@@ -82,7 +82,7 @@ live_loop :osc_monitor do
     set :snare, snare
     set :hihat, hihat
     
-    # set drum "on" status based on the button state
+  # set drum "on" status based on the button state
   when "kick"
     set :kick_on, n[0]==1.0
   when "snare"
@@ -90,7 +90,7 @@ live_loop :osc_monitor do
   when "hihat"
     set :hihat_on, n[0]==1.0
     
-    # save specific beat states inro corresponding var
+  # save specific beat states inro corresponding var
   when "kick_beats"
     kick[token[2].to_i] = n[0].to_i
   when "snare_beats"
