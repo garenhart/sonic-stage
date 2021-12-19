@@ -1,6 +1,6 @@
 {
   "createdWith": "Open Stage Control",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "type": "session",
   "content": {
     "type": "root",
@@ -167,7 +167,7 @@
                     "top": "0%",
                     "left": "0%",
                     "id": "drums",
-                    "visible": true,
+                    "visible": "@{drums_on}",
                     "interaction": true,
                     "comments": "",
                     "width": "4%",
@@ -194,7 +194,7 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
+                    "script": "set(\"drums_on\", false)",
                     "colorTextOn": "auto",
                     "label": false,
                     "vertical": false,
@@ -236,7 +236,7 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
+                    "script": "set(\"drums_on\", true)",
                     "colorBg": "auto",
                     "layout": "horizontal",
                     "justify": "start",
@@ -368,7 +368,7 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
+                    "script": "set(\"drums_on\", true)",
                     "colorBg": "auto",
                     "layout": "horizontal",
                     "justify": "start",
@@ -458,7 +458,7 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
+                    "script": "set(\"drums_on\", true)",
                     "colorBg": "auto",
                     "layout": "horizontal",
                     "justify": "start",
@@ -473,6 +473,22 @@
                     "props": {},
                     "widgets": [],
                     "tabs": []
+                  },
+                  {
+                    "type": "variable",
+                    "id": "drums_on",
+                    "comments": "",
+                    "value": false,
+                    "default": false,
+                    "linkId": "",
+                    "address": "auto",
+                    "preArgs": "",
+                    "typeTags": "",
+                    "decimals": 2,
+                    "target": "",
+                    "ignoreDefaults": false,
+                    "bypass": false,
+                    "script": ""
                   }
                 ],
                 "tabs": []
@@ -483,6 +499,7 @@
         ]
       }
     ],
-    "tabs": []
+    "tabs": [],
+    "hideMenu": false
   }
 }
