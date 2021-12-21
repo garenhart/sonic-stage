@@ -124,7 +124,7 @@
                 "top": 150,
                 "left": 50,
                 "id": "drums",
-                "visible": "@{drums_modified}",
+                "visible": true,
                 "interaction": true,
                 "comments": "",
                 "width": 40,
@@ -142,7 +142,7 @@
                 "html": "",
                 "css": "",
                 "colorTextOn": "auto",
-                "label": "auto",
+                "label": "@{drums_label}",
                 "vertical": true,
                 "wrap": false,
                 "on": 1,
@@ -159,7 +159,7 @@
                 "target": "",
                 "ignoreDefaults": false,
                 "bypass": false,
-                "script": "set(\"drums_modified\", false)"
+                "script": "set(\"drums_label\", \"drums\")"
               },
               {
                 "type": "panel",
@@ -272,7 +272,7 @@
                         "html": "",
                         "css": "",
                         "colorTextOn": "auto",
-                        "label": "auto",
+                        "label": "kick #{\n@{this} == 1 ? \"^volume-up\" : \"^volume-mute\" \n}",
                         "vertical": false,
                         "wrap": false,
                         "on": 1,
@@ -335,7 +335,7 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": "set(\"drums_modified\", true)",
+                        "script": "set(\"drums_label\", \"^sync.pulse\")",
                         "widgets": [],
                         "tabs": []
                       }
@@ -409,7 +409,7 @@
                         "html": "",
                         "css": "",
                         "colorTextOn": "auto",
-                        "label": "auto",
+                        "label": "snare #{\n@{this} == 1 ? \"^volume-up\" : \"^volume-mute\" \n}",
                         "vertical": false,
                         "wrap": false,
                         "on": 1,
@@ -472,7 +472,7 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": "set(\"drums_modified\", true)",
+                        "script": "set(\"drums_label\", \"^sync.pulse\")",
                         "widgets": [],
                         "tabs": []
                       }
@@ -546,7 +546,7 @@
                         "html": "",
                         "css": "",
                         "colorTextOn": "auto",
-                        "label": "auto",
+                        "label": "hihat #{\n@{this} == 1 ? \"^volume-up\" : \"^volume-mute\" \n}",
                         "vertical": false,
                         "wrap": false,
                         "on": 1,
@@ -609,7 +609,7 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": "set(\"drums_modified\", true)",
+                        "script": "set(\"drums_label\", \"^sync.pulse\")",
                         "widgets": [],
                         "tabs": []
                       }
@@ -625,6 +625,22 @@
                 "comments": "true if any of the drum beats are modified since last update",
                 "value": false,
                 "default": false,
+                "linkId": "",
+                "address": "auto",
+                "preArgs": "",
+                "typeTags": "",
+                "decimals": 2,
+                "target": "",
+                "ignoreDefaults": false,
+                "bypass": false,
+                "script": ""
+              },
+              {
+                "type": "variable",
+                "id": "drums_label",
+                "comments": "",
+                "value": "drums",
+                "default": "drums",
                 "linkId": "",
                 "address": "auto",
                 "preArgs": "",
