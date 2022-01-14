@@ -1,15 +1,20 @@
-# osc-monitor.rb
+######################################
+# osc_monitor.rb
+# drum pad monitor/player
+# Sonic Pi - Open Stage Control (poc)
+# author: Garen H.
+######################################
 
 use_debug false
 use_bpm 30
 
 set :ip, "127.0.0.1"
-set :port, 7777
-set :kick_on, false
+set :port, 7777 # make sure to match Open Stage Control's osc-port value
 
 use_osc get(:ip), get(:port)
 
 #=== DRUMS ===
+set :kick_on, false
 set :snare_on, false
 set :hihat_on, false
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -54,6 +59,7 @@ define :play_drum do |drum_sample, beats, on=true|
   end
 end
 
+# playing loops
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   live_loop :drum_kick do
     use_real_time
@@ -71,6 +77,7 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   end
 end
 
+# osc message monitoring loop
 live_loop :osc_monitor do
   addr = "/osc:#{get(:ip)}:#{get(:port)}/**"
   n = sync addr
@@ -90,7 +97,7 @@ live_loop :osc_monitor do
   when "hihat"
     set :hihat_on, n[0]==1.0
     
-    # save specific beat states into corresponding Time State var
+    # save beat states
   when "kick_beats"
     kick[token[2].to_i] = n[0].to_i
   when "snare_beats"
