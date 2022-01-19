@@ -1,6 +1,6 @@
 {
   "createdWith": "Open Stage Control",
-  "version": "1.13.0",
+  "version": "1.14.1",
   "type": "session",
   "content": {
     "type": "root",
@@ -37,7 +37,6 @@
     "target": "",
     "ignoreDefaults": false,
     "bypass": false,
-    "script": "",
     "widgets": [],
     "tabs": [
       {
@@ -73,7 +72,6 @@
         "target": "",
         "ignoreDefaults": false,
         "bypass": false,
-        "script": "",
         "widgets": [
           {
             "type": "variable",
@@ -97,7 +95,8 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "script": ""
+            "onValue": "",
+            "onCreate": ""
           },
           {
             "type": "variable",
@@ -121,7 +120,8 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "script": ""
+            "onValue": "",
+            "onCreate": ""
           },
           {
             "type": "variable",
@@ -145,7 +145,8 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "script": ""
+            "onValue": "",
+            "onCreate": ""
           },
           {
             "type": "variable",
@@ -169,7 +170,8 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "script": ""
+            "onValue": "",
+            "onCreate": ""
           },
           {
             "type": "variable",
@@ -185,7 +187,8 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "script": ""
+            "onValue": "",
+            "onCreate": ""
           },
           {
             "type": "panel",
@@ -229,7 +232,6 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "script": "",
             "widgets": [
               {
                 "type": "panel",
@@ -263,7 +265,6 @@
                 "target": "",
                 "ignoreDefaults": false,
                 "bypass": false,
-                "script": "",
                 "colorBg": "auto",
                 "layout": "vertical",
                 "justify": "start",
@@ -307,12 +308,13 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
                     "align": "center",
                     "unit": "",
                     "asYouType": false,
                     "numeric": false,
-                    "validation": ""
+                    "validation": "",
+                    "onValue": "",
+                    "onCreate": ""
                   },
                   {
                     "type": "dropdown",
@@ -328,7 +330,6 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "if (value == 1)\n{\n  set(\"scales\", get(\"scales_m\"));\n}\nif (value == 2)\n{\n  set(\"scales\", get(\"scales_mmi\"));\n}\nif (value == 3)\n{\n  set(\"scales\", get(\"scales_hmi\"));\n}\nif (value == 4)\n{\n  set(\"scales\", get(\"scales_hm\"));\n}\n\nset(\"dropdown_scales\", 1);",
                     "top": "auto",
                     "left": 120,
                     "visible": true,
@@ -355,10 +356,14 @@
                       "Melodic Minor": 2,
                       "Harmonic Minor": 3,
                       "Harmonic Major": 4
-                    }
+                    },
+                    "onValue": "if (value == 1)\n{\n  set(\"scales\", get(\"scales_m\"));\n}\nif (value == 2)\n{\n  set(\"scales\", get(\"scales_mmi\"));\n}\nif (value == 3)\n{\n  set(\"scales\", get(\"scales_hmi\"));\n}\nif (value == 4)\n{\n  set(\"scales\", get(\"scales_hm\"));\n}\n\nset(\"dropdown_scales\", 1);",
+                    "onCreate": ""
                   }
                 ],
-                "tabs": []
+                "tabs": [],
+                "onValue": "",
+                "onCreate": ""
               },
               {
                 "type": "panel",
@@ -402,7 +407,6 @@
                 "target": "",
                 "ignoreDefaults": false,
                 "bypass": false,
-                "script": "",
                 "widgets": [
                   {
                     "type": "input",
@@ -436,12 +440,13 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
                     "align": "center",
                     "unit": "",
                     "asYouType": false,
                     "numeric": false,
-                    "validation": ""
+                    "validation": "",
+                    "onValue": "",
+                    "onCreate": ""
                   },
                   {
                     "type": "dropdown",
@@ -475,17 +480,22 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
                     "align": "center",
                     "label": "%key",
                     "icon": "true",
-                    "values": "@{scales}"
+                    "values": "@{scales}",
+                    "onValue": "",
+                    "onCreate": ""
                   }
                 ],
-                "tabs": []
+                "tabs": [],
+                "onValue": "",
+                "onCreate": ""
               }
             ],
-            "tabs": []
+            "tabs": [],
+            "onValue": "",
+            "onCreate": ""
           },
           {
             "type": "panel",
@@ -529,7 +539,6 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "script": "",
             "widgets": [
               {
                 "type": "button",
@@ -563,7 +572,6 @@
                 "target": "",
                 "ignoreDefaults": false,
                 "bypass": false,
-                "script": "set(\"drums_label\", \"Drums\")",
                 "colorTextOn": "auto",
                 "label": "@{drums_label}",
                 "vertical": true,
@@ -571,7 +579,9 @@
                 "on": 1,
                 "off": 0,
                 "mode": "push",
-                "doubleTap": false
+                "doubleTap": false,
+                "onValue": "set(\"drums_label\", \"Drums\")",
+                "onCreate": ""
               },
               {
                 "type": "panel",
@@ -615,7 +625,6 @@
                 "target": "",
                 "ignoreDefaults": false,
                 "bypass": false,
-                "script": "",
                 "widgets": [
                   {
                     "type": "panel",
@@ -649,7 +658,6 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
                     "colorBg": "auto",
                     "layout": "horizontal",
                     "justify": "start",
@@ -701,7 +709,8 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": ""
+                        "onValue": "",
+                        "onCreate": ""
                       },
                       {
                         "type": "matrix",
@@ -747,12 +756,15 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": "set(\"drums_label\", \"^sync.pulse\")",
                         "widgets": [],
-                        "tabs": []
+                        "tabs": [],
+                        "onValue": "set(\"drums_label\", \"^sync.pulse\")",
+                        "onCreate": ""
                       }
                     ],
-                    "tabs": []
+                    "tabs": [],
+                    "onValue": "",
+                    "onCreate": ""
                   },
                   {
                     "type": "panel",
@@ -768,7 +780,6 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
                     "top": 10,
                     "left": 90,
                     "visible": true,
@@ -838,7 +849,8 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": ""
+                        "onValue": "",
+                        "onCreate": ""
                       },
                       {
                         "type": "matrix",
@@ -884,12 +896,15 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": "set(\"drums_label\", \"^sync.pulse\")",
                         "widgets": [],
-                        "tabs": []
+                        "tabs": [],
+                        "onValue": "set(\"drums_label\", \"^sync.pulse\")",
+                        "onCreate": ""
                       }
                     ],
-                    "tabs": []
+                    "tabs": [],
+                    "onValue": "",
+                    "onCreate": ""
                   },
                   {
                     "type": "panel",
@@ -933,7 +948,6 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "script": "",
                     "widgets": [
                       {
                         "type": "button",
@@ -975,7 +989,8 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": ""
+                        "onValue": "",
+                        "onCreate": ""
                       },
                       {
                         "type": "matrix",
@@ -1021,15 +1036,20 @@
                         "target": "",
                         "ignoreDefaults": false,
                         "bypass": false,
-                        "script": "set(\"drums_label\", \"^sync.pulse\")",
                         "widgets": [],
-                        "tabs": []
+                        "tabs": [],
+                        "onValue": "set(\"drums_label\", \"^sync.pulse\")",
+                        "onCreate": ""
                       }
                     ],
-                    "tabs": []
+                    "tabs": [],
+                    "onValue": "",
+                    "onCreate": ""
                   }
                 ],
-                "tabs": []
+                "tabs": [],
+                "onValue": "",
+                "onCreate": ""
               },
               {
                 "type": "variable",
@@ -1045,7 +1065,8 @@
                 "target": "",
                 "ignoreDefaults": false,
                 "bypass": false,
-                "script": ""
+                "onValue": "",
+                "onCreate": ""
               },
               {
                 "type": "variable",
@@ -1061,14 +1082,21 @@
                 "target": "",
                 "ignoreDefaults": false,
                 "bypass": false,
-                "script": ""
+                "onValue": "",
+                "onCreate": ""
               }
             ],
-            "tabs": []
+            "tabs": [],
+            "onValue": "",
+            "onCreate": ""
           }
         ],
-        "tabs": []
+        "tabs": [],
+        "onValue": "",
+        "onCreate": ""
       }
-    ]
+    ],
+    "onValue": "",
+    "onCreate": ""
   }
 }
