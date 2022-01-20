@@ -522,7 +522,7 @@
                 "ignoreDefaults": false,
                 "bypass": false,
                 "onCreate": "",
-                "onValue": "// script for single key toggle mode\nvar keyVal = value[getIndex(id)]\nif (keyVal == getProp('this', 'on')) {\n  // if key is pressed\n  if (locals.lastKey) {\n    // release last pressed key\n    // sync:false to prevent forced release from triggering the script \n    set(locals.lastKey, 0, {sync:false})\n  }\n  // store pressed key \n  locals.lastKey = id\n} else if (id == locals.lastKey ) {\n  // if key is released manually\n  locals.lastKey = 0\n}"
+                "onValue": "// script for single key toggle mode\nvar keyVal = value[getIndex(id)]\nconsole.log('key value: ' + keyVal + ' (on: '+getProp('this', 'on')+')')\nif (keyVal == getProp('this', 'on')) {\n  // if key is pressed\n  console.log('last key: '+locals.lastKey)\n  if (locals.lastKey) {\n    // release last pressed key\n    // sync:false to prevent forced release from triggering the script \n    set(locals.lastKey, 0, {sync:false})\n  }\n  // store pressed key \n  locals.lastKey = id\n} else if (id == locals.lastKey ) {\n  // if key is released manually\n  locals.lastKey = 0\n}\nconsole.log('current key: '+id, 'current index: '+getIndex(id))\n"
               }
             ],
             "tabs": [],
