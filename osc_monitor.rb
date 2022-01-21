@@ -13,6 +13,16 @@ set :port, 7777 # make sure to match Open Stage Control's osc-port value
 
 use_osc get(:ip), get(:port)
 
+define :parse_addr do |path|
+  e = get_event(path).to_s
+  v = e.split(",")[6]
+  if v != nil
+    return v[3..-2].split("/")
+  else
+    return ["error"]
+  end
+end
+
 # DRUM CONFIG
 set :kick_on, false
 set :snare_on, false
@@ -23,16 +33,6 @@ set :hihat, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 hihat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-define :parse_addr do |path|
-  e = get_event(path).to_s
-  v = e.split(",")[6]
-  if v != nil
-    return v[3..-2].split("/")
-  else
-    return ["error"]
-  end
-end
 
 define :init_drum do |d|
   osc "/#{d}", 0
