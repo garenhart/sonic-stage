@@ -13,7 +13,7 @@ set :port, 7777 # make sure to match Open Stage Control's osc-port value
 
 use_osc get(:ip), get(:port)
 
-#=== DRUMS ===
+# DRUM CONFIG
 set :kick_on, false
 set :snare_on, false
 set :hihat_on, false
@@ -58,8 +58,9 @@ define :play_drum do |drum_sample, beats, on=true|
     sleep 0.0625
   end
 end
+# END DRUM CONFIG
 
-# playing loops
+# DRUM LOOPS
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   live_loop :drum_kick do
     use_real_time
@@ -76,8 +77,10 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
     play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_on)
   end
 end
+# END DRUM LOOPS
 
-# osc message monitoring loop
+
+# OSC MESSAGE MONITORING LOOP
 live_loop :osc_monitor do
   addr = "/osc:#{get(:ip)}:#{get(:port)}/**"
   n = sync addr
@@ -106,4 +109,5 @@ live_loop :osc_monitor do
     hihat[token[2].to_i] = n[0].to_i
   end
 end
+# END OSC MESSAGE MONITORING LOOP
 
