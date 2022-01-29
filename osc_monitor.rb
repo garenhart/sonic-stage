@@ -23,6 +23,8 @@ end
 
 # CONFIG
 set :tempo, 60
+set :style, 1
+set :mode, 1
 set :key_1, 48
 
 # DRUM CONFIG
@@ -51,10 +53,10 @@ define :init_drums do
 end
 
 define :init_controls do
-  osc "/input_tempo", get(:tempo)
-  osc "/dropdown_styles", 1
-  osc "/dropdown_modes", 1
-  osc "/keyboard_1", get(:key_1), 1
+  osc "/tempo", get(:tempo)
+  osc "/style", get(:style)
+  osc "/mode", get(:mode)
+  osc "/key", get(:key_1), 1
   init_drums
 end
 
@@ -101,12 +103,15 @@ live_loop :osc_monitor do
   token   = parse_addr addr
   
   case token[1]
-  
-  when "input_tempo"
+  when "tempo"
     set :tempo, n[0].to_i
     puts "tempo", get(:tempo)
     
-  when "keyboard_1"
+  when "style"
+    set :style, n[0].to_i
+    puts "style", get(:style)
+    
+  when "key"
     if n[1] == 1
       set :key_1, n[0].to_i
     end
