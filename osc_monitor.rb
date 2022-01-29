@@ -6,11 +6,9 @@
 ######################################
 
 use_debug false
-use_bpm 30
 
 set :ip, "127.0.0.1"
 set :port, 7777 # make sure to match Open Stage Control's osc-port value
-
 use_osc get(:ip), get(:port)
 
 define :parse_addr do |path|
@@ -22,6 +20,10 @@ define :parse_addr do |path|
     return ["error"]
   end
 end
+
+# CONFIG
+set :tempo, 60
+set :key_1, 48
 
 # DRUM CONFIG
 set :kick_on, false
@@ -48,7 +50,16 @@ define :init_drums do
   init_drum "hihat"
 end
 
-init_drums
+define :init_controls do
+  osc "/input_tempo", get(:tempo)
+  osc "/dropdown_styles", 1
+  osc "/dropdown_modes", 1
+  osc "/keyboard_1", get(:key_1), 1
+  init_drums
+end
+
+
+init_controls
 
 define :play_drum do |drum_sample, beats, on=true|
   16.times do |i|
@@ -64,16 +75,19 @@ end
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   live_loop :drum_kick do
     use_real_time
+    use_bpm get(:tempo)
     play_drum :bd_tek, get(:kick), get(:kick_on)
   end
   
   live_loop :drum_snare do
     use_real_time
+    use_bpm get(:tempo)
     play_drum :drum_snare_soft, get(:snare), get(:snare_on)
   end
   
   live_loop :drum_hihat do
     use_real_time
+    use_bpm get(:tempo)
     play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_on)
   end
 end
@@ -87,6 +101,17 @@ live_loop :osc_monitor do
   token   = parse_addr addr
   
   case token[1]
+  
+  when "input_tempo"
+    set :tempo, n[0].to_i
+    puts "tempo", get(:tempo)
+    
+  when "keyboard_1"
+    if n[1] == 1
+      set :key_1, n[0].to_i
+    end
+    puts "key", get(:key_1)
+    
   when "drums" # update Time State
     set :kick, kick
     set :snare, snare
