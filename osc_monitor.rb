@@ -11,6 +11,13 @@ set :ip, "127.0.0.1"
 set :port, 7777 # make sure to match Open Stage Control's osc-port value
 use_osc get(:ip), get(:port)
 
+require get(:sp_path)+"lib/modes.rb" # Load extra scales and chords from separate file
+use_random_seed 31
+ModeScales = Modes.scales
+prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
+
+
+
 define :parse_addr do |path|
   e = get_event(path).to_s
   v = e.split(",")[6]
@@ -68,7 +75,7 @@ define :play_drum do |drum_sample, beats, on=true|
     if beats[i] == 1 && on
       sample drum_sample
     end
-    sleep 0.0625
+    sleep 0.25
   end
 end
 # END DRUM CONFIG
@@ -78,23 +85,59 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   live_loop :drum_kick do
     use_real_time
     use_bpm get(:tempo)
+    sync :tick
     play_drum :bd_tek, get(:kick), get(:kick_on)
   end
   
   live_loop :drum_snare do
     use_real_time
     use_bpm get(:tempo)
+    sync :tick
     play_drum :drum_snare_soft, get(:snare), get(:snare_on)
   end
   
   live_loop :drum_hihat do
     use_real_time
     use_bpm get(:tempo)
+    sync :tick
     play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_on)
   end
 end
 # END DRUM LOOPS
 
+# BASS LOOP
+with_fx :reverb, damp: 0.9, room: 0.8 do
+  live_loop :bass do
+    use_real_time
+    use_bpm get(:tempo)
+    use_synth_defaults depth: -1, divisor: 1, release: [0.25,0.5].choose, amp: 1
+    cue :tick
+    
+    puts "SSS", get(:style)
+    case get(:style)
+    when 1
+      tonic = get(:key_1)
+      lowest_tonic = 28
+      while tonic < lowest_tonic
+        tonic+=12
+      end
+      4.times do |i|
+        if tonic < lowest_tonic
+          tonic += (4-i)*7
+        end
+        play tonic
+        tonic -= 7
+        sleep 1
+      end
+      
+    when 2
+      sleep 0.5
+    when 3
+      sleep 0.5
+    end
+  end
+end
+#END BASS LOOP
 
 # OSC MESSAGE MONITORING LOOP
 live_loop :osc_monitor do
