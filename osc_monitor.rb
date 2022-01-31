@@ -32,7 +32,7 @@ end
 set :tempo, 60
 set :style, 1
 set :mode, 1
-set :key_1, 48
+set :key_1, 0
 
 # DRUM CONFIG
 set :kick_on, false
@@ -117,19 +117,22 @@ with_fx :reverb, damp: 0.9, room: 0.8 do
     case get(:style)
     when 1
       tonic = get(:key_1)
-      lowest_tonic = 28
-      while tonic < lowest_tonic
-        tonic+=12
-      end
-      4.times do |i|
-        if tonic < lowest_tonic
-          tonic += (4-i)*7
+      if (tonic <= 0)
+        sleep 0.125 #sleep until a valid tonic signal received
+      else
+        lowest_tonic = 28
+        while tonic < lowest_tonic
+          tonic+=12
         end
-        play tonic
-        tonic -= 7
-        sleep 1
+        4.times do |i|
+          if tonic < lowest_tonic
+            tonic += (4-i)*7
+          end
+          play tonic
+          tonic -= 7
+          sleep 1
+        end
       end
-      
     when 2
       sleep 0.5
     when 3
