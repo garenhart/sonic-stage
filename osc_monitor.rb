@@ -137,6 +137,8 @@ with_fx :reverb, damp: 0.9, room: 0.8 do
       sleep 0.5
     when 3
       sleep 0.5
+    else
+      sleep 0.5
     end
   end
 end
