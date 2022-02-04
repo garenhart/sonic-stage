@@ -41,12 +41,16 @@ set :hihat_on, false
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :hihat, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+set :kick_amp, 0.5
+set :snare_amp, 0.5
+set :hihat_amp, 0.5
 kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 hihat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 define :init_drum do |d|
   osc "/#{d}", 0
+  osc "/#{d}_amp", 0.5
   16.times do |i|
     osc "/#{d}_beats/#{i}", 0
   end
@@ -70,10 +74,10 @@ end
 
 init_controls
 
-define :play_drum do |drum_sample, beats, on=true|
+define :play_drum do |drum_sample, beats, amp, on=true|
   16.times do |i|
     if beats[i] == 1 && on
-      sample drum_sample
+      sample drum_sample, amp: amp
     end
     sleep 0.25
   end
@@ -86,31 +90,31 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    play_drum :bd_tek, get(:kick), get(:kick_on)
+    play_drum :bd_tek, get(:kick), get(:kick_amp), get(:kick_on)
   end
   
   live_loop :drum_snare do
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    play_drum :drum_snare_soft, get(:snare), get(:snare_on)
+    play_drum :drum_snare_soft, get(:snare), get(:snare_amp), get(:snare_on)
   end
   
   live_loop :drum_hihat do
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_on)
+    play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_amp), get(:hihat_on)
   end
 end
 # END DRUM LOOPS
 
 # BASS LOOP
-with_fx :reverb, damp: 0.9, room: 0.8 do
+with_fx :reverb, room: 0.4, mix: 0.4 do |r|
   live_loop :bass do
     use_real_time
     use_bpm get(:tempo)
-    use_synth_defaults depth: -1, divisor: 1, release: [0.25,0.5].choose, amp: 1
+    use_synth :fm
     cue :tick
     
     puts "SSS", get(:style)
@@ -177,6 +181,14 @@ live_loop :osc_monitor do
     set :snare_on, n[0]==1.0
   when "hihat"
     set :hihat_on, n[0]==1.0
+    
+    #set amp
+  when "kick_amp"
+    set :kick_amp, n[0]
+  when "snare_amp"
+    set :snare_amp, n[0]
+  when "hihat_amp"
+    set :hihat_amp, n[0]
     
     # save beat states
   when "kick_beats"
