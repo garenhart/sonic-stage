@@ -5,15 +5,17 @@
 # author: Garen H.
 ######################################
 
-use_debug false
+eval_file get(:sp_path)+"lib/lib-impro.rb" # Load library
+#require get(:sp_path)+"lib/modes.rb" # Load extra scales and chords from separate file
+#ModeScales = Modes.scales
+
+use_debug true
 
 set :ip, "127.0.0.1"
 set :port, 7777 # make sure to match Open Stage Control's osc-port value
 use_osc get(:ip), get(:port)
 
-require get(:sp_path)+"lib/modes.rb" # Load extra scales and chords from separate file
 use_random_seed 31
-ModeScales = Modes.scales
 prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
 
@@ -74,14 +76,6 @@ end
 
 init_controls
 
-define :play_drum do |drum_sample, beats, amp, on=true|
-  16.times do |i|
-    if beats[i] == 1 && on
-      sample drum_sample, amp: amp
-    end
-    sleep 0.25
-  end
-end
 # END DRUM CONFIG
 
 # DRUM LOOPS
@@ -90,21 +84,21 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    play_drum :bd_tek, get(:kick), get(:kick_amp), get(:kick_on)
+    li_play_drum :bd_tek, get(:kick), get(:kick_amp), get(:kick_on)
   end
   
   live_loop :drum_snare do
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    play_drum :drum_snare_soft, get(:snare), get(:snare_amp), get(:snare_on)
+    li_play_drum :drum_snare_soft, get(:snare), get(:snare_amp), get(:snare_on)
   end
   
   live_loop :drum_hihat do
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_amp), get(:hihat_on)
+    li_play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_amp), get(:hihat_on)
   end
 end
 # END DRUM LOOPS
@@ -116,11 +110,11 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
     use_bpm get(:tempo)
     use_synth :fm
     cue :tick
-    
+    tonic = get(:key_1)
     puts "SSS", get(:style)
+    
     case get(:style)
     when 1
-      tonic = get(:key_1)
       if (tonic <= 0)
         sleep 0.125 #sleep until a valid tonic signal received
       else
@@ -138,7 +132,7 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
         end
       end
     when 2
-      sleep 0.5
+      li_root_sequence(tonic, 0.25)
     when 3
       sleep 0.5
     else
