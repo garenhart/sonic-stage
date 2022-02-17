@@ -1,4 +1,6 @@
-#extra-modes.rb
+# modes.rb
+# based on scale_patch.rb from amiika
+# https://in-thread.sonic-pi.net/t/chord-progression-tool/4947/14
 
   class SonicPi::Scale
     
@@ -8,30 +10,6 @@
       }
     end
 
-    def initialize(tonic, name, num_octaves=1)
-      if name.is_a?(Array)
-        intervals = name
-        name = :custom
-      else
-        name = name.to_sym
-        intervals = SCALE[name]
-      end
-      raise InvalidScaleError, "Unknown scale name: #{name.inspect}" unless intervals
-      intervals = intervals * num_octaves
-      current = SonicPi::Note.resolve_midi_note(tonic)
-      res = [current]
-      intervals.each do |i|
-        current += i
-        res << current
-      end
-  
-      @name = name
-      @tonic = tonic
-      @num_octaves = num_octaves
-      @notes = res
-      super(res)
-    end
-  
   end
   
   class SonicPi::Chord
@@ -73,7 +51,15 @@
     ionian5s = [2,2,1,3,1,2,1]
     ionian6b = [2,2,1,2,1,3,1]
     {
-      # Family 2
+      # Family 1 - Major Modes (already exist in SPi)
+      # :ionian
+      # :dorian
+      # :phrygian
+      # :lydian
+      # :mixolydian
+      # :aeolian
+      # :locrian
+      # Family 2 - Melodic Minor Modes
       :ionian1s=>ionian1s,
       :dorian7s=>ionian1s.rotate(1),
       :phrygian6s=>ionian1s.rotate(2),
@@ -81,7 +67,7 @@
       :mixolydian4s=>ionian1s.rotate(4),
       :aeolian3s=>ionian1s.rotate(5),
       :locrian2s=>ionian1s.rotate(6),
-      # Family 3
+      # Family 3 - Harmonic Minor Modes
       :ionian5s=>ionian5s,
       :dorian4s=>ionian5s.rotate(1),
       :phrygian3s=>ionian5s.rotate(2),
@@ -89,7 +75,7 @@
       :mixolydian1s=>ionian5s.rotate(4),
       :aeolian7s=>ionian5s.rotate(5),
       :locrian6s=>ionian5s.rotate(6),
-      # Family 4
+      # Family 4 - Harmonic Major Modes
       :ionian6b=>ionian6b,
       :dorian5b=>ionian6b.rotate(1),
       :phrygian4b=>ionian6b.rotate(2),
