@@ -1,6 +1,6 @@
 {
   "createdWith": "Open Stage Control",
-  "version": "1.14.1",
+  "version": "1.15.0",
   "type": "session",
   "content": {
     "type": "root",
@@ -41,7 +41,7 @@
     "tabs": [
       {
         "type": "tab",
-        "id": "main_controls",
+        "id": "controller",
         "visible": true,
         "interaction": true,
         "comments": "",
@@ -96,7 +96,8 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onValue": "",
-            "onCreate": ""
+            "onCreate": "",
+            "lock": false
           },
           {
             "type": "variable",
@@ -121,7 +122,8 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onValue": "",
-            "onCreate": ""
+            "onCreate": "",
+            "lock": false
           },
           {
             "type": "variable",
@@ -146,7 +148,8 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onValue": "",
-            "onCreate": ""
+            "onCreate": "",
+            "lock": false
           },
           {
             "type": "variable",
@@ -171,7 +174,8 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onValue": "",
-            "onCreate": ""
+            "onCreate": "",
+            "lock": false
           },
           {
             "type": "variable",
@@ -188,7 +192,8 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onValue": "",
-            "onCreate": ""
+            "onCreate": "",
+            "lock": false
           },
           {
             "type": "panel",
@@ -308,7 +313,8 @@
                     "onValue": "",
                     "onCreate": "",
                     "vertical": false,
-                    "wrap": false
+                    "wrap": false,
+                    "lock": false
                   },
                   {
                     "type": "input",
@@ -348,12 +354,14 @@
                     "ignoreDefaults": false,
                     "bypass": false,
                     "onCreate": "",
-                    "onValue": ""
+                    "onValue": "",
+                    "lock": false
                   }
                 ],
                 "tabs": [],
                 "onValue": "",
-                "onCreate": ""
+                "onCreate": "",
+                "lock": false
               },
               {
                 "type": "panel",
@@ -430,7 +438,8 @@
                     "onValue": "",
                     "onCreate": "",
                     "vertical": false,
-                    "wrap": false
+                    "wrap": false,
+                    "lock": false
                   },
                   {
                     "type": "dropdown",
@@ -474,12 +483,14 @@
                     },
                     "onValue": "",
                     "onCreate": "",
-                    "align": "center"
+                    "align": "center",
+                    "lock": false
                   }
                 ],
                 "tabs": [],
                 "onValue": "",
-                "onCreate": ""
+                "onCreate": "",
+                "lock": false
               },
               {
                 "type": "panel",
@@ -556,7 +567,8 @@
                     "onValue": "",
                     "onCreate": "",
                     "vertical": false,
-                    "wrap": false
+                    "wrap": false,
+                    "lock": false
                   },
                   {
                     "type": "dropdown",
@@ -600,12 +612,14 @@
                       "Harmonic Major": 4
                     },
                     "onValue": "if (value == 1)\n{\n  set(\"scales\", get(\"scales_m\"));\n}\nif (value == 2)\n{\n  set(\"scales\", get(\"scales_mmi\"));\n}\nif (value == 3)\n{\n  set(\"scales\", get(\"scales_hmi\"));\n}\nif (value == 4)\n{\n  set(\"scales\", get(\"scales_hm\"));\n}\n\nset(\"dropdown_scales\", 1);",
-                    "onCreate": ""
+                    "onCreate": "",
+                    "lock": false
                   }
                 ],
                 "tabs": [],
                 "onValue": "",
-                "onCreate": ""
+                "onCreate": "",
+                "lock": false
               },
               {
                 "type": "panel",
@@ -682,7 +696,8 @@
                     "onValue": "",
                     "onCreate": "",
                     "vertical": false,
-                    "wrap": false
+                    "wrap": false,
+                    "lock": false
                   },
                   {
                     "type": "dropdown",
@@ -721,12 +736,14 @@
                     "icon": "true",
                     "values": "@{scales}",
                     "onValue": "",
-                    "onCreate": ""
+                    "onCreate": "",
+                    "lock": false
                   }
                 ],
                 "tabs": [],
                 "onValue": "",
-                "onCreate": ""
+                "onCreate": "",
+                "lock": false
               },
               {
                 "type": "keyboard",
@@ -770,12 +787,14 @@
                 "ignoreDefaults": false,
                 "bypass": false,
                 "onCreate": "",
-                "onValue": "// script for single key toggle mode\nvar keyVal = value[getIndex(id)]\nconsole.log('key value: ' + keyVal + ' (on: '+getProp('this', 'on')+')')\nif (keyVal == getProp('this', 'on')) {\n  // if key is pressed\n  console.log('last key: '+locals.lastKey)\n  if (locals.lastKey) {\n    // release last pressed key\n    // sync:false to prevent forced release from triggering the script \n    set(locals.lastKey, 0, {sync:false})\n  }\n  // store pressed key \n  locals.lastKey = id\n} else if (id == locals.lastKey ) {\n  // if key is released manually\n  locals.lastKey = 0\n}\nconsole.log('current key: '+id, 'current index: '+getIndex(id))\n"
+                "onValue": "// script for single key toggle mode\nvar keyVal = value[getIndex(id)]\nconsole.log('key value: ' + keyVal + ' (on: '+getProp('this', 'on')+')')\nif (keyVal == getProp('this', 'on')) {\n  // if key is pressed\n  console.log('last key: '+locals.lastKey)\n  if (locals.lastKey) {\n    // release last pressed key\n    // sync:false to prevent forced release from triggering the script \n    set(locals.lastKey, 0, {sync:false})\n  }\n  // store pressed key \n  locals.lastKey = id\n} else if (id == locals.lastKey ) {\n  // if key is released manually\n  locals.lastKey = 0\n}\nconsole.log('current key: '+id, 'current index: '+getIndex(id))\n",
+                "lock": false
               }
             ],
             "tabs": [],
             "onValue": "",
-            "onCreate": ""
+            "onCreate": "",
+            "lock": false
           },
           {
             "type": "panel",
@@ -861,7 +880,8 @@
                 "mode": "push",
                 "doubleTap": false,
                 "onValue": "set(\"drums_label\", \"Drums\")",
-                "onCreate": ""
+                "onCreate": "",
+                "lock": false
               },
               {
                 "type": "panel",
@@ -958,7 +978,7 @@
                         "interaction": true,
                         "comments": "",
                         "width": "auto",
-                        "height": 80,
+                        "height": "auto",
                         "expand": true,
                         "colorText": "auto",
                         "colorWidget": "auto",
@@ -996,7 +1016,8 @@
                         "widgets": [],
                         "tabs": [],
                         "onValue": "set(\"drums_label\", \"^sync.pulse\")",
-                        "onCreate": ""
+                        "onCreate": "",
+                        "lock": false
                       },
                       {
                         "type": "panel",
@@ -1007,7 +1028,7 @@
                         "interaction": true,
                         "comments": "",
                         "width": "auto",
-                        "height": 50,
+                        "height": 30,
                         "expand": "false",
                         "colorText": "auto",
                         "colorWidget": "auto",
@@ -1084,7 +1105,8 @@
                             "ignoreDefaults": false,
                             "bypass": false,
                             "onValue": "",
-                            "onCreate": ""
+                            "onCreate": "",
+                            "lock": false
                           },
                           {
                             "type": "fader",
@@ -1137,15 +1159,18 @@
                             "bypass": false,
                             "onCreate": "",
                             "onValue": "",
-                            "onTouch": ""
+                            "onTouch": "",
+                            "lock": false
                           }
                         ],
-                        "tabs": []
+                        "tabs": [],
+                        "lock": false
                       }
                     ],
                     "tabs": [],
                     "onValue": "",
-                    "onCreate": ""
+                    "onCreate": "",
+                    "lock": false
                   },
                   {
                     "type": "panel",
@@ -1237,7 +1262,8 @@
                         "widgets": [],
                         "tabs": [],
                         "onValue": "set(\"drums_label\", \"^sync.pulse\")",
-                        "onCreate": ""
+                        "onCreate": "",
+                        "lock": false
                       },
                       {
                         "type": "panel",
@@ -1248,7 +1274,7 @@
                         "interaction": true,
                         "comments": "",
                         "width": "auto",
-                        "height": 50,
+                        "height": 30,
                         "expand": "false",
                         "colorText": "auto",
                         "colorWidget": "auto",
@@ -1325,7 +1351,8 @@
                             "ignoreDefaults": false,
                             "bypass": false,
                             "onValue": "",
-                            "onCreate": ""
+                            "onCreate": "",
+                            "lock": false
                           },
                           {
                             "type": "fader",
@@ -1378,15 +1405,18 @@
                             "bypass": false,
                             "onCreate": "",
                             "onValue": "",
-                            "onTouch": ""
+                            "onTouch": "",
+                            "lock": false
                           }
                         ],
-                        "tabs": []
+                        "tabs": [],
+                        "lock": false
                       }
                     ],
                     "tabs": [],
                     "onValue": "",
-                    "onCreate": ""
+                    "onCreate": "",
+                    "lock": false
                   },
                   {
                     "type": "panel",
@@ -1478,7 +1508,8 @@
                         "widgets": [],
                         "tabs": [],
                         "onValue": "set(\"drums_label\", \"^sync.pulse\")",
-                        "onCreate": ""
+                        "onCreate": "",
+                        "lock": false
                       },
                       {
                         "type": "panel",
@@ -1489,7 +1520,7 @@
                         "interaction": true,
                         "comments": "",
                         "width": "auto",
-                        "height": 50,
+                        "height": 30,
                         "expand": "false",
                         "colorText": "auto",
                         "colorWidget": "auto",
@@ -1566,7 +1597,8 @@
                             "ignoreDefaults": false,
                             "bypass": false,
                             "onValue": "",
-                            "onCreate": ""
+                            "onCreate": "",
+                            "lock": false
                           },
                           {
                             "type": "fader",
@@ -1619,20 +1651,24 @@
                             "bypass": false,
                             "onCreate": "",
                             "onValue": "",
-                            "onTouch": ""
+                            "onTouch": "",
+                            "lock": false
                           }
                         ],
-                        "tabs": []
+                        "tabs": [],
+                        "lock": false
                       }
                     ],
                     "tabs": [],
                     "onValue": "",
-                    "onCreate": ""
+                    "onCreate": "",
+                    "lock": false
                   }
                 ],
                 "tabs": [],
                 "onValue": "",
-                "onCreate": ""
+                "onCreate": "",
+                "lock": false
               },
               {
                 "type": "variable",
@@ -1649,7 +1685,8 @@
                 "ignoreDefaults": false,
                 "bypass": false,
                 "onValue": "",
-                "onCreate": ""
+                "onCreate": "",
+                "lock": false
               },
               {
                 "type": "variable",
@@ -1666,20 +1703,109 @@
                 "ignoreDefaults": false,
                 "bypass": false,
                 "onValue": "",
-                "onCreate": ""
+                "onCreate": "",
+                "lock": false
               }
             ],
             "tabs": [],
             "onValue": "",
-            "onCreate": ""
+            "onCreate": "",
+            "lock": false
           }
         ],
         "tabs": [],
         "onValue": "",
-        "onCreate": ""
+        "onCreate": "",
+        "lock": false
+      },
+      {
+        "type": "tab",
+        "lock": false,
+        "id": "experimental",
+        "visible": true,
+        "interaction": true,
+        "comments": "",
+        "colorText": "auto",
+        "colorWidget": "auto",
+        "colorFill": "auto",
+        "padding": "auto",
+        "html": "",
+        "css": "",
+        "colorBg": "auto",
+        "layout": "default",
+        "justify": "start",
+        "gridTemplate": "",
+        "contain": true,
+        "scroll": true,
+        "innerPadding": true,
+        "verticalTabs": false,
+        "label": "auto",
+        "variables": "@{parent.variables}",
+        "traversing": false,
+        "value": "",
+        "default": "",
+        "linkId": "",
+        "address": "auto",
+        "preArgs": "",
+        "typeTags": "",
+        "decimals": 2,
+        "target": "",
+        "ignoreDefaults": false,
+        "bypass": false,
+        "onCreate": "",
+        "onValue": "",
+        "widgets": [
+          {
+            "type": "keyboard",
+            "top": 70,
+            "left": 200,
+            "id": "keyboard_backup",
+            "visible": true,
+            "interaction": true,
+            "comments": "",
+            "width": "auto",
+            "height": "auto",
+            "expand": true,
+            "colorText": "auto",
+            "colorWidget": "auto",
+            "colorStroke": "auto",
+            "colorFill": "auto",
+            "alphaStroke": "auto",
+            "alphaFillOff": "auto",
+            "alphaFillOn": "auto",
+            "lineWidth": "auto",
+            "padding": "auto",
+            "html": "",
+            "css": "",
+            "colorWhite": "auto",
+            "colorBlack": "auto",
+            "keys": 25,
+            "start": 48,
+            "traversing": true,
+            "on": 1,
+            "off": 0,
+            "velocity": false,
+            "mode": "toggle",
+            "value": "",
+            "default": "",
+            "linkId": "",
+            "address": "auto",
+            "preArgs": "",
+            "typeTags": "",
+            "decimals": 2,
+            "target": "",
+            "ignoreDefaults": false,
+            "bypass": false,
+            "onCreate": "",
+            "onValue": "// script for single key toggle mode\nvar keyVal = value[getIndex(id)]\nconsole.log('key value: ' + keyVal + ' (on: '+getProp('this', 'on')+')')\nif (keyVal == getProp('this', 'on')) {\n  // if key is pressed\n  console.log('last key: '+locals.lastKey)\n  if (locals.lastKey) {\n    // release last pressed key\n    // sync:false to prevent forced release from triggering the script \n    set(locals.lastKey, 0, {sync:false})\n  }\n  // store pressed key \n  locals.lastKey = id\n} else if (id == locals.lastKey ) {\n  // if key is released manually\n  locals.lastKey = 0\n}\nconsole.log('current key: '+id, 'current index: '+getIndex(id))\n",
+            "lock": false
+          }
+        ],
+        "tabs": []
       }
     ],
     "onValue": "",
-    "onCreate": ""
+    "onCreate": "",
+    "lock": false
   }
 }
