@@ -11,6 +11,11 @@ eval_file get(:sp_path)+"lib/lib-impro.rb" # Load library
 
 use_debug true
 
+# generic midi definitions
+midi_in = "/midi*midi*/"
+midi_daw = "/midi*m_daw*/"
+#######
+
 set :ip, "127.0.0.1"
 set :port, 7777 # make sure to match Open Stage Control's osc-port value
 use_osc get(:ip), get(:port)
@@ -18,6 +23,7 @@ use_osc get(:ip), get(:port)
 use_random_seed 31
 prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
+tonics = []
 
 
 define :parse_addr do |path|
@@ -32,9 +38,8 @@ end
 
 # CONFIG
 set :tempo, 60
-set :style, 1
-set :mode, 1
-set :key_1, 0
+set :pattern_mode, 0
+set :pattern, 1
 
 # DRUM CONFIG
 set :kick_on, false
@@ -59,17 +64,16 @@ define :init_drum do |d|
 end
 
 define :init_drums do
-  osc "/drums", 0
   init_drum "kick"
   init_drum "snare"
   init_drum "hihat"
+  osc "/drums", 0
 end
 
 define :init_controls do
   osc "/tempo", get(:tempo)
-  osc "/style", get(:style)
-  osc "/mode", get(:mode)
-  osc "/key", get(:key_1), 1
+  osc "/pattern_mode", get(:pattern_mode)
+  osc "/pattern", get(:pattern)
   init_drums
 end
 
@@ -110,34 +114,14 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
     use_bpm get(:tempo)
     use_synth :fm
     cue :tick
-    tonic = get(:key_1)
-    puts "SSS", get(:style)
-    
-    case get(:style)
-    when 1
-      if (tonic <= 0)
-        sleep 0.125 #sleep until a valid tonic signal received
-      else
-        lowest_tonic = 28
-        while tonic < lowest_tonic
-          tonic+=12
-        end
-        4.times do |i|
-          if tonic < lowest_tonic
-            tonic += (4-i)*7
-          end
-          play tonic
-          tonic -= 7
-          sleep 1
-        end
-      end
-    when 2
-      li_root_sequence(tonic, 0.25)
-    when 3
-      sleep 0.5
-    else
-      sleep 0.5
+    pattern_build = get(:pattern_mode)
+    puts "build", pattern_build
+    puts tonics
+    if (tonics.size > 0) && (pattern_build == 0)
+      puts "playing"
+      play tonics.tick
     end
+    sleep 0.5
   end
 end
 #END BASS LOOP
@@ -146,22 +130,20 @@ end
 live_loop :osc_monitor do
   addr = "/osc:#{get(:ip)}:#{get(:port)}/**"
   n = sync addr
-  token   = parse_addr addr
+  token = parse_addr addr
   
   case token[1]
   when "tempo"
     set :tempo, n[0].to_i
     puts "tempo", get(:tempo)
     
-  when "style"
-    set :style, n[0].to_i
-    puts "style", get(:style)
+  when "pattern"
+    set :pattern, n[0].to_i
+    puts "style", get(:pattern)
     
-  when "key"
-    if n[1] == 1
-      set :key_1, n[0].to_i
-    end
-    puts "key", get(:key_1)
+  when "pattern_mode"
+    set :pattern_mode, n[0].to_i
+    puts "patternmode", get(:pattern_mode)
     
   when "drums" # update Time State
     set :kick, kick
@@ -195,3 +177,21 @@ live_loop :osc_monitor do
 end
 # END OSC MESSAGE MONITORING LOOP
 
+# MIDI MESSAGE MONITORING LOOP
+live_loop :midi_in do
+  note, velocity = sync midi_in + "note_on"
+  puts "NNNNN", note
+  pattern = get(:pattern)
+  pattern_mode = get(:pattern_mode)
+  puts "pattern mode: ", pattern_mode
+  puts "pattern: ", pattern
+  
+  case pattern
+  when 3
+    if pattern_mode == 1
+      tonics.push note
+      puts "Tonics", tonics
+    end
+  end
+end
+# END MIDI MESSAGE MONITORING LOOP
