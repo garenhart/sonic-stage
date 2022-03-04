@@ -189,6 +189,8 @@ live_loop :midi_in do
   case pattern
   when 3
     if pattern_mode == 1
+      use_synth :fm
+      play note
       tonics.push note
       puts "Tonics", tonics
     end
