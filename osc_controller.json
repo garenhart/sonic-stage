@@ -485,9 +485,10 @@
                     "label": "%key",
                     "icon": "true",
                     "values": {
-                      "Circle of Fifths": 1,
-                      "Descending Fifths": 2,
-                      "II-V-I": 3
+                      "Random": 1,
+                      "Circle of Fifths": 2,
+                      "Descending Fifths": 3,
+                      "II-V-I": 4
                     },
                     "onValue": "",
                     "onCreate": "",

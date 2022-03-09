@@ -189,7 +189,7 @@ live_loop :midi_in do
   puts "pattern: ", pattern
   
   case pattern
-  when 3
+  when 1
     if pattern_mode == 1
       use_synth :fm
       play note
