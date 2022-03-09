@@ -146,10 +146,12 @@ live_loop :osc_monitor do
     puts "patternmode", get(:pattern_mode)
     
   when "drums" # update Time State
-    set :kick, kick
-    set :snare, snare
-    set :hihat, hihat
-    
+    puts "DRUMS:", n
+    if n[0] == 0.0
+      set :kick, kick
+      set :snare, snare
+      set :hihat, hihat
+    end
     # set drum "on" status based on the button state
   when "kick"
     set :kick_on, n[0]==1.0
