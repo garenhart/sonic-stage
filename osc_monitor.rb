@@ -4,12 +4,12 @@
 # Sonic Pi - Open Stage Control (poc)
 # author: Garen H.
 ######################################
-
 eval_file get(:sp_path)+"lib/lib-impro.rb" # Load library
+eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb" # Load library
 #require get(:sp_path)+"lib/modes.rb" # Load extra scales and chords from separate file
 #ModeScales = Modes.scales
 
-use_debug true
+use_debug false
 
 # generic midi definitions
 midi_in = "/midi*midi*/"
@@ -25,6 +25,9 @@ prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1
 
 tonics = []
 
+define :reset_tonics do
+  tonics = []
+end
 
 define :parse_addr do |path|
   e = get_event(path).to_s
@@ -54,6 +57,7 @@ set :hihat_amp, 0.5
 kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 hihat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+set :loop_mode, 0
 
 define :init_drum do |d|
   osc "/#{d}", 0
@@ -74,6 +78,7 @@ define :init_controls do
   osc "/tempo", get(:tempo)
   osc "/pattern_mode", get(:pattern_mode)
   osc "/pattern", get(:pattern)
+  osc "/switch_loop", get(:loop_mode)
   init_drums
 end
 
@@ -143,7 +148,14 @@ live_loop :osc_monitor do
     
   when "pattern_mode"
     set :pattern_mode, n[0].to_i
-    puts "patternmode", get(:pattern_mode)
+    puts "pattern mode", get(:pattern_mode)
+    if n[0] == 1.0
+      reset_tonics
+    end
+    
+  when "switch_loop"
+    set :loop_mode, n[0].to_i
+    puts "loop_mode", get(:loop_mode)
     
   when "drums" # update Time State
     puts "DRUMS:", n
@@ -181,6 +193,10 @@ end
 
 # MIDI MESSAGE MONITORING LOOP
 live_loop :midi_in do
+  use_real_time
+  #use_bpm get(:tempo)
+  #sync :tick
+  
   note, velocity = sync midi_in + "note_on"
   puts "NNNNN", note
   pattern = get(:pattern)
