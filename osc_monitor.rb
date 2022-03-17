@@ -43,6 +43,8 @@ end
 set :tempo, 60
 set :pattern_mode, 0
 set :pattern, 1
+set :bass_amp, 0.5
+
 
 # DRUM CONFIG
 set :kick_on, false
@@ -79,6 +81,7 @@ define :init_controls do
   osc "/pattern_mode", get(:pattern_mode)
   osc "/pattern", get(:pattern)
   osc "/switch_loop", get(:loop_mode)
+  osc "/bass_amp", get(:bass_amp)
   init_drums
 end
 
@@ -119,14 +122,7 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
     use_bpm get(:tempo)
     use_synth :fm
     cue :tick
-    pattern_build = get(:pattern_mode)
-    puts "build", pattern_build
-    puts tonics
-    if (tonics.size > 0) && (pattern_build == 0)
-      puts "playing"
-      play tonics.tick
-    end
-    sleep 0.5
+    li_play_bass get(:pattern_mode), tonics, 0, get(:bass_amp)
   end
 end
 #END BASS LOOP
@@ -185,6 +181,9 @@ live_loop :osc_monitor do
     set :hihat_on, n[0]==1.0
     
     #set amp
+  when "bass_amp"
+    set :bass_amp, n[0]
+    
   when "kick_amp"
     set :kick_amp, n[0]
   when "snare_amp"
