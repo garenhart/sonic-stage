@@ -151,11 +151,23 @@ live_loop :osc_monitor do
     puts "pattern mode", get(:pattern_mode)
     if n[0] == 1.0
       reset_tonics
+    else
+      bass_pattern = []
+      tonics.length.times do |i|
+        bass_pattern.push i
+        bass_pattern.push 0
+      end
+      puts "bass line", bass_pattern
+      osc "/bass_points", tonics.length
+      osc "/bass_points_pos", bass_pattern.to_s
     end
     
   when "switch_loop"
     set :loop_mode, n[0].to_i
     puts "loop_mode", get(:loop_mode)
+    
+  when "bass_line"
+    puts "bass line", n[0].round, n[2].round, n[4].round, n[6].round
     
   when "drums" # update Time State
     puts "DRUMS:", n
@@ -210,7 +222,8 @@ live_loop :midi_in do
       use_synth :fm
       play note
       tonics.push note
-      puts "Tonics", tonics
+      puts "Tonics", tonics, tonics.length
+      osc "/bass_points", tonics.length
     end
   end
 end
