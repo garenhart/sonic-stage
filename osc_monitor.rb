@@ -24,6 +24,7 @@ use_random_seed 31
 prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
 tonics = []
+tonics_pattern = []
 
 define :reset_tonics do
   tonics = []
@@ -122,7 +123,7 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
     use_bpm get(:tempo)
     use_synth :fm
     cue :tick
-    li_play_bass get(:pattern_mode), tonics, 0, get(:bass_amp)
+    li_play_bass get(:pattern_mode), tonics, tonics_pattern, get(:bass_amp)
   end
 end
 #END BASS LOOP
@@ -148,14 +149,16 @@ live_loop :osc_monitor do
     if n[0] == 1.0
       reset_tonics
     else
-      bass_pattern = []
+      bass_points_pos = []
+      tonics_pattern = []
       tonics.length.times do |i|
-        bass_pattern.push i
-        bass_pattern.push 0
+        tonics_pattern.push i
+        bass_points_pos.push i
+        bass_points_pos.push 0 #arr vertical pos for osc
       end
-      puts "bass line", bass_pattern
+      puts "bass line 1", tonics_pattern
       osc "/bass_points", tonics.length
-      osc "/bass_points_pos", bass_pattern.to_s
+      osc "/bass_points_pos", bass_points_pos.to_s
     end
     
   when "switch_loop"
@@ -163,7 +166,11 @@ live_loop :osc_monitor do
     puts "loop_mode", get(:loop_mode)
     
   when "bass_line"
-    puts "bass line", n[0].round, n[2].round, n[4].round, n[6].round
+    tonics_pattern = []
+    n.length.times do |i|
+      tonics_pattern.push n[i].round if i.even? # we only need X coord.
+    end
+    puts "bass line 2", tonics_pattern
     
   when "drums" # update Time State
     puts "DRUMS:", n
