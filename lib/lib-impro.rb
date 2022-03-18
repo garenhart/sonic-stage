@@ -8,8 +8,10 @@ define :li_play_drum do |drum_sample, beats, amp, on=true|
 end
 
 define :li_play_bass do |mode, tonics, tonics_pos, amp|
+  puts "tonics", tonics
+  puts "tonics pos", tonics_pos
   16.times do |i|
-    if (tonics.size > 0) && (mode == 0)
+    if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (mode == 0)
       play tonics.tick, amp: amp
     end
     sleep 0.25
