@@ -4,8 +4,11 @@
 # Sonic Pi - Open Stage Control (poc)
 # author: Garen H.
 ######################################
-eval_file get(:sp_path)+"lib/lib-impro.rb" # Load library
-eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb" # Load library
+
+#load libraries
+eval_file get(:sp_path)+"lib/lib-impro.rb"
+eval_file get(:sp_path)+"lib/lib-osc.rb"
+eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
 #require get(:sp_path)+"lib/modes.rb" # Load extra scales and chords from separate file
 #ModeScales = Modes.scales
 
@@ -28,16 +31,6 @@ tonics_pattern = []
 
 define :reset_tonics do
   tonics = []
-end
-
-define :parse_addr do |path|
-  e = get_event(path).to_s
-  v = e.split(",")[6]
-  if v != nil
-    return v[3..-2].split("/")
-  else
-    return ["error"]
-  end
 end
 
 # CONFIG
@@ -85,7 +78,6 @@ define :init_controls do
   osc "/bass_amp", get(:bass_amp)
   init_drums
 end
-
 
 init_controls
 
@@ -137,15 +129,12 @@ live_loop :osc_monitor do
   case token[1]
   when "tempo"
     set :tempo, n[0].to_i
-    puts "tempo", get(:tempo)
     
   when "pattern"
     set :pattern, n[0].to_i
-    puts "style", get(:pattern)
     
   when "pattern_mode"
     set :pattern_mode, n[0].to_i
-    puts "pattern mode", get(:pattern_mode)
     if n[0] == 1.0
       reset_tonics
     else
@@ -156,24 +145,20 @@ live_loop :osc_monitor do
         bass_points_pos.push i
         bass_points_pos.push 0 #arr vertical pos for osc
       end
-      puts "bass line 1", tonics_pattern
       osc "/bass_points", tonics.length
       osc "/bass_points_pos", bass_points_pos.to_s
     end
     
   when "switch_loop"
     set :loop_mode, n[0].to_i
-    puts "loop_mode", get(:loop_mode)
     
   when "bass_line"
     tonics_pattern = []
     n.length.times do |i|
       tonics_pattern.push n[i].round if i.even? # we only need X coord.
     end
-    puts "bass line 2", tonics_pattern
     
   when "drums" # update Time State
-    puts "DRUMS:", n
     if n[0] == 0.0
       set :kick, kick
       set :snare, snare
@@ -216,11 +201,8 @@ live_loop :midi_in do
   #sync :tick
   
   note, velocity = sync midi_in + "note_on"
-  puts "NNNNN", note
   pattern = get(:pattern)
   pattern_mode = get(:pattern_mode)
-  puts "pattern mode: ", pattern_mode
-  puts "pattern: ", pattern
   
   case pattern
   when 1
@@ -228,7 +210,6 @@ live_loop :midi_in do
       use_synth :fm
       play note
       tonics.push note
-      puts "Tonics", tonics, tonics.length
       osc "/bass_points", tonics.length
     end
   end
