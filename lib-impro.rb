@@ -10,10 +10,12 @@ end
 define :li_play_bass do |mode, tonics, tonics_pos, amp|
   puts "tonics", tonics
   puts "tonics pos", tonics_pos
-  16.times do |i|
-    if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (mode == 0)
+  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (mode == 0)
+    16.times do |i|
       play tonics.tick, amp: amp
+      sleep 0.25
     end
+  else
     sleep 0.25
   end
 end
