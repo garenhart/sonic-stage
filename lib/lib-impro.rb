@@ -12,7 +12,10 @@ define :li_play_bass do |mode, tonics, tonics_pos, amp|
   puts "tonics pos", tonics_pos
   if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (mode == 0)
     16.times do |i|
-      play tonics.tick, amp: amp
+      pos = tonics_pos.index(i)
+      if (pos)
+        play tonics[pos], amp: amp
+      end
       sleep 0.25
     end
   else
