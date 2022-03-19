@@ -1,3 +1,8 @@
+#######################
+# lib-impro.rb
+# author: Garen H.
+#######################
+
 define :li_play_drum do |drum_sample, beats, amp, on=true|
   16.times do |i|
     if beats[i] == 1 && on
