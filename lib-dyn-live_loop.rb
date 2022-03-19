@@ -1,5 +1,9 @@
+#######################
+# lib-dyn-live_loop.rb
+# author: Garen H.
 # Library inspired by:
 # https://in-thread.sonic-pi.net/t/programmatically-creating-live-loops-on-the-fly/1919/10
+#######################
 
 RUNSTATE_KEY = "ll_runstate_"
 LIVE_LOOP_NAME_KEY = "ll_"

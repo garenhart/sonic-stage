@@ -1,6 +1,9 @@
-# modes.rb
-# based on scale_patch.rb from amiika
+######################################
+# lib-modes.rb
+# author: Garen H.
+# based on scale_patch.rb from
 # https://in-thread.sonic-pi.net/t/chord-progression-tool/4947/14
+######################################
 
   class SonicPi::Scale
     

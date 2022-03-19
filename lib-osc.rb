@@ -1,6 +1,6 @@
 #######################
-# Garen H.
 # osc library
+# author: Garen H.
 #######################
 
 define :parse_addr do |path|
