@@ -138,19 +138,24 @@ live_loop :osc_monitor do
     if n[0] == 1.0
       reset_tonics
     else
-      bass_points_pos = []
-      tonics_pattern = []
-      tonics.length.times do |i|
-        tonics_pattern.push i
-        bass_points_pos.push i
-        bass_points_pos.push 0 #arr vertical pos for osc
+      if get(:loop_mode) == 0 # bass mode
+        bass_points_pos = []
+        tonics_pattern = []
+        tonics.length.times do |i|
+          tonics_pattern.push i
+          bass_points_pos.push i
+          bass_points_pos.push 0 #arr vertical pos for osc
+        end
+        osc "/bass_points", tonics.length
+        osc "/bass_points_pos", bass_points_pos.to_s
       end
-      osc "/bass_points", tonics.length
-      osc "/bass_points_pos", bass_points_pos.to_s
     end
     
   when "switch_loop"
     set :loop_mode, n[0].to_i
+    set :pattern_mode, 0 if n[0].to_i > 0
+    puts get(:loop_mode)
+    puts get(:pattern_mode)
     
   when "bass_line"
     tonics_pattern = []
@@ -195,23 +200,31 @@ end
 # END OSC MESSAGE MONITORING LOOP
 
 # MIDI MESSAGE MONITORING LOOP
-live_loop :midi_in do
+live_loop :midi_monitor do
   use_real_time
-  #use_bpm get(:tempo)
-  #sync :tick
+  # use_bpm get(:tempo)
+  # sync :tick
   
   note, velocity = sync midi_in + "note_on"
+  loop = get(:loop_mode)
   pattern = get(:pattern)
   pattern_mode = get(:pattern_mode)
-  
-  case pattern
-  when 1
-    if pattern_mode == 1
-      use_synth :fm
-      play note
-      tonics.push note
-      osc "/bass_points", tonics.length
+  case loop
+  when 0
+    case pattern
+    when 1
+      puts "HERE"
+      if pattern_mode == 1
+        use_synth :fm
+        play note
+        tonics.push note
+        osc "/bass_points", tonics.length
+      end
     end
+  when 1
+    use_synth :piano
+    play note
   end
 end
+
 # END MIDI MESSAGE MONITORING LOOP
