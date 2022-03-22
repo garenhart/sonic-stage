@@ -519,7 +519,7 @@
                     "preArgs": "",
                     "decimals": 2,
                     "target": "",
-                    "onValue": "var on = getProp('this', 'on')\nconsole.log(value)\nif (value == 1)\n{\n  set('switch_loop', 0)\n  set('bass_points', 0)\n  set('bass_points_pos', 0)\n}\n",
+                    "onValue": "var on = getProp('this', 'on')\nif (value == 1)\n{\n  set('switch_loop', 0)\n  set('bass_points', 0)\n  set('bass_points_pos', 0)\n}\n",
                     "onCreate": "",
                     "vertical": false,
                     "wrap": false,
@@ -1013,7 +1013,7 @@
                     "ignoreDefaults": false,
                     "bypass": false,
                     "onCreate": "",
-                    "onValue": "console.log(value)\nfor (let i=0; i<value.length; i++)\n{value[i] = value[i].toFixed}\n",
+                    "onValue": "for (let i=0; i<value.length; i++)\n{value[i] = value[i].toFixed}\n",
                     "pointSize": 18,
                     "ephemeral": false,
                     "pips": true,
@@ -1243,7 +1243,7 @@
                 "ignoreDefaults": false,
                 "bypass": false,
                 "onCreate": "",
-                "onValue": "console.log(value)"
+                "onValue": ""
               },
               {
                 "type": "panel",
