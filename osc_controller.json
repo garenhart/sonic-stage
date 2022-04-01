@@ -821,7 +821,7 @@
                     "value": "",
                     "default": 1,
                     "linkId": "",
-                    "address": "scale",
+                    "address": "/scale",
                     "preArgs": "",
                     "typeTags": "",
                     "decimals": 2,

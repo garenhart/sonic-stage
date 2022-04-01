@@ -6,6 +6,7 @@
 ######################################
 
 #load libraries
+eval_file get(:sp_path)+"lib/lib-chord-gen.rb"
 eval_file get(:sp_path)+"lib/lib-impro.rb"
 eval_file get(:sp_path)+"lib/lib-osc.rb"
 eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
@@ -38,7 +39,9 @@ set :tempo, 60
 set :pattern_mode, 0
 set :pattern, 1
 set :bass_amp, 0.5
-
+set :chord_amp, 0.5
+set :main_mode, nil
+set :main_scale, nil
 
 # DRUM CONFIG
 set :kick_on, false
@@ -108,6 +111,18 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
 end
 # END DRUM LOOPS
 
+# CHORD LOOP
+with_fx :reverb, room: 0.4, mix: 0.4 do |r|
+  live_loop :chord do
+    use_real_time
+    use_bpm get(:tempo)
+    use_synth :piano
+    sync :tick
+    li_play_chords get(:pattern_mode), tonics, tonics_pattern, get(:chord_amp), get(:main_mode), get(:main_scale)
+  end
+end
+#END CHORD LOOP
+
 # BASS LOOP
 with_fx :reverb, room: 0.4, mix: 0.4 do |r|
   live_loop :bass do
@@ -119,6 +134,8 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
   end
 end
 #END BASS LOOP
+
+
 
 # OSC MESSAGE MONITORING LOOP
 live_loop :osc_monitor do
@@ -154,8 +171,6 @@ live_loop :osc_monitor do
   when "switch_loop"
     set :loop_mode, n[0].to_i
     set :pattern_mode, 0 if n[0].to_i > 0
-    puts get(:loop_mode)
-    puts get(:pattern_mode)
     
   when "bass_line"
     tonics_pattern = []
@@ -195,6 +210,12 @@ live_loop :osc_monitor do
     snare[token[2].to_i] = n[0].to_i
   when "hihat_beats"
     hihat[token[2].to_i] = n[0].to_i
+    
+    # save mode and scale
+  when "mode"
+    set :main_mode, n[0].to_i
+  when "scale"
+    set :main_scale, n[0].to_i
   end
 end
 # END OSC MESSAGE MONITORING LOOP
@@ -213,7 +234,6 @@ live_loop :midi_monitor do
   when 0
     case pattern
     when 1
-      puts "HERE"
       if pattern_mode == 1
         use_synth :fm
         play note
