@@ -12,10 +12,8 @@ define :li_play_drum do |drum_sample, beats, amp, on=true|
   end
 end
 
-define :li_play_bass do |mode, tonics, tonics_pos, amp|
-  puts "tonics", tonics
-  puts "tonics pos", tonics_pos
-  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (mode == 0)
+define :li_play_bass do |pattern_mode, tonics, tonics_pos, amp|
+  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (pattern_mode == 0)
     16.times do |i|
       pos = tonics_pos.index(i)
       if (pos)
@@ -28,10 +26,30 @@ define :li_play_bass do |mode, tonics, tonics_pos, amp|
   end
 end
 
+define :li_play_chords do |pattern_mode, tonics, tonics_pos, amp, mode, scale|
+  puts "PRE"
+  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (pattern_mode == 0) && mode != nil && scale != nil
+    m_scale = mode_scale mode, scale
+    puts "SCALE1", m_scale
 
-define :li_root_sequence do |root, dur|
-  16.times do
-    play root
-    sleep dur
+    cs = []
+    chord_num = 0
+    16.times do |i|
+      pos = tonics_pos.index(i)
+      if (pos)
+        chord_num = 0
+        puts "SCALE2", m_scale
+        cs = chord_seq(tonics[pos], m_scale, [2,5,1])
+        puts "chords", cs
+        play cs[chord_num], amp: amp
+#      else
+#        chord_num = chord_num + 1
+#        play cs[chord_num], amp: amp # if chord_num < cs.length && chord_num > 0
+      end
+      sleep 0.25
+    end
+  else
+    sleep 0.25
   end
 end
+
