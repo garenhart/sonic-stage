@@ -27,18 +27,16 @@ define :li_play_bass do |pattern_mode, tonics, tonics_pos, amp|
 end
 
 define :li_play_chords do |pattern_mode, tonics, tonics_pos, amp, mode, scale|
-  puts "PRE"
   if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (pattern_mode == 0) && mode != nil && scale != nil
     m_scale = mode_scale mode, scale
-    puts "SCALE1", m_scale
+    puts "SCALE", m_scale
 
     cs = []
     chord_num = 0
     16.times do |i|
       pos = tonics_pos.index(i)
       if (pos)
-        chord_num = 0
-        puts "SCALE2", m_scale
+        chord_num = 2
         cs = chord_seq(tonics[pos], m_scale, [2,5,1])
         puts "chords", cs
         play cs[chord_num], amp: amp
