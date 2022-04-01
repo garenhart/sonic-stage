@@ -28,7 +28,7 @@
   end
 
   class SonicPi::Modes
-    def self.scales
+    def self.name_scales
       {
         :M7=>[:ionian, :lydian, :lydian2s, :ionian6b, :augmented],
         :minor7=>[:dorian, :phrygian, :aeolian, :phrygian6s, :dorian4s, :phrygian4b],
@@ -44,6 +44,15 @@
         '7-5-3'=>[:ionian1],
         'm7+5'=>[:ionian1],
         '9'=>[:ionian1]
+      }
+    end
+    
+    def self.mode_scales
+      {
+        :major=>[:ionian, :dorian, :phrygian, :lydian, :mixolydian, :aeolian, :locrian],
+        :melodic_minor=>[:ionian1s, :dorian7s, :phrygian6s, :lydian5s, :mixolydian4s, :aeolian3s, :locrian2s],
+        :harmonic_minor=>[:ionian5s, :dorian4s, :phrygian3s, :lydian2s, :mixolydian1s, :aeolian7s, :locrian6s],
+        :harmonic_major=>[:ionian6b, :dorian5b, :phrygian4b, :lydian3b, :mixolydian2b, :aeolian1b, :locrian7b]
       }
     end
   end

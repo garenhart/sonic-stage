@@ -9,7 +9,7 @@ eval_file get(:sp_path)+"lib/lib-modes.rb" #include modes patch library for exte
 # chordSeq - returns chord sequence of specified degrees (degs) within mode for specified tonic
 # seven - seventh chord (default = true)
 # rootless - exclude tonic (default = true)
-define :chordSeq do |tonic, mode, degs, seven=true, rootless=true|
+define :chord_seq do |tonic, mode, degs, seven=true, rootless=true|
     cords = []
     lookup = scale(tonic, mode, num_octaves: 2)
 
@@ -24,4 +24,22 @@ define :chordSeq do |tonic, mode, degs, seven=true, rootless=true|
         cords.append theChord
     }
     cords
-  end
+end
+
+define :mode_scale do |mode, scale|
+    m = nil
+    m_scale = nil
+    ModeScales = Modes.mode_scales
+    case mode
+    when 1 #major modes
+        m = :major
+    when 2 # melodic minor mode
+        m = :melodic_minor
+    when 3 # harmonic minor mode
+        m = :harmonic_minor
+    when 4 # melodic minor mode
+        m = :harmonic_major
+    end
+    m_scale = ModeScales[m][scale-1]
+end
+
