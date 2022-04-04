@@ -1053,7 +1053,7 @@
                     "interaction": true,
                     "comments": "",
                     "width": "auto",
-                    "height": 20,
+                    "height": "auto",
                     "expand": true,
                     "colorText": "auto",
                     "colorWidget": "orange",
