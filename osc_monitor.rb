@@ -174,10 +174,14 @@ live_loop :osc_monitor do
     set :pattern_mode, 0 if n[0].to_i > 0
     
   when "bass_line"
+    bass_points_pos = []
     tonics_pattern = []
     n.length.times do |i|
-      tonics_pattern.push n[i].round if i.even? # we only need X coord.
+      val = n[i].round
+      tonics_pattern.push val if i.even? # we only need X coord.
+      bass_points_pos.push val
     end
+    osc "/bass_points_pos", bass_points_pos.to_s # send back rounded positions to imitate "snap to grid" 
     
   when "drums" # update Time State
     if n[0] == 0.0
