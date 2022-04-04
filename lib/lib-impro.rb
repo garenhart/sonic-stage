@@ -51,3 +51,8 @@ define :li_play_chords do |pattern_mode, tonics, tonics_pos, amp, mode, scale|
   end
 end
 
+# 'pseudo'-evenly distributes 'count' positions within number of 'slots'
+# returns distributed position for 'item_num' 
+define :dist_pos do |item_num, count, slots| 
+  pos = item_num * (slots / count)
+end
