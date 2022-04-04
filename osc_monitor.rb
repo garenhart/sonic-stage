@@ -159,8 +159,9 @@ live_loop :osc_monitor do
         bass_points_pos = []
         tonics_pattern = []
         tonics.length.times do |i|
-          tonics_pattern.push i
-          bass_points_pos.push i
+          pos = dist_pos i, tonics.length, 16
+          tonics_pattern.push pos
+          bass_points_pos.push pos
           bass_points_pos.push 0 #arr vertical pos for osc
         end
         osc "/bass_points", tonics.length
