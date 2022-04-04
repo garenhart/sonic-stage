@@ -32,6 +32,7 @@ tonics_pattern = []
 
 define :reset_tonics do
   tonics = []
+  tonics_pattern = []
 end
 
 # CONFIG
