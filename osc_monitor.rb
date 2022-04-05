@@ -155,19 +155,6 @@ live_loop :osc_monitor do
     set :pattern_mode, n[0].to_i
     if n[0] == 1.0
       reset_tonics
-    else
-      if get(:loop_mode) == 0 # bass mode
-        bass_points_pos = []
-        tonics_pattern = []
-        tonics.length.times do |i|
-          pos = dist_pos i, tonics.length, 16
-          tonics_pattern.push pos
-          bass_points_pos.push pos
-          bass_points_pos.push 0 #arr vertical pos for osc
-        end
-        osc "/bass_points", tonics.length
-        osc "/bass_points_pos", bass_points_pos.to_s
-      end
     end
     
   when "switch_loop"
@@ -241,10 +228,20 @@ live_loop :midi_monitor do
     case pattern
     when 1
       if pattern_mode == 1
-        use_synth :fm
-        play note
+#        use_synth :fm
+#        play note
         tonics.push note
         osc "/bass_points", tonics.length
+
+        bass_points_pos = []
+        tonics_pattern = []
+        tonics.length.times do |i|
+          pos = dist_pos i, tonics.length, 16
+          tonics_pattern.push pos
+          bass_points_pos.push pos
+          bass_points_pos.push 0 #arr vertical pos for osc
+        end
+        osc "/bass_points_pos", bass_points_pos.to_s
       end
     end
   when 1
