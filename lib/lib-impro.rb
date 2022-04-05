@@ -12,8 +12,8 @@ define :li_play_drum do |drum_sample, beats, amp, on=true|
   end
 end
 
-define :li_play_bass do |pattern_mode, tonics, tonics_pos, amp|
-  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (pattern_mode == 0)
+define :li_play_bass do |tonics, tonics_pos, amp|
+  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
     16.times do |i|
       pos = tonics_pos.index(i)
       if (pos)
@@ -26,8 +26,8 @@ define :li_play_bass do |pattern_mode, tonics, tonics_pos, amp|
   end
 end
 
-define :li_play_chords do |pattern_mode, tonics, tonics_pos, amp, mode, scale|
-  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && (pattern_mode == 0) && mode != nil && scale != nil
+define :li_play_chords do |tonics, tonics_pos, amp, mode, scale|
+  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size) && mode != nil && scale != nil
     m_scale = mode_scale mode, scale
     puts "SCALE", m_scale
 
