@@ -29,10 +29,12 @@ prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1
 
 tonics = []
 tonics_pattern = []
+chords_pattern = []
 
 define :reset_tonics do
   tonics = []
   tonics_pattern = []
+  chords_pattern = []
 end
 
 # CONFIG
@@ -41,8 +43,8 @@ set :pattern_mode, 0
 set :pattern, 1
 set :bass_amp, 0.5
 set :chord_amp, 0.5
-set :main_mode, nil
-set :main_scale, nil
+set :main_mode, 0
+set :main_scale, 0
 
 # DRUM CONFIG
 set :kick_on, false
@@ -80,6 +82,7 @@ define :init_controls do
   osc "/pattern", get(:pattern)
   osc "/switch_loop", get(:loop_mode)
   osc "/bass_amp", get(:bass_amp)
+  osc "/chord_amp", get(:chord_amp)
   init_drums
 end
 
@@ -119,7 +122,7 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
     use_bpm get(:tempo)
     use_synth :piano
     sync :tick
-    li_play_chords get(:pattern_mode), tonics, tonics_pattern, get(:chord_amp), get(:main_mode), get(:main_scale)
+    li_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_mode), get(:main_scale)
   end
 end
 #END CHORD LOOP
@@ -131,7 +134,7 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
     use_bpm get(:tempo)
     use_synth :fm
     cue :tick
-    li_play_bass get(:pattern_mode), tonics, tonics_pattern, get(:bass_amp)
+    li_play_bass tonics, tonics_pattern, get(:bass_amp)
   end
 end
 #END BASS LOOP
@@ -170,6 +173,16 @@ live_loop :osc_monitor do
       bass_points_pos.push val
     end
     osc "/bass_points_pos", bass_points_pos.to_s # send back rounded positions to imitate "snap to grid" 
+    
+  when "chord_line"
+    chord_points_pos = []
+    chords_pattern = []
+    n.length.times do |i|
+      val = n[i].round
+      chords_pattern.push val if i.even? # we only need X coord.
+      chord_points_pos.push val
+    end
+    osc "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid" 
     
   when "drums" # update Time State
     if n[0] == 0.0
@@ -232,16 +245,20 @@ live_loop :midi_monitor do
 #        play note
         tonics.push note
         osc "/bass_points", tonics.length
+        osc "/chord_points", tonics.length
 
         bass_points_pos = []
         tonics_pattern = []
+        chords_pattern = []
         tonics.length.times do |i|
           pos = dist_pos i, tonics.length, 16
           tonics_pattern.push pos
+          chords_pattern.push pos
           bass_points_pos.push pos
           bass_points_pos.push 0 #arr vertical pos for osc
         end
         osc "/bass_points_pos", bass_points_pos.to_s
+        osc "/chord_points_pos", bass_points_pos.to_s
       end
     end
   when 1
