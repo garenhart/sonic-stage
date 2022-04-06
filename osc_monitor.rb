@@ -85,7 +85,9 @@ define :init_controls do
   osc "/chord_amp", get(:chord_amp)
   osc "/mode", get(:main_mode)
   osc "/scale", get(:main_scale)
-  init_drums
+  osc "/bass_points", tonics.length
+  osc "/chord_points", tonics.length
+init_drums
 end
 
 init_controls
@@ -203,6 +205,8 @@ live_loop :osc_monitor do
     #set amp
   when "bass_amp"
     set :bass_amp, n[0]
+  when "chord_amp"
+    set :chord_amp, n[0]
     
   when "kick_amp"
     set :kick_amp, n[0]
