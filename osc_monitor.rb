@@ -83,6 +83,8 @@ define :init_controls do
   osc "/switch_loop", get(:loop_mode)
   osc "/bass_amp", get(:bass_amp)
   osc "/chord_amp", get(:chord_amp)
+  osc "/mode", get(:main_mode)
+  osc "/scale", get(:main_scale)
   init_drums
 end
 
