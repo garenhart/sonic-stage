@@ -241,8 +241,6 @@ live_loop :midi_monitor do
     case pattern
     when 1
       if pattern_mode == 1
-#        use_synth :fm
-#        play note
         tonics.push note
         osc "/bass_points", tonics.length
         osc "/chord_points", tonics.length
