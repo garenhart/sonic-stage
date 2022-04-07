@@ -26,7 +26,7 @@ define :li_play_bass do |tonics, tonics_pos, amp|
   end
 end
 
-define :li_play_chords do |tonics, tonics_pos, amp, mode, scale|
+define :li_play_chords do |tonics, tonics_pos, amp, mode, scale, chord_type|
   if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
     m_scale = mode_scale mode, scale
     puts "SCALE", m_scale
