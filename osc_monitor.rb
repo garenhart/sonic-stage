@@ -128,7 +128,7 @@ with_fx :reverb, room: 0.4, mix: 0.4 do |r|
     use_bpm get(:tempo)
     use_synth :piano
     sync :tick
-    li_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_mode), get(:main_scale), get(:chord_type)
+    li_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_mode), get(:main_scale), get(:pattern), get(:chord_type)
   end
 end
 #END CHORD LOOP
