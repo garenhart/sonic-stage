@@ -1,7 +1,7 @@
 ######################################
 # osc_monitor.rb
-# drum pad monitor/player
-# Sonic Pi - Open Stage Control (poc)
+# monitor/player part (Sonic Pi) 
+# no name yet for this project (Sonic Pi - Open Stage Control - Processing)
 # author: Garen H.
 ######################################
 
