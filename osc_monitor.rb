@@ -1,6 +1,6 @@
 ######################################
 # osc_monitor.rb
-# monitor/player part (Sonic Pi) 
+# monitor/player part (Sonic Pi)
 # no name yet for this project (Sonic Pi - Open Stage Control - Processing)
 # author: Garen H.
 ######################################
@@ -41,6 +41,7 @@ end
 set :tempo, 60
 set :pattern_mode, 0
 set :pattern, 1
+set :bass_inst, :fm
 set :bass_amp, 0.5
 set :chord_amp, 0.5
 set :main_mode, 0
@@ -122,7 +123,7 @@ end
 # END DRUM LOOPS
 
 # CHORD LOOP
-with_fx :reverb, room: 0.4, mix: 0.4 do |r|
+with_fx :reverb, room: 0.8, mix: 0.6 do |r|
   live_loop :chord do
     use_real_time
     use_bpm get(:tempo)
@@ -134,11 +135,12 @@ end
 #END CHORD LOOP
 
 # BASS LOOP
-with_fx :reverb, room: 0.4, mix: 0.4 do |r|
+with_fx :reverb, room: 0.6, mix: 0.4 do |r|
   live_loop :bass do
     use_real_time
     use_bpm get(:tempo)
-    use_synth :fm
+    use_synth get(:bass_inst)
+    puts "INST", get(:bass_inst)
     cue :tick
     li_play_bass tonics, tonics_pattern, get(:bass_amp)
   end
@@ -170,6 +172,9 @@ live_loop :osc_monitor do
     set :loop_mode, n[0].to_i
     set :pattern_mode, 0 if n[0].to_i > 0
     
+  when "bass_inst"
+    set :bass_inst, n[0].to_sym
+    
   when "bass_line"
     bass_points_pos = []
     tonics_pattern = []
@@ -178,7 +183,7 @@ live_loop :osc_monitor do
       tonics_pattern.push val if i.even? # we only need X coord.
       bass_points_pos.push val
     end
-    osc "/bass_points_pos", bass_points_pos.to_s # send back rounded positions to imitate "snap to grid" 
+    osc "/bass_points_pos", bass_points_pos.to_s # send back rounded positions to imitate "snap to grid"
     
   when "chord_line"
     chord_points_pos = []
@@ -188,12 +193,12 @@ live_loop :osc_monitor do
       chords_pattern.push val if i.even? # we only need X coord.
       chord_points_pos.push val
     end
-    osc "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid" 
-  
+    osc "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid"
+    
   when "chord_type"
-      set :chord_type, n[0].to_i
-      puts "TYPE", get(:chord_type)
-
+    set :chord_type, n[0].to_i
+    puts "TYPE", get(:chord_type)
+    
   when "drums" # update Time State
     if n[0] == 0.0
       set :kick, kick
@@ -253,10 +258,12 @@ live_loop :midi_monitor do
     case pattern
     when 1
       if pattern_mode == 1
+        use_synth :piano
+        play note
         tonics.push note
         osc "/bass_points", tonics.length
         osc "/chord_points", tonics.length
-
+        
         bass_points_pos = []
         tonics_pattern = []
         chords_pattern = []
