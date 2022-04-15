@@ -997,11 +997,10 @@
                     "icon": false,
                     "align": "center",
                     "values": {
-                      "Tonic": 1,
-                      "Chord": 2,
-                      "Rootless": 3,
-                      "Chord 7": 4,
-                      "Rootless 7": 5
+                      "piano": "piano",
+                      "prophet": "prophet",
+                      "pulse": "pulse",
+                      "tb303": "tb303"
                     },
                     "value": "",
                     "default": "",

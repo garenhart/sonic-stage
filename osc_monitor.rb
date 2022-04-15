@@ -47,6 +47,7 @@ set :chord_amp, 0.5
 set :main_mode, 0
 set :main_scale, 0
 set :chord_type, 1
+set :chord_inst, :piano
 
 # DRUM CONFIG
 set :kick_on, false
@@ -90,6 +91,8 @@ define :init_controls do
   osc "/bass_points", tonics.length
   osc "/chord_points", tonics.length
   osc "/chord_type", get(:chord_type)
+  osc "/bass_inst", :fm
+  osc "/chord_inst", :piano
   init_drums
 end
 
@@ -127,7 +130,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do |r|
   live_loop :chord do
     use_real_time
     use_bpm get(:tempo)
-    use_synth :piano
+    use_synth get(:chord_inst)
     sync :tick
     li_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_mode), get(:main_scale), get(:pattern), get(:chord_type)
   end
@@ -184,6 +187,9 @@ live_loop :osc_monitor do
       bass_points_pos.push val
     end
     osc "/bass_points_pos", bass_points_pos.to_s # send back rounded positions to imitate "snap to grid"
+    
+  when "chord_inst"
+    set :chord_inst, n[0].to_sym
     
   when "chord_line"
     chord_points_pos = []
