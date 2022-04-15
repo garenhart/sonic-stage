@@ -26,11 +26,8 @@ define :li_play_bass do |tonics, tonics_pos, amp|
   end
 end
 
-define :li_play_chords do |tonics, tonics_pos, amp, mode, scale, pattern, chord_type|
+define :li_play_chords do |tonics, tonics_pos, amp, scale, pattern, chord_type|
   if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
-    m_scale = mode_scale mode, scale
-    puts "SCALE", m_scale
-
     seq = 1
     case pattern
     when 1
@@ -58,8 +55,6 @@ define :li_play_chords do |tonics, tonics_pos, amp, mode, scale, pattern, chord_
       rootless = true
     end
 
-
-
     cs = []
     last_pos = -1
     last_ind = 0
@@ -68,7 +63,7 @@ define :li_play_chords do |tonics, tonics_pos, amp, mode, scale, pattern, chord_
       if (pos)
         last_pos = pos
         last_ind = i
-        cs = chord_seq(tonics[pos], m_scale, seq, seven, rootless)
+        cs = chord_seq(tonics[pos], scale, seq, seven, rootless)
         puts "chords", cs
         play (tonic ? cs[0][0] : cs[0]), amp: amp
       else

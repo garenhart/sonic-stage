@@ -46,15 +46,6 @@
         '9'=>[:ionian1]
       }
     end
-    
-    def self.mode_scales
-      {
-        :major=>[:ionian, :dorian, :phrygian, :lydian, :mixolydian, :aeolian, :locrian],
-        :melodic_minor=>[:ionian1s, :dorian7s, :phrygian6s, :lydian5s, :mixolydian4s, :aeolian3s, :locrian2s],
-        :harmonic_minor=>[:ionian5s, :dorian4s, :phrygian3s, :lydian2s, :mixolydian1s, :aeolian7s, :locrian6s],
-        :harmonic_major=>[:ionian6b, :dorian5b, :phrygian4b, :lydian3b, :mixolydian2b, :aeolian1b, :locrian7b]
-      }
-    end
   end
 
   #Missing scales based on: https://www.newjazz.dk/Compendiums/scales_of_harmonies.pdf
