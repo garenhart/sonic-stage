@@ -25,21 +25,4 @@ define :chord_seq do |tonic, mode, degs, seven=false, rootless=false|
     cords
 end
 
-define :mode_scale do |mode, scale|
-    m = 0
-    m_scale = 0
-    ModeScales = Modes.mode_scales
-    case mode
-    when 0 #major modes
-        m = :major
-    when 1 # melodic minor mode
-        m = :melodic_minor
-    when 2 # harmonic minor mode
-        m = :harmonic_minor
-    when 3 # melodic minor mode
-        m = :harmonic_major
-    end
-    m_scale = ModeScales[m][scale]
-    # puts m_scale
-end
 
