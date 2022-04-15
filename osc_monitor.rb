@@ -45,7 +45,7 @@ set :bass_inst, :fm
 set :bass_amp, 0.5
 set :chord_amp, 0.5
 set :main_mode, 0
-set :main_scale, 0
+set :main_scale, :ionian
 set :chord_type, 1
 set :chord_inst, :piano
 
@@ -87,7 +87,7 @@ define :init_controls do
   osc "/bass_amp", get(:bass_amp)
   osc "/chord_amp", get(:chord_amp)
   osc "/mode", get(:main_mode)
-  osc "/scale", get(:main_scale)
+#  osc "/scale", "ionian"
   osc "/bass_points", tonics.length
   osc "/chord_points", tonics.length
   osc "/chord_type", get(:chord_type)
@@ -132,7 +132,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do |r|
     use_bpm get(:tempo)
     use_synth get(:chord_inst)
     sync :tick
-    li_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_mode), get(:main_scale), get(:pattern), get(:chord_type)
+    li_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_scale), get(:pattern), get(:chord_type)
   end
 end
 #END CHORD LOOP
@@ -244,7 +244,8 @@ live_loop :osc_monitor do
   when "mode"
     set :main_mode, n[0].to_i
   when "scale"
-    set :main_scale, n[0].to_i
+    set :main_scale, n[0].to_sym
+    puts "SSSSSSSSSSSSSSSSS", get(:main_scale)
   end
 end
 # END OSC MESSAGE MONITORING LOOP

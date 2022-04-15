@@ -78,13 +78,13 @@
             "id": "scales_m",
             "comments": "",
             "value": {
-              "Ionian": 0,
-              "Dorian": 1,
-              "Phrygian": 2,
-              "Lydian": 3,
-              "Mixolydian": 4,
-              "Aeolian": 5,
-              "Locrian": 6
+              "Ionian": "ionian",
+              "Dorian": "dorian",
+              "Phrygian": "phrygian",
+              "Lydian": "lydian",
+              "Mixolydian": "mixolydian",
+              "Aeolian": "aeolian",
+              "Locrian": "locrian"
             },
             "default": "",
             "linkId": "",
@@ -104,13 +104,13 @@
             "id": "scales_hm",
             "comments": "",
             "value": {
-              "Ionian b6": 0,
-              "Dorian b5": 1,
-              "Phrygian b4": 2,
-              "Lydian b3": 3,
-              "Mixolydian b2": 4,
-              "Aeolian b1": 5,
-              "Locrian b7": 6
+              "Ionian b6": "ionian6b",
+              "Dorian b5": "dorian5b",
+              "Phrygian b4": "phrygian4b",
+              "Lydian b3": "lydian3b",
+              "Mixolydian b2": "mixolydian2b",
+              "Aeolian b1": "aeolian1b",
+              "Locrian b7": "locrian7b"
             },
             "default": "",
             "linkId": "",
@@ -130,13 +130,13 @@
             "id": "scales_mmi",
             "comments": "",
             "value": {
-              "Ionian #1": 0,
-              "Dorian #7": 1,
-              "Phrygian #6": 2,
-              "Lydian #5": 3,
-              "Mixolydian #4": 4,
-              "Aeolian #3": 5,
-              "Locrian #2": 6
+              "Ionian #1": "ionian1s",
+              "Dorian #7": "dorian7s",
+              "Phrygian #6": "phrygian6s",
+              "Lydian #5": "lydian5s",
+              "Mixolydian #4": "mixolydian4s",
+              "Aeolian #3": "aeolian3s",
+              "Locrian #2": "locrian2s"
             },
             "default": "",
             "linkId": "",
@@ -156,13 +156,13 @@
             "id": "scales_hmi",
             "comments": "",
             "value": {
-              "Ionian #5": 0,
-              "Dorian #4": 1,
-              "Phrygian #3": 2,
-              "Lydian #2": 3,
-              "Mixolydian #1": 4,
-              "Aeolian #7": 5,
-              "Locrian #6": 6
+              "Ionian #5": "ionian5s",
+              "Dorian #4": "dorian4s",
+              "Phrygian #3": "phrygian3s",
+              "Lydian #2": "lydian2s",
+              "Mixolydian #1": "mixolydian1s",
+              "Aeolian #7": "aeolian7s",
+              "Locrian #6": "locrian6s"
             },
             "default": "",
             "linkId": "",
@@ -741,7 +741,7 @@
                       "Harmonic Minor": 2,
                       "Harmonic Major": 3
                     },
-                    "onValue": "if (value === 0)\n{\n  set(\"scales\", get(\"scales_m\"));\n}\nif (value == 1)\n{\n  set(\"scales\", get(\"scales_mmi\"));\n}\nif (value == 2)\n{\n  set(\"scales\", get(\"scales_hmi\"));\n}\nif (value == 3)\n{\n  set(\"scales\", get(\"scales_hm\"));\n}\n\nset(\"dropdown_scales\", 0);",
+                    "onValue": "if (value === 0)\n{\n  set(\"scales\", get(\"scales_m\"));\n  set(\"dropdown_scales\", \"ionian\");\n}\nif (value == 1)\n{\n  set(\"scales\", get(\"scales_mmi\"));\n  set(\"dropdown_scales\", \"ionian1s\");\n}\nif (value == 2)\n{\n  set(\"scales\", get(\"scales_hmi\"));\n  set(\"dropdown_scales\", \"ionian5s\");\n}\nif (value == 3)\n{\n  set(\"scales\", get(\"scales_hm\"));\n  set(\"dropdown_scales\", \"ionian6b\");\n}\n",
                     "onCreate": "",
                     "lock": false
                   }
