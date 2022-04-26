@@ -42,8 +42,8 @@ set :tempo, 60
 set :pattern_mode, 0
 set :pattern, 1
 set :bass_inst, :fm
-set :bass_amp, 0.5
-set :chord_amp, 0.5
+set :bass_amp, 0
+set :chord_amp, 0
 set :main_mode, 0
 set :main_scale, :ionian
 set :chord_type, 1
