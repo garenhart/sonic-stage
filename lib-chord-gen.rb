@@ -25,4 +25,9 @@ define :chord_seq do |tonic, mode, degs, seven=false, rootless=false|
     cords
 end
 
-
+define :notes_in_scale do |notes, mode, key|
+    scale_notes = scale key, mode
+    puts "NOTES", notes
+    puts "SCALE", scale_notes
+    (notes-scale_notes).empty?
+end
