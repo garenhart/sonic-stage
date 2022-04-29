@@ -283,6 +283,7 @@ live_loop :midi_monitor do
         end
         osc "/bass_points_pos", bass_points_pos.to_s
         osc "/chord_points_pos", bass_points_pos.to_s
+        osc "/scale_match", (notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
       end
     end
   when 1
