@@ -31,3 +31,14 @@ define :notes_in_scale do |notes, mode, key|
     puts "SCALE", scale_notes
     (notes-scale_notes).empty?
 end
+
+# following two methods are converting note midi numbers to names
+# based on this original idea: https://in-thread.sonic-pi.net/t/midi-number-to-note-name-debuging/3335/3
+define :gl_note_to_name do |n|
+    note_info(n).to_s.split(" ")[1][1..-2]
+end
+  
+define :gl_notes_to_names do |list|
+    list.map {|x| gl_note_to_name(x)}
+end
+  
