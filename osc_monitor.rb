@@ -246,6 +246,7 @@ live_loop :osc_monitor do
   when "scale"
     set :main_scale, n[0].to_sym
     puts "SSSSSSSSSSSSSSSSS", get(:main_scale)
+    osc "/scale_match", (notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
   end
 end
 # END OSC MESSAGE MONITORING LOOP
@@ -268,8 +269,10 @@ live_loop :midi_monitor do
         use_synth :piano
         play note
         tonics.push note
-        osc "/bass_points", tonics.length
-        osc "/chord_points", tonics.length
+        tonic_names = gl_notes_to_names(tonics).to_s
+        puts "TONICS", tonic_names
+        osc "/bass_points", tonic_names
+        osc "/chord_points", tonic_names
         
         bass_points_pos = []
         tonics_pattern = []
