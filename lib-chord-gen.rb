@@ -1,6 +1,8 @@
 #######################
 # lib-chord-gen.rb
 # Generate chord sequence of any degrees for a tonic/mode combination
+# gl_ prefix is used for methods to indicate "garen's library"
+#     in absence of support for namespaces and classes 
 # author: Garen H.
 #######################
 
