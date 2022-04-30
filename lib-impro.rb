@@ -6,7 +6,7 @@
 # author: Garen H.
 #######################
 
-define :li_play_drum do |drum_sample, beats, amp, on=true|
+define :gl_play_drum do |drum_sample, beats, amp, on=true|
   16.times do |i|
     if beats[i] == 1 && on
       sample drum_sample, amp: amp
@@ -15,7 +15,7 @@ define :li_play_drum do |drum_sample, beats, amp, on=true|
   end
 end
 
-define :li_play_bass do |tonics, tonics_pos, amp|
+define :gl_play_bass do |tonics, tonics_pos, amp|
   if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
     16.times do |i|
       pos = tonics_pos.index(i)
@@ -29,7 +29,7 @@ define :li_play_bass do |tonics, tonics_pos, amp|
   end
 end
 
-define :li_play_chords do |tonics, tonics_pos, amp, scale, pattern, chord_type|
+define :gl_play_chords do |tonics, tonics_pos, amp, scale, pattern, chord_type|
   if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
     seq = 1
     case pattern
@@ -66,7 +66,7 @@ define :li_play_chords do |tonics, tonics_pos, amp, scale, pattern, chord_type|
       if (pos)
         last_pos = pos
         last_ind = i
-        cs = chord_seq(tonics[pos], scale, seq, seven, rootless)
+        cs = gl_chord_seq(tonics[pos], scale, seq, seven, rootless)
         puts "chords", cs
         play (tonic ? cs[0][0] : cs[0]), amp: amp
       else
