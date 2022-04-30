@@ -1,9 +1,12 @@
 ######################################
 # lib-modes.rb
-# author: Garen H.
+# additional scales and chords
 # based on scale_patch.rb from
 # https://in-thread.sonic-pi.net/t/chord-progression-tool/4947/14
-######################################
+# gl_ prefix is used for methods to indicate "garen's library"
+#     in absence of support for namespaces and classes 
+# author: Garen H.
+#####################################
 
   class SonicPi::Scale
     

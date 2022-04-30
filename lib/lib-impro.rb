@@ -1,5 +1,8 @@
 #######################
 # lib-impro.rb
+# Improvisation library
+# gl_ prefix is used for methods to indicate "garen's library"
+#     in absence of support for namespaces and classes 
 # author: Garen H.
 #######################
 
