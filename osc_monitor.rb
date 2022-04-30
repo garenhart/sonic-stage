@@ -106,21 +106,21 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    li_play_drum :bd_tek, get(:kick), get(:kick_amp), get(:kick_on)
+    gl_play_drum :bd_tek, get(:kick), get(:kick_amp), get(:kick_on)
   end
   
   live_loop :drum_snare do
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    li_play_drum :drum_snare_soft, get(:snare), get(:snare_amp), get(:snare_on)
+    gl_play_drum :drum_snare_soft, get(:snare), get(:snare_amp), get(:snare_on)
   end
   
   live_loop :drum_hihat do
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    li_play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_amp), get(:hihat_on)
+    gl_play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_amp), get(:hihat_on)
   end
 end
 # END DRUM LOOPS
@@ -132,7 +132,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do |r|
     use_bpm get(:tempo)
     use_synth get(:chord_inst)
     sync :tick
-    li_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_scale), get(:pattern), get(:chord_type)
+    gl_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_scale), get(:pattern), get(:chord_type)
   end
 end
 #END CHORD LOOP
@@ -145,7 +145,7 @@ with_fx :reverb, room: 0.6, mix: 0.4 do |r|
     use_synth get(:bass_inst)
     puts "INST", get(:bass_inst)
     cue :tick
-    li_play_bass tonics, tonics_pattern, get(:bass_amp)
+    gl_play_bass tonics, tonics_pattern, get(:bass_amp)
   end
 end
 #END BASS LOOP
@@ -156,7 +156,7 @@ end
 live_loop :osc_monitor do
   addr = "/osc:#{get(:ip)}:#{get(:port)}/**"
   n = sync addr
-  token = parse_addr addr
+  token = gl_parse_addr addr
   
   case token[1]
   when "tempo"
@@ -246,7 +246,7 @@ live_loop :osc_monitor do
   when "scale"
     set :main_scale, n[0].to_sym
     puts "SSSSSSSSSSSSSSSSS", get(:main_scale)
-    osc "/scale_match", (notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
+    osc "/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
   end
 end
 # END OSC MESSAGE MONITORING LOOP
@@ -286,7 +286,7 @@ live_loop :midi_monitor do
         end
         osc "/bass_points_pos", bass_points_pos.to_s
         osc "/chord_points_pos", bass_points_pos.to_s
-        osc "/scale_match", (notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
+        osc "/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
       end
     end
   when 1
