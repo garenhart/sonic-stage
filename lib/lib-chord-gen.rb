@@ -11,7 +11,7 @@ eval_file get(:sp_path)+"lib/lib-modes.rb" #include modes patch library for exte
 # chordSeq - returns chord sequence of specified degrees (degs) within mode for specified tonic
 # seven - seventh chord (default = true)
 # rootless - exclude tonic (default = true)
-define :chord_seq do |tonic, mode, degs, seven=false, rootless=false|
+define :gl_chord_seq do |tonic, mode, degs, seven=false, rootless=false|
     cords = []
     lookup = scale(tonic, mode, num_octaves: 2)
 
@@ -27,7 +27,7 @@ define :chord_seq do |tonic, mode, degs, seven=false, rootless=false|
     cords
 end
 
-define :notes_in_scale do |notes, mode, key|
+define :gl_notes_in_scale do |notes, mode, key|
     scale_notes = scale key, mode
     puts "NOTES", notes
     puts "SCALE", scale_notes
