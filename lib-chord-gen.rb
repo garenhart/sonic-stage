@@ -27,11 +27,18 @@ define :gl_chord_seq do |tonic, mode, degs, seven=false, rootless=false|
     cords
 end
 
+define :gl_note_in_scale do |note, mode, key|
+    scale_notes = scale key, mode
+    puts "NOTE", note
+    puts "SCALE", scale_notes 
+    scale_notes.to_a.include? note
+end
+
 define :gl_notes_in_scale do |notes, mode, key|
     scale_notes = scale key, mode
     puts "NOTES", notes
     puts "SCALE", scale_notes
-    (notes-scale_notes).empty?
+    (notes - scale_notes).empty?
 end
 
 # following two methods are converting note midi numbers to names
