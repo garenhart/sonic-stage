@@ -59,20 +59,18 @@ define :gl_play_chords do |tonics, tonics_pos, amp, scale, pattern, chord_type|
     end
 
     cs = []
-    last_pos = -1
-    last_ind = 0
-    16.times do |i|
-      pos = tonics_pos.index(i)
-      if (pos)
-        last_pos = pos
-        last_ind = i
-        cs = gl_chord_seq(tonics[pos], scale, seq, seven, rootless)
+    last_pos = 0
+    16.times do |pos|
+      i = tonics_pos.index(pos)
+      if (i)
+        last_ind = pos
+        cs = gl_chord_seq(tonics[i], scale, seq, seven, rootless)
         puts "chords", cs
         play (tonic ? cs[0][0] : cs[0]), amp: amp
       else
-        chord_num = i-last_ind
-        if (chord_num < cs.length) && (i < 16)
-          puts "III", i
+        chord_num = pos-last_pos
+        if (chord_num < cs.length) && (pos < 16)
+          puts "III", pos
           play cs[chord_num], amp: amp
         end
       end
