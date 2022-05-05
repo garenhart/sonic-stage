@@ -27,19 +27,36 @@ define :gl_chord_seq do |tonic, mode, degs, seven=false, rootless=false|
     cords
 end
 
-define :gl_note_in_scale do |note, mode, key|
-    scale_notes = scale key, mode
-    puts "NOTE", note
-    puts "SCALE", scale_notes 
-    scale_notes.to_a.include? note
+# Returns corresponding local octave note for the tonic
+# e.g. if note=F5 (or note=F3) and tonic=C4, returns F4
+define :gl_note_to_octave do |note, tonic|
+    local_note = tonic + (note - tonic) % 12
 end
 
-define :gl_notes_in_scale do |notes, mode, key|
-    scale_notes = scale key, mode
-    puts "NOTES", notes
-    puts "SCALE", scale_notes
-    (notes - scale_notes).empty?
+# True if note is in scale, otherwise false
+define :gl_note_in_scale do |note, mode, tonic|
+    scale_notes = scale tonic, mode
+    scale_notes.to_a.include? gl_note_to_octave(note, tonic)
 end
+
+# True if all notes are in scale, otherwise false
+define :gl_notes_in_scale do |notes, mode, tonic|
+    scale_notes = scale tonic, mode
+    in_scale = true
+    for note in notes
+        in_scale = gl_note_in_scale(note, mode, tonic)
+        break if !in_scale
+    end
+    return in_scale
+end
+
+# True if all notes are in scale, otherwise false
+#define :gl_notes_in_scale do |notes, mode, tonic|
+#    scale_notes = scale tonic, mode
+#    puts "NOTES", notes
+#    puts "SCALE", scale_notes
+#    (notes - scale_notes).empty?
+#end
 
 # following two methods are converting note midi numbers to names
 # based on this original idea: https://in-thread.sonic-pi.net/t/midi-number-to-note-name-debuging/3335/3
