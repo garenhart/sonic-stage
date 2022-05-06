@@ -692,9 +692,11 @@
                     "icon": "true",
                     "values": {
                       "Random": 1,
-                      "Circle of Fifths": 2,
-                      "Descending Fifths": 3,
-                      "II-V-I": 4
+                      "Fixed Tonic": 2,
+                      "Flexible Tonic": 3,
+                      "II-V-I": 4,
+                      "Circle of Fifths": 5,
+                      "Descending Fifths": 6
                     },
                     "onValue": "",
                     "onCreate": "",
