@@ -252,47 +252,48 @@ end
 # END OSC MESSAGE MONITORING LOOP
 
 # MIDI MESSAGE MONITORING LOOP
-live_loop :midi_monitor do
-  use_real_time
-  # use_bpm get(:tempo)
-  # sync :tick
-  
-  note, velocity = sync midi_in + "note_on"
-  loop = get(:loop_mode)
-  pattern = get(:pattern)
-  pattern_mode = get(:pattern_mode)
-  case loop
-  when 0
-    case pattern
-    when 1
-      if pattern_mode == 1
-        use_synth :piano
-        play note
-        tonics.push note
-        tonic_names = gl_notes_to_names(tonics).to_s
-        puts "TONICS", tonic_names
-        osc "/bass_points", tonic_names
-        osc "/chord_points", tonic_names
-        
-        bass_points_pos = []
-        tonics_pattern = []
-        chords_pattern = []
-        tonics.length.times do |i|
-          pos = dist_pos i, tonics.length, 16
-          tonics_pattern.push pos
-          chords_pattern.push pos
-          bass_points_pos.push pos
-          bass_points_pos.push 0 #arr vertical pos for osc
-        end
-        osc "/bass_points_pos", bass_points_pos.to_s
-        osc "/chord_points_pos", bass_points_pos.to_s
-        osc "/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
-     end
+with_fx :reverb, room: 0.8, mix: 0.6 do
+  live_loop :midi_monitor do
+    use_real_time
+    # use_bpm get(:tempo)
+    # sync :tick
+    
+    note, velocity = sync midi_in + "note_on"
+    loop = get(:loop_mode)
+    pattern = get(:pattern)
+    pattern_mode = get(:pattern_mode)
+    case loop
+    when 0
+      case pattern
+      when 1
+        if pattern_mode == 1
+          use_synth :piano
+          play note
+          tonics.push note
+          tonic_names = gl_notes_to_names(tonics).to_s
+          puts "TONICS", tonic_names
+          osc "/bass_points", tonic_names
+          osc "/chord_points", tonic_names
+          
+          bass_points_pos = []
+          tonics_pattern = []
+          chords_pattern = []
+          tonics.length.times do |i|
+            pos = dist_pos i, tonics.length, 16
+            tonics_pattern.push pos
+            chords_pattern.push pos
+            bass_points_pos.push pos
+            bass_points_pos.push 0 #arr vertical pos for osc
+          end
+          osc "/bass_points_pos", bass_points_pos.to_s
+          osc "/chord_points_pos", bass_points_pos.to_s
+          osc "/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
+      end
     end
-  when 1
-    use_synth :piano
-    play note
+    when 1
+      use_synth :piano
+      play note
+    end
   end
 end
-
 # END MIDI MESSAGE MONITORING LOOP
