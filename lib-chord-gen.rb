@@ -12,9 +12,9 @@ eval_file get(:sp_path)+"lib/lib-modes.rb" #include modes patch library for exte
 # seven - seventh chord (default = true)
 # rootless - exclude tonic (default = true)
 define :gl_chord_seq do |tonic, mode, degs, seven=false, rootless=false|
+    return degs if degs == nil
     cords = []
     lookup = scale(tonic, mode, num_octaves: 2)
-
     degs.each {|deg|
         lu = lookup.rotate(deg-1)
         # construct triad or seventh chord based on values of "seven" and "rootless"
