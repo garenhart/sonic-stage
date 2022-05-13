@@ -245,8 +245,10 @@ live_loop :osc_monitor do
     set :main_mode, n[0].to_i
   when "scale"
     set :main_scale, n[0].to_sym
-    puts "SSSSSSSSSSSSSSSSS", get(:main_scale)
-    osc "/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
+    the_scale = get(:main_scale)
+    puts "SSSSSSSSSSSSSSSSS", the_scale
+    osc "/scale_match", (gl_notes_in_scale tonics, the_scale, tonics[0]) ? 1 : 0
+    gl_reset_keyboard(tonics[0], the_scale)
   end
 end
 # END OSC MESSAGE MONITORING LOOP
