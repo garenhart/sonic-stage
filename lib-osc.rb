@@ -15,4 +15,11 @@ define :gl_parse_addr do |path|
       return ["error"]
     end
   end
-  
+
+define :gl_reset_keyboard do |tonic, mode|
+  scale_notes = scale tonic, mode
+  for note in 21..107
+    osc "/keyboard_scale", note, (scale_notes.to_a.include? note) ? 1 : 0
+  end
+end
+
