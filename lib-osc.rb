@@ -23,3 +23,19 @@ define :gl_reset_keyboard do |tonic, mode|
   end
 end
 
+# populates osc variable target with the list of SPi sample names
+# for the specified sample group sg
+define :gl_populate_samples do |target, sg|
+  return if target==nil or sg==nil
+  sn = sample_names(sg)
+  sn_osc = []
+  for n in sn
+    sn_osc.push n.to_s
+  end
+  osc target, sn_osc.to_s
+end
+
+define :gl_populate_drum_samples do
+  #kick
+  gl_populate_samples "/inst_kick", :bd
+end
