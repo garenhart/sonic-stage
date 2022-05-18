@@ -50,6 +50,7 @@ set :chord_type, 1
 set :chord_inst, :piano
 
 # DRUM CONFIG
+set :kick_inst, :bd_tek
 set :kick_on, false
 set :snare_on, false
 set :hihat_on, false
@@ -94,6 +95,7 @@ define :init_controls do
   osc "/bass_inst", :fm
   osc "/chord_inst", :piano
   init_drums
+  gl_populate_drum_samples
 end
 
 init_controls
@@ -106,7 +108,7 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    gl_play_drum :bd_tek, get(:kick), get(:kick_amp), get(:kick_on)
+    gl_play_drum get(:kick_inst), get(:kick), get(:kick_amp), get(:kick_on)
   end
   
   live_loop :drum_snare do
@@ -211,7 +213,11 @@ live_loop :osc_monitor do
       set :snare, snare
       set :hihat, hihat
     end
-    # set drum "on" status based on the button state
+
+  when "kick_inst"
+    set :kick_inst, n[0].to_sym
+    puts "DRUM", get(:kick_inst)
+# set drum "on" status based on the button state
   when "kick"
     set :kick_on, n[0]==1.0
   when "snare"
