@@ -95,7 +95,7 @@ define :init_controls do
   osc "/bass_inst", :fm
   osc "/chord_inst", :piano
   init_drums
-  gl_populate_drum_samples
+  gl_populate_all_samples
 end
 
 init_controls
@@ -214,6 +214,8 @@ live_loop :osc_monitor do
       set :hihat, hihat
     end
 
+  when "kick_inst_groups"
+    gl_populate_samples "/inst_kick", n[0].to_sym
   when "kick_inst"
     set :kick_inst, n[0].to_sym
     puts "DRUM", get(:kick_inst)
