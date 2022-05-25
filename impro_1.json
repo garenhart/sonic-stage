@@ -1,0 +1,33 @@
+{
+    "tempo": 60,
+    "pattern_mode": 0,
+    "pattern": 1,
+    "mode": 0,
+    "scale": "ionian",
+    "bass":
+    {
+        "synth": "fm",
+        "amp": 0
+    },
+    "chord":
+    {
+        "type": 1,
+        "synth": "piano",
+        "amp": 0
+    },
+    "cymbal":
+    {
+        "sample": "drum_cymbal_closed",
+        "amp": 0.5
+    },
+    "snare":
+    {
+        "sample": "drum_snare_soft",
+        "amp": 0.5
+    },
+    "kick":
+    {
+        "sample": "bd_tek",
+        "amp": 0.5
+    }
+}

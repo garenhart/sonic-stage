@@ -20,6 +20,10 @@ midi_in = "/midi*midi*/"
 midi_daw = "/midi*m_daw*/"
 #######
 
+# config input JSON
+file = File.read(get(:sp_path)+'live-impro\sonic-pi-open-stage-control\impro_1.json')
+config = JSON.parse(file)
+
 set :ip, "127.0.0.1"
 set :port, 7777 # make sure to match Open Stage Control's osc-port value
 use_osc get(:ip), get(:port)
@@ -38,28 +42,28 @@ define :reset_tonics do
 end
 
 # CONFIG
-set :tempo, 60
-set :pattern_mode, 0
-set :pattern, 1
-set :bass_inst, :fm
-set :bass_amp, 0
-set :chord_amp, 0
-set :main_mode, 0
-set :main_scale, :ionian
-set :chord_type, 1
-set :chord_inst, :piano
+set :tempo, config['tempo']
+set :pattern_mode, config['pattern_mode']
+set :pattern, config['pattern']
+set :bass_inst, config['bass']['synth']
+set :bass_amp, config['bass']['amp']
+set :chord_type, config['chord']['type']
+set :chord_inst, config['chord']['synth']
+set :chord_amp, config['chord']['amp']
+set :main_mode, config['mode']
+set :main_scale, config['scale']
 
 # DRUM CONFIG
-set :kick_inst, :bd_tek
+set :kick_inst, config['kick']['sample']
 set :kick_on, false
 set :snare_on, false
 set :hihat_on, false
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :hihat, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-set :kick_amp, 0.5
-set :snare_amp, 0.5
-set :hihat_amp, 0.5
+set :kick_amp, config['kick']['amp']
+set :snare_amp, config['snare']['amp']
+set :hihat_amp, config['cymbal']['amp']
 kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 hihat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -67,7 +71,7 @@ set :loop_mode, 0
 
 define :init_drum do |d|
   osc "/#{d}", 0
-  osc "/#{d}_amp", 0.5
+  osc "/#{d}_amp", get("#{d}_amp".to_sym)
   16.times do |i|
     osc "/#{d}_beats/#{i}", 0
   end
@@ -92,8 +96,8 @@ define :init_controls do
   osc "/bass_points", tonics.length
   osc "/chord_points", tonics.length
   osc "/chord_type", get(:chord_type)
-  osc "/bass_inst", :fm
-  osc "/chord_inst", :piano
+  osc "/bass_inst", get(:bass_inst)
+  osc "/chord_inst", get(:chord_inst)
   init_drums
   gl_populate_all_samples
 end
