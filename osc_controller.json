@@ -382,7 +382,7 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onCreate": "",
-            "onValue": "set(\"kick_inst_groups\", \"bd\");"
+            "onValue": ""
           },
           {
             "type": "variable",
@@ -2896,7 +2896,7 @@
                             "target": "",
                             "ignoreDefaults": false,
                             "bypass": false,
-                            "onValue": "console.log(\"HERE\")",
+                            "onValue": "",
                             "onCreate": "",
                             "lock": false,
                             "icon": false,
