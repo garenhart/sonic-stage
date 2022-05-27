@@ -50,5 +50,4 @@ end
 
 define :gl_populate_all_samples do
   gl_populate_sample_groups "/sample_groups"
-  osc '/kick_inst_groups', :bd
 end
