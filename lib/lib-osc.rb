@@ -38,14 +38,17 @@ end
 # populates osc variable target with the list of SPi sample names
 # for the specified sample group sg
 define :gl_populate_samples do |target, sg|
+  puts "pop", target, sg
   return if target==nil or sg==nil
   sn = sample_names(sg)
-  sn_str = []
+  sn_str = "{"
   # convert to array of strings
   for n in sn
-    sn_str.push n.to_s
+    sn_str += ", " if sn_str.length > 2
+    sn_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
   end
-  osc target, sn_str.to_s
+  sn_str += "}"
+  osc target, sn_str
 end
 
 define :gl_populate_all_samples do
