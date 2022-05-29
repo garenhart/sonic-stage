@@ -54,6 +54,7 @@ set :main_mode, config['mode']
 set :main_scale, config['scale']
 
 # DRUM CONFIG
+set :kick_inst_group, config['kick']['sample_group']
 set :kick_inst, config['kick']['sample']
 set :kick_on, false
 set :snare_on, false
@@ -69,18 +70,21 @@ snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 hihat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :loop_mode, 0
 
-define :init_drum do |d|
+define :init_drum do |d, gr_ctrl, gr, inst_ctrl, inst|
   osc "/#{d}", 0
   osc "/#{d}_amp", get("#{d}_amp".to_sym)
+  osc gr_ctrl, gr
+  gl_populate_samples inst_ctrl + "_v", gr.to_sym
+  osc inst_ctrl, inst.to_s
   16.times do |i|
     osc "/#{d}_beats/#{i}", 0
   end
 end
 
 define :init_drums do
-  init_drum "kick"
-  init_drum "snare"
-  init_drum "hihat"
+  init_drum "kick", "/kick_inst_groups", get(:kick_inst_group), "/kick_inst", get(:kick_inst)
+  init_drum "snare", "/snare_inst_groups", get(:kick_inst_group), "/snare_inst", get(:kick_inst)
+  init_drum "hihat", "/cymbal_inst_groups", get(:kick_inst_group), "/cymbal_inst", get(:kick_inst)
   osc "/drums", 0
 end
 
@@ -99,7 +103,6 @@ define :init_controls do
   osc "/bass_inst", get(:bass_inst)
   osc "/chord_inst", get(:chord_inst)
   init_drums
-  gl_populate_all_samples
 end
 
 init_controls
@@ -219,7 +222,8 @@ live_loop :osc_monitor do
     end
 
   when "kick_inst_groups"
-    gl_populate_samples "/inst_kick", n[0].to_sym
+    puts "KICK_INST", n[0].to_sym
+    gl_populate_samples "/kick_inst_v", n[0].to_sym
   when "kick_inst"
     set :kick_inst, n[0].to_sym
     puts "DRUM", get(:kick_inst)

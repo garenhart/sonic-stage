@@ -27,6 +27,7 @@
     },
     "kick":
     {
+        "sample_group": "bd",
         "sample": "bd_tek",
         "amp": 0.5
     }
