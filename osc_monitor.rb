@@ -79,6 +79,7 @@ define :init_drum do |d, gr_ctrl, gr, inst_ctrl, inst|
   osc "/#{d}_amp", get("#{d}_amp".to_sym)
   osc gr_ctrl, gr
   gl_populate_samples inst_ctrl + "_v", gr.to_sym
+  sleep 0.125 # sleeping between populating and selecting seems to make it work 
   osc inst_ctrl, inst.to_s
   16.times do |i|
     osc "/#{d}_beats/#{i}", 0
