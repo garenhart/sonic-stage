@@ -17,11 +17,13 @@
     },
     "cymbal":
     {
+        "sample_group": "drum",
         "sample": "drum_cymbal_closed",
         "amp": 0.5
     },
     "snare":
     {
+        "sample_group": "drum",
         "sample": "drum_snare_soft",
         "amp": 0.5
     },

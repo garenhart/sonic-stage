@@ -56,6 +56,10 @@ set :main_scale, config['scale']
 # DRUM CONFIG
 set :kick_inst_group, config['kick']['sample_group']
 set :kick_inst, config['kick']['sample']
+set :snare_inst_group, config['snare']['sample_group']
+set :snare_inst, config['snare']['sample']
+set :cymbal_inst_group, config['cymbal']['sample_group']
+set :cymbal_inst, config['cymbal']['sample']
 set :kick_on, false
 set :snare_on, false
 set :hihat_on, false
@@ -83,8 +87,8 @@ end
 
 define :init_drums do
   init_drum "kick", "/kick_inst_groups", get(:kick_inst_group), "/kick_inst", get(:kick_inst)
-  init_drum "snare", "/snare_inst_groups", get(:kick_inst_group), "/snare_inst", get(:kick_inst)
-  init_drum "hihat", "/cymbal_inst_groups", get(:kick_inst_group), "/cymbal_inst", get(:kick_inst)
+  init_drum "snare", "/snare_inst_groups", get(:snare_inst_group), "/snare_inst", get(:snare_inst)
+  init_drum "hihat", "/cymbal_inst_groups", get(:cymbal_inst_group), "/cymbal_inst", get(:cymbal_inst)
   osc "/drums", 0
 end
 
@@ -122,14 +126,14 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    gl_play_drum :drum_snare_soft, get(:snare), get(:snare_amp), get(:snare_on)
+    gl_play_drum get(:snare_inst), get(:snare), get(:snare_amp), get(:snare_on)
   end
   
   live_loop :drum_hihat do
     use_real_time
     use_bpm get(:tempo)
     sync :tick
-    gl_play_drum :drum_cymbal_closed, get(:hihat), get(:hihat_amp), get(:hihat_on)
+    gl_play_drum get(:cymbal_inst), get(:hihat), get(:hihat_amp), get(:hihat_on)
   end
 end
 # END DRUM LOOPS
@@ -227,6 +231,15 @@ live_loop :osc_monitor do
   when "kick_inst"
     set :kick_inst, n[0].to_sym
     puts "DRUM", get(:kick_inst)
+  when "snare_inst_groups"
+    gl_populate_samples "/snare_inst_v", n[0].to_sym
+  when "snare_inst"
+    set :snare_inst, n[0].to_sym
+  when "cymbal_inst_groups"
+    gl_populate_samples "/cymbal_inst_v", n[0].to_sym
+  when "cymbal_inst"
+    set :cymbal_inst, n[0].to_sym
+
 # set drum "on" status based on the button state
   when "kick"
     set :kick_on, n[0]==1.0
