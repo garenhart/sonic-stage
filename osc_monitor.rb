@@ -107,6 +107,7 @@ define :init_controls do
   osc "/chord_type", get(:chord_type)
   osc "/bass_inst", get(:bass_inst)
   osc "/chord_inst", get(:chord_inst)
+  gl_reset_keyboard(tonics[0], get(:main_scale))
   init_drums
 end
 
