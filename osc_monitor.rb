@@ -54,6 +54,7 @@ set :main_mode, config['mode']
 set :main_scale, config['scale']
 
 # DRUM CONFIG
+set :drum_tempo_factor, 1
 set :kick_inst_group, config['kick']['sample_group']
 set :kick_inst, config['kick']['sample']
 set :snare_inst_group, config['snare']['sample_group']
@@ -91,6 +92,7 @@ define :init_drums do
   init_drum "snare", "/snare_inst_groups", get(:snare_inst_group), "/snare_inst", get(:snare_inst)
   init_drum "hihat", "/cymbal_inst_groups", get(:cymbal_inst_group), "/cymbal_inst", get(:cymbal_inst)
   osc "/drums", 0
+  osc "/dropdown_drum_tempo_factor", 1
 end
 
 define :init_controls do
@@ -119,21 +121,21 @@ init_controls
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   live_loop :drum_kick do
     use_real_time
-    use_bpm get(:tempo)
+    use_bpm get(:tempo)*get(:drum_tempo_factor)
     sync :tick
     gl_play_drum get(:kick_inst), get(:kick), get(:kick_amp), get(:kick_on)
   end
   
   live_loop :drum_snare do
     use_real_time
-    use_bpm get(:tempo)
+    use_bpm get(:tempo)*get(:drum_tempo_factor)
     sync :tick
     gl_play_drum get(:snare_inst), get(:snare), get(:snare_amp), get(:snare_on)
   end
   
   live_loop :drum_hihat do
     use_real_time
-    use_bpm get(:tempo)
+    use_bpm get(:tempo)*get(:drum_tempo_factor)
     sync :tick
     gl_play_drum get(:cymbal_inst), get(:hihat), get(:hihat_amp), get(:hihat_on)
   end
@@ -219,6 +221,9 @@ live_loop :osc_monitor do
   when "chord_type"
     set :chord_type, n[0].to_i
     puts "TYPE", get(:chord_type)
+
+  when "dropdown_drum_tempo_factor" # update Time State
+    set :drum_tempo_factor, n[0].to_i
     
   when "drums" # update Time State
     if n[0] == 0.0
