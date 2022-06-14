@@ -7,11 +7,13 @@
 #######################
 
 define :gl_play_drum do |drum_sample, beats, amp, on=true|
-  16.times do |i|
-    if beats[i] == 1 && on
-      sample drum_sample, amp: amp
+  get(:drum_tempo_factor).times do
+    16.times do |i|
+      if beats[i] == 1 && on
+        sample drum_sample, amp: amp
+      end
+      sleep 0.25
     end
-    sleep 0.25
   end
 end
 
