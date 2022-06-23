@@ -56,14 +56,14 @@ define :gl_populate_all_samples do
 end
 
 # directs osc message to open stage control
-define :lg_osc_ctrl1 do |path, *args|
+define :lg_osc_ctrl do |path, *args|
   ip = "127.0.0.1"
   port =  7777 # make sure to match Open Stage Control's osc-port value
 
   osc_send ip, port, path, *args
 end
 
-define :lg_osc_ctrl do |path, arg1, arg2=nil|
+define :lg_osc_ctrl_inactive do |path, arg1, arg2=nil|
   ip = "127.0.0.1"
   port =  7777 # make sure to match Open Stage Control's osc-port value
 
