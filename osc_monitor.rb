@@ -7,6 +7,7 @@
 
 #load libraries
 eval_file get(:sp_path)+"lib/lib-chord-gen.rb"
+eval_file get(:sp_path)+"lib/lib-osc-animation.rb"
 eval_file get(:sp_path)+"lib/lib-impro.rb"
 eval_file get(:sp_path)+"lib/lib-osc.rb"
 eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
@@ -24,9 +25,12 @@ midi_daw = "/midi*m_daw*/"
 file = File.read(get(:sp_path)+'live-impro\sonic-pi-open-stage-control\impro_1.json')
 config = JSON.parse(file)
 
-set :ip, "127.0.0.1"
-set :port, 7777 # make sure to match Open Stage Control's osc-port value
-use_osc get(:ip), get(:port)
+# Open Stage Control config
+set :ctrl_ip, "127.0.0.1"
+set :ctrl_port, 7777 # make sure to match Open Stage Control's osc-port value
+# Processing config
+set :anim_ip, "127.0.0.1"
+set :anim_port, 8000 # make sure to match Processing osc-port value
 
 use_random_seed 31
 prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
@@ -76,14 +80,14 @@ hihat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :loop_mode, 0
 
 define :init_drum do |d, gr_ctrl, gr, inst_ctrl, inst|
-  osc "/#{d}", 0
-  osc "/#{d}_amp", get("#{d}_amp".to_sym)
-  osc gr_ctrl, gr
+  lg_osc_ctrl "/#{d}", 0
+  lg_osc_ctrl "/#{d}_amp", get("#{d}_amp".to_sym)
+  lg_osc_ctrl gr_ctrl, gr
   gl_populate_samples inst_ctrl + "_v", gr.to_sym
   sleep 0.125 # sleeping between populating and selecting seems to make it work 
-  osc inst_ctrl, inst.to_s
+  lg_osc_ctrl inst_ctrl, inst.to_s
   16.times do |i|
-    osc "/#{d}_beats/#{i}", 0
+    lg_osc_ctrl "/#{d}_beats/#{i}", 0
   end
 end
 
@@ -91,24 +95,24 @@ define :init_drums do
   init_drum "kick", "/kick_inst_groups", get(:kick_inst_group), "/kick_inst", get(:kick_inst)
   init_drum "snare", "/snare_inst_groups", get(:snare_inst_group), "/snare_inst", get(:snare_inst)
   init_drum "hihat", "/cymbal_inst_groups", get(:cymbal_inst_group), "/cymbal_inst", get(:cymbal_inst)
-  osc "/drums", 0
-  osc "/dropdown_drum_tempo_factor", 1
+  lg_osc_ctrl "/drums", 0
+  lg_osc_ctrl "/dropdown_drum_tempo_factor", 1
 end
 
 define :init_controls do
-  osc "/tempo", get(:tempo)
-  osc "/pattern_mode", get(:pattern_mode)
-  osc "/pattern", get(:pattern)
-  osc "/switch_loop", get(:loop_mode)
-  osc "/bass_amp", get(:bass_amp)
-  osc "/chord_amp", get(:chord_amp)
-  osc "/mode", get(:main_mode)
-#  osc "/scale", "ionian"
-  osc "/bass_points", tonics.length
-  osc "/chord_points", tonics.length
-  osc "/chord_type", get(:chord_type)
-  osc "/bass_inst", get(:bass_inst)
-  osc "/chord_inst", get(:chord_inst)
+  lg_osc_ctrl "/tempo", get(:tempo)
+  lg_osc_ctrl "/pattern_mode", get(:pattern_mode)
+  lg_osc_ctrl "/pattern", get(:pattern)
+  lg_osc_ctrl "/switch_loop", get(:loop_mode)
+  lg_osc_ctrl "/bass_amp", get(:bass_amp)
+  lg_osc_ctrl "/chord_amp", get(:chord_amp)
+  lg_osc_ctrl "/mode", get(:main_mode)
+#  lg_osc_ctrl "/scale", "ionian"
+  lg_osc_ctrl "/bass_points", tonics.length
+  lg_osc_ctrl "/chord_points", tonics.length
+  lg_osc_ctrl "/chord_type", get(:chord_type)
+  lg_osc_ctrl "/bass_inst", get(:bass_inst)
+  lg_osc_ctrl "/chord_inst", get(:chord_inst)
   gl_reset_keyboard(tonics[0], get(:main_scale))
   init_drums
 end
@@ -156,6 +160,7 @@ end
 
 # BASS LOOP
 with_fx :reverb, room: 0.6, mix: 0.4 do |r|
+  use_osc get(:anim_ip), get(:anim_port)
   live_loop :bass do
     use_real_time
     use_bpm get(:tempo)
@@ -167,11 +172,10 @@ with_fx :reverb, room: 0.6, mix: 0.4 do |r|
 end
 #END BASS LOOP
 
-
-
 # OSC MESSAGE MONITORING LOOP
 live_loop :osc_monitor do
-  addr = "/osc:#{get(:ip)}:#{get(:port)}/**"
+  use_osc get(:ctrl_ip), get(:ctrl_port)
+  addr = "/osc:#{get(:ctrl_ip)}:#{get(:ctrl_port)}/**"
   n = sync addr
   token = gl_parse_addr addr
   
@@ -203,7 +207,7 @@ live_loop :osc_monitor do
       tonics_pattern.push val if i.even? # we only need X coord.
       bass_points_pos.push val
     end
-    osc "/bass_points_pos", bass_points_pos.to_s # send back rounded positions to imitate "snap to grid"
+    osc "/bass_points_pos", *bass_points_pos # send back rounded positions to imitate "snap to grid"
     
   when "chord_inst"
     set :chord_inst, n[0].to_sym
@@ -291,6 +295,7 @@ end
 
 # MIDI MESSAGE MONITORING LOOP
 with_fx :reverb, room: 0.8, mix: 0.6 do
+  use_osc get(:ctrl_ip), get(:ctrl_port)
   live_loop :midi_monitor do
     use_real_time
     # use_bpm get(:tempo)
@@ -323,8 +328,8 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
             bass_points_pos.push pos
             bass_points_pos.push 0 #arr vertical pos for osc
           end
-          osc "/bass_points_pos", bass_points_pos.to_s
-          osc "/chord_points_pos", bass_points_pos.to_s
+          osc "/bass_points_pos", *bass_points_pos
+          osc "/chord_points_pos", *bass_points_pos
           osc "/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
       end
     end
