@@ -23,6 +23,7 @@ define :gl_play_bass do |tonics, tonics_pos, amp|
       pos = tonics_pos.index(i)
       if (pos)
         play tonics[pos], amp: amp
+        lg_animate_POC(tonics[pos])
       end
       sleep 0.25
     end
