@@ -295,8 +295,7 @@ end
 
 # MIDI MESSAGE MONITORING LOOP
 with_fx :reverb, room: 0.8, mix: 0.6 do
-  use_osc get(:ctrl_ip), get(:ctrl_port)
-  live_loop :midi_monitor do
+   live_loop :midi_monitor do
     use_real_time
     # use_bpm get(:tempo)
     # sync :tick
@@ -315,8 +314,8 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
           tonics.push note
           tonic_names = gl_notes_to_names(tonics).to_s
           puts "TONICS", tonic_names
-          osc "/bass_points", tonic_names
-          osc "/chord_points", tonic_names
+          lg_osc_ctrl("/bass_points", tonic_names)
+          lg_osc_ctrl("/chord_points", tonic_names)
           
           bass_points_pos = []
           tonics_pattern = []
@@ -328,9 +327,9 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
             bass_points_pos.push pos
             bass_points_pos.push 0 #arr vertical pos for osc
           end
-          osc "/bass_points_pos", *bass_points_pos
-          osc "/chord_points_pos", *bass_points_pos
-          osc "/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0
+          lg_osc_ctrl("/bass_points_pos", *bass_points_pos)
+          lg_osc_ctrl("/chord_points_pos", *bass_points_pos)
+          lg_osc_ctrl("/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0)
       end
     end
     when 1
