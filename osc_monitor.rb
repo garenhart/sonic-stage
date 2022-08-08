@@ -67,16 +67,16 @@ set :cymbal_inst_group, config['cymbal']['sample_group']
 set :cymbal_inst, config['cymbal']['sample']
 set :kick_on, false
 set :snare_on, false
-set :hihat_on, false
+set :cymbal_on, false
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-set :hihat, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :kick_amp, config['kick']['amp']
 set :snare_amp, config['snare']['amp']
-set :hihat_amp, config['cymbal']['amp']
+set :cymbal_amp, config['cymbal']['amp']
 kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-hihat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+cymbal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :loop_mode, 0
 
 define :init_drum do |d, gr_ctrl, gr, inst_ctrl, inst|
@@ -94,7 +94,7 @@ end
 define :init_drums do
   init_drum "kick", "/kick_inst_groups", get(:kick_inst_group), "/kick_inst", get(:kick_inst)
   init_drum "snare", "/snare_inst_groups", get(:snare_inst_group), "/snare_inst", get(:snare_inst)
-  init_drum "hihat", "/cymbal_inst_groups", get(:cymbal_inst_group), "/cymbal_inst", get(:cymbal_inst)
+  init_drum "cymbal", "/cymbal_inst_groups", get(:cymbal_inst_group), "/cymbal_inst", get(:cymbal_inst)
   lg_osc_ctrl "/drums", 0
   lg_osc_ctrl "/dropdown_drum_tempo_factor", 1
 end
@@ -137,11 +137,11 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
     gl_play_drum get(:snare_inst), get(:snare), get(:snare_amp), get(:snare_on)
   end
   
-  live_loop :drum_hihat do
+  live_loop :drum_cymbal do
     use_real_time
     use_bpm get(:tempo)*get(:drum_tempo_factor)
     sync :tick
-    gl_play_drum get(:cymbal_inst), get(:hihat), get(:hihat_amp), get(:hihat_on)
+    gl_play_drum get(:cymbal_inst), get(:cymbal), get(:cymbal_amp), get(:cymbal_on)
   end
 end
 # END DRUM LOOPS
@@ -233,7 +233,7 @@ live_loop :osc_monitor do
     if n[0] == 0.0
       set :kick, kick
       set :snare, snare
-      set :hihat, hihat
+      set :cymbal, cymbal
     end
 
   when "kick_inst_groups"
@@ -256,8 +256,8 @@ live_loop :osc_monitor do
     set :kick_on, n[0]==1.0
   when "snare"
     set :snare_on, n[0]==1.0
-  when "hihat"
-    set :hihat_on, n[0]==1.0
+  when "cymbal"
+    set :cymbal_on, n[0]==1.0
     
     #set amp
   when "bass_amp"
@@ -269,16 +269,16 @@ live_loop :osc_monitor do
     set :kick_amp, n[0]
   when "snare_amp"
     set :snare_amp, n[0]
-  when "hihat_amp"
-    set :hihat_amp, n[0]
+  when "cymbal_amp"
+    set :cymbal_amp, n[0]
     
     # save beat states
   when "kick_beats"
     kick[token[2].to_i] = n[0].to_i
   when "snare_beats"
     snare[token[2].to_i] = n[0].to_i
-  when "hihat_beats"
-    hihat[token[2].to_i] = n[0].to_i
+  when "cymbal_beats"
+    cymbal[token[2].to_i] = n[0].to_i
     
     # save mode and scale
   when "mode"
