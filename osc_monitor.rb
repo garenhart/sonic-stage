@@ -124,15 +124,15 @@ init_controls
 # DRUM LOOPS
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   live_loop :drum_kick do
-    gl_play_drum get(:kick_inst), get(:kick), get(:kick_amp), get(:kick_on)
+    gl_play_drum "kick"
   end
   
   live_loop :drum_snare do
-    gl_play_drum get(:snare_inst), get(:snare), get(:snare_amp), get(:snare_on)
+    gl_play_drum "snare"
   end
   
   live_loop :drum_cymbal do
-    gl_play_drum get(:cymbal_inst), get(:cymbal), get(:cymbal_amp), get(:cymbal_on)
+    gl_play_drum "cymbal"
   end
 end
 # END DRUM LOOPS
