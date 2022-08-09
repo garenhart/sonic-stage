@@ -124,23 +124,14 @@ init_controls
 # DRUM LOOPS
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   live_loop :drum_kick do
-    use_real_time
-    use_bpm get(:tempo)*get(:drum_tempo_factor)
-    sync :tick
     gl_play_drum get(:kick_inst), get(:kick), get(:kick_amp), get(:kick_on)
   end
   
   live_loop :drum_snare do
-    use_real_time
-    use_bpm get(:tempo)*get(:drum_tempo_factor)
-    sync :tick
     gl_play_drum get(:snare_inst), get(:snare), get(:snare_amp), get(:snare_on)
   end
   
   live_loop :drum_cymbal do
-    use_real_time
-    use_bpm get(:tempo)*get(:drum_tempo_factor)
-    sync :tick
     gl_play_drum get(:cymbal_inst), get(:cymbal), get(:cymbal_amp), get(:cymbal_on)
   end
 end
