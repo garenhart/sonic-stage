@@ -7,7 +7,12 @@
 #######################
 
 define :gl_play_drum do |drum_sample, beats, amp, on=true|
-  get(:drum_tempo_factor).times do
+  use_real_time
+  tempo_factor = get(:drum_tempo_factor)
+  use_bpm get(:tempo)*tempo_factor
+  sync :tick
+
+  tempo_factor.times do
     16.times do |i|
       if beats[i] == 1 && on
         sample drum_sample, amp: amp
