@@ -6,11 +6,19 @@
 # author: Garen H.
 #######################
 
-define :gl_play_drum do |drum_sample, beats, amp, on=true|
+define :gl_play_drum do |drum|
   use_real_time
   tempo_factor = get(:drum_tempo_factor)
   use_bpm get(:tempo)*tempo_factor
   sync :tick
+  drum_sample = get(gl_to_sym drum, "_inst")
+  beats = get(gl_to_sym drum)
+  amp = get(gl_to_sym drum, "_amp")
+  on = get(gl_to_sym drum, "_on")
+  puts drum_sample
+  puts beats
+  puts amp
+  puts on
 
   tempo_factor.times do
     16.times do |i|
@@ -131,4 +139,8 @@ define :gl_note_ind do |note, tonic, mode_scale|
     i = i+1
   end
   return octave_note == scale_notes[i] ? i : nil
+end
+
+define :gl_to_sym do |str1, str2=""|
+  return (str1+str2).to_sym
 end
