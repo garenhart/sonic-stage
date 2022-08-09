@@ -141,6 +141,7 @@ define :gl_note_ind do |note, tonic, mode_scale|
   return octave_note == scale_notes[i] ? i : nil
 end
 
+# concatenates two strings and converts resulting string to symbol
 define :gl_to_sym do |str1, str2=""|
   return (str1+str2).to_sym
 end
