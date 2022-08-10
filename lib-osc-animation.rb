@@ -15,3 +15,9 @@ define :lg_animate_POC do |nv|
   osc "/clr", sn, 128, 0 # color
   osc "/rad", 50.0 # radius
 end
+
+# sends OSC messages with drum component and corresponding amp
+define :lg_animate_drum do |drum, amp|
+  # osc "/drum", drum # drum component
+  osc "/#{drum}_amp", amp # drum component amp
+end
