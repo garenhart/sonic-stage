@@ -15,15 +15,12 @@ define :gl_play_drum do |drum|
   beats = get(gl_to_sym drum)
   amp = get(gl_to_sym drum, "_amp")
   on = get(gl_to_sym drum, "_on")
-  puts drum_sample
-  puts beats
-  puts amp
-  puts on
 
   tempo_factor.times do
     16.times do |i|
       if beats[i] == 1 && on
         sample drum_sample, amp: amp
+        lg_animate_drum drum, amp
       end
       sleep 0.25
     end
