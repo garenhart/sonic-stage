@@ -123,6 +123,7 @@ init_controls
 
 # DRUM LOOPS
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
+  use_osc get(:anim_ip), get(:anim_port)
   live_loop :drum_kick do
     gl_play_drum "kick"
   end
