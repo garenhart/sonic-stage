@@ -17,8 +17,9 @@ eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
 use_debug false
 
 # generic midi definitions
-midi_in = "/midi*midi*/"
-midi_daw = "/midi*m_daw*/"
+midi_in = "/midi:nanokey*/" # Korg nanoKey
+# midi_in = "/midi*midi*/" # Komplete Kontrol M32
+midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32 controls
 #######
 
 # config input JSON
