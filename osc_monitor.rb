@@ -81,14 +81,14 @@ cymbal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :loop_mode, 0
 
 define :init_drum do |d, gr_ctrl, gr, inst_ctrl, inst|
-  lg_osc_ctrl "/#{d}", 0
-  lg_osc_ctrl "/#{d}_amp", get("#{d}_amp".to_sym)
-  lg_osc_ctrl gr_ctrl, gr
+  gl_osc_ctrl "/#{d}", 0
+  gl_osc_ctrl "/#{d}_amp", get("#{d}_amp".to_sym)
+  gl_osc_ctrl gr_ctrl, gr
   gl_populate_samples inst_ctrl + "_v", gr.to_sym
   sleep 0.125 # sleeping between populating and selecting seems to make it work 
-  lg_osc_ctrl inst_ctrl, inst.to_s
+  gl_osc_ctrl inst_ctrl, inst.to_s
   16.times do |i|
-    lg_osc_ctrl "/#{d}_beats/#{i}", 0
+    gl_osc_ctrl "/#{d}_beats/#{i}", 0
   end
 end
 
@@ -96,24 +96,24 @@ define :init_drums do
   init_drum "kick", "/kick_inst_groups", get(:kick_inst_group), "/kick_inst", get(:kick_inst)
   init_drum "snare", "/snare_inst_groups", get(:snare_inst_group), "/snare_inst", get(:snare_inst)
   init_drum "cymbal", "/cymbal_inst_groups", get(:cymbal_inst_group), "/cymbal_inst", get(:cymbal_inst)
-  lg_osc_ctrl "/drums", 0
-  lg_osc_ctrl "/dropdown_drum_tempo_factor", 1
+  gl_osc_ctrl "/drums", 0
+  gl_osc_ctrl "/dropdown_drum_tempo_factor", 1
 end
 
 define :init_controls do
-  lg_osc_ctrl "/tempo", get(:tempo)
-  lg_osc_ctrl "/pattern_mode", get(:pattern_mode)
-  lg_osc_ctrl "/pattern", get(:pattern)
-  lg_osc_ctrl "/switch_loop", get(:loop_mode)
-  lg_osc_ctrl "/bass_amp", get(:bass_amp)
-  lg_osc_ctrl "/chord_amp", get(:chord_amp)
-  lg_osc_ctrl "/mode", get(:main_mode)
-#  lg_osc_ctrl "/scale", "ionian"
-  lg_osc_ctrl "/bass_points", tonics.length
-  lg_osc_ctrl "/chord_points", tonics.length
-  lg_osc_ctrl "/chord_type", get(:chord_type)
-  lg_osc_ctrl "/bass_inst", get(:bass_inst)
-  lg_osc_ctrl "/chord_inst", get(:chord_inst)
+  gl_osc_ctrl "/tempo", get(:tempo)
+  gl_osc_ctrl "/pattern_mode", get(:pattern_mode)
+  gl_osc_ctrl "/pattern", get(:pattern)
+  gl_osc_ctrl "/switch_loop", get(:loop_mode)
+  gl_osc_ctrl "/bass_amp", get(:bass_amp)
+  gl_osc_ctrl "/chord_amp", get(:chord_amp)
+  gl_osc_ctrl "/mode", get(:main_mode)
+#  gl_osc_ctrl "/scale", "ionian"
+  gl_osc_ctrl "/bass_points", tonics.length
+  gl_osc_ctrl "/chord_points", tonics.length
+  gl_osc_ctrl "/chord_type", get(:chord_type)
+  gl_osc_ctrl "/bass_inst", get(:bass_inst)
+  gl_osc_ctrl "/chord_inst", get(:chord_inst)
   gl_reset_keyboard(tonics[0], get(:main_scale))
   init_drums
 end
@@ -307,22 +307,22 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
           tonics.push note
           tonic_names = gl_notes_to_names(tonics).to_s
           puts "TONICS", tonic_names
-          lg_osc_ctrl("/bass_points", tonic_names)
-          lg_osc_ctrl("/chord_points", tonic_names)
+          gl_osc_ctrl("/bass_points", tonic_names)
+          gl_osc_ctrl("/chord_points", tonic_names)
           
           bass_points_pos = []
           tonics_pattern = []
           chords_pattern = []
           tonics.length.times do |i|
-            pos = dist_pos i, tonics.length, 16
+            pos = gl_dist_pos i, tonics.length, 16
             tonics_pattern.push pos
             chords_pattern.push pos
             bass_points_pos.push pos
             bass_points_pos.push 0 #arr vertical pos for osc
           end
-          lg_osc_ctrl("/bass_points_pos", *bass_points_pos)
-          lg_osc_ctrl("/chord_points_pos", *bass_points_pos)
-          lg_osc_ctrl("/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0)
+          gl_osc_ctrl("/bass_points_pos", *bass_points_pos)
+          gl_osc_ctrl("/chord_points_pos", *bass_points_pos)
+          gl_osc_ctrl("/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0)
       end
     end
     when 1
