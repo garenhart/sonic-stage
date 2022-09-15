@@ -8,7 +8,7 @@
 #######################
 
 # POC method to connect to Processing
-define :lg_animate_POC do |nv|
+define :gl_animate_POC do |nv|
   sn = (note(nv)-36)*16 #scaled note to send
   
   osc "/n", sn # scaled note info to set vertical pos
@@ -17,7 +17,7 @@ define :lg_animate_POC do |nv|
 end
 
 # sends OSC messages with drum component and corresponding amp
-define :lg_animate_drum do |drum, amp|
+define :gl_animate_drum do |drum, amp|
   # osc "/drum", drum # drum component
   osc "/#{drum}_amp", amp # drum component amp
 end

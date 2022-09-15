@@ -19,7 +19,7 @@ define :gl_parse_addr do |path|
 define :gl_reset_keyboard do |tonic, mode|
   scale_notes = scale tonic, mode
   for note in 21..107
-    lg_osc_ctrl "/keyboard_scale", note, (scale_notes.to_a.include? note) ? 1 : 0
+    gl_osc_ctrl "/keyboard_scale", note, (scale_notes.to_a.include? note) ? 1 : 0
   end
 end
 
@@ -48,7 +48,7 @@ define :gl_populate_samples do |target, sg|
     sn_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
   end
   sn_str += "}"
-  lg_osc_ctrl target, sn_str
+  gl_osc_ctrl target, sn_str
 end
 
 define :gl_populate_all_samples do
@@ -56,14 +56,14 @@ define :gl_populate_all_samples do
 end
 
 # directs osc message to open stage control
-define :lg_osc_ctrl do |path, *args|
+define :gl_osc_ctrl do |path, *args|
   ip = "127.0.0.1"
   port =  7777 # make sure to match Open Stage Control's osc-port value
 
   osc_send ip, port, path, *args
 end
 
-define :lg_osc_ctrl_inactive do |path, arg1, arg2=nil|
+define :gl_osc_ctrl_inactive do |path, arg1, arg2=nil|
   ip = "127.0.0.1"
   port =  7777 # make sure to match Open Stage Control's osc-port value
 
