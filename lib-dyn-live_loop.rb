@@ -19,7 +19,7 @@ define :gl_runLoop do |name, fn|
   end
 end
 
-define :stopLoop do |name|
+define :gl_stopLoop do |name|
   set (RUNSTATE_KEY + name).to_sym, false
 end
 

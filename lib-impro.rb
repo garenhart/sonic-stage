@@ -20,7 +20,7 @@ define :gl_play_drum do |drum|
     16.times do |i|
       if beats[i] == 1 && on
         sample drum_sample, amp: amp
-        lg_animate_drum drum, amp
+        gl_animate_drum drum, amp
       end
       sleep 0.25
     end
@@ -33,7 +33,7 @@ define :gl_play_bass do |tonics, tonics_pos, amp|
       pos = tonics_pos.index(i)
       if (pos)
         play tonics[pos], amp: amp
-        lg_animate_POC(tonics[pos])
+        gl_animate_POC(tonics[pos])
       end
       sleep 0.25
     end
@@ -109,7 +109,7 @@ end
 
 # 'pseudo'-evenly distributes 'count' positions within number of 'slots'
 # returns distributed position for 'item_num' 
-define :dist_pos do |item_num, count, slots| 
+define :gl_dist_pos do |item_num, count, slots| 
   pos = item_num * (slots / count)
 end
 
