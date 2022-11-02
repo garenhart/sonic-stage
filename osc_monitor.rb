@@ -19,11 +19,11 @@ use_debug false
 # generic midi definitions
 midi_in = "/midi:nanokey*/" # Korg nanoKey
 # midi_in = "/midi*midi*/" # Komplete Kontrol M32
-midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32 controls
+midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32 
 #######
 
 # config input JSON
-file = File.read(get(:sp_path)+'live-impro\sonic-pi-open-stage-control\impro_1.json')
+file = File.read(get(:sp_path)+'live-impro\sonic-pi-open-stage-control\default.json')
 config = JSON.parse(file)
 
 # Open Stage Control config
