@@ -6,6 +6,7 @@
 ######################################
 
 #load libraries
+eval_file get(:sp_path)+"lib/lib-io.rb"
 eval_file get(:sp_path)+"lib/lib-chord-gen.rb"
 eval_file get(:sp_path)+"lib/lib-osc-animation.rb"
 eval_file get(:sp_path)+"lib/lib-impro.rb"
@@ -22,9 +23,8 @@ midi_in = "/midi:nanokey*/" # Korg nanoKey
 midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32 
 #######
 
-# config input JSON
-file = File.read(get(:sp_path)+'live-impro\sonic-pi-open-stage-control\default.json')
-config = JSON.parse(file)
+# config IO JSON
+config = gl_readJSON("default")
 
 # Open Stage Control config
 set :ctrl_ip, "127.0.0.1"
