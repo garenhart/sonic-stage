@@ -14,7 +14,7 @@ define :gl_play_drum do |drum, tempo, tempo_factor, cfg|
   # drum_sample = get(gl_to_sym drum, "_inst")
   drum_sample = cfg[drum]['sample']
   beats = get(gl_to_sym drum)
-  amp = get(gl_to_sym drum, "_amp")
+  amp = cfg[drum]['amp']
   on = get(gl_to_sym drum, "_on")
 
   tempo_factor.times do
