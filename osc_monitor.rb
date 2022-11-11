@@ -24,7 +24,12 @@ midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32
 #######
 
 # config IO JSON
-config = gl_readJSON("default")
+# deserialize JSON file into cfg hash
+cfg = gl_readJSON("default")
+
+puts "cfg", cfg
+
+
 
 # Open Stage Control config
 set :ctrl_ip, "127.0.0.1"
@@ -47,34 +52,36 @@ define :reset_tonics do
 end
 
 # CONFIG
-set :tempo, config['tempo']
-set :pattern_mode, config['pattern_mode']
-set :pattern, config['pattern']
-set :bass_inst, config['bass']['synth']
-set :bass_amp, config['bass']['amp']
-set :chord_type, config['chord']['type']
-set :chord_inst, config['chord']['synth']
-set :chord_amp, config['chord']['amp']
-set :main_mode, config['mode']
-set :main_scale, config['scale']
+# set :tempo, cfg['tempo']
+# set :pattern_mode, cfg['pattern_mode']
+# set :pattern, cfg['pattern']
+# set :main_mode, cfg['mode']
+# set :main_scale, cfg['scale']
+# set :bass_inst, cfg['bass']['synth']
+# set :bass_amp, cfg['bass']['amp']
+# set :chord_type, cfg['chord']['type']
+# set :chord_inst, cfg['chord']['synth']
+# set :chord_amp, cfg['chord']['amp']
 
 # DRUM CONFIG
-set :drum_tempo_factor, 1
-set :kick_inst_group, config['kick']['sample_group']
-set :kick_inst, config['kick']['sample']
-set :snare_inst_group, config['snare']['sample_group']
-set :snare_inst, config['snare']['sample']
-set :cymbal_inst_group, config['cymbal']['sample_group']
-set :cymbal_inst, config['cymbal']['sample']
+# set :drum_tempo_factor, 1
+# set :kick_inst_group, cfg['kick']['sample_group']
+# set :kick_inst, cfg['kick']['sample']
+# set :snare_inst_group, cfg['snare']['sample_group']
+# set :snare_inst, cfg['snare']['sample']
+# set :cymbal_inst_group, cfg['cymbal']['sample_group']
+# set :cymbal_inst, cfg['cymbal']['sample']
+
+set :kick_amp, cfg['kick']['amp']
+set :snare_amp, cfg['snare']['amp']
+set :cymbal_amp, cfg['cymbal']['amp']
+
 set :kick_on, false
 set :snare_on, false
 set :cymbal_on, false
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-set :kick_amp, config['kick']['amp']
-set :snare_amp, config['snare']['amp']
-set :cymbal_amp, config['cymbal']['amp']
 kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 cymbal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -93,28 +100,28 @@ define :init_drum do |d, gr_ctrl, gr, inst_ctrl, inst|
 end
 
 define :init_drums do
-  init_drum "kick", "/kick_inst_groups", get(:kick_inst_group), "/kick_inst", get(:kick_inst)
-  init_drum "snare", "/snare_inst_groups", get(:snare_inst_group), "/snare_inst", get(:snare_inst)
-  init_drum "cymbal", "/cymbal_inst_groups", get(:cymbal_inst_group), "/cymbal_inst", get(:cymbal_inst)
+  init_drum "kick", "/kick_inst_groups", cfg['kick']['sample_group'], "/kick_inst", cfg['kick']['sample']
+  init_drum "snare", "/snare_inst_groups", cfg['snare']['sample_group'], "/snare_inst", cfg['snare']['sample']
+  init_drum "cymbal", "/cymbal_inst_groups", cfg['cymbal']['sample_group'], "/cymbal_inst", cfg['cymbal']['sample']
   gl_osc_ctrl "/drums", 0
   gl_osc_ctrl "/dropdown_drum_tempo_factor", 1
 end
 
 define :init_controls do
-  gl_osc_ctrl "/tempo", get(:tempo)
-  gl_osc_ctrl "/pattern_mode", get(:pattern_mode)
-  gl_osc_ctrl "/pattern", get(:pattern)
+  gl_osc_ctrl "/tempo", cfg['tempo']
+  gl_osc_ctrl "/pattern_mode", cfg['pattern_mode']
+  gl_osc_ctrl "/pattern", cfg['pattern']
   gl_osc_ctrl "/switch_loop", get(:loop_mode)
-  gl_osc_ctrl "/bass_amp", get(:bass_amp)
-  gl_osc_ctrl "/chord_amp", get(:chord_amp)
-  gl_osc_ctrl "/mode", get(:main_mode)
+  gl_osc_ctrl "/bass_amp", cfg['bass']['amp']
+  gl_osc_ctrl "/chord_amp", cfg['chord']['amp']
+  gl_osc_ctrl "/mode", cfg['mode']
 #  gl_osc_ctrl "/scale", "ionian"
   gl_osc_ctrl "/bass_points", tonics.length
   gl_osc_ctrl "/chord_points", tonics.length
-  gl_osc_ctrl "/chord_type", get(:chord_type)
-  gl_osc_ctrl "/bass_inst", get(:bass_inst)
-  gl_osc_ctrl "/chord_inst", get(:chord_inst)
-  gl_reset_keyboard(tonics[0], get(:main_scale))
+  gl_osc_ctrl "/chord_type", cfg['chord']['type']
+  gl_osc_ctrl "/bass_inst", cfg['bass']['synth']
+  gl_osc_ctrl "/chord_inst", cfg['chord']['synth']
+  gl_reset_keyboard(tonics[0], cfg['scale'])
   init_drums
 end
 
@@ -126,15 +133,15 @@ init_controls
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   use_osc get(:anim_ip), get(:anim_port)
   live_loop :drum_kick do
-    gl_play_drum "kick"
+    gl_play_drum "kick", cfg['tempo'], get(:drum_tempo_factor), **cfg
   end
   
   live_loop :drum_snare do
-    gl_play_drum "snare"
+    gl_play_drum "snare", cfg['tempo'], get(:drum_tempo_factor), **cfg
   end
   
   live_loop :drum_cymbal do
-    gl_play_drum "cymbal"
+    gl_play_drum "cymbal", cfg['tempo'], get(:drum_tempo_factor), **cfg
   end
 end
 # END DRUM LOOPS
@@ -143,10 +150,10 @@ end
 with_fx :reverb, room: 0.8, mix: 0.6 do |r|
   live_loop :chord do
     use_real_time
-    use_bpm get(:tempo)
-    use_synth get(:chord_inst)
+    use_bpm cfg['tempo']
+    use_synth (cfg['chord']['synth']).to_sym
     sync :tick
-    gl_play_chords tonics, chords_pattern, get(:chord_amp), get(:main_scale), get(:pattern), get(:chord_type)
+    gl_play_chords tonics, chords_pattern, cfg['chord']['amp'], cfg['scale'], cfg['pattern'], cfg['chord']['type']
   end
 end
 #END CHORD LOOP
@@ -156,11 +163,11 @@ with_fx :reverb, room: 0.6, mix: 0.4 do |r|
   use_osc get(:anim_ip), get(:anim_port)
   live_loop :bass do
     use_real_time
-    use_bpm get(:tempo)
-    use_synth get(:bass_inst)
-    puts "INST", get(:bass_inst)
+    use_bpm cfg['tempo']
+    use_synth cfg['bass']['synth'].to_sym
+    puts "INST", cfg['bass']['synth']
     cue :tick
-    gl_play_bass tonics, tonics_pattern, get(:bass_amp)
+    gl_play_bass tonics, tonics_pattern, cfg['bass']['amp']
   end
 end
 #END BASS LOOP
@@ -174,23 +181,23 @@ live_loop :osc_monitor do
   
   case token[1]
   when "tempo"
-    set :tempo, n[0].to_i
+    cfg['tempo'] = n[0].to_i
     
   when "pattern"
-    set :pattern, n[0].to_i
+    cfg['pattern'] = n[0].to_i
     
   when "pattern_mode"
-    set :pattern_mode, n[0].to_i
+    cfg['pattern_mode'] = n[0].to_i
     if n[0] == 1.0
       reset_tonics
     end
     
   when "switch_loop"
     set :loop_mode, n[0].to_i
-    set :pattern_mode, 0 if n[0].to_i > 0
+    cfg['pattern_mode'] = 0 if n[0].to_i > 0
     
   when "bass_inst"
-    set :bass_inst, n[0].to_sym
+    cfg['bass']['synth'] = n[0].to_sym
     
   when "bass_line"
     bass_points_pos = []
@@ -203,7 +210,7 @@ live_loop :osc_monitor do
     osc "/bass_points_pos", *bass_points_pos # send back rounded positions to imitate "snap to grid"
     
   when "chord_inst"
-    set :chord_inst, n[0].to_sym
+    cfg['chord']['synth'] = n[0].to_sym
     
   when "chord_line"
     chord_points_pos = []
@@ -216,8 +223,8 @@ live_loop :osc_monitor do
     osc "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid"
     
   when "chord_type"
-    set :chord_type, n[0].to_i
-    puts "TYPE", get(:chord_type)
+    cfg['chord']['type'] = n[0].to_i
+    puts "TYPE", cfg['chord']['type']
 
   when "dropdown_drum_tempo_factor" # update Time State
     set :drum_tempo_factor, n[0].to_i
@@ -233,16 +240,16 @@ live_loop :osc_monitor do
     puts "KICK_INST", n[0].to_sym
     gl_populate_samples "/kick_inst_v", n[0].to_sym
   when "kick_inst"
-    set :kick_inst, n[0].to_sym
-    puts "DRUM", get(:kick_inst)
+    cfg['kick']['sample'] = n[0].to_sym
+    puts "DRUM", cfg['kick']['sample']
   when "snare_inst_groups"
     gl_populate_samples "/snare_inst_v", n[0].to_sym
   when "snare_inst"
-    set :snare_inst, n[0].to_sym
+    cfg['snare']['sample'] = n[0].to_sym
   when "cymbal_inst_groups"
     gl_populate_samples "/cymbal_inst_v", n[0].to_sym
   when "cymbal_inst"
-    set :cymbal_inst, n[0].to_sym
+    cfg['cymbal']['sample'] = n[0].to_sym
 
 # set drum "on" status based on the button state
   when "kick"
@@ -254,9 +261,9 @@ live_loop :osc_monitor do
     
     #set amp
   when "bass_amp"
-    set :bass_amp, n[0]
+    cfg['bass']['amp'] = n[0]
   when "chord_amp"
-    set :chord_amp, n[0]
+    cfg['chord']['amp'] = n[0]
     
   when "kick_amp"
     set :kick_amp, n[0]
@@ -275,10 +282,10 @@ live_loop :osc_monitor do
     
     # save mode and scale
   when "mode"
-    set :main_mode, n[0].to_i
+    cfg['mode'] = n[0].to_i
   when "scale"
-    set :main_scale, n[0].to_sym
-    the_scale = get(:main_scale)
+    cfg['scale'] = n[0].to_sym
+    the_scale = cfg['scale']
     puts "SSSSSSSSSSSSSSSSS", the_scale
     osc "/scale_match", (gl_notes_in_scale tonics, the_scale, tonics[0]) ? 1 : 0
     gl_reset_keyboard(tonics[0], the_scale)
@@ -295,8 +302,8 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
     
     note, velocity = sync midi_in + "note_on"
     loop = get(:loop_mode)
-    pattern = get(:pattern)
-    pattern_mode = get(:pattern_mode)
+    pattern = cfg['pattern']
+    pattern_mode = cfg['pattern_mode']
     case loop
     when 0
       case pattern
@@ -322,7 +329,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
           end
           gl_osc_ctrl("/bass_points_pos", *bass_points_pos)
           gl_osc_ctrl("/chord_points_pos", *bass_points_pos)
-          gl_osc_ctrl("/scale_match", (gl_notes_in_scale tonics, get(:main_scale), tonics[0]) ? 1 : 0)
+          gl_osc_ctrl("/scale_match", (gl_notes_in_scale tonics, cfg['scale'], tonics[0]) ? 1 : 0)
       end
     end
     when 1
