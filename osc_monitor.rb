@@ -71,10 +71,9 @@ end
 # set :snare_inst, cfg['snare']['sample']
 # set :cymbal_inst_group, cfg['cymbal']['sample_group']
 # set :cymbal_inst, cfg['cymbal']['sample']
-
-set :kick_amp, cfg['kick']['amp']
-set :snare_amp, cfg['snare']['amp']
-set :cymbal_amp, cfg['cymbal']['amp']
+# set :kick_amp, cfg['kick']['amp']
+# set :snare_amp, cfg['snare']['amp']
+# set :cymbal_amp, cfg['cymbal']['amp']
 
 set :kick_on, false
 set :snare_on, false
@@ -266,11 +265,11 @@ live_loop :osc_monitor do
     cfg['chord']['amp'] = n[0]
     
   when "kick_amp"
-    set :kick_amp, n[0]
+    cfg['kick']['amp'] = n[0]
   when "snare_amp"
-    set :snare_amp, n[0]
+    cfg['snare']['amp'] = n[0]
   when "cymbal_amp"
-    set :cymbal_amp, n[0]
+    cfg['cymbal']['amp'] = n[0]
     
     # save beat states
   when "kick_beats"
