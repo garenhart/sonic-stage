@@ -29,8 +29,6 @@ cfg = gl_readJSON("default")
 
 puts "cfg", cfg
 
-
-
 # Open Stage Control config
 set :ctrl_ip, "127.0.0.1"
 set :ctrl_port, 7777 # make sure to match Open Stage Control's osc-port value
@@ -64,7 +62,6 @@ end
 # set :chord_amp, cfg['chord']['amp']
 
 # DRUM CONFIG
-# set :drum_tempo_factor, 1
 # set :kick_inst_group, cfg['kick']['sample_group']
 # set :kick_inst, cfg['kick']['sample']
 # set :snare_inst_group, cfg['snare']['sample_group']
@@ -75,9 +72,12 @@ end
 # set :snare_amp, cfg['snare']['amp']
 # set :cymbal_amp, cfg['cymbal']['amp']
 
-set :kick_on, false
-set :snare_on, false
-set :cymbal_on, false
+# set :drum_tempo_factor, 1
+
+# set :kick_on, false
+# set :snare_on, false
+# set :cymbal_on, false
+
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -86,22 +86,22 @@ snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 cymbal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :loop_mode, 0
 
-define :init_drum do |d, gr_ctrl, gr, inst_ctrl, inst|
+define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
   gl_osc_ctrl "/#{d}", 0
-  gl_osc_ctrl "/#{d}_amp", get("#{d}_amp".to_sym)
-  gl_osc_ctrl gr_ctrl, gr
-  gl_populate_samples inst_ctrl + "_v", gr.to_sym
+  gl_osc_ctrl "/#{d}_amp", cfg[d]['amp']
+  gl_osc_ctrl gr_ctrl, cfg[d]['sample_group']
+  gl_populate_samples inst_ctrl + "_v", (cfg[d]['sample_group']).to_sym
   sleep 0.125 # sleeping between populating and selecting seems to make it work 
-  gl_osc_ctrl inst_ctrl, inst.to_s
+  gl_osc_ctrl inst_ctrl, (cfg[d]['sample']).to_s
   16.times do |i|
     gl_osc_ctrl "/#{d}_beats/#{i}", 0
   end
 end
 
 define :init_drums do
-  init_drum "kick", "/kick_inst_groups", cfg['kick']['sample_group'], "/kick_inst", cfg['kick']['sample']
-  init_drum "snare", "/snare_inst_groups", cfg['snare']['sample_group'], "/snare_inst", cfg['snare']['sample']
-  init_drum "cymbal", "/cymbal_inst_groups", cfg['cymbal']['sample_group'], "/cymbal_inst", cfg['cymbal']['sample']
+  init_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
+  init_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
+  init_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
   gl_osc_ctrl "/drums", 0
   gl_osc_ctrl "/dropdown_drum_tempo_factor", 1
 end
@@ -132,15 +132,15 @@ init_controls
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   use_osc get(:anim_ip), get(:anim_port)
   live_loop :drum_kick do
-    gl_play_drum "kick", cfg['tempo'], get(:drum_tempo_factor), **cfg
+    gl_play_drum "kick", **cfg
   end
   
   live_loop :drum_snare do
-    gl_play_drum "snare", cfg['tempo'], get(:drum_tempo_factor), **cfg
+    gl_play_drum "snare", **cfg
   end
   
   live_loop :drum_cymbal do
-    gl_play_drum "cymbal", cfg['tempo'], get(:drum_tempo_factor), **cfg
+    gl_play_drum "cymbal", **cfg
   end
 end
 # END DRUM LOOPS
@@ -226,7 +226,7 @@ live_loop :osc_monitor do
     puts "TYPE", cfg['chord']['type']
 
   when "dropdown_drum_tempo_factor" # update Time State
-    set :drum_tempo_factor, n[0].to_i
+    cfg['drum_tempo_factor'] = n[0].to_i
     
   when "drums" # update Time State
     if n[0] == 0.0
@@ -240,7 +240,6 @@ live_loop :osc_monitor do
     gl_populate_samples "/kick_inst_v", n[0].to_sym
   when "kick_inst"
     cfg['kick']['sample'] = n[0].to_sym
-    puts "DRUM", cfg['kick']['sample']
   when "snare_inst_groups"
     gl_populate_samples "/snare_inst_v", n[0].to_sym
   when "snare_inst"
@@ -252,11 +251,11 @@ live_loop :osc_monitor do
 
 # set drum "on" status based on the button state
   when "kick"
-    set :kick_on, n[0]==1.0
+    cfg['kick']['on'] = n[0]==1.0
   when "snare"
-    set :snare_on, n[0]==1.0
+    cfg['snare']['on'] = n[0]==1.0
   when "cymbal"
-    set :cymbal_on, n[0]==1.0
+    cfg['cymbal']['on'] = n[0]==1.0
     
     #set amp
   when "bass_amp"

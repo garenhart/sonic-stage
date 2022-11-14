@@ -1,5 +1,6 @@
 {
     "tempo": 60,
+    "drum_tempo_factor": 1,
     "pattern_mode": 0,
     "pattern": 1,
     "mode": 0,
@@ -17,20 +18,26 @@
     },
     "cymbal":
     {
+        "on": 1,
         "sample_group": "drum",
         "sample": "drum_cymbal_closed",
-        "amp": 0.5
+        "amp": 0.5,
+        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     "snare":
     {
+        "on": 1,
         "sample_group": "drum",
         "sample": "drum_snare_soft",
-        "amp": 0.5
+        "amp": 0.5,
+        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     "kick":
     {
+        "on": 1,
         "sample_group": "bd",
         "sample": "bd_tek",
-        "amp": 0.5
+        "amp": 0.5,
+        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 }
