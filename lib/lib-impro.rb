@@ -6,16 +6,16 @@
 # author: Garen H.
 #######################
 
-define :gl_play_drum do |drum, tempo, tempo_factor, cfg|
+define :gl_play_drum do |drum, cfg|
   use_real_time
-  # tempo_factor = get(:drum_tempo_factor)
-  use_bpm tempo*tempo_factor
+  tempo_factor = cfg['drum_tempo_factor']
+  use_bpm cfg['tempo']*tempo_factor
   sync :tick
   # drum_sample = get(gl_to_sym drum, "_inst")
   drum_sample = cfg[drum]['sample']
   beats = get(gl_to_sym drum)
   amp = cfg[drum]['amp']
-  on = get(gl_to_sym drum, "_on")
+  on = cfg[drum]['on']
 
   tempo_factor.times do
     16.times do |i|
