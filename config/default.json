@@ -18,26 +18,26 @@
     },
     "cymbal":
     {
-        "on": 1,
+        "on": false,
         "sample_group": "drum",
         "sample": "drum_cymbal_closed",
         "amp": 0.5,
-        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "beats": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
     },
     "snare":
     {
-        "on": 1,
+        "on": false,
         "sample_group": "drum",
         "sample": "drum_snare_soft",
         "amp": 0.5,
-        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "beats": [0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     "kick":
     {
-        "on": 1,
+        "on": false,
         "sample_group": "bd",
         "sample": "bd_tek",
         "amp": 0.5,
-        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "beats": [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
     }
 }

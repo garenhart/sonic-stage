@@ -77,13 +77,13 @@ end
 # set :kick_on, false
 # set :snare_on, false
 # set :cymbal_on, false
+# kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# cymbal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-cymbal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :loop_mode, 0
 
 define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
@@ -94,16 +94,18 @@ define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
   sleep 0.125 # sleeping between populating and selecting seems to make it work 
   gl_osc_ctrl inst_ctrl, (cfg[d]['sample']).to_s
   16.times do |i|
-    gl_osc_ctrl "/#{d}_beats/#{i}", 0
+    gl_osc_ctrl "/#{d}_beats/#{i}", cfg[d]['beats'][i] #should figure out how to populate beats without looping through array
   end
+  # gl_osc_ctrl "/#{d}_beats", cfg[d]['beats']
+  set (d.to_sym), cfg[d]['beats'] #set the beats to for the drum
 end
 
 define :init_drums do
+  gl_osc_ctrl "/drums", 1
+  gl_osc_ctrl "/dropdown_drum_tempo_factor", 1
   init_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
   init_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
   init_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
-  gl_osc_ctrl "/drums", 0
-  gl_osc_ctrl "/dropdown_drum_tempo_factor", 1
 end
 
 define :init_controls do
@@ -230,9 +232,9 @@ live_loop :osc_monitor do
     
   when "drums" # update Time State
     if n[0] == 0.0
-      set :kick, kick
-      set :snare, snare
-      set :cymbal, cymbal
+      set :kick, cfg['kick']['beats']
+      set :snare, cfg['snare']['beats']
+      set :cymbal, cfg['cymbal']['beats']
     end
 
   when "kick_inst_groups"
@@ -272,11 +274,11 @@ live_loop :osc_monitor do
     
     # save beat states
   when "kick_beats"
-    kick[token[2].to_i] = n[0].to_i
+    cfg['kick']['beats'][token[2].to_i] = n[0].to_i
   when "snare_beats"
-    snare[token[2].to_i] = n[0].to_i
+    cfg['snare']['beats'][token[2].to_i] = n[0].to_i
   when "cymbal_beats"
-    cymbal[token[2].to_i] = n[0].to_i
+    cfg['cymbal']['beats'][token[2].to_i] = n[0].to_i
     
     # save mode and scale
   when "mode"
