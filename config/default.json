@@ -5,6 +5,7 @@
     "pattern": 1,
     "mode": 0,
     "scale": "ionian",
+    "loop_mode": 0,
     "bass":
     {
         "synth": "fm",

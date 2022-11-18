@@ -80,11 +80,11 @@ end
 # kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # cymbal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# set :loop_mode, 0
 
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-set :loop_mode, 0
 
 define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
   gl_osc_ctrl "/#{d}", 0
@@ -97,7 +97,7 @@ define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
     gl_osc_ctrl "/#{d}_beats/#{i}", cfg[d]['beats'][i] #should figure out how to populate beats without looping through array
   end
   # gl_osc_ctrl "/#{d}_beats", cfg[d]['beats']
-  set (d.to_sym), cfg[d]['beats'] #set the beats to for the drum
+  # set (d.to_sym), cfg[d]['beats'] #set the beats to for the drum
 end
 
 define :init_drums do
@@ -112,7 +112,7 @@ define :init_controls do
   gl_osc_ctrl "/tempo", cfg['tempo']
   gl_osc_ctrl "/pattern_mode", cfg['pattern_mode']
   gl_osc_ctrl "/pattern", cfg['pattern']
-  gl_osc_ctrl "/switch_loop", get(:loop_mode)
+  gl_osc_ctrl "/switch_loop", cfg['loop_mode']
   gl_osc_ctrl "/bass_amp", cfg['bass']['amp']
   gl_osc_ctrl "/chord_amp", cfg['chord']['amp']
   gl_osc_ctrl "/mode", cfg['mode']
@@ -194,7 +194,7 @@ live_loop :osc_monitor do
     end
     
   when "switch_loop"
-    set :loop_mode, n[0].to_i
+    cfg['loop_mode'] = n[0].to_i
     cfg['pattern_mode'] = 0 if n[0].to_i > 0
     
   when "bass_inst"
@@ -301,10 +301,9 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
     # sync :tick
     
     note, velocity = sync midi_in + "note_on"
-    loop = get(:loop_mode)
     pattern = cfg['pattern']
     pattern_mode = cfg['pattern_mode']
-    case loop
+    case cfg['loop_mode']
     when 0
       case pattern
       when 1
