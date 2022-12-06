@@ -2,8 +2,8 @@
 configFilePath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
 
 # read from JSON file and return parsed hash
-define :gl_readJSON do |file_name|
-    file = File.read(configFilePath + file_name +".json") 
+define :gl_readJSON do |file_name, default_path = true|
+    file = File.read((default_path ? configFilePath : "") + file_name) 
     return JSON.parse(file)
     # return  MultiJson.load(file) # this works as well
 end
