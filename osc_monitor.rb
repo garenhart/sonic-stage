@@ -25,7 +25,7 @@ midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32
 
 # config IO JSON
 # deserialize JSON file into cfg hash
-cfg = gl_readJSON("default")
+cfg = gl_readJSON("default.json")
 
 puts "cfg", cfg
 
@@ -124,6 +124,7 @@ define :init_controls do
   gl_osc_ctrl "/chord_inst", cfg['chord']['synth']
   gl_reset_keyboard(tonics[0], cfg['scale'])
   init_drums
+  reset_tonics
 end
 
 init_controls
@@ -181,6 +182,12 @@ live_loop :osc_monitor do
   token = gl_parse_addr addr
   
   case token[1]
+  when "cfg_file"
+    puts "CFG FILE:", n[0]
+    # deserialize JSON file into cfg hash
+    cfg = gl_readJSON(n[0], false)
+    init_controls
+    
   when "tempo"
     cfg['tempo'] = n[0].to_i
     
