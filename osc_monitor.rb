@@ -5,7 +5,11 @@
 # author: Garen H.
 ######################################
 
+use_debug false
+
 #load libraries
+require 'date'
+
 eval_file get(:sp_path)+"lib/lib-io.rb"
 eval_file get(:sp_path)+"lib/lib-chord-gen.rb"
 eval_file get(:sp_path)+"lib/lib-osc-animation.rb"
@@ -15,17 +19,19 @@ eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
 #require get(:sp_path)+"lib/modes.rb" # Load extra scales and chords from separate file
 #ModeScales = Modes.scales
 
-use_debug false
-
 # generic midi definitions
 midi_in = "/midi:nanokey*/" # Korg nanoKey
 # midi_in = "/midi*midi*/" # Komplete Kontrol M32
 midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32 
 #######
 
-# config IO JSON
+# configuration folder path
+configPath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
+cfg_def = "default.json"
+cfgFile = configPath + cfg_def
 # deserialize JSON file into cfg hash
-cfg = gl_readJSON("default.json")
+cfg = gl_readJSON(cfgFile)
+gl_osc_ctrl "/cfg_file", cfg_def # init the osc control
 
 puts "cfg", cfg
 
@@ -183,10 +189,16 @@ live_loop :osc_monitor do
   
   case token[1]
   when "cfg_file"
-    puts "CFG FILE:", n[0]
+    cfgFile = n[0]
     # deserialize JSON file into cfg hash
-    cfg = gl_readJSON(n[0], false)
+    cfg = gl_readJSON(cfgFile)
     init_controls
+    
+  when "save"
+    # cfgFileNew = gl_suffix_filename(cfgFile, DateTime.now.strftime("%m-%d-%y-%k%M%S"))
+    # serialize cfg hash into JSON file
+    gl_write_unique_JSON(cfgFile, cfg)
+    puts cfgFile
     
   when "tempo"
     cfg['tempo'] = n[0].to_i
