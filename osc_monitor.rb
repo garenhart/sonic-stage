@@ -93,7 +93,7 @@ set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
-  gl_osc_ctrl "/#{d}", 0
+  gl_osc_ctrl "/#{d}", cfg[d]['on'] ? 1 : 0
   gl_osc_ctrl "/#{d}_amp", cfg[d]['amp']
   gl_osc_ctrl gr_ctrl, cfg[d]['sample_group']
   gl_populate_samples inst_ctrl + "_v", (cfg[d]['sample_group']).to_sym
