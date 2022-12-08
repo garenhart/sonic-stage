@@ -11,6 +11,7 @@ use_debug false
 require 'date'
 
 eval_file get(:sp_path)+"lib/lib-io.rb"
+eval_file get(:sp_path)+"lib/lib-init.rb"
 eval_file get(:sp_path)+"lib/lib-chord-gen.rb"
 eval_file get(:sp_path)+"lib/lib-osc-animation.rb"
 eval_file get(:sp_path)+"lib/lib-impro.rb"
@@ -42,8 +43,8 @@ set :ctrl_port, 7777 # make sure to match Open Stage Control's osc-port value
 set :anim_ip, "127.0.0.1"
 set :anim_port, 8000 # make sure to match Processing osc-port value
 
-use_random_seed 31
-prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
+# use_random_seed 31
+# prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
 tonics = []
 tonics_pattern = []
@@ -55,85 +56,19 @@ define :reset_tonics do
   chords_pattern = []
 end
 
-# CONFIG
-# set :tempo, cfg['tempo']
-# set :pattern_mode, cfg['pattern_mode']
-# set :pattern, cfg['pattern']
-# set :main_mode, cfg['mode']
-# set :main_scale, cfg['scale']
-# set :bass_inst, cfg['bass']['synth']
-# set :bass_amp, cfg['bass']['amp']
-# set :chord_type, cfg['chord']['type']
-# set :chord_inst, cfg['chord']['synth']
-# set :chord_amp, cfg['chord']['amp']
-
-# DRUM CONFIG
-# set :kick_inst_group, cfg['kick']['sample_group']
-# set :kick_inst, cfg['kick']['sample']
-# set :snare_inst_group, cfg['snare']['sample_group']
-# set :snare_inst, cfg['snare']['sample']
-# set :cymbal_inst_group, cfg['cymbal']['sample_group']
-# set :cymbal_inst, cfg['cymbal']['sample']
-# set :kick_amp, cfg['kick']['amp']
-# set :snare_amp, cfg['snare']['amp']
-# set :cymbal_amp, cfg['cymbal']['amp']
-
-# set :drum_tempo_factor, 1
-
-# set :kick_on, false
-# set :snare_on, false
-# set :cymbal_on, false
-# kick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# snare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# cymbal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# set :loop_mode, 0
-
 set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
-  gl_osc_ctrl "/#{d}", cfg[d]['on'] ? 1 : 0
-  gl_osc_ctrl "/#{d}_amp", cfg[d]['amp']
-  gl_osc_ctrl gr_ctrl, cfg[d]['sample_group']
-  gl_populate_samples inst_ctrl + "_v", (cfg[d]['sample_group']).to_sym
-  sleep 0.125 # sleeping between populating and selecting seems to make it work 
-  gl_osc_ctrl inst_ctrl, (cfg[d]['sample']).to_s
-  16.times do |i|
-    gl_osc_ctrl "/#{d}_beats/#{i}", cfg[d]['beats'][i] #should figure out how to populate beats without looping through array
-  end
-  # gl_osc_ctrl "/#{d}_beats", cfg[d]['beats']
-  # set (d.to_sym), cfg[d]['beats'] #set the beats to for the drum
-end
+init_controls cfg
 
-define :init_drums do
-  gl_osc_ctrl "/drums", 1
-  gl_osc_ctrl "/dropdown_drum_tempo_factor", cfg['drum_tempo_factor']
-  init_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
-  init_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
-  init_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
-end
+# --- move to lib-init.rb
+gl_osc_ctrl "/bass_points", tonics.length
+gl_osc_ctrl "/chord_points", tonics.length
+gl_reset_keyboard(tonics[0], cfg['scale'])
 
-define :init_controls do
-  gl_osc_ctrl "/tempo", cfg['tempo']
-  gl_osc_ctrl "/pattern_mode", cfg['pattern_mode']
-  gl_osc_ctrl "/pattern", cfg['pattern']
-  gl_osc_ctrl "/switch_loop", cfg['loop_mode']
-  gl_osc_ctrl "/bass_amp", cfg['bass']['amp']
-  gl_osc_ctrl "/chord_amp", cfg['chord']['amp']
-  gl_osc_ctrl "/mode", cfg['mode']
-  gl_osc_ctrl "/scale", cfg['scale']
-  gl_osc_ctrl "/bass_points", tonics.length
-  gl_osc_ctrl "/chord_points", tonics.length
-  gl_osc_ctrl "/chord_type", cfg['chord']['type']
-  gl_osc_ctrl "/bass_inst", cfg['bass']['synth']
-  gl_osc_ctrl "/chord_inst", cfg['chord']['synth']
-  gl_reset_keyboard(tonics[0], cfg['scale'])
-  init_drums
-  reset_tonics
-end
-
-init_controls
+reset_tonics
+# ---
 
 # END DRUM CONFIG
 
@@ -192,7 +127,7 @@ live_loop :osc_monitor do
     cfgFile = n[0]
     # deserialize JSON file into cfg hash
     cfg = gl_readJSON(cfgFile)
-    init_controls
+    init_controls(cfg)
     
   when "save"
     # cfgFileNew = gl_suffix_filename(cfgFile, DateTime.now.strftime("%m-%d-%y-%k%M%S"))
