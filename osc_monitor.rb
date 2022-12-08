@@ -108,7 +108,7 @@ end
 
 define :init_drums do
   gl_osc_ctrl "/drums", 1
-  gl_osc_ctrl "/dropdown_drum_tempo_factor", 1
+  gl_osc_ctrl "/dropdown_drum_tempo_factor", cfg['drum_tempo_factor']
   init_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
   init_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
   init_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
@@ -122,7 +122,7 @@ define :init_controls do
   gl_osc_ctrl "/bass_amp", cfg['bass']['amp']
   gl_osc_ctrl "/chord_amp", cfg['chord']['amp']
   gl_osc_ctrl "/mode", cfg['mode']
-#  gl_osc_ctrl "/scale", "ionian"
+  gl_osc_ctrl "/scale", cfg['scale']
   gl_osc_ctrl "/bass_points", tonics.length
   gl_osc_ctrl "/chord_points", tonics.length
   gl_osc_ctrl "/chord_type", cfg['chord']['type']
