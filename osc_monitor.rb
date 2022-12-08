@@ -46,6 +46,14 @@ set :anim_port, 8000 # make sure to match Processing osc-port value
 # use_random_seed 31
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
+
+set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+init_controls cfg
+
+# --- move to lib-init.rb
 tonics = []
 tonics_pattern = []
 chords_pattern = []
@@ -56,13 +64,6 @@ define :reset_tonics do
   chords_pattern = []
 end
 
-set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-init_controls cfg
-
-# --- move to lib-init.rb
 gl_osc_ctrl "/bass_points", tonics.length
 gl_osc_ctrl "/chord_points", tonics.length
 gl_reset_keyboard(tonics[0], cfg['scale'])
