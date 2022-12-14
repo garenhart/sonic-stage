@@ -11,9 +11,8 @@ define :gl_play_drum do |drum, cfg|
   tempo_factor = cfg['drum_tempo_factor']
   use_bpm cfg['tempo']*tempo_factor
   sync :tick
-  # drum_sample = get(gl_to_sym drum, "_inst")
   drum_sample = cfg[drum]['sample']
-  beats = get(gl_to_sym drum)
+  beats = get(drum.to_sym)
   amp = cfg[drum]['amp']
   on = cfg[drum]['on']
 
@@ -137,9 +136,4 @@ define :gl_note_ind do |note, tonic, mode_scale|
     i = i+1
   end
   return octave_note == scale_notes[i] ? i : nil
-end
-
-# concatenates two strings and converts resulting string to symbol
-define :gl_to_sym do |str1, str2=""|
-  return (str1+str2).to_sym
 end
