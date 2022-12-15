@@ -6,7 +6,9 @@
     "mode": 0,
     "scale": "ionian",
     "loop_mode": 0,
-    "bass":
+    "beat_on": "+",
+    "beat_off": "-",
+   "bass":
     {
         "synth": "fm",
         "amp": 0
@@ -23,7 +25,7 @@
         "sample_group": "drum",
         "sample": "drum_cymbal_closed",
         "amp": 0.5,
-        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "beats": "----------------"
     },
     "snare":
     {
@@ -31,7 +33,7 @@
         "sample_group": "drum",
         "sample": "drum_snare_soft",
         "amp": 0.5,
-        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "beats": "----------------"
     },
     "kick":
     {
@@ -39,6 +41,6 @@
         "sample_group": "bd",
         "sample": "bd_tek",
         "amp": 0.5,
-        "beats": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "beats": "----------------"
     }
 }

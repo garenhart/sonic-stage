@@ -47,9 +47,9 @@ set :anim_port, 8000 # make sure to match Processing osc-port value
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
 
-set :kick, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-set :snare, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-set :cymbal, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+set :kick, "----------------"
+set :snare, "----------------"
+set :cymbal, "----------------"
 
 init_controls cfg
 
@@ -229,11 +229,11 @@ live_loop :osc_monitor do
     
     # save beat states
   when "kick_beats"
-    cfg['kick']['beats'][token[2].to_i] = n[0].to_i
+    cfg['kick']['beats'][token[2].to_i] = n[0]==0 ? cfg["beat_off"] : cfg["beat_on"]
   when "snare_beats"
-    cfg['snare']['beats'][token[2].to_i] = n[0].to_i
+    cfg['snare']['beats'][token[2].to_i] = n[0]==0 ? cfg["beat_off"] : cfg["beat_on"]
   when "cymbal_beats"
-    cfg['cymbal']['beats'][token[2].to_i] = n[0].to_i
+    cfg['cymbal']['beats'][token[2].to_i] = n[0]==0 ? cfg["beat_off"] : cfg["beat_on"]
     
     # save mode and scale
   when "mode"
