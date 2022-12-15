@@ -14,7 +14,7 @@ define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
     sleep 0.125 # sleeping between populating and selecting seems to make it work 
     gl_osc_ctrl inst_ctrl, (cfg[d]['sample']).to_s
     16.times do |i|
-      gl_osc_ctrl "/#{d}_beats/#{i}", cfg[d]['beats'][i] #should figure out how to populate beats without looping through array
+      gl_osc_ctrl "/#{d}_beats/#{i}", cfg[d]['beats'][i] == cfg["beat_off"] ? 0 : 1 #should figure out how to populate beats without looping through array
     end
     # gl_osc_ctrl "/#{d}_beats", cfg[d]['beats']
     # set (d.to_sym), cfg[d]['beats'] #set the beats to for the drum
