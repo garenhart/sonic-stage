@@ -6,6 +6,10 @@
 # author: Garen H.
 #######################
 
+# define :pattern_match do |pattern, match=BEAT_on|
+#   return pattern.ring.tick == match
+# end
+
 define :gl_play_drum do |drum, cfg|
   use_real_time
   tempo_factor = cfg['drum_tempo_factor']
@@ -17,8 +21,8 @@ define :gl_play_drum do |drum, cfg|
   on = cfg[drum]['on']
 
   tempo_factor.times do
-    16.times do |i|
-      if beats[i] == 1 && on
+    beats.length.times do |i|
+      if beats[i] == cfg["beat_on"] && on
         sample drum_sample, amp: amp
         gl_animate_drum drum, amp
       end
