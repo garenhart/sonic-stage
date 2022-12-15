@@ -16,7 +16,7 @@ define :gl_play_drum do |drum, cfg|
   use_bpm cfg['tempo']*tempo_factor
   sync :tick
   drum_sample = cfg[drum]['sample']
-  beats = get(drum.to_sym)
+  beats = get(drum.to_sym) # get the beats from Time State
   amp = cfg[drum]['amp']
   on = cfg[drum]['on']
 
