@@ -47,6 +47,7 @@ set :anim_port, 8000 # make sure to match Processing osc-port value
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
 
+# Time State drum beats
 set :kick, "----------------"
 set :snare, "----------------"
 set :cymbal, "----------------"
@@ -185,7 +186,7 @@ live_loop :osc_monitor do
   when "dropdown_drum_tempo_factor" # update Time State
     cfg['drum_tempo_factor'] = n[0].to_i
     
-  when "drums" # update Time State
+  when "drums" # update Time State beats
     if n[0] == 0.0
       set :kick, cfg['kick']['beats']
       set :snare, cfg['snare']['beats']
