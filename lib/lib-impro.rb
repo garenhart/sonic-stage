@@ -13,14 +13,14 @@
 define :gl_play_drum do |drum, cfg|
   use_real_time
   tempo_factor = cfg['drum_tempo_factor']
-  use_bpm cfg['tempo']*tempo_factor
+  use_bpm cfg['tempo']
   sync :tick
   drum_sample = cfg[drum]['sample']
   beats = get(drum.to_sym) # get the beats from Time State
   amp = cfg[drum]['amp']
   on = cfg[drum]['on']
 
-  tempo_factor.times do
+  density tempo_factor do
     beats.length.times do |i|
       if beats[i] == cfg["beat_on"] && on
         sample drum_sample, amp: amp
