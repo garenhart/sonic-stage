@@ -230,11 +230,11 @@ live_loop :osc_monitor do
     
     # save beat states
   when "kick_beats"
-    cfg['kick']['beats'][token[2].to_i] = n[0]==0 ? cfg["beat_off"] : cfg["beat_on"]
+    cfg['kick']['beats'][token[2].to_i] = n[0].to_i.to_s
   when "snare_beats"
-    cfg['snare']['beats'][token[2].to_i] = n[0]==0 ? cfg["beat_off"] : cfg["beat_on"]
+    cfg['snare']['beats'][token[2].to_i] = n[0].to_i.to_s
   when "cymbal_beats"
-    cfg['cymbal']['beats'][token[2].to_i] = n[0]==0 ? cfg["beat_off"] : cfg["beat_on"]
+    cfg['cymbal']['beats'][token[2].to_i] = n[0].to_i.to_s
     
     # save mode and scale
   when "mode"
