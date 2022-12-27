@@ -22,7 +22,7 @@ define :gl_play_drum do |drum, cfg|
 
   density tempo_factor do
     beats.length.times do |i|
-      if beats[i] == cfg["beat_on"] && on
+      if on && (beats[i] == "1")
         sample drum_sample, amp: amp
         gl_animate_drum drum, amp
       end
