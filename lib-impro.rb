@@ -31,12 +31,12 @@ define :gl_play_drum do |drum, cfg|
   end
 end
 
-define :gl_play_bass do |tonics, tonics_pos, amp|
+define :gl_play_bass do |tonics, tonics_pos, cfg|
   if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
     16.times do |i|
       pos = tonics_pos.index(i)
       if (pos)
-        play tonics[pos], amp: amp
+        play tonics[pos], amp: cfg['bass']['amp']
         gl_animate_POC(tonics[pos])
       end
       sleep 0.25
@@ -46,10 +46,10 @@ define :gl_play_bass do |tonics, tonics_pos, amp|
   end
 end
 
-define :gl_play_chords do |tonics, tonics_pos, amp, mode_scale, pattern, chord_type|
+define :gl_play_chords do |tonics, tonics_pos, cfg|
   if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
     seq = 1
-    case pattern
+    case cfg['pattern']
     when 1
       seq = [1]
     when 2
@@ -63,7 +63,7 @@ define :gl_play_chords do |tonics, tonics_pos, amp, mode_scale, pattern, chord_t
     seven = false
     rootless = false
     tonic = false
-    case chord_type
+    case cfg['chord']['type']
     when 1
       tonic = true
     when 3
@@ -81,9 +81,9 @@ define :gl_play_chords do |tonics, tonics_pos, amp, mode_scale, pattern, chord_t
       i = tonics_pos.index(pos)
       if (i)
         last_ind = pos
-        # ind = gl_nearest_ind(tonics[i], tonics[0], mode_scale)
-        ind = gl_note_ind(tonics[i], tonics[0], mode_scale)
-        puts "Nearest", ind, tonics[i], tonics[0], mode_scale
+        # ind = gl_nearest_ind(tonics[i], tonics[0], cfg['scale'])
+        ind = gl_note_ind(tonics[i], tonics[0], cfg['scale'])
+        puts "Nearest", ind, tonics[i], tonics[0], cfg['scale']
         seq = ind == nil ? nil : [ind+1]
         chord_tonic = tonics[0]
         while tonics[i] < chord_tonic do # bring tonic down to corresponding octave if current tonic[i] is lower than tonic[0]
@@ -92,16 +92,16 @@ define :gl_play_chords do |tonics, tonics_pos, amp, mode_scale, pattern, chord_t
         while tonics[i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
           chord_tonic += 12
         end
-        cs = gl_chord_seq(chord_tonic, mode_scale, seq, seven, rootless)
+        cs = gl_chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
         puts "chords", cs
         if cs != nil
-          play (tonic ? cs[0][0] : cs[0]), amp: amp 
+          play (tonic ? cs[0][0] : cs[0]), amp: cfg['chord']['amp'] 
         end        
       else
         chord_num = pos-last_pos
         if (cs != nil) && (chord_num < cs.length) && (pos < 16)
           puts "III", pos
-          play cs[chord_num], amp: amp
+          play cs[chord_num], amp: cfg['chord']['amp']
         end
       end
       sleep 0.25
