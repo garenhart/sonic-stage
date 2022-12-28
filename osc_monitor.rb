@@ -56,12 +56,12 @@ init_controls cfg
 
 # --- move to lib-init.rb
 tonics = []
-tonics_pattern = []
+bass_pattern = []
 chords_pattern = []
 
 define :reset_tonics do
   tonics = []
-  tonics_pattern = []
+  bass_pattern = []
   chords_pattern = []
 end
 
@@ -112,7 +112,7 @@ with_fx :reverb, room: 0.6, mix: 0.4 do |r|
     use_synth cfg['bass']['synth'].to_sym
     puts "INST", cfg['bass']['synth']
     cue :tick
-    gl_play_bass tonics, tonics_pattern, cfg
+    gl_play_bass tonics, bass_pattern, cfg
   end
 end
 #END BASS LOOP
@@ -158,10 +158,10 @@ live_loop :osc_monitor do
     
   when "bass_line"
     bass_points_pos = []
-    tonics_pattern = []
+    bass_pattern = []
     n.length.times do |i|
       val = n[i].round
-      tonics_pattern.push val if i.even? # we only need X coord.
+      bass_pattern.push val if i.even? # we only need X coord.
       bass_points_pos.push val
     end
     osc "/bass_points_pos", *bass_points_pos # send back rounded positions to imitate "snap to grid"
@@ -273,11 +273,11 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
           gl_osc_ctrl("/chord_points", tonic_names)
           
           bass_points_pos = []
-          tonics_pattern = []
+          bass_pattern = []
           chords_pattern = []
           tonics.length.times do |i|
             pos = gl_dist_pos i, tonics.length, 16
-            tonics_pattern.push pos
+            bass_pattern.push pos
             chords_pattern.push pos
             bass_points_pos.push pos
             bass_points_pos.push 0 #arr vertical pos for osc
