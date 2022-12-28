@@ -98,7 +98,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do |r|
     use_bpm cfg['tempo']
     use_synth (cfg['chord']['synth']).to_sym
     sync :tick
-    gl_play_chords tonics, chords_pattern, cfg['chord']['amp'], cfg['scale'], cfg['pattern'], cfg['chord']['type']
+    gl_play_chords tonics, chords_pattern, cfg
   end
 end
 #END CHORD LOOP
@@ -112,7 +112,7 @@ with_fx :reverb, room: 0.6, mix: 0.4 do |r|
     use_synth cfg['bass']['synth'].to_sym
     puts "INST", cfg['bass']['synth']
     cue :tick
-    gl_play_bass tonics, tonics_pattern, cfg['bass']['amp']
+    gl_play_bass tonics, tonics_pattern, cfg
   end
 end
 #END BASS LOOP
