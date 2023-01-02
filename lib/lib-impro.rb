@@ -63,7 +63,7 @@ define :gl_play_chords do |tonics, tonics_pos, cfg|
     seven = false
     rootless = false
     tonic = false
-    case cfg['chord']['type']
+    case cfg['chords']['type']
     when 1
       tonic = true
     when 3
@@ -95,13 +95,13 @@ define :gl_play_chords do |tonics, tonics_pos, cfg|
         cs = gl_chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
         puts "chords", cs
         if cs != nil
-          play (tonic ? cs[0][0] : cs[0]), amp: cfg['chord']['amp'] 
+          play (tonic ? cs[0][0] : cs[0]), amp: cfg['chords']['amp'] 
         end        
       else
         chord_num = pos-last_pos
         if (cs != nil) && (chord_num < cs.length) && (pos < 16)
           puts "III", pos
-          play cs[chord_num], amp: cfg['chord']['amp']
+          play cs[chord_num], amp: cfg['chords']['amp']
         end
       end
       sleep 0.25
