@@ -11,7 +11,7 @@
         "synth": "fm",
         "amp": 0
     },
-    "chord":
+    "chords":
     {
         "type": 1,
         "synth": "piano",

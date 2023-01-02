@@ -96,7 +96,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do |r|
   live_loop :chord do
     use_real_time
     use_bpm cfg['tempo']
-    use_synth (cfg['chord']['synth']).to_sym
+    use_synth (cfg['chords']['synth']).to_sym
     sync :tick
     gl_play_chords tonics, chords_pattern, cfg
   end
@@ -167,7 +167,7 @@ live_loop :osc_monitor do
     osc "/bass_points_pos", *bass_points_pos # send back rounded positions to imitate "snap to grid"
     
   when "chord_inst"
-    cfg['chord']['synth'] = n[0].to_sym
+    cfg['chords']['synth'] = n[0].to_sym
     
   when "chord_line"
     chord_points_pos = []
@@ -180,8 +180,8 @@ live_loop :osc_monitor do
     osc "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid"
     
   when "chord_type"
-    cfg['chord']['type'] = n[0].to_i
-    puts "TYPE", cfg['chord']['type']
+    cfg['chords']['type'] = n[0].to_i
+    puts "TYPE", cfg['chords']['type']
 
   when "dropdown_drum_tempo_factor" # update Time State
     cfg['drum_tempo_factor'] = n[0].to_i
@@ -219,7 +219,7 @@ live_loop :osc_monitor do
   when "bass_amp"
     cfg['bass']['amp'] = n[0]
   when "chord_amp"
-    cfg['chord']['amp'] = n[0]
+    cfg['chords']['amp'] = n[0]
     
   when "kick_amp"
     cfg['kick']['amp'] = n[0]
