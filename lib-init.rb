@@ -33,13 +33,13 @@ define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
     gl_osc_ctrl "/pattern_mode", cfg['pattern_mode']
     gl_osc_ctrl "/pattern", cfg['pattern']
     gl_osc_ctrl "/switch_loop", cfg['loop_mode']
-    gl_osc_ctrl "/bass_amp", cfg['bass']['amp']
-    gl_osc_ctrl "/chord_amp", cfg['chord']['amp']
     gl_osc_ctrl "/mode", cfg['mode']
     gl_osc_ctrl "/scale", cfg['scale']
-    gl_osc_ctrl "/chord_type", cfg['chord']['type']
     gl_osc_ctrl "/bass_inst", cfg['bass']['synth']
-    gl_osc_ctrl "/chord_inst", cfg['chord']['synth']
+    gl_osc_ctrl "/bass_amp", cfg['bass']['amp']
+    gl_osc_ctrl "/chord_type", cfg['chords']['type']
+    gl_osc_ctrl "/chord_inst", cfg['chords']['synth']
+    gl_osc_ctrl "/chord_amp", cfg['chords']['amp']
     init_drums cfg
   end
   
