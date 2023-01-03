@@ -6,16 +6,19 @@
     "mode": 0,
     "scale": "ionian",
     "loop_mode": 0,
+    "tonics": [],
     "bass":
     {
         "synth": "fm",
-        "amp": 0
+        "amp": 0,
+        "pattern": []
     },
     "chords":
     {
         "type": 1,
         "synth": "piano",
-        "amp": 0
+        "amp": 0,
+        "pattern": []
     },
     "cymbal":
     {

@@ -55,19 +55,19 @@ set :cymbal, "----------------"
 init_controls cfg
 
 # --- move to lib-init.rb
-tonics = []
-bass_pattern = []
-chords_pattern = []
+# tonics = []
+# bass_pattern = []
+# chords_pattern = []
 
 define :reset_tonics do
-  tonics = []
-  bass_pattern = []
-  chords_pattern = []
+  cfg['tonics'] = []
+  cfg['bass']['pattern'] = []
+  cfg['chords']['pattern'] = []
 end
 
-gl_osc_ctrl "/bass_points", tonics.length
-gl_osc_ctrl "/chord_points", tonics.length
-gl_reset_keyboard(tonics[0], cfg['scale'])
+gl_osc_ctrl "/bass_points", cfg['tonics'].length
+gl_osc_ctrl "/chord_points", cfg['tonics'].length
+gl_reset_keyboard(cfg['tonics'][0], cfg['scale'])
 
 reset_tonics
 # ---
@@ -98,7 +98,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do |r|
     use_bpm cfg['tempo']
     use_synth (cfg['chords']['synth']).to_sym
     sync :tick
-    gl_play_chords tonics, chords_pattern, cfg
+    gl_play_chords cfg
   end
 end
 #END CHORD LOOP
@@ -112,7 +112,7 @@ with_fx :reverb, room: 0.6, mix: 0.4 do |r|
     use_synth cfg['bass']['synth'].to_sym
     puts "INST", cfg['bass']['synth']
     cue :tick
-    gl_play_bass tonics, bass_pattern, cfg
+    gl_play_bass cfg
   end
 end
 #END BASS LOOP
@@ -158,10 +158,10 @@ live_loop :osc_monitor do
     
   when "bass_line"
     bass_points_pos = []
-    bass_pattern = []
+    cfg['bass']['pattern'] = []
     n.length.times do |i|
       val = n[i].round
-      bass_pattern.push val if i.even? # we only need X coord.
+      cfg['bass']['pattern'].push val if i.even? # we only need X coord.
       bass_points_pos.push val
     end
     osc "/bass_points_pos", *bass_points_pos # send back rounded positions to imitate "snap to grid"
@@ -171,10 +171,10 @@ live_loop :osc_monitor do
     
   when "chord_line"
     chord_points_pos = []
-    chords_pattern = []
+    cfg['chords']['pattern'] = []
     n.length.times do |i|
       val = n[i].round
-      chords_pattern.push val if i.even? # we only need X coord.
+      cfg['chords']['pattern'].push val if i.even? # we only need X coord.
       chord_points_pos.push val
     end
     osc "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid"
@@ -243,8 +243,8 @@ live_loop :osc_monitor do
     cfg['scale'] = n[0].to_sym
     the_scale = cfg['scale']
     puts "SSSSSSSSSSSSSSSSS", the_scale
-    osc "/scale_match", (gl_notes_in_scale tonics, the_scale, tonics[0]) ? 1 : 0
-    gl_reset_keyboard(tonics[0], the_scale)
+    osc "/scale_match", (gl_notes_in_scale cfg['tonics'], the_scale, cfg['tonics'][0]) ? 1 : 0
+    gl_reset_keyboard(cfg['tonics'][0], the_scale)
   end
 end
 # END OSC MESSAGE MONITORING LOOP
@@ -266,25 +266,25 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
         if pattern_mode == 1
           use_synth :piano
           play note
-          tonics.push note
-          tonic_names = gl_notes_to_names(tonics).to_s
+          cfg['tonics'].push note
+          tonic_names = gl_notes_to_names(cfg['tonics']).to_s
           puts "TONICS", tonic_names
           gl_osc_ctrl("/bass_points", tonic_names)
           gl_osc_ctrl("/chord_points", tonic_names)
           
           bass_points_pos = []
-          bass_pattern = []
-          chords_pattern = []
-          tonics.length.times do |i|
-            pos = gl_dist_pos i, tonics.length, 16
-            bass_pattern.push pos
-            chords_pattern.push pos
+          cfg['bass']['pattern'] = []
+          cfg['chords']['pattern'] = []
+          cfg['tonics'].length.times do |i|
+            pos = gl_dist_pos i, cfg['tonics'].length, 16
+            cfg['bass']['pattern'].push pos
+            cfg['chords']['pattern'].push pos
             bass_points_pos.push pos
             bass_points_pos.push 0 #arr vertical pos for osc
           end
           gl_osc_ctrl("/bass_points_pos", *bass_points_pos)
           gl_osc_ctrl("/chord_points_pos", *bass_points_pos)
-          gl_osc_ctrl("/scale_match", (gl_notes_in_scale tonics, cfg['scale'], tonics[0]) ? 1 : 0)
+          gl_osc_ctrl("/scale_match", (gl_notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
       end
     end
     when 1
