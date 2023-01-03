@@ -22,6 +22,6 @@ end
 # create unique name based on current date-time and save hash into it
 define :gl_write_unique_JSON do |file_name, hash|
     file_name_new = gl_suffix_filename(file_name, DateTime.now.strftime("_%m-%d-%y-%k%M%S-%L"))
-    File.write(file_name_new, JSON.pretty_generate(hash, indent: "    "))
-    # File.write(file_name_new, JSON.pretty_generate(hash, array_nl: "")) # array_nl: "" puts array in one string, but still retains appropriate indentation which makes in worse
+    # File.write(file_name_new, JSON.pretty_generate(hash, indent: "    "))
+    File.write(file_name_new, JSON.pretty_generate(hash, array_nl: "")) # array_nl: "" puts array in one string, but still retains appropriate indentation which makes in worse
 end

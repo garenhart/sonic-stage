@@ -31,13 +31,13 @@ define :gl_play_drum do |drum, cfg|
   end
 end
 
-define :gl_play_bass do |tonics, tonics_pos, cfg|
-  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
+define :gl_play_bass do |cfg|
+  if (cfg['bass']['pattern'].size > 0) && (cfg['bass']['pattern'].size == cfg['tonics'].size)
     16.times do |i|
-      pos = tonics_pos.index(i)
+      pos = cfg['bass']['pattern'].index(i)
       if (pos)
-        play tonics[pos], amp: cfg['bass']['amp']
-        gl_animate_POC(tonics[pos])
+        play cfg['tonics'][pos], amp: cfg['bass']['amp']
+        gl_animate_POC(cfg['tonics'][pos])
       end
       sleep 0.25
     end
@@ -46,8 +46,8 @@ define :gl_play_bass do |tonics, tonics_pos, cfg|
   end
 end
 
-define :gl_play_chords do |tonics, tonics_pos, cfg|
-  if (tonics_pos.size > 0) && (tonics_pos.size == tonics.size)
+define :gl_play_chords do |cfg|
+  if (cfg['chords']['pattern'].size > 0) && (cfg['chords']['pattern'].size == cfg['tonics'].size)
     seq = 1
     case cfg['pattern']
     when 1
@@ -78,18 +78,18 @@ define :gl_play_chords do |tonics, tonics_pos, cfg|
     cs = []
     last_pos = 0
     16.times do |pos|
-      i = tonics_pos.index(pos)
+      i = cfg['chords']['pattern'].index(pos)
       if (i)
         last_ind = pos
-        # ind = gl_nearest_ind(tonics[i], tonics[0], cfg['scale'])
-        ind = gl_note_ind(tonics[i], tonics[0], cfg['scale'])
-        puts "Nearest", ind, tonics[i], tonics[0], cfg['scale']
+        # ind = gl_nearest_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
+        ind = gl_note_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
+        puts "Nearest", ind, cfg['tonics'][i], cfg['tonics'][0], cfg['scale']
         seq = ind == nil ? nil : [ind+1]
-        chord_tonic = tonics[0]
-        while tonics[i] < chord_tonic do # bring tonic down to corresponding octave if current tonic[i] is lower than tonic[0]
+        chord_tonic = cfg['tonics'][0]
+        while cfg['tonics'][i] < chord_tonic do # bring tonic down to corresponding octave if current tonic[i] is lower than tonic[0]
           chord_tonic -= 12
         end
-        while tonics[i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
+        while cfg['tonics'][i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
           chord_tonic += 12
         end
         cs = gl_chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
