@@ -51,10 +51,6 @@ define :gl_populate_samples do |target, sg|
   gl_osc_ctrl target, sn_str
 end
 
-define :gl_populate_all_samples do
-  gl_populate_sample_groups "/sample_groups"
-end
-
 # directs osc message to open stage control
 define :gl_osc_ctrl do |path, *args|
   ip = "127.0.0.1"
