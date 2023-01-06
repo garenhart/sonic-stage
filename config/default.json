@@ -23,7 +23,6 @@
     "cymbal":
     {
         "on": false,
-        "sample_group": "drum",
         "sample": "drum_cymbal_closed",
         "amp": 0.5,
         "beats": "0000000000000000"
@@ -31,7 +30,6 @@
     "snare":
     {
         "on": false,
-        "sample_group": "drum",
         "sample": "drum_snare_soft",
         "amp": 0.5,
         "beats": "0000000000000000"
@@ -39,7 +37,6 @@
     "kick":
     {
         "on": false,
-        "sample_group": "bd",
         "sample": "bd_tek",
         "amp": 0.5,
         "beats": "0000000000000000"
