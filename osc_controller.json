@@ -2227,7 +2227,7 @@
                                 "ignoreDefaults": false,
                                 "bypass": false,
                                 "onCreate": "",
-                                "onValue": "",
+                                "onValue": "set('drums', 1)",
                                 "widgets": [
                                   {
                                     "type": "switch",
@@ -2623,7 +2623,7 @@
                                 "ignoreDefaults": false,
                                 "bypass": false,
                                 "onCreate": "",
-                                "onValue": "",
+                                "onValue": "set('drums', 1)",
                                 "widgets": [
                                   {
                                     "type": "switch",
@@ -3016,7 +3016,7 @@
                                 "ignoreDefaults": false,
                                 "bypass": false,
                                 "onCreate": "",
-                                "onValue": "",
+                                "onValue": "set('drums', 1)",
                                 "widgets": [
                                   {
                                     "type": "switch",
