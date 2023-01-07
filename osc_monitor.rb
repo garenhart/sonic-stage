@@ -48,9 +48,19 @@ set :anim_port, 8000 # make sure to match Processing osc-port value
 
 
 # Time State drum beats
-set :kick, "----------------"
-set :snare, "----------------"
-set :cymbal, "----------------"
+define :init_time_state do
+  set :cymbal, cfg['cymbal']['beats']
+  set :snare, cfg['snare']['beats']
+  set :kick, cfg['kick']['beats']
+
+  set :cymbal_inst, cfg['cymbal']['sample']
+  set :snare_inst, cfg['snare']['sample']
+  set :kick_inst, cfg['kick']['sample']
+end
+
+# set :kick, "----------------"
+# set :snare, "----------------"
+# set :cymbal, "----------------"
 
 init_controls cfg
 
@@ -188,9 +198,7 @@ live_loop :osc_monitor do
     
   when "drums" # update Time State beats
     if n[0] == 0.0
-      set :kick, cfg['kick']['beats']
-      set :snare, cfg['snare']['beats']
-      set :cymbal, cfg['cymbal']['beats']
+      init_time_state
     end
 
   when "kick_inst_groups"
