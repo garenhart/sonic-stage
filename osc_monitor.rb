@@ -58,27 +58,19 @@ define :init_time_state do
   set :kick_inst, cfg['kick']['sample']
 end
 
-# set :kick, "----------------"
-# set :snare, "----------------"
-# set :cymbal, "----------------"
-
-init_controls cfg
-
-# --- move to lib-init.rb
-# tonics = []
-# bass_pattern = []
-# chords_pattern = []
-
 define :reset_tonics do
   cfg['tonics'] = []
   cfg['bass']['pattern'] = []
   cfg['chords']['pattern'] = []
 end
 
+init_controls cfg
+
 gl_osc_ctrl "/bass_points", cfg['tonics'].length
 gl_osc_ctrl "/chord_points", cfg['tonics'].length
 gl_reset_keyboard(cfg['tonics'][0], cfg['scale'])
 
+init_time_state
 reset_tonics
 # ---
 
