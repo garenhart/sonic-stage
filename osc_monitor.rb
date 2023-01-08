@@ -14,7 +14,7 @@ eval_file get(:sp_path)+"lib/lib-io.rb"
 eval_file get(:sp_path)+"lib/lib-init.rb"
 eval_file get(:sp_path)+"lib/lib-chord-gen.rb"
 eval_file get(:sp_path)+"lib/lib-osc-animation.rb"
-eval_file get(:sp_path)+"lib/lib-impro.rb"
+eval_file get(:sp_path)+"lib/lib-play.rb"
 eval_file get(:sp_path)+"lib/lib-osc.rb"
 eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
 #require get(:sp_path)+"lib/modes.rb" # Load extra scales and chords from separate file
