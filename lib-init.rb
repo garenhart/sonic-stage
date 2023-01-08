@@ -11,6 +11,19 @@ define :gl_sample_group do |s|
   s.split("_").first
 end
 
+define :init_tonics do |cfg|
+  cfg['tonics'] = []
+  cfg['bass']['pattern'] = []
+  cfg['chords']['pattern'] = []
+end
+
+define :gl_init_keyboard do |tonic, mode|
+  scale_notes = scale tonic, mode
+  for note in 21..107
+    gl_osc_ctrl "/keyboard_scale", note, (scale_notes.to_a.include? note) ? 1 : 0
+  end
+end
+
 define :init_drum do |d, gr_ctrl, inst_ctrl, cfg|
   sample_gr = gl_sample_group(cfg[d]['sample'])
   gl_osc_ctrl "/#{d}", cfg[d]['on'] ? 1 : 0
@@ -46,6 +59,11 @@ define :init_controls do |cfg|
   gl_osc_ctrl "/chord_type", cfg['chords']['type']
   gl_osc_ctrl "/chord_inst", cfg['chords']['synth']
   gl_osc_ctrl "/chord_amp", cfg['chords']['amp']
+  
+  gl_osc_ctrl "/bass_points", cfg['tonics'].length
+  gl_osc_ctrl "/chord_points", cfg['tonics'].length
+  gl_init_keyboard(cfg['tonics'][0], cfg['scale'])
+
   init_drums cfg
 end
 

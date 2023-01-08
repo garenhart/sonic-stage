@@ -16,13 +16,6 @@ define :gl_parse_addr do |path|
     end
   end
 
-define :gl_reset_keyboard do |tonic, mode|
-  scale_notes = scale tonic, mode
-  for note in 21..107
-    gl_osc_ctrl "/keyboard_scale", note, (scale_notes.to_a.include? note) ? 1 : 0
-  end
-end
-
 # populates osc variable target with the list of SPi sample groups
 define :gl_populate_sample_groups do |target|
   return if target==nil
