@@ -11,6 +11,17 @@ define :gl_sample_group do |s|
   s.split("_").first
 end
 
+# Time State drum beats
+define :init_time_state do |cfg|
+  set :cymbal, cfg['cymbal']['beats']
+  set :snare, cfg['snare']['beats']
+  set :kick, cfg['kick']['beats']
+
+  set :cymbal_inst, cfg['cymbal']['sample']
+  set :snare_inst, cfg['snare']['sample']
+  set :kick_inst, cfg['kick']['sample']
+end
+
 define :init_tonics do |cfg|
   cfg['tonics'] = []
   cfg['bass']['pattern'] = []
