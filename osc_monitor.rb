@@ -46,21 +46,9 @@ set :anim_port, 8000 # make sure to match Processing osc-port value
 # use_random_seed 31
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
-
-# Time State drum beats
-define :init_time_state do
-  set :cymbal, cfg['cymbal']['beats']
-  set :snare, cfg['snare']['beats']
-  set :kick, cfg['kick']['beats']
-
-  set :cymbal_inst, cfg['cymbal']['sample']
-  set :snare_inst, cfg['snare']['sample']
-  set :kick_inst, cfg['kick']['sample']
-end
-
 init_tonics cfg
 init_controls cfg
-init_time_state
+init_time_state cfg
 # ---
 
 # END DRUM CONFIG
@@ -179,7 +167,7 @@ live_loop :osc_monitor do
     
   when "drums" # update Time State beats
     if n[0] == 0.0
-      init_time_state
+      init_time_state cfg
     end
 
   when "kick_inst_groups"
