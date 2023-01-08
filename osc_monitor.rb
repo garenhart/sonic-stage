@@ -58,20 +58,9 @@ define :init_time_state do
   set :kick_inst, cfg['kick']['sample']
 end
 
-define :reset_tonics do
-  cfg['tonics'] = []
-  cfg['bass']['pattern'] = []
-  cfg['chords']['pattern'] = []
-end
-
+init_tonics cfg
 init_controls cfg
-
-gl_osc_ctrl "/bass_points", cfg['tonics'].length
-gl_osc_ctrl "/chord_points", cfg['tonics'].length
-gl_reset_keyboard(cfg['tonics'][0], cfg['scale'])
-
 init_time_state
-reset_tonics
 # ---
 
 # END DRUM CONFIG
@@ -148,7 +137,7 @@ live_loop :osc_monitor do
   when "pattern_mode"
     cfg['pattern_mode'] = n[0].to_i
     if n[0] == 1.0
-      reset_tonics
+      init_tonics cfg
     end
     
   when "switch_loop"
@@ -244,7 +233,7 @@ live_loop :osc_monitor do
     the_scale = cfg['scale']
     puts "SSSSSSSSSSSSSSSSS", the_scale
     osc "/scale_match", (gl_notes_in_scale cfg['tonics'], the_scale, cfg['tonics'][0]) ? 1 : 0
-    gl_reset_keyboard(cfg['tonics'][0], the_scale)
+    gl_init_keyboard(cfg['tonics'][0], the_scale)
   end
 end
 # END OSC MESSAGE MONITORING LOOP
