@@ -31,8 +31,8 @@ configPath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\"
 cfg_def = "default.json"
 cfgFile = configPath + cfg_def
 # deserialize JSON file into cfg hash
-cfg = gl_readJSON(cfgFile)
-gl_osc_ctrl "/cfg_file", cfg_def # init the osc control
+cfg = readJSON(cfgFile)
+osc_ctrl "/cfg_file", cfg_def # init the osc control
 
 puts "cfg", cfg
 
@@ -57,15 +57,15 @@ init_time_state cfg
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   use_osc get(:anim_ip), get(:anim_port)
   live_loop :drum_kick do
-    gl_play_drum "kick", **cfg
+    play_drum "kick", **cfg
   end
   
   live_loop :drum_snare do
-    gl_play_drum "snare", **cfg
+    play_drum "snare", **cfg
   end
   
   live_loop :drum_cymbal do
-    gl_play_drum "cymbal", **cfg
+    play_drum "cymbal", **cfg
   end
 end
 # END DRUM LOOPS
@@ -77,7 +77,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do |r|
     use_bpm cfg['tempo']
     use_synth (cfg['chords']['synth']).to_sym
     sync :tick
-    gl_play_chords cfg
+    play_chords cfg
   end
 end
 #END CHORD LOOP
@@ -91,7 +91,7 @@ with_fx :reverb, room: 0.6, mix: 0.4 do |r|
     use_synth cfg['bass']['synth'].to_sym
     puts "INST", cfg['bass']['synth']
     cue :tick
-    gl_play_bass cfg
+    play_bass cfg
   end
 end
 #END BASS LOOP
@@ -101,19 +101,19 @@ live_loop :osc_monitor do
   use_osc get(:ctrl_ip), get(:ctrl_port)
   addr = "/osc:#{get(:ctrl_ip)}:#{get(:ctrl_port)}/**"
   n = sync addr
-  token = gl_parse_addr addr
+  token = parse_addr addr
   
   case token[1]
   when "cfg_file"
     cfgFile = n[0]
     # deserialize JSON file into cfg hash
-    cfg = gl_readJSON(cfgFile)
+    cfg = readJSON(cfgFile)
     init_controls(cfg)
     
   when "save"
-    # cfgFileNew = gl_suffix_filename(cfgFile, DateTime.now.strftime("%m-%d-%y-%k%M%S"))
+    # cfgFileNew = suffix_filename(cfgFile, DateTime.now.strftime("%m-%d-%y-%k%M%S"))
     # serialize cfg hash into JSON file
-    gl_write_unique_JSON(cfgFile, cfg)
+    write_unique_JSON(cfgFile, cfg)
     puts cfgFile
     
   when "tempo"
@@ -172,15 +172,15 @@ live_loop :osc_monitor do
 
   when "kick_inst_groups"
     puts "KICK_INST", n[0].to_sym
-    gl_populate_samples "/kick_inst_v", n[0].to_sym
+    populate_samples "/kick_inst_v", n[0].to_sym
   when "kick_inst"
     cfg['kick']['sample'] = n[0].to_sym
   when "snare_inst_groups"
-    gl_populate_samples "/snare_inst_v", n[0].to_sym
+    populate_samples "/snare_inst_v", n[0].to_sym
   when "snare_inst"
     cfg['snare']['sample'] = n[0].to_sym
   when "cymbal_inst_groups"
-    gl_populate_samples "/cymbal_inst_v", n[0].to_sym
+    populate_samples "/cymbal_inst_v", n[0].to_sym
   when "cymbal_inst"
     cfg['cymbal']['sample'] = n[0].to_sym
 
@@ -220,8 +220,8 @@ live_loop :osc_monitor do
     cfg['scale'] = n[0].to_sym
     the_scale = cfg['scale']
     puts "SSSSSSSSSSSSSSSSS", the_scale
-    osc "/scale_match", (gl_notes_in_scale cfg['tonics'], the_scale, cfg['tonics'][0]) ? 1 : 0
-    gl_init_keyboard(cfg['tonics'][0], the_scale)
+    osc "/scale_match", (notes_in_scale cfg['tonics'], the_scale, cfg['tonics'][0]) ? 1 : 0
+    init_keyboard(cfg['tonics'][0], the_scale)
   end
 end
 # END OSC MESSAGE MONITORING LOOP
@@ -244,24 +244,24 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
           use_synth :piano
           play note
           cfg['tonics'].push note
-          tonic_names = gl_notes_to_names(cfg['tonics']).to_s
+          tonic_names = notes_to_names(cfg['tonics']).to_s
           puts "TONICS", tonic_names
-          gl_osc_ctrl("/bass_points", tonic_names)
-          gl_osc_ctrl("/chord_points", tonic_names)
+          osc_ctrl("/bass_points", tonic_names)
+          osc_ctrl("/chord_points", tonic_names)
           
           bass_points_pos = []
           cfg['bass']['pattern'] = []
           cfg['chords']['pattern'] = []
           cfg['tonics'].length.times do |i|
-            pos = gl_dist_pos i, cfg['tonics'].length, 16
+            pos = dist_pos i, cfg['tonics'].length, 16
             cfg['bass']['pattern'].push pos
             cfg['chords']['pattern'].push pos
             bass_points_pos.push pos
             bass_points_pos.push 0 #arr vertical pos for osc
           end
-          gl_osc_ctrl("/bass_points_pos", *bass_points_pos)
-          gl_osc_ctrl("/chord_points_pos", *bass_points_pos)
-          gl_osc_ctrl("/scale_match", (gl_notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
+          osc_ctrl("/bass_points_pos", *bass_points_pos)
+          osc_ctrl("/chord_points_pos", *bass_points_pos)
+          osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
       end
     end
     when 1
