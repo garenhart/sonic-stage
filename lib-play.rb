@@ -1,8 +1,6 @@
 #######################
 # lib-play.rb
-# Improvisation library
-# gl_ prefix is used for methods to indicate "garen's library"
-#     in absence of support for namespaces and classes 
+# Play library
 # author: Garen H.
 #######################
 
@@ -10,7 +8,7 @@
 #   return pattern.ring.tick == match
 # end
 
-define :gl_play_drum do |drum, cfg|
+define :play_drum do |drum, cfg|
   use_real_time
   tempo_factor = cfg['drum_tempo_factor']
   use_bpm cfg['tempo']
@@ -25,20 +23,20 @@ define :gl_play_drum do |drum, cfg|
     beats.length.times do |i|
       if on && (beats[i] == "1")
         sample drum_sample, amp: amp
-        gl_animate_drum drum, amp
+        animate_drum drum, amp
       end
       sleep 0.25
     end
   end
 end
 
-define :gl_play_bass do |cfg|
+define :play_bass do |cfg|
   if (cfg['bass']['pattern'].size > 0) && (cfg['bass']['pattern'].size == cfg['tonics'].size)
     16.times do |i|
       pos = cfg['bass']['pattern'].index(i)
       if (pos)
         play cfg['tonics'][pos], amp: cfg['bass']['amp']
-        gl_animate_POC(cfg['tonics'][pos])
+        animate_POC(cfg['tonics'][pos])
       end
       sleep 0.25
     end
@@ -47,7 +45,7 @@ define :gl_play_bass do |cfg|
   end
 end
 
-define :gl_play_chords do |cfg|
+define :play_chords do |cfg|
   if (cfg['chords']['pattern'].size > 0) && (cfg['chords']['pattern'].size == cfg['tonics'].size)
     seq = 1
     case cfg['pattern']
@@ -82,8 +80,8 @@ define :gl_play_chords do |cfg|
       i = cfg['chords']['pattern'].index(pos)
       if (i)
         last_ind = pos
-        # ind = gl_nearest_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
-        ind = gl_note_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
+        # ind = nearest_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
+        ind = note_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
         puts "Nearest", ind, cfg['tonics'][i], cfg['tonics'][0], cfg['scale']
         seq = ind == nil ? nil : [ind+1]
         chord_tonic = cfg['tonics'][0]
@@ -93,7 +91,7 @@ define :gl_play_chords do |cfg|
         while cfg['tonics'][i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
           chord_tonic += 12
         end
-        cs = gl_chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
+        cs = chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
         puts "chords", cs
         if cs != nil
           play (tonic ? cs[0][0] : cs[0]), amp: cfg['chords']['amp'] 
@@ -114,27 +112,27 @@ end
 
 # 'pseudo'-evenly distributes 'count' positions within number of 'slots'
 # returns distributed position for 'item_num' 
-define :gl_dist_pos do |item_num, count, slots| 
+define :dist_pos do |item_num, count, slots| 
   pos = item_num * (slots / count)
 end
 
 # returns index of nearest note in scale
-define :gl_nearest_ind do |note, tonic, mode_scale|
+define :nearest_ind do |note, tonic, mode_scale|
   return nil if mode_scale.empty?
   scale_notes = scale tonic, mode_scale
   puts "scale notes", scale_notes
   i = 0
-  while gl_note_to_octave(note, tonic) > scale_notes[i] do
+  while note_to_octave(note, tonic) > scale_notes[i] do
     i = i+1
   end
   return i
 end
 
 # returns index of the note in scale, or nil if the note is not in scale
-define :gl_note_ind do |note, tonic, mode_scale|
+define :note_ind do |note, tonic, mode_scale|
   return nil if mode_scale.empty?
   scale_notes = scale tonic, mode_scale
-  octave_note = gl_note_to_octave(note, tonic)
+  octave_note = note_to_octave(note, tonic)
   puts "scale notes", scale_notes
   i = 0
   while octave_note > scale_notes[i] do

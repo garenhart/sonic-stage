@@ -1,12 +1,10 @@
 #######################
 # lib-osc.rb
 # osc library
-# gl_ prefix is used for methods to indicate "garen's library"
-#     in absence of support for namespaces and classes 
 # author: Garen H.
 #######################
 
-define :gl_parse_addr do |path|
+define :parse_addr do |path|
     e = get_event(path).to_s
     v = e.split(",")[6]
     if v != nil
@@ -17,7 +15,7 @@ define :gl_parse_addr do |path|
   end
 
 # populates osc variable target with the list of SPi sample groups
-define :gl_populate_sample_groups do |target|
+define :populate_sample_groups do |target|
   return if target==nil
   sg = sample_groups
   sg_str = []
@@ -30,7 +28,7 @@ end
 
 # populates osc variable target with the list of SPi sample names
 # for the specified sample group sg
-define :gl_populate_samples do |target, sg|
+define :populate_samples do |target, sg|
   puts "pop", target, sg
   return if target==nil or sg==nil
   sn = sample_names(sg)
@@ -41,18 +39,18 @@ define :gl_populate_samples do |target, sg|
     sn_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
   end
   sn_str += "}"
-  gl_osc_ctrl target, sn_str
+  osc_ctrl target, sn_str
 end
 
 # directs osc message to open stage control
-define :gl_osc_ctrl do |path, *args|
+define :osc_ctrl do |path, *args|
   ip = "127.0.0.1"
   port =  7777 # make sure to match Open Stage Control's osc-port value
 
   osc_send ip, port, path, *args
 end
 
-define :gl_osc_ctrl_inactive do |path, arg1, arg2=nil|
+define :osc_ctrl_inactive do |path, arg1, arg2=nil|
   ip = "127.0.0.1"
   port =  7777 # make sure to match Open Stage Control's osc-port value
 
