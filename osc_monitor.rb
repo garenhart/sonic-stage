@@ -73,10 +73,6 @@ end
 # CHORD LOOP
 with_fx :reverb, room: 0.8, mix: 0.6 do |r|
   live_loop :chord do
-    use_real_time
-    use_bpm cfg['tempo']
-    use_synth (cfg['chords']['synth']).to_sym
-    sync :tick
     play_chords cfg
   end
 end
@@ -86,11 +82,6 @@ end
 with_fx :reverb, room: 0.6, mix: 0.4 do |r|
   use_osc get(:anim_ip), get(:anim_port)
   live_loop :bass do
-    use_real_time
-    use_bpm cfg['tempo']
-    use_synth cfg['bass']['synth'].to_sym
-    puts "INST", cfg['bass']['synth']
-    cue :tick
     play_bass cfg
   end
 end
