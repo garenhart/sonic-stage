@@ -31,7 +31,12 @@ define :play_drum do |drum, cfg|
 end
 
 define :play_bass do |cfg|
+  use_real_time
+  use_bpm cfg['tempo']
+  cue :tick
   if (cfg['bass']['pattern'].size > 0) && (cfg['bass']['pattern'].size == cfg['tonics'].size)
+    use_synth cfg['bass']['synth'].to_sym
+    puts "INST", cfg['bass']['synth']
     16.times do |i|
       pos = cfg['bass']['pattern'].index(i)
       if (pos)
@@ -47,6 +52,10 @@ end
 
 define :play_chords do |cfg|
   if (cfg['chords']['pattern'].size > 0) && (cfg['chords']['pattern'].size == cfg['tonics'].size)
+    use_real_time
+    use_bpm cfg['tempo']
+    use_synth (cfg['chords']['synth']).to_sym
+    sync :tick
     seq = 1
     case cfg['pattern']
     when 1
