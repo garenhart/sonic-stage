@@ -32,7 +32,7 @@ cfg_def = "default.json"
 cfgFile = configPath + cfg_def
 # deserialize JSON file into cfg hash
 cfg = readJSON(cfgFile)
-osc_ctrl "/cfg_file", cfg_def # init the osc control
+osc_ctrl "/open", cfg_def # set the osc control file name
 
 puts "cfg", cfg
 
@@ -104,7 +104,7 @@ live_loop :osc_monitor do
   token = parse_addr addr
   
   case token[1]
-  when "cfg_file"
+  when "open"
     cfgFile = n[0]
     # deserialize JSON file into cfg hash
     cfg = readJSON(cfgFile)

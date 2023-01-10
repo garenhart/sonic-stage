@@ -3320,7 +3320,7 @@
                     "top": 0,
                     "left": 0,
                     "lock": false,
-                    "id": "cfg_file",
+                    "id": "open",
                     "visible": true,
                     "interaction": true,
                     "comments": "",
