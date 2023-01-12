@@ -20,7 +20,7 @@ define :init_time_state do |cfg|
   set :kick_inst, cfg['kick']['sample']
 end
 
-define :init_tonics do |cfg|
+define :reset_tonics do |cfg|
   cfg['tonics'] = []
   cfg['bass']['pattern'] = []
   cfg['chords']['pattern'] = []
