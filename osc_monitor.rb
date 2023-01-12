@@ -46,7 +46,6 @@ set :anim_port, 8000 # make sure to match Processing osc-port value
 # use_random_seed 31
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
-init_tonics cfg
 init_controls cfg
 init_time_state cfg
 # ---
@@ -116,7 +115,7 @@ live_loop :osc_monitor do
   when "pattern_mode"
     cfg['pattern_mode'] = n[0].to_i
     if n[0] == 1.0
-      init_tonics cfg
+      reset_tonics cfg
     end
     
   when "switch_loop"
