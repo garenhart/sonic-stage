@@ -23,7 +23,7 @@ define :populate_sample_groups do |target|
   for n in sg
     sg_str.push n.to_s
   end
-  osc target, sg_str.to_s
+  osc_ctrl target, sg_str.to_s
 end
 
 # populates osc variable target with the list of SPi sample names
@@ -44,19 +44,6 @@ end
 
 # directs osc message to open stage control
 define :osc_ctrl do |path, *args|
-  ip = "127.0.0.1"
-  port =  7777 # make sure to match Open Stage Control's osc-port value
-
-  osc_send ip, port, path, *args
+  osc_send get(:ctrl_ip), get(:ctrl_port), path, *args
 end
 
-define :osc_ctrl_inactive do |path, arg1, arg2=nil|
-  ip = "127.0.0.1"
-  port =  7777 # make sure to match Open Stage Control's osc-port value
-
-  if arg2==nil
-    osc_send ip, port, path, arg1
-  else
-    osc_send ip, port, path, arg1, arg2
-  end
-end
