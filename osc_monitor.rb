@@ -26,6 +26,14 @@ midi_in = "/midi:nanokey*/" # Korg nanoKey
 midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32 
 #######
 
+# Open Stage Control config
+set :ctrl_ip, "127.0.0.1"
+set :ctrl_port, 7777 # make sure to match Open Stage Control's osc-port value
+# Processing config
+set :anim_ip, "127.0.0.1"
+set :anim_port, 8000 # make sure to match Processing osc-port value
+
+puts "CTRL", :ctrl_ip, :ctrl_port
 # configuration folder path
 configPath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
 cfg_def = "default.json"
@@ -35,13 +43,6 @@ cfg = readJSON(cfgFile)
 osc_ctrl "/open", cfg_def # set the osc control file name
 
 puts "cfg", cfg
-
-# Open Stage Control config
-set :ctrl_ip, "127.0.0.1"
-set :ctrl_port, 7777 # make sure to match Open Stage Control's osc-port value
-# Processing config
-set :anim_ip, "127.0.0.1"
-set :anim_port, 8000 # make sure to match Processing osc-port value
 
 # use_random_seed 31
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
@@ -54,7 +55,7 @@ init_time_state cfg
 
 # DRUM LOOPS
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
-  use_osc get(:anim_ip), get(:anim_port)
+#  use_osc get(:anim_ip), get(:anim_port)
   live_loop :drum_kick do
     play_drum "kick", **cfg
   end
@@ -79,7 +80,7 @@ end
 
 # BASS LOOP
 with_fx :reverb, room: 0.6, mix: 0.4 do |r|
-  use_osc get(:anim_ip), get(:anim_port)
+#  use_osc get(:anim_ip), get(:anim_port)
   live_loop :bass do
     play_bass cfg
   end
@@ -88,7 +89,7 @@ end
 
 # OSC MESSAGE MONITORING LOOP
 live_loop :osc_monitor do
-  use_osc get(:ctrl_ip), get(:ctrl_port)
+#  use_osc get(:ctrl_ip), get(:ctrl_port)
   addr = "/osc:#{get(:ctrl_ip)}:#{get(:ctrl_port)}/**"
   n = sync addr
   token = parse_addr addr
@@ -133,7 +134,7 @@ live_loop :osc_monitor do
       cfg['bass']['pattern'].push val if i.even? # we only need X coord.
       bass_points_pos.push val
     end
-    osc "/bass_points_pos", *bass_points_pos # send back rounded positions to imitate "snap to grid"
+    osc_ctrl "/bass_points_pos", *bass_points_pos # send back rounded positions to imitate "snap to grid"
     
   when "chord_inst"
     cfg['chords']['synth'] = n[0].to_sym
@@ -146,7 +147,7 @@ live_loop :osc_monitor do
       cfg['chords']['pattern'].push val if i.even? # we only need X coord.
       chord_points_pos.push val
     end
-    osc "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid"
+    osc_ctrl "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid"
     
   when "chord_type"
     cfg['chords']['type'] = n[0].to_i
@@ -210,7 +211,7 @@ live_loop :osc_monitor do
     cfg['scale'] = n[0].to_sym
     the_scale = cfg['scale']
     puts "SSSSSSSSSSSSSSSSS", the_scale
-    osc "/scale_match", (notes_in_scale cfg['tonics'], the_scale, cfg['tonics'][0]) ? 1 : 0
+    osc_ctrl "/scale_match", (notes_in_scale cfg['tonics'], the_scale, cfg['tonics'][0]) ? 1 : 0
     init_keyboard(cfg['tonics'][0], the_scale)
   end
 end
