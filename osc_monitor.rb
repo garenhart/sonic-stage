@@ -235,24 +235,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
           use_synth :piano
           play note
           cfg['tonics'].push note
-          tonic_names = notes_to_names(cfg['tonics']).to_s
-          puts "TONICS", tonic_names
-          osc_ctrl("/bass_points", tonic_names)
-          osc_ctrl("/chord_points", tonic_names)
-          
-          bass_points_pos = []
-          cfg['bass']['pattern'] = []
-          cfg['chords']['pattern'] = []
-          cfg['tonics'].length.times do |i|
-            pos = dist_pos i, cfg['tonics'].length, 16
-            cfg['bass']['pattern'].push pos
-            cfg['chords']['pattern'].push pos
-            bass_points_pos.push pos
-            bass_points_pos.push 0 #arr vertical pos for osc
-          end
-          osc_ctrl("/bass_points_pos", *bass_points_pos)
-          osc_ctrl("/chord_points_pos", *bass_points_pos)
-          osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
+          init_osc_tonics cfg
       end
     end
     when 1
@@ -262,3 +245,4 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
   end
 end
 # END MIDI MESSAGE MONITORING LOOP
+
