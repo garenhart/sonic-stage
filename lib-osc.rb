@@ -25,6 +25,28 @@ define :init_osc_samples do |target, sg|
   osc_ctrl target, sn_str
 end
 
+define :init_osc_tonics do |cfg|
+  bass_points_pos = []
+  cfg['bass']['pattern'] = []
+  cfg['chords']['pattern'] = []
+  cfg['tonics'].length.times do |i|
+    pos = dist_pos i, cfg['tonics'].length, 16
+    cfg['bass']['pattern'].push pos
+    cfg['chords']['pattern'].push pos
+    bass_points_pos.push pos
+    bass_points_pos.push 0 #arr vertical pos for osc
+  end
+
+  tonic_names = notes_to_names(cfg['tonics']).to_s
+  puts "TONICS", tonic_names
+  osc_ctrl("/bass_points", tonic_names)
+  osc_ctrl("/chord_points", tonic_names)
+
+  osc_ctrl("/bass_points_pos", *bass_points_pos)
+  osc_ctrl("/chord_points_pos", *bass_points_pos)
+  osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
+end
+
 define :init_osc_keyboard do |tonic, mode|
   scale_notes = scale tonic, mode
   for note in 21..107
@@ -86,4 +108,3 @@ end
 #   end
 #   osc_ctrl target, sg_str.to_s
 # end
-
