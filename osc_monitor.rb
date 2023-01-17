@@ -47,7 +47,7 @@ puts "cfg", cfg
 # use_random_seed 31
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
-init_controls cfg
+init_osc_controls cfg
 init_time_state cfg
 # ---
 
@@ -99,7 +99,7 @@ live_loop :osc_monitor do
     cfgFile = n[0]
     # deserialize JSON file into cfg hash
     cfg = readJSON(cfgFile)
-    init_controls(cfg)
+    init_osc_controls(cfg)
     
   when "save"
     # cfgFileNew = suffix_filename(cfgFile, DateTime.now.strftime("%m-%d-%y-%k%M%S"))
@@ -163,15 +163,15 @@ live_loop :osc_monitor do
 
   when "kick_inst_groups"
     puts "KICK_INST", n[0].to_sym
-    populate_samples "/kick_inst_v", n[0].to_sym
+    init_osc_samples "/kick_inst_v", n[0].to_sym
   when "kick_inst"
     cfg['kick']['sample'] = n[0].to_sym
   when "snare_inst_groups"
-    populate_samples "/snare_inst_v", n[0].to_sym
+    init_osc_samples "/snare_inst_v", n[0].to_sym
   when "snare_inst"
     cfg['snare']['sample'] = n[0].to_sym
   when "cymbal_inst_groups"
-    populate_samples "/cymbal_inst_v", n[0].to_sym
+    init_osc_samples "/cymbal_inst_v", n[0].to_sym
   when "cymbal_inst"
     cfg['cymbal']['sample'] = n[0].to_sym
 
@@ -212,7 +212,7 @@ live_loop :osc_monitor do
     the_scale = cfg['scale']
     puts "SSSSSSSSSSSSSSSSS", the_scale
     osc_ctrl "/scale_match", (notes_in_scale cfg['tonics'], the_scale, cfg['tonics'][0]) ? 1 : 0
-    init_keyboard(cfg['tonics'][0], the_scale)
+    init_osc_keyboard(cfg['tonics'][0], the_scale)
   end
 end
 # END OSC MESSAGE MONITORING LOOP
