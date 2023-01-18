@@ -7,12 +7,6 @@
     "scale": "ionian",
     "loop_mode": 0,
     "tonics": [],
-    "bass":
-    {
-        "synth": "fm",
-        "amp": 0,
-        "pattern": []
-    },
     "chords":
     {
         "type": 1,
@@ -20,7 +14,13 @@
         "amp": 0,
         "pattern": []
     },
-    "cymbal":
+     "bass":
+    {
+        "synth": "fm",
+        "amp": 0,
+        "pattern": []
+    },
+   "cymbal":
     {
         "on": false,
         "sample": "drum_cymbal_closed",
