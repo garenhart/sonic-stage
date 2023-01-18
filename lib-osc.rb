@@ -26,6 +26,11 @@ define :init_osc_samples do |target, sg|
 end
 
 define :init_osc_tonics do |cfg|
+  tonic_names = notes_to_names(cfg['tonics']).to_s
+  puts "TONICS", tonic_names
+  osc_ctrl("/bass_points", tonic_names)
+  osc_ctrl("/chord_points", tonic_names)
+
   bass_points_pos = []
   cfg['bass']['pattern'] = []
   cfg['chords']['pattern'] = []
@@ -36,11 +41,6 @@ define :init_osc_tonics do |cfg|
     bass_points_pos.push pos
     bass_points_pos.push 0 #arr vertical pos for osc
   end
-
-  tonic_names = notes_to_names(cfg['tonics']).to_s
-  puts "TONICS", tonic_names
-  osc_ctrl("/bass_points", tonic_names)
-  osc_ctrl("/chord_points", tonic_names)
 
   osc_ctrl("/bass_points_pos", *bass_points_pos)
   osc_ctrl("/chord_points_pos", *bass_points_pos)
