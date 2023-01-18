@@ -11,6 +11,6 @@ define :dist_pos do |item_num, count, slots|
 end
 
 # Inserts 'el' after each element in 'arr'
-define :insert_after_each_element(arr, el)
+define :insert_after_each_element do |arr, el|
     arr.map {|x| [x, el]}.flatten
 end
