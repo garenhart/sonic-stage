@@ -9,4 +9,3 @@
 define :dist_pos do |item_num, count, slots| 
     pos = item_num * (slots / count)
 end
-
