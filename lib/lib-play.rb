@@ -119,12 +119,6 @@ define :play_chords do |cfg|
   end
 end
 
-# 'pseudo'-evenly distributes 'count' positions within number of 'slots'
-# returns distributed position for 'item_num' 
-define :dist_pos do |item_num, count, slots| 
-  pos = item_num * (slots / count)
-end
-
 # returns index of nearest note in scale
 define :nearest_ind do |note, tonic, mode_scale|
   return nil if mode_scale.empty?
