@@ -235,7 +235,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
         if pattern_mode == 1
           use_synth :piano
           play note
-          cfg['tonics'].push note
+          add_tonic cfg, note
           init_osc_tonics cfg
       end
     end
