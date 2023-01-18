@@ -10,6 +10,7 @@ use_debug false
 #load libraries
 require 'date'
 
+eval_file get(:sp_path)+"lib/lib-util.rb"
 eval_file get(:sp_path)+"lib/lib-io.rb"
 eval_file get(:sp_path)+"lib/lib-init.rb"
 eval_file get(:sp_path)+"lib/lib-chord-gen.rb"
