@@ -25,28 +25,6 @@ define :init_osc_samples do |target, sg|
   osc_ctrl target, sn_str
 end
 
-define :init_osc_tonics do |cfg|
-  tonic_names = notes_to_names(cfg['tonics']).to_s
-  puts "TONICS", tonic_names
-  osc_ctrl("/bass_points", tonic_names)
-  osc_ctrl("/chord_points", tonic_names)
-
-  bass_points_pos = []
-  cfg['bass']['pattern'] = []
-  cfg['chords']['pattern'] = []
-  cfg['tonics'].length.times do |i|
-    pos = dist_pos i, cfg['tonics'].length, 16
-    cfg['bass']['pattern'].push pos
-    cfg['chords']['pattern'].push pos
-    bass_points_pos.push pos
-    bass_points_pos.push 0 #arr vertical pos for osc
-  end
-
-  osc_ctrl("/bass_points_pos", *bass_points_pos)
-  osc_ctrl("/chord_points_pos", *bass_points_pos)
-  osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
-end
-
 define :init_osc_keyboard do |tonic, mode|
   scale_notes = scale tonic, mode
   for note in 21..107
@@ -77,6 +55,19 @@ define :init_osc_drums do |cfg|
   init_osc_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
 end
 
+define :init_osc_tonics do |cfg|
+  tonic_names = notes_to_names(cfg['tonics']).to_s
+  puts "TONICS", tonic_names
+  osc_ctrl("/bass_points", tonic_names)
+  osc_ctrl("/chord_points", tonic_names)
+
+  bass_points_pos = insert_after_each_element(cfg['bass']['pattern'], 0)
+  chord_points_pos = insert_after_each_element(cfg['chords']['pattern'], 0)
+  osc_ctrl("/bass_points_pos", *bass_points_pos)
+  osc_ctrl("/chord_points_pos", *chord_points_pos)
+  osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
+end
+
 define :init_osc_controls do |cfg|
   osc_ctrl "/tempo", cfg['tempo']
   osc_ctrl "/pattern_mode", cfg['pattern_mode']
@@ -89,9 +80,8 @@ define :init_osc_controls do |cfg|
   osc_ctrl "/chord_type", cfg['chords']['type']
   osc_ctrl "/chord_inst", cfg['chords']['synth']
   osc_ctrl "/chord_amp", cfg['chords']['amp']
-  
-  osc_ctrl "/bass_points", cfg['tonics'].length
-  osc_ctrl "/chord_points", cfg['tonics'].length
+
+  init_osc_tonics cfg
   init_osc_keyboard(cfg['tonics'][0], cfg['scale'])
 
   init_osc_drums cfg

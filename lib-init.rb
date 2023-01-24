@@ -45,7 +45,7 @@ define :init_bass_pattern do |cfg|
   cfg['bass']['pattern'] = []
   cfg['tonics'].length.times do |i|
     pos = dist_pos i, cfg['tonics'].length, 16
-    cfg['bass']['pattern'].push [pos, cfg['tonics'][i]]
+    cfg['bass']['pattern'].push pos
   end
 end
 
@@ -53,7 +53,6 @@ define :init_chords_pattern do |cfg|
   cfg['chords']['pattern'] = []
   cfg['tonics'].length.times do |i|
     pos = dist_pos i, cfg['tonics'].length, 16
-    cfg['chords']['pattern'].push [pos, cfg['tonics'][i]]
+    cfg['chords']['pattern'].push pos
   end
 end
-

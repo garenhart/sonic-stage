@@ -10,7 +10,7 @@ define :dist_pos do |item_num, count, slots|
     pos = item_num * (slots / count)
 end
 
-# Inserts 'el' after each element in 'arr'
+# Inserts 'el' after each element in 'arr' and returns the new array
 define :insert_after_each_element do |arr, el|
     arr.map {|x| [x, el]}.flatten
 end
