@@ -52,8 +52,6 @@ init_osc_controls cfg
 init_time_state cfg
 # ---
 
-# END DRUM CONFIG
-
 # DRUM LOOPS
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
 #  use_osc get(:anim_ip), get(:anim_port)
