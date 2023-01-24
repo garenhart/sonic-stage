@@ -236,6 +236,8 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
           use_synth :piano
           play note
           add_tonic cfg, note
+          init_bass_pattern cfg
+          init_chords_pattern cfg
           init_osc_tonics cfg
       end
     end
