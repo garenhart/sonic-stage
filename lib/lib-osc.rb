@@ -65,7 +65,29 @@ define :update_osc_chord_point_positions do |cfg|
   osc_ctrl("/chord_points_pos", *pos)
 end
 
+define :update_osc_bass_points do |cfg|
+  tonic_names = notes_to_names(cfg['tonics'])
+  pos = insert_after_each_element(cfg['bass']['pattern'], 0)
+  pts = [tonic_names, pos]
+  puts "BASS PTS:", pts
+  osc_ctrl("/bass_points", *[*tonic_names, *pos])
+end
+
+define :update_osc_chord_points do |cfg|
+  tonic_names = notes_to_names(cfg['tonics'])
+  pos = insert_after_each_element(cfg['chords']['pattern'], 0)
+  pts = [tonic_names, pos]
+  puts "CHORD PTS:", pts
+  osc_ctrl("/chord_points", *[*tonic_names, *pos])
+end
+
 define :init_osc_tonics do |cfg|
+  update_osc_bass_points cfg
+  update_osc_chord_points cfg
+  osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
+end
+
+define :init_osc_tonics1 do |cfg|
   tonic_names = notes_to_names(cfg['tonics']).to_s
   puts "TONICS", tonic_names
   osc_ctrl("/bass_points", tonic_names)
