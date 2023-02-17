@@ -101,10 +101,9 @@ live_loop :osc_monitor do
     init_osc_controls(cfg)
     
   when "save"
-    # cfgFileNew = suffix_filename(cfgFile, DateTime.now.strftime("%m-%d-%y-%k%M%S"))
     # serialize cfg hash into JSON file
-    write_unique_JSON(cfgFile, cfg)
-    osc_ctrl "/NOTIFY", "clock", "Configuration saved"
+    new_name = write_unique_JSON(cfgFile, cfg)
+    osc_ctrl "/NOTIFY", "clock", new_name + " saved"
     
   when "tempo"
     cfg['tempo'] = n[0].to_i
