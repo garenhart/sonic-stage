@@ -3549,7 +3549,7 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "onCreate": "",
+            "onCreate": "  // setting initial values just for testing without osc client\n  setVar('bass_line', 'pts', 3)\n  set('bass_line', [2, 0, 5, 0, 12, 0])",
             "onValue": "console.log(\"bass points: \" + value)\nif (Array.isArray(value)) {\n  const split = value.length/3;\n  // first 1/3 of the array are points\n  // second 1/3 are 2D coordinates\n  const pts = value.slice(0, split)\n  const pos = value.slice(split, value.length)\n  console.log(\"pts: \" + pts)\n  console.log(\"pos: \" + pos)\n  \n  setVar('bass_line', 'pts', pts)\n  set('bass_line', pos)\n} else {\n  setVar('bass_line', 'pts', [])\n  set('bass_line', [])\n}\n\n"
           },
           {
@@ -3585,7 +3585,7 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onValue": "console.log(\"chord points: \" + value)\nif (Array.isArray(value)) {\n  const split = value.length/3;\n  // first 1/3 of the array are points\n  // second 1/3 are 2D coordinates\n  const pts = value.slice(0, split)\n  const pos = value.slice(split, value.length)\n  console.log(\"pts: \" + pts)\n  console.log(\"pos: \" + pos)\n  \n  setVar('chord_line', 'pts', pts)\n  set('chord_line', pos)\n} else {\n  setVar('chord_line', 'pts', [])\n  set('chord_line', [])\n}\n",
-            "onCreate": "",
+            "onCreate": "  // setting initial values just for testing without osc client\n  setVar('chord_line', 'pts', 3)\n  set('chord_line', [3, 0, 8, 0, 15, 0])",
             "lock": false
           },
           {
