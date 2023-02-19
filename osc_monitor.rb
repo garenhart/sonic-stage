@@ -125,31 +125,23 @@ live_loop :osc_monitor do
     cfg['bass']['synth'] = n[0].to_sym
     
   when "bass_line"
-    bass_points_pos = []
-    cfg['bass']['pattern'] = []
-    n.length.times do |i|
-      val = n[i].round
-      cfg['bass']['pattern'].push val if i.even? # we only need X coord.
-      bass_points_pos.push val
-    end
-    osc_ctrl "/bass_points_pos", *bass_points_pos # send back rounded positions to imitate "snap to grid"
-    
+    # add elements with even indices (0, 2, 4...) of array n to bass pattern
+    # (we only need x coordinates)
+    cfg['bass']['pattern'] = n.select.with_index { |_, i| i.even? }
+    puts "bass_line", cfg['bass']['pattern']
+
   when "chord_inst"
     cfg['chords']['synth'] = n[0].to_sym
-    
-  when "chord_line"
-    chord_points_pos = []
-    cfg['chords']['pattern'] = []
-    n.length.times do |i|
-      val = n[i].round
-      cfg['chords']['pattern'].push val if i.even? # we only need X coord.
-      chord_points_pos.push val
-    end
-    osc_ctrl "/chord_points_pos", chord_points_pos.to_s # send back rounded positions to imitate "snap to grid"
     
   when "chord_type"
     cfg['chords']['type'] = n[0].to_i
     puts "TYPE", cfg['chords']['type']
+
+  when "chord_line"
+    # add elements with even indices (0, 2, 4...) of array n to bass pattern
+    # (we only need x coordinates)
+    cfg['chords']['pattern'] = n.select.with_index { |_, i| i.even? }
+    puts "chord line", cfg['chords']['pattern']
 
   when "dropdown_drum_tempo_factor" # update Time State
     cfg['drum_tempo_factor'] = n[0].to_i
