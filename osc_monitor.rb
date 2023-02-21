@@ -126,8 +126,8 @@ live_loop :osc_monitor do
     
   when "bass_line_updated"
     # add elements with even indices (0, 2, 4...) of array n to bass pattern
-    # (we only need x coordinates)
-    cfg['bass']['pattern'] = n.select.with_index { |_, i| i.even? }
+    # (we only need x coordinates), and convert to integer
+    cfg['bass']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
     puts "bass_line_updated", cfg['bass']['pattern']
 
   when "chord_inst"
@@ -139,8 +139,8 @@ live_loop :osc_monitor do
 
   when "chord_line_updated"
     # add elements with even indices (0, 2, 4...) of array n to bass pattern
-    # (we only need x coordinates)
-    cfg['chords']['pattern'] = n.select.with_index { |_, i| i.even? }
+    # (we only need x coordinates), and convert to integer
+    cfg['chords']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
     puts "chord_line_updated", cfg['chords']['pattern']
 
   when "dropdown_drum_tempo_factor" # update Time State
