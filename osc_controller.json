@@ -3368,7 +3368,7 @@
                     "interaction": true,
                     "comments": "",
                     "width": 30,
-                    "height": 20,
+                    "height": "auto",
                     "expand": "false",
                     "colorText": "auto",
                     "colorWidget": "auto",
