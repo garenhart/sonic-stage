@@ -124,11 +124,11 @@ live_loop :osc_monitor do
   when "bass_inst"
     cfg['bass']['synth'] = n[0].to_sym
     
-  when "bass_line"
+  when "bass_line_updated"
     # add elements with even indices (0, 2, 4...) of array n to bass pattern
     # (we only need x coordinates)
     cfg['bass']['pattern'] = n.select.with_index { |_, i| i.even? }
-    puts "bass_line", cfg['bass']['pattern']
+    puts "bass_line_updated", cfg['bass']['pattern']
 
   when "chord_inst"
     cfg['chords']['synth'] = n[0].to_sym
@@ -137,11 +137,11 @@ live_loop :osc_monitor do
     cfg['chords']['type'] = n[0].to_i
     puts "TYPE", cfg['chords']['type']
 
-  when "chord_line"
+  when "chord_line_updated"
     # add elements with even indices (0, 2, 4...) of array n to bass pattern
     # (we only need x coordinates)
     cfg['chords']['pattern'] = n.select.with_index { |_, i| i.even? }
-    puts "chord line", cfg['chords']['pattern']
+    puts "chord_line_updated", cfg['chords']['pattern']
 
   when "dropdown_drum_tempo_factor" # update Time State
     cfg['drum_tempo_factor'] = n[0].to_i

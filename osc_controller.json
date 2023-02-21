@@ -1230,7 +1230,7 @@
                         "logScaleX": false,
                         "logScaleY": false,
                         "sensitivity": 1,
-                        "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n}",
+                        "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/chord_line_updated', ...value)\n}",
                         "doubleTap": false,
                         "borderRadius": "auto"
                       },
@@ -1640,7 +1640,7 @@
                         "logScaleX": false,
                         "logScaleY": false,
                         "sensitivity": 1,
-                        "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n}",
+                        "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/bass_line_updated', ...value)\n}",
                         "doubleTap": false
                       },
                       {
@@ -3368,7 +3368,7 @@
                     "interaction": true,
                     "comments": "",
                     "width": 30,
-                    "height": "auto",
+                    "height": 20,
                     "expand": "false",
                     "colorText": "auto",
                     "colorWidget": "auto",
