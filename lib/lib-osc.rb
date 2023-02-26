@@ -84,11 +84,13 @@ define :init_osc_controls do |cfg|
   osc_ctrl "/switch_loop", cfg['loop_mode']
   osc_ctrl "/mode", cfg['mode']
   osc_ctrl "/scale", cfg['scale']
-  osc_ctrl "/bass_inst", cfg['bass']['synth']
+  osc_ctrl "/bass", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
+  osc_ctrl "/bass_inst", cfg['bass']['synth']
+  osc_ctrl "/chord", cfg['chords']['on'] ? 1 : 0
+  osc_ctrl "/chord_amp", cfg['chords']['amp']
   osc_ctrl "/chord_type", cfg['chords']['type']
   osc_ctrl "/chord_inst", cfg['chords']['synth']
-  osc_ctrl "/chord_amp", cfg['chords']['amp']
 
   init_osc_tonics cfg
   init_osc_keyboard(cfg['tonics'][0], cfg['scale'])
