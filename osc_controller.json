@@ -75,25 +75,12 @@
         "widgets": [
           {
             "type": "panel",
-            "id": "panel_controller",
-            "comments": "",
-            "value": "",
-            "default": "",
-            "linkId": "",
-            "address": "auto",
-            "preArgs": "",
-            "typeTags": "",
-            "decimals": 2,
-            "target": "",
-            "ignoreDefaults": false,
-            "bypass": false,
-            "onCreate": "",
-            "onValue": "",
-            "lock": false,
             "top": "auto",
             "left": "auto",
+            "id": "panel_controller",
             "visible": true,
             "interaction": true,
+            "comments": "",
             "width": "100%",
             "height": "100%",
             "expand": true,
@@ -108,6 +95,20 @@
             "padding": "auto",
             "html": "",
             "css": "",
+            "value": "",
+            "default": "",
+            "linkId": "",
+            "address": "auto",
+            "preArgs": "",
+            "typeTags": "",
+            "decimals": 2,
+            "target": "",
+            "ignoreDefaults": false,
+            "bypass": false,
+            "onValue": "",
+            "onCreate": "",
+            "lock": false,
+            "borderRadius": "auto",
             "colorBg": "auto",
             "layout": "vertical",
             "justify": "start",
@@ -1282,6 +1283,52 @@
                             "borderRadius": "auto"
                           },
                           {
+                            "type": "button",
+                            "top": 10,
+                            "left": 70,
+                            "id": "chord",
+                            "visible": true,
+                            "interaction": true,
+                            "comments": "",
+                            "width": "4%",
+                            "height": "auto",
+                            "expand": "false",
+                            "colorText": "auto",
+                            "colorWidget": "darkorange",
+                            "colorStroke": "auto",
+                            "colorFill": "auto",
+                            "alphaStroke": "auto",
+                            "alphaFillOff": "auto",
+                            "alphaFillOn": "auto",
+                            "lineWidth": "auto",
+                            "padding": "auto",
+                            "html": "",
+                            "css": "",
+                            "colorTextOn": "auto",
+                            "label": "#{\n@{this} == 1 ? \"^volume-up\" : \"^volume-mute\" \n}",
+                            "vertical": false,
+                            "wrap": false,
+                            "on": 1,
+                            "off": 0,
+                            "mode": "toggle",
+                            "doubleTap": false,
+                            "value": "",
+                            "default": "",
+                            "linkId": "",
+                            "address": "auto",
+                            "preArgs": "",
+                            "typeTags": "",
+                            "decimals": 2,
+                            "target": "",
+                            "ignoreDefaults": false,
+                            "bypass": false,
+                            "onValue": "",
+                            "onCreate": "",
+                            "lock": false,
+                            "borderRadius": "auto",
+                            "decoupled": false
+                          },
+                          {
                             "type": "fader",
                             "id": "chord_amp",
                             "comments": "",
@@ -1690,6 +1737,52 @@
                             "onValue": "",
                             "align": "center",
                             "borderRadius": "auto"
+                          },
+                          {
+                            "type": "button",
+                            "top": 10,
+                            "left": 80,
+                            "id": "bass",
+                            "visible": true,
+                            "interaction": true,
+                            "comments": "",
+                            "width": "4%",
+                            "height": "auto",
+                            "expand": "false",
+                            "colorText": "auto",
+                            "colorWidget": "darkorange",
+                            "colorStroke": "auto",
+                            "colorFill": "auto",
+                            "alphaStroke": "auto",
+                            "alphaFillOff": "auto",
+                            "alphaFillOn": "auto",
+                            "lineWidth": "auto",
+                            "padding": "auto",
+                            "html": "",
+                            "css": "",
+                            "colorTextOn": "auto",
+                            "label": "#{\n@{this} == 1 ? \"^volume-up\" : \"^volume-mute\" \n}",
+                            "vertical": false,
+                            "wrap": false,
+                            "on": 1,
+                            "off": 0,
+                            "mode": "toggle",
+                            "doubleTap": false,
+                            "value": "",
+                            "default": "",
+                            "linkId": "",
+                            "address": "auto",
+                            "preArgs": "",
+                            "typeTags": "",
+                            "decimals": 2,
+                            "target": "",
+                            "ignoreDefaults": false,
+                            "bypass": false,
+                            "onValue": "",
+                            "onCreate": "",
+                            "lock": false,
+                            "borderRadius": "auto",
+                            "decoupled": false
                           },
                           {
                             "type": "fader",
@@ -3411,12 +3504,10 @@
                 "borderRadius": "auto"
               }
             ],
-            "tabs": [],
-            "borderRadius": "auto"
+            "tabs": []
           },
           {
             "type": "variable",
-            "lock": false,
             "id": "scales_m",
             "comments": "",
             "value": {
@@ -3438,10 +3529,12 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onCreate": "",
-            "onValue": ""
+            "onValue": "",
+            "lock": false
           },
           {
             "type": "variable",
+            "lock": false,
             "id": "scales_hm",
             "comments": "",
             "value": {
@@ -3462,9 +3555,8 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "onValue": "",
             "onCreate": "",
-            "lock": false
+            "onValue": ""
           },
           {
             "type": "variable",
@@ -3538,7 +3630,6 @@
           },
           {
             "type": "variable",
-            "lock": false,
             "id": "bass_points",
             "comments": "",
             "value": "",
@@ -3551,11 +3642,13 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
+            "onValue": "console.log(\"bass points: \" + value)\nif (Array.isArray(value)) {\n  const split = value.length/3;\n  // first 1/3 of the array are points\n  // second 1/3 are 2D coordinates\n  const pts = value.slice(0, split)\n  const pos = value.slice(split, value.length)\n  console.log(\"pts: \" + pts)\n  console.log(\"pos: \" + pos)\n  \n  setVar('bass_line', 'pts', pts)\n  set('bass_line', pos)\n} else {\n  setVar('bass_line', 'pts', [])\n  set('bass_line', [])\n}\n\n",
             "onCreate": "  // setting initial values just for testing without osc client\n  setVar('bass_line', 'pts', 3)\n  set('bass_line', [2, 0, 5, 0, 12, 0])",
-            "onValue": "console.log(\"bass points: \" + value)\nif (Array.isArray(value)) {\n  const split = value.length/3;\n  // first 1/3 of the array are points\n  // second 1/3 are 2D coordinates\n  const pts = value.slice(0, split)\n  const pos = value.slice(split, value.length)\n  console.log(\"pts: \" + pts)\n  console.log(\"pos: \" + pos)\n  \n  setVar('bass_line', 'pts', pts)\n  set('bass_line', pos)\n} else {\n  setVar('bass_line', 'pts', [])\n  set('bass_line', [])\n}\n\n"
+            "lock": false
           },
           {
             "type": "variable",
+            "lock": false,
             "id": "chord_points",
             "comments": "",
             "value": "",
@@ -3568,13 +3661,11 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "onValue": "console.log(\"chord points: \" + value)\nif (Array.isArray(value)) {\n  const split = value.length/3;\n  // first 1/3 of the array are points\n  // second 1/3 are 2D coordinates\n  const pts = value.slice(0, split)\n  const pos = value.slice(split, value.length)\n  console.log(\"pts: \" + pts)\n  console.log(\"pos: \" + pos)\n  \n  setVar('chord_line', 'pts', pts)\n  set('chord_line', pos)\n} else {\n  setVar('chord_line', 'pts', [])\n  set('chord_line', [])\n}\n",
             "onCreate": "  // setting initial values just for testing without osc client\n  setVar('chord_line', 'pts', 3)\n  set('chord_line', [3, 0, 8, 0, 15, 0])",
-            "lock": false
+            "onValue": "console.log(\"chord points: \" + value)\nif (Array.isArray(value)) {\n  const split = value.length/3;\n  // first 1/3 of the array are points\n  // second 1/3 are 2D coordinates\n  const pts = value.slice(0, split)\n  const pos = value.slice(split, value.length)\n  console.log(\"pts: \" + pts)\n  console.log(\"pos: \" + pos)\n  \n  setVar('chord_line', 'pts', pts)\n  set('chord_line', pos)\n} else {\n  setVar('chord_line', 'pts', [])\n  set('chord_line', [])\n}\n"
           },
           {
             "type": "variable",
-            "lock": false,
             "id": "inst_synths",
             "comments": "",
             "value": {
@@ -3632,8 +3723,9 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
+            "onValue": "",
             "onCreate": "",
-            "onValue": ""
+            "lock": false
           },
           {
             "type": "variable",
@@ -3655,6 +3747,7 @@
           },
           {
             "type": "variable",
+            "lock": false,
             "id": "tonic_point",
             "comments": "",
             "value": 0,
@@ -3667,13 +3760,11 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
-            "onValue": "",
             "onCreate": "",
-            "lock": false
+            "onValue": ""
           },
           {
             "type": "variable",
-            "lock": false,
             "id": "sample_groups",
             "comments": "",
             "value": {
@@ -3701,8 +3792,9 @@
             "target": "",
             "ignoreDefaults": false,
             "bypass": false,
+            "onValue": "",
             "onCreate": "",
-            "onValue": ""
+            "lock": false
           },
           {
             "type": "variable",
@@ -3724,6 +3816,7 @@
           },
           {
             "type": "variable",
+            "lock": false,
             "id": "snare_inst_v",
             "comments": "populated by SPi - populates snare_inst",
             "value": "",
@@ -3737,8 +3830,7 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onCreate": "",
-            "onValue": "",
-            "lock": false
+            "onValue": ""
           },
           {
             "type": "variable",

@@ -165,13 +165,17 @@ live_loop :osc_monitor do
   when "cymbal_inst"
     cfg['cymbal']['sample'] = n[0].to_sym
 
-# set drum "on" status based on the button state
-  when "kick"
-    cfg['kick']['on'] = n[0]==1.0
-  when "snare"
-    cfg['snare']['on'] = n[0]==1.0
+# set instrument "on" status based on the button state
+  when "chord"
+    cfg['chords']['on'] = n[0]==1.0
+  when "bass"
+    cfg['bass']['on'] = n[0]==1.0
   when "cymbal"
     cfg['cymbal']['on'] = n[0]==1.0
+  when "snare"
+    cfg['snare']['on'] = n[0]==1.0
+  when "kick"
+    cfg['kick']['on'] = n[0]==1.0
     
     #set amp
   when "bass_amp"
