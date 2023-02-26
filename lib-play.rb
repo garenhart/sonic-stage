@@ -33,13 +33,15 @@ end
 define :play_bass do |cfg|
   use_real_time
   use_bpm cfg['tempo']
+  on = cfg['bass']['on']
+
   cue :tick
   if (cfg['bass']['pattern'].size > 0) && (cfg['bass']['pattern'].size == cfg['tonics'].size)
     use_synth cfg['bass']['synth'].to_sym
     puts "INST", cfg['bass']['synth']
     16.times do |i|
       pos = cfg['bass']['pattern'].index(i)
-      if (pos)
+      if (on && pos)
         play cfg['tonics'][pos], amp: cfg['bass']['amp']
         animate_POC(cfg['tonics'][pos])
       end
@@ -55,6 +57,8 @@ define :play_chords do |cfg|
     use_real_time
     use_bpm cfg['tempo']
     use_synth (cfg['chords']['synth']).to_sym
+    on = cfg['chords']['on']
+
     sync :tick
     seq = 1
     case cfg['pattern']
@@ -87,7 +91,7 @@ define :play_chords do |cfg|
     last_pos = 0
     16.times do |pos|
       i = cfg['chords']['pattern'].index(pos)
-      if (i)
+      if ( on && i)
         last_ind = pos
         # ind = nearest_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
         ind = note_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
