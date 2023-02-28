@@ -19,15 +19,25 @@ define :sample_group do |s|
   s.split("_").first
 end
 
-# Time State drum beats
-define :init_time_state do |cfg|
-  set :cymbal, cfg['cymbal']['beats']
-  set :snare, cfg['snare']['beats']
-  set :kick, cfg['kick']['beats']
+# Time State chords
+define :init_time_state_chords do |cfg|
+end
 
-  set :cymbal_inst, cfg['cymbal']['sample']
-  set :snare_inst, cfg['snare']['sample']
-  set :kick_inst, cfg['kick']['sample']
+# Time State bass
+define :init_time_state_drums do |cfg|
+end
+
+
+# Time State drums
+define :init_time_state_drums do |cfg|
+  set :cymbal, cfg['cymbal']
+  set :snare, cfg['snare']
+  set :kick, cfg['kick']
+end
+
+# Time State
+define :init_time_state do |cfg|
+  init_time_state_drums cfg
 end
 
 define :reset_tonics do |cfg|
