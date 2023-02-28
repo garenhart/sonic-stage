@@ -14,15 +14,14 @@ define :play_drum do |drum, cfg|
   use_bpm cfg['tempo']
   sync :tick
   # get sample instrument and the beats from Time State
-  drum_sample = get((drum+"_inst").to_sym)
-  beats = get(drum.to_sym) 
-  amp = cfg[drum]['amp']
-  on = cfg[drum]['on']
+  drum = get(drum.to_sym) 
+  beats = drum['beats']
+  amp = drum['amp']
 
   density tempo_factor do
     beats.length.times do |i|
-      if on && (beats[i] == "1")
-        sample drum_sample, amp: amp
+      if drum['on'] && (beats[i] == "1")
+        sample drum['sample'], amp: amp
         animate_drum drum, amp
       end
       sleep 0.25
