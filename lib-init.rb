@@ -24,15 +24,13 @@ define :init_time_state_chords do |cfg|
 end
 
 # Time State bass
-define :init_time_state_drums do |cfg|
+define :init_time_state_bass do |cfg|
 end
 
 
 # Time State drums
 define :init_time_state_drums do |cfg|
-  set :cymbal, cfg['cymbal']
-  set :snare, cfg['snare']
-  set :kick, cfg['kick']
+  set :drums, cfg['drums']
 end
 
 # Time State
@@ -65,4 +63,14 @@ define :init_chords_pattern do |cfg|
     pos = dist_pos i, cfg['tonics'].length, 16
     cfg['chords']['pattern'].push pos
   end
+end
+
+# sets specific drum configuration component
+define :init_drum_component do |cfg, d, c, v|
+  cfg['drums'][d][c] = v  
+end
+
+# sets specified drum beat
+define :init_drum_beat do |cfg, d, b, v|
+  cfg['drums'][d]['beats'][b] = v  
 end
