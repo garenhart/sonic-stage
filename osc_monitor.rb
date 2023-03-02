@@ -147,7 +147,7 @@ live_loop :osc_monitor do
     cfg['drums']['tempo_factor'] = n[0].to_i
     
   # drum section ==================================
-  when "drums" # update Time State
+  when "drums_update" # update Time State
     if n[0] == 0.0
       init_time_state cfg
     end
