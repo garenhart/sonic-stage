@@ -33,15 +33,15 @@ define :init_osc_keyboard do |tonic, mode|
 end
 
 define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
-  sample_gr = sample_group(cfg[d]['sample'])
-  osc_ctrl "/#{d}", cfg[d]['on'] ? 1 : 0
-  osc_ctrl "/#{d}_amp", cfg[d]['amp']
+  sample_gr = sample_group(cfg['drums'][d]['sample'])
+  osc_ctrl "/#{d}", cfg['drums'][d]['on'] ? 1 : 0
+  osc_ctrl "/#{d}_amp", cfg['drums'][d]['amp']
   osc_ctrl gr_ctrl, sample_gr
   init_osc_samples inst_ctrl + "_v", sample_gr.to_sym
   sleep 0.125 # sleeping between populating and selecting seems to make it work 
-  osc_ctrl inst_ctrl, (cfg[d]['sample'])
+  osc_ctrl inst_ctrl, (cfg['drums'][d]['sample'])
   16.times do |i|
-    osc_ctrl "/#{d}_beats/#{i}", cfg[d]['beats'][i] #should figure out how to populate beats without looping through array
+    osc_ctrl "/#{d}_beats/#{i}", cfg['drums'][d]['beats'][i] #should figure out how to populate beats without looping through array
   end
   # osc_ctrl "/#{d}_beats", cfg[d]['beats']
   # set (d.to_sym), cfg[d]['beats'] #set the beats to for the drum
@@ -49,7 +49,7 @@ end
 
 define :init_osc_drums do |cfg|
   osc_ctrl "/drums", 1
-  osc_ctrl "/dropdown_drum_tempo_factor", cfg['drum_tempo_factor']
+  osc_ctrl "/dropdown_drum_tempo_factor", cfg['drums']['tempo_factor']
   init_osc_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
   init_osc_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
   init_osc_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
@@ -81,9 +81,9 @@ define :init_osc_controls do |cfg|
   osc_ctrl "/tempo", cfg['tempo']
   osc_ctrl "/pattern_mode", cfg['pattern_mode']
   osc_ctrl "/pattern", cfg['pattern']
-  osc_ctrl "/switch_loop", cfg['loop_mode']
   osc_ctrl "/mode", cfg['mode']
   osc_ctrl "/scale", cfg['scale']
+  osc_ctrl "/switch_loop", cfg['loop_mode']
   osc_ctrl "/bass", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
   osc_ctrl "/bass_inst", cfg['bass']['synth']
