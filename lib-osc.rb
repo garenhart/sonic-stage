@@ -48,7 +48,7 @@ define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
 end
 
 define :init_osc_drums do |cfg|
-  osc_ctrl "/drums", 1
+  osc_ctrl "/drums_update", 1
   osc_ctrl "/dropdown_drum_tempo_factor", cfg['drums']['tempo_factor']
   osc_ctrl "/drums_auto", cfg['drums']['auto'] ? 1 : 0
   init_osc_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
