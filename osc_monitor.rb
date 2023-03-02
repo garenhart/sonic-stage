@@ -170,11 +170,11 @@ live_loop :osc_monitor do
   when "cymbal_inst"
     init_drum_component cfg, "cymbal", "sample", n[0].to_sym
  
-  when "cymbal"
+  when "cymbal_on"
     init_drum_component cfg, "cymbal", "on", n[0]==1.0
-  when "snare"
+  when "snare_on"
     init_drum_component cfg, "snare", "on", n[0]==1.0
-  when "kick"
+  when "kick_on"
     init_drum_component cfg, "kick", "on", n[0]==1.0
 
   # drum amps
