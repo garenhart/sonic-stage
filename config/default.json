@@ -24,6 +24,7 @@
     "drums":
     {
         "tempo_factor": 1,
+        "auto": false,
         "cymbal":
         {
             "on": false,

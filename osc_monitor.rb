@@ -147,10 +147,13 @@ live_loop :osc_monitor do
     cfg['drums']['tempo_factor'] = n[0].to_i
     
   # drum section ==================================
-  when "drums" # update Time State beats
+  when "drums" # update Time State
     if n[0] == 0.0
       init_time_state cfg
     end
+
+  when "drums_auto"
+   cfg['drums']['auto'] = n[0].to_i == 1 ? true : false
 
   # drum instruments
   when "kick_inst_groups"
@@ -166,15 +169,22 @@ live_loop :osc_monitor do
     init_osc_samples "/cymbal_inst_v", n[0].to_sym
   when "cymbal_inst"
     init_drum_component cfg, "cymbal", "sample", n[0].to_sym
-  
-  # drum amplitudes
-  when "kick_amp"
-    init_drum_component cfg, "kick", "amp", n[0]
-  when "snare_amp"
-    init_drum_component cfg, "snare", "amp", n[0]
+ 
+  when "cymbal"
+    init_drum_component cfg, "cymbal", "on", n[0]==1.0
+  when "snare"
+    init_drum_component cfg, "snare", "on", n[0]==1.0
+  when "kick"
+    init_drum_component cfg, "kick", "on", n[0]==1.0
+
+  # drum amps
   when "cymbal_amp"
     init_drum_component cfg, "cymbal", "amp", n[0]
-    
+  when "snare_amp"
+    init_drum_component cfg, "snare", "amp", n[0]
+  when "kick_amp"
+    init_drum_component cfg, "kick", "amp", n[0]
+   
   # drum beats
   when "kick_beats"
     init_drum_beat cfg, "kick", token[2].to_i, n[0].to_i.to_s
@@ -189,12 +199,6 @@ live_loop :osc_monitor do
     cfg['chords']['on'] = n[0]==1.0
   when "bass"
     cfg['bass']['on'] = n[0]==1.0
-  when "cymbal"
-    cfg['drums']['cymbal']['on'] = n[0]==1.0
-  when "snare"
-    cfg['drums']['snare']['on'] = n[0]==1.0
-  when "kick"
-    cfg['drums']['kick']['on'] = n[0]==1.0
     
     #set amp
   when "bass_amp"
