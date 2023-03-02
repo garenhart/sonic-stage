@@ -50,6 +50,7 @@ end
 define :init_osc_drums do |cfg|
   osc_ctrl "/drums", 1
   osc_ctrl "/dropdown_drum_tempo_factor", cfg['drums']['tempo_factor']
+  osc_ctrl "/drums_auto", cfg['drums']['auto'] ? 1 : 0
   init_osc_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
   init_osc_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
   init_osc_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
