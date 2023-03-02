@@ -144,26 +144,45 @@ live_loop :osc_monitor do
     puts "chord_line_updated", cfg['chords']['pattern']
 
   when "dropdown_drum_tempo_factor" # update Time State
-    cfg['drum_tempo_factor'] = n[0].to_i
+    cfg['drums']['tempo_factor'] = n[0].to_i
     
+  # drum section ==================================
   when "drums" # update Time State beats
     if n[0] == 0.0
       init_time_state cfg
     end
 
+  # drum instruments
   when "kick_inst_groups"
     puts "KICK_INST", n[0].to_sym
     init_osc_samples "/kick_inst_v", n[0].to_sym
   when "kick_inst"
-    cfg['kick']['sample'] = n[0].to_sym
+    init_drum_component cfg, "kick", "sample", n[0].to_sym
   when "snare_inst_groups"
     init_osc_samples "/snare_inst_v", n[0].to_sym
   when "snare_inst"
-    cfg['snare']['sample'] = n[0].to_sym
+    init_drum_component cfg, "snare", "sample", n[0].to_sym
   when "cymbal_inst_groups"
     init_osc_samples "/cymbal_inst_v", n[0].to_sym
   when "cymbal_inst"
-    cfg['cymbal']['sample'] = n[0].to_sym
+    init_drum_component cfg, "cymbal", "sample", n[0].to_sym
+  
+  # drum amplitudes
+  when "kick_amp"
+    init_drum_component cfg, "kick", "amp", n[0]
+  when "snare_amp"
+    init_drum_component cfg, "snare", "amp", n[0]
+  when "cymbal_amp"
+    init_drum_component cfg, "cymbal", "amp", n[0]
+    
+  # drum beats
+  when "kick_beats"
+    init_drum_beat cfg, "kick", token[2].to_i, n[0].to_i.to_s
+  when "snare_beats"
+    init_drum_beat cfg, "snare", token[2].to_i, n[0].to_i.to_s
+  when "cymbal_beats"
+    init_drum_beat cfg, "cymbal", token[2].to_i, n[0].to_i.to_s
+# end drum section ==================================
 
 # set instrument "on" status based on the button state
   when "chord"
@@ -171,32 +190,17 @@ live_loop :osc_monitor do
   when "bass"
     cfg['bass']['on'] = n[0]==1.0
   when "cymbal"
-    cfg['cymbal']['on'] = n[0]==1.0
+    cfg['drums']['cymbal']['on'] = n[0]==1.0
   when "snare"
-    cfg['snare']['on'] = n[0]==1.0
+    cfg['drums']['snare']['on'] = n[0]==1.0
   when "kick"
-    cfg['kick']['on'] = n[0]==1.0
+    cfg['drums']['kick']['on'] = n[0]==1.0
     
     #set amp
   when "bass_amp"
     cfg['bass']['amp'] = n[0]
   when "chord_amp"
     cfg['chords']['amp'] = n[0]
-    
-  when "kick_amp"
-    cfg['kick']['amp'] = n[0]
-  when "snare_amp"
-    cfg['snare']['amp'] = n[0]
-  when "cymbal_amp"
-    cfg['cymbal']['amp'] = n[0]
-    
-    # save beat states
-  when "kick_beats"
-    cfg['kick']['beats'][token[2].to_i] = n[0].to_i.to_s
-  when "snare_beats"
-    cfg['snare']['beats'][token[2].to_i] = n[0].to_i.to_s
-  when "cymbal_beats"
-    cfg['cymbal']['beats'][token[2].to_i] = n[0].to_i.to_s
     
     # save mode and scale
   when "mode"

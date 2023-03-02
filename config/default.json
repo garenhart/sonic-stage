@@ -1,6 +1,5 @@
 {
     "tempo": 60,
-    "drum_tempo_factor": 1,
     "pattern_mode": 0,
     "pattern": 1,
     "mode": 0,
@@ -15,32 +14,36 @@
         "synth": "piano",
         "pattern": []
     },
-     "bass":
+    "bass":
     {
         "on": false,
         "amp": 0.5,
         "synth": "fm",
         "pattern": []
     },
-   "cymbal":
+    "drums":
     {
-        "on": false,
-        "amp": 0.5,
-        "sample": "drum_cymbal_closed",
-        "beats": "0000000000000000"
-    },
-    "snare":
-    {
-        "on": false,
-        "amp": 0.5,
-        "sample": "drum_snare_soft",
-        "beats": "0000000000000000"
-    },
-    "kick":
-    {
-        "on": false,
-        "amp": 0.5,
-        "sample": "bd_tek",
-        "beats": "0000000000000000"
+        "tempo_factor": 1,
+        "cymbal":
+        {
+            "on": false,
+            "amp": 0.5,
+            "sample": "drum_cymbal_closed",
+            "beats": "0000000000000000"
+        },
+        "snare":
+        {
+            "on": false,
+            "amp": 0.5,
+            "sample": "drum_snare_soft",
+            "beats": "0000000000000000"
+        },
+        "kick":
+        {
+            "on": false,
+            "amp": 0.5,
+            "sample": "bd_tek",
+            "beats": "0000000000000000"
+        }
     }
 }
