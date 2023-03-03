@@ -48,7 +48,7 @@ puts "cfg", cfg
 # use_random_seed 31
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
-init_osc_controls cfg
+init_osc_controls cfg, true
 init_time_state cfg
 # ---
 

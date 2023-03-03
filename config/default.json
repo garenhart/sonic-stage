@@ -8,7 +8,7 @@
     "tonics": [],
     "chords":
     {
-        "on": false,
+        "on": true,
         "amp": 0.5,
         "type": 1,
         "synth": "piano",
@@ -16,7 +16,7 @@
     },
     "bass":
     {
-        "on": false,
+        "on": true,
         "amp": 0.5,
         "synth": "fm",
         "pattern": []
@@ -26,21 +26,21 @@
         "tempo_factor": 1,
         "cymbal":
         {
-            "on": false,
+            "on": true,
             "amp": 0.5,
             "sample": "drum_cymbal_closed",
             "beats": "0000000000000000"
         },
         "snare":
         {
-            "on": false,
+            "on": true,
             "amp": 0.5,
             "sample": "drum_snare_soft",
             "beats": "0000000000000000"
         },
         "kick":
         {
-            "on": false,
+            "on": true,
             "amp": 0.5,
             "sample": "bd_tek",
             "beats": "0000000000000000"
