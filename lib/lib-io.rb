@@ -37,12 +37,16 @@ end
 define :unique_filename do |file_name|
     extension = File.extname(file_name)
     file_name_base = file_name.reverse.sub(extension.reverse, "".reverse).reverse
-    file_name_new = file_name
+    puts "file_name_base", file_name_base
+    file_name_base = file_name_base.split("_").first
+    file_name_new = file_name_base + extension
+    puts "file_name_new", file_name_new
     i = 0
     while File.exist?(file_name_new)
         i += 1
         file_name_new = "#{file_name_base}_#{i.to_s.rjust(2, '0')}#{extension}"
     end
+    puts "file_name_new", file_name_new
     return file_name_new
 end
 
