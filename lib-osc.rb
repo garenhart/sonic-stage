@@ -34,17 +34,17 @@ end
 
 define :init_osc_update_drums do
   osc_ctrl "/drums_update", 0
-  osc_ctrl "/drums_auto", 1
+  osc_ctrl "/drums_auto", get(:drums_auto) ? 1 : 0
 end
 
 define :init_osc_update_bass do
   osc_ctrl "/bass_update", 0
-  osc_ctrl "/bass_auto", 1
+  osc_ctrl "/bass_auto", get(:bass_auto) ? 1 : 0
 end
 
 define :init_osc_update_chords do
   osc_ctrl "/chords_update", 0
-  osc_ctrl "/chords_auto", 1
+  osc_ctrl "/chords_auto", get(:chords_auto) ? 1 : 0
 end
 
 define :init_osc_updates do
