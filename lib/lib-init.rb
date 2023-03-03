@@ -68,11 +68,11 @@ end
 # sets specific drum configuration component
 define :init_drum_component do |cfg, d, c, v|
   cfg['drums'][d][c] = v
-  init_time_state_drums cfg if cfg['drums']['auto'] == true
+  init_time_state_drums cfg if get(:drums_auto)
 end
 
 # sets specified drum beat
 define :init_drum_beat do |cfg, d, b, v|
   cfg['drums'][d]['beats'][b] = v  
-  init_time_state_drums cfg if cfg['drums']['auto'] == true
+  init_time_state_drums cfg if get(:drums_auto)
 end
