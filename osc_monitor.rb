@@ -34,6 +34,10 @@ set :ctrl_port, 7777 # make sure to match Open Stage Control's osc-port value
 set :anim_ip, "127.0.0.1"
 set :anim_port, 8000 # make sure to match Processing osc-port value
 
+set :drums_auto, true
+set :bass_auto, true
+set :chords_auto, true
+
 puts "CTRL", :ctrl_ip, :ctrl_port
 # configuration folder path
 configPath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
@@ -99,6 +103,7 @@ live_loop :osc_monitor do
     # deserialize JSON file into cfg hash
     cfg = readJSON(cfgFile)
     init_osc_controls(cfg)
+    init_time_state cfg if get(:drums_auto)
     
   when "save"
     # serialize cfg hash into JSON file
@@ -153,7 +158,7 @@ live_loop :osc_monitor do
     end
 
   when "drums_auto"
-   cfg['drums']['auto'] = n[0].to_i == 1 ? true : false
+   set :drums_auto, n[0].to_i == 1 ? true : false
 
   # drum instruments
   when "kick_inst_groups"
