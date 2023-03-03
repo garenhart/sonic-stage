@@ -32,6 +32,27 @@ define :init_osc_keyboard do |tonic, mode|
   end
 end
 
+define :init_osc_update_drums do
+  osc_ctrl "/drums_update", 0
+  osc_ctrl "/drums_auto", 1
+end
+
+define :init_osc_update_bass do
+  osc_ctrl "/bass_update", 0
+  osc_ctrl "/bass_auto", 1
+end
+
+define :init_osc_update_chords do
+  osc_ctrl "/chords_update", 0
+  osc_ctrl "/chords_auto", 1
+end
+
+define :init_osc_updates do
+  init_osc_update_drums 
+  init_osc_update_bass
+  init_osc_update_chords
+end
+
 define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
   sample_gr = sample_group(cfg['drums'][d]['sample'])
   osc_ctrl "/#{d}_on", cfg['drums'][d]['on'] ? 1 : 0
@@ -48,9 +69,7 @@ define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
 end
 
 define :init_osc_drums do |cfg|
-  osc_ctrl "/drums_update", 1
   osc_ctrl "/dropdown_drum_tempo_factor", cfg['drums']['tempo_factor']
-  osc_ctrl "/drums_auto", cfg['drums']['auto'] ? 1 : 0
   init_osc_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
   init_osc_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
   init_osc_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
@@ -78,7 +97,9 @@ define :init_osc_tonics do |cfg|
   osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
 end
 
-define :init_osc_controls do |cfg|
+define :init_osc_controls do |cfg, init_updates=false|
+  init_osc_updates if init_updates
+
   osc_ctrl "/tempo", cfg['tempo']
   osc_ctrl "/pattern_mode", cfg['pattern_mode']
   osc_ctrl "/pattern", cfg['pattern']
