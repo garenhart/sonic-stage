@@ -148,17 +148,16 @@ live_loop :osc_monitor do
     cfg['chords']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
     puts "chord_line_updated", cfg['chords']['pattern']
 
+  # drum section ==================================
   when "dropdown_drum_tempo_factor" # update Time State
     cfg['drums']['tempo_factor'] = n[0].to_i
-    
-  # drum section ==================================
-  when "drums_update" # update Time State
-    if n[0] == 0.0
-      init_time_state cfg
-    end
+    init_time_state cfg if get(:drums_auto)
 
+  when "drums_update" # update Time State
+    init_time_state cfg if n[0] == 0.0
+    
   when "drums_auto"
-   set :drums_auto, n[0].to_i == 1 ? true : false
+    set :drums_auto, n[0].to_i == 1 ? true : false
 
   # drum instruments
   when "kick_inst_groups"
