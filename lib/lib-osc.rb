@@ -9,6 +9,32 @@ define :osc_ctrl do |path, *args|
   osc_send get(:ctrl_ip), get(:ctrl_port), path, *args
 end
 
+# populates osc variable with the list of SPi synth names
+define :init_osc_synths do
+  sn = synth_names
+  sn_str = "{"
+  # convert to array of strings
+  for n in sn
+    sn_str += ", " if sn_str.length > 2
+    sn_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
+  end
+  sn_str += "}"
+  osc_ctrl "/synths", sn_str 
+end
+
+# populates osc variable with the list of SPi sample group names
+define :init_osc_sample_groups do
+  sg = sample_groups
+  sg_str = "{"
+  # convert to array of strings
+  for n in sg
+    sg_str += ", " if sg_str.length > 2
+    sg_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
+  end
+  sg_str += "}"
+  osc_ctrl "/sample_groups", sg_str 
+end
+
 # populates osc variable target with the list of SPi sample names
 # for the specified sample group sg
 define :init_osc_samples do |target, sg|
@@ -22,6 +48,7 @@ define :init_osc_samples do |target, sg|
     sn_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
   end
   sn_str += "}"
+  puts "Samples: ", sn_str
   osc_ctrl target, sn_str
 end
 
@@ -97,8 +124,12 @@ define :init_osc_tonics do |cfg|
   osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
 end
 
-define :init_osc_controls do |cfg, init_updates=false|
-  init_osc_updates if init_updates
+define :init_osc_controls do |cfg, init_presets=false|
+  if init_presets
+    init_osc_updates
+    init_osc_synths
+    init_osc_sample_groups
+  end
 
   osc_ctrl "/tempo", cfg['tempo']
   osc_ctrl "/pattern_mode", cfg['pattern_mode']
