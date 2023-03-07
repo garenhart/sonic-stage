@@ -76,7 +76,7 @@ end
 # CHORD LOOP
 with_fx :reverb, room: 0.8, mix: 0.6 do |r|
   live_loop :chord do
-    play_chords cfg
+    play_chords **cfg
   end
 end
 #END CHORD LOOP
@@ -85,7 +85,7 @@ end
 with_fx :reverb, room: 0.6, mix: 0.4 do |r|
 #  use_osc get(:anim_ip), get(:anim_port)
   live_loop :bass do
-    play_bass cfg
+    play_bass **cfg
   end
 end
 #END BASS LOOP
@@ -103,7 +103,9 @@ live_loop :osc_monitor do
     # deserialize JSON file into cfg hash
     cfg = readJSON(cfgFile)
     init_osc_controls(cfg)
-    init_time_state cfg if get(:drums_auto)
+    init_time_state_chords cfg if get(:chord_auto)
+    init_time_state_bass cfg if get(:bass_auto)
+    init_time_state_drums cfg if get(:drums_auto)
     
   when "save"
     # serialize cfg hash into JSON file
@@ -129,8 +131,14 @@ live_loop :osc_monitor do
 # bass section ===================================    
   when "bass_tempo_factor" # update Time State
     cfg['bass']['tempo_factor'] = n[0].to_i
-    init_time_state cfg if get(:bass_auto)
+    init_time_state_bass cfg if get(:bass_auto)
   
+  when "bass_update" # update Time State
+    init_time_state_bass cfg if n[0] == 0.0
+    
+  when "bass_auto"
+    set :bass_auto, n[0].to_i == 1 ? true : false
+
   when "bass_inst"
     cfg['bass']['synth'] = n[0].to_sym
     
@@ -147,11 +155,17 @@ live_loop :osc_monitor do
     cfg['bass']['amp'] = n[0]
 
 # chord section ==================================    
-when "chord_tempo_factor" # update Time State
-  cfg['chords']['tempo_factor'] = n[0].to_i
-  init_time_state cfg if get(:chords_auto)
+  when "chord_update" # update Time State
+    init_time_state_chords cfg if n[0] == 0.0
+    
+  when "chord_auto"
+    set :chords_auto, n[0].to_i == 1 ? true : false
 
-when "chord_inst"
+  when "chord_tempo_factor" # update Time State
+    cfg['chords']['tempo_factor'] = n[0].to_i
+    init_time_state_chords cfg if get(:chords_auto)
+
+  when "chord_inst"
     cfg['chords']['synth'] = n[0].to_sym
     
   when "chord_type"
@@ -173,10 +187,10 @@ when "chord_inst"
   # drum section ==================================
   when "drum_tempo_factor" # update Time State
     cfg['drums']['tempo_factor'] = n[0].to_i
-    init_time_state cfg if get(:drums_auto)
+    init_time_state_drums cfg if get(:drums_auto)
 
   when "drums_update" # update Time State
-    init_time_state cfg if n[0] == 0.0
+    init_time_state_drums cfg if n[0] == 0.0
     
   when "drums_auto"
     set :drums_auto, n[0].to_i == 1 ? true : false
