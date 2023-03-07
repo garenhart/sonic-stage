@@ -125,7 +125,12 @@ live_loop :osc_monitor do
   when "switch_loop"
     cfg['loop_mode'] = n[0].to_i
     cfg['pattern_mode'] = 0 if n[0].to_i > 0
-    
+
+# bass section ===================================    
+  when "bass_tempo_factor" # update Time State
+    cfg['bass']['tempo_factor'] = n[0].to_i
+    init_time_state cfg if get(:bass_auto)
+  
   when "bass_inst"
     cfg['bass']['synth'] = n[0].to_sym
     
@@ -135,7 +140,18 @@ live_loop :osc_monitor do
     cfg['bass']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
     puts "bass_line_updated", cfg['bass']['pattern']
 
-  when "chord_inst"
+  when "bass_on"
+    cfg['bass']['on'] = n[0]==1.0
+    
+  when "bass_amp"
+    cfg['bass']['amp'] = n[0]
+
+# chord section ==================================    
+when "chord_tempo_factor" # update Time State
+  cfg['chords']['tempo_factor'] = n[0].to_i
+  init_time_state cfg if get(:chords_auto)
+
+when "chord_inst"
     cfg['chords']['synth'] = n[0].to_sym
     
   when "chord_type"
@@ -148,8 +164,14 @@ live_loop :osc_monitor do
     cfg['chords']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
     puts "chord_line_updated", cfg['chords']['pattern']
 
+  when "chord_on"
+    cfg['chords']['on'] = n[0]==1.0
+  
+  when "chord_amp"
+    cfg['chords']['amp'] = n[0]
+    
   # drum section ==================================
-  when "dropdown_drum_tempo_factor" # update Time State
+  when "drum_tempo_factor" # update Time State
     cfg['drums']['tempo_factor'] = n[0].to_i
     init_time_state cfg if get(:drums_auto)
 
@@ -198,18 +220,6 @@ live_loop :osc_monitor do
     init_drum_beat cfg, "cymbal", token[2].to_i, n[0].to_i.to_s
 # end drum section ==================================
 
-# set instrument "on" status based on the button state
-  when "chord"
-    cfg['chords']['on'] = n[0]==1.0
-  when "bass"
-    cfg['bass']['on'] = n[0]==1.0
-    
-    #set amp
-  when "bass_amp"
-    cfg['bass']['amp'] = n[0]
-  when "chord_amp"
-    cfg['chords']['amp'] = n[0]
-    
     # save mode and scale
   when "mode"
     cfg['mode'] = n[0].to_i

@@ -8,6 +8,7 @@
     "tonics": [],
     "chords":
     {
+        "tempo_factor": 1,
         "on": true,
         "amp": 0.5,
         "type": 1,
@@ -16,6 +17,7 @@
     },
     "bass":
     {
+        "tempo_factor": 1,
         "on": true,
         "amp": 0.5,
         "synth": "fm",
