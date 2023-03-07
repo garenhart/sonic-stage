@@ -27,8 +27,8 @@ end
 # Time State bass
 define :init_time_state_bass do |cfg|
   set :bass, cfg['bass']
+  puts "BASS SET", get(:bass)
 end
-
 
 # Time State drums
 define :init_time_state_drums do |cfg|
@@ -37,6 +37,8 @@ end
 
 # Time State
 define :init_time_state do |cfg|
+  init_time_state_chords cfg
+  init_time_state_bass cfg
   init_time_state_drums cfg
 end
 
