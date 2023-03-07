@@ -16,7 +16,7 @@ define :init_osc_synths do
   # convert to array of strings
   for n in sn
     sn_str += ", " if sn_str.length > 2
-    sn_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
+    sn_str += "\"" + split_and_capitalize(n.to_s, "_") + "\": \"" + n.to_s + "\""
   end
   sn_str += "}"
   osc_ctrl "/synths", sn_str 
@@ -29,7 +29,7 @@ define :init_osc_sample_groups do
   # convert to array of strings
   for n in sg
     sg_str += ", " if sg_str.length > 2
-    sg_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
+    sg_str += "\"" + split_and_capitalize(n.to_s, "_") + "\": \"" + n.to_s + "\""
   end
   sg_str += "}"
   osc_ctrl "/sample_groups", sg_str 
