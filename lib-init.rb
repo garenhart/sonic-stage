@@ -21,10 +21,12 @@ end
 
 # Time State chords
 define :init_time_state_chords do |cfg|
+  set :chords, cfg['chords']
 end
 
 # Time State bass
 define :init_time_state_bass do |cfg|
+  set :bass, cfg['bass']
 end
 
 
