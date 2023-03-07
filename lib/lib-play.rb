@@ -35,16 +35,21 @@ define :play_bass do |cfg|
   on = cfg['bass']['on']
 
   cue :tick
+
+  tempo_factor = cfg['bass']['tempo_factor']
   if (cfg['bass']['pattern'].size > 0) && (cfg['bass']['pattern'].size == cfg['tonics'].size)
     use_synth cfg['bass']['synth'].to_sym
     puts "INST", cfg['bass']['synth']
-    16.times do |i|
-      pos = cfg['bass']['pattern'].index(i)
-      if (on && pos)
-        play cfg['tonics'][pos], amp: cfg['bass']['amp']
-        animate_POC(cfg['tonics'][pos])
+
+    density tempo_factor do
+      16.times do |i|
+        pos = cfg['bass']['pattern'].index(i)
+        if (on && pos)
+          play cfg['tonics'][pos], amp: cfg['bass']['amp']
+          animate_POC(cfg['tonics'][pos])
+        end
+        sleep 0.25
       end
-      sleep 0.25
     end
   else
     sleep 0.25
@@ -59,6 +64,8 @@ define :play_chords do |cfg|
     on = cfg['chords']['on']
 
     sync :tick
+    tempo_factor = cfg['chords']['tempo_factor']
+
     seq = 1
     case cfg['pattern']
     when 1
@@ -88,34 +95,36 @@ define :play_chords do |cfg|
 
     cs = []
     last_pos = 0
-    16.times do |pos|
-      i = cfg['chords']['pattern'].index(pos)
-      if ( on && i)
-        last_ind = pos
-        # ind = nearest_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
-        ind = note_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
-        puts "Nearest", ind, cfg['tonics'][i], cfg['tonics'][0], cfg['scale']
-        seq = ind == nil ? nil : [ind+1]
-        chord_tonic = cfg['tonics'][0]
-        while cfg['tonics'][i] < chord_tonic do # bring tonic down to corresponding octave if current tonic[i] is lower than tonic[0]
-          chord_tonic -= 12
+    density tempo_factor do
+      16.times do |pos|
+        i = cfg['chords']['pattern'].index(pos)
+        if ( on && i)
+          last_ind = pos
+          # ind = nearest_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
+          ind = note_ind(cfg['tonics'][i], cfg['tonics'][0], cfg['scale'])
+          puts "Nearest", ind, cfg['tonics'][i], cfg['tonics'][0], cfg['scale']
+          seq = ind == nil ? nil : [ind+1]
+          chord_tonic = cfg['tonics'][0]
+          while cfg['tonics'][i] < chord_tonic do # bring tonic down to corresponding octave if current tonic[i] is lower than tonic[0]
+            chord_tonic -= 12
+          end
+          while cfg['tonics'][i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
+            chord_tonic += 12
+          end
+          cs = chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
+          puts "chords", cs
+          if cs != nil
+            play (tonic ? cs[0][0] : cs[0]), amp: cfg['chords']['amp'] 
+          end        
+        else
+          chord_num = pos-last_pos
+          if (cs != nil) && (chord_num < cs.length) && (pos < 16)
+            puts "III", pos
+            play cs[chord_num], amp: cfg['chords']['amp']
+          end
         end
-        while cfg['tonics'][i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
-          chord_tonic += 12
-        end
-        cs = chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
-        puts "chords", cs
-        if cs != nil
-          play (tonic ? cs[0][0] : cs[0]), amp: cfg['chords']['amp'] 
-        end        
-      else
-        chord_num = pos-last_pos
-        if (cs != nil) && (chord_num < cs.length) && (pos < 16)
-          puts "III", pos
-          play cs[chord_num], amp: cfg['chords']['amp']
-        end
+        sleep 0.25
       end
-      sleep 0.25
     end
   else
     sleep 0.25

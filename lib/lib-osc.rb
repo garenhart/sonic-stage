@@ -70,8 +70,8 @@ define :init_osc_update_bass do
 end
 
 define :init_osc_update_chords do
-  osc_ctrl "/chords_update", 0
-  osc_ctrl "/chords_auto", get(:chords_auto) ? 1 : 0
+  osc_ctrl "/chord_update", 0
+  osc_ctrl "/chord_auto", get(:chords_auto) ? 1 : 0
 end
 
 define :init_osc_updates do
@@ -96,13 +96,14 @@ define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
 end
 
 define :init_osc_drums do |cfg|
-  osc_ctrl "/dropdown_drum_tempo_factor", cfg['drums']['tempo_factor']
+  osc_ctrl "/drum_tempo_factor", cfg['drums']['tempo_factor']
   init_osc_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
   init_osc_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
   init_osc_drum "cymbal", "/cymbal_inst_groups", "/cymbal_inst", cfg
 end
 
 define :update_osc_bass_points do |cfg|
+  osc_ctrl "/bass_tempo_factor", cfg['bass']['tempo_factor']
   tonic_names = notes_to_names(cfg['tonics'])
   pos = insert_after_each_element(cfg['bass']['pattern'], 0)
   pts = [tonic_names, pos]
@@ -111,6 +112,7 @@ define :update_osc_bass_points do |cfg|
 end
 
 define :update_osc_chord_points do |cfg|
+  osc_ctrl "/chord_tempo_factor", cfg['chords']['tempo_factor']
   tonic_names = notes_to_names(cfg['tonics'])
   pos = insert_after_each_element(cfg['chords']['pattern'], 0)
   pts = [tonic_names, pos]
@@ -137,10 +139,10 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/mode", cfg['mode']
   osc_ctrl "/scale", cfg['scale']
   osc_ctrl "/switch_loop", cfg['loop_mode']
-  osc_ctrl "/bass", cfg['bass']['on'] ? 1 : 0
+  osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
   osc_ctrl "/bass_inst", cfg['bass']['synth']
-  osc_ctrl "/chord", cfg['chords']['on'] ? 1 : 0
+  osc_ctrl "/chord_on", cfg['chords']['on'] ? 1 : 0
   osc_ctrl "/chord_amp", cfg['chords']['amp']
   osc_ctrl "/chord_type", cfg['chords']['type']
   osc_ctrl "/chord_inst", cfg['chords']['synth']
