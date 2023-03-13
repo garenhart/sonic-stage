@@ -104,7 +104,7 @@ end
 
 define :update_osc_bass_points do |cfg|
   osc_ctrl "/bass_tempo_factor", cfg['bass']['tempo_factor']
-  tonic_names = notes_to_names(cfg['tonics'])
+  tonic_names = notes_to_names(cfg['bass']['tonics'])
   pos = insert_after_each_element(cfg['bass']['pattern'], 0)
   pts = [tonic_names, pos]
   puts "BASS PTS:", pts
@@ -113,17 +113,22 @@ end
 
 define :update_osc_chord_points do |cfg|
   osc_ctrl "/chord_tempo_factor", cfg['chords']['tempo_factor']
-  tonic_names = notes_to_names(cfg['tonics'])
+  tonic_names = notes_to_names(cfg['chords']['tonics'])
   pos = insert_after_each_element(cfg['chords']['pattern'], 0)
   pts = [tonic_names, pos]
   puts "CHORD PTS:", pts
   osc_ctrl("/chord_points", *[*tonic_names, *pos])
 end
 
+define :update_scale_match do |cfg|
+  osc_ctrl("/scale_match", (notes_in_scale cfg['chords']['tonics'], cfg['scale'], cfg['chords']['tonics'][0]) ? 1 : 0)
+  init_osc_keyboard(cfg['chords']['tonics'][0], cfg['scale'])
+end
+
 define :init_osc_tonics do |cfg|
   update_osc_bass_points cfg
   update_osc_chord_points cfg
-  osc_ctrl("/scale_match", (notes_in_scale cfg['tonics'], cfg['scale'], cfg['tonics'][0]) ? 1 : 0)
+  update_scale_match cfg
 end
 
 define :init_osc_controls do |cfg, init_presets=false|
@@ -148,19 +153,5 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/chord_inst", cfg['chords']['synth']
 
   init_osc_tonics cfg
-  init_osc_keyboard(cfg['tonics'][0], cfg['scale'])
-
   init_osc_drums cfg
 end
-
-# populates osc variable target with the list of SPi sample groups
-# define :osc_populate_sample_groups do |target|
-#   return if target==nil
-#   sg = sample_groups
-#   sg_str = []
-#   # convert to array of strings
-#   for n in sg
-#     sg_str.push n.to_s
-#   end
-#   osc_ctrl target, sg_str.to_s
-# end
