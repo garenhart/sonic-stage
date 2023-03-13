@@ -239,10 +239,8 @@ live_loop :osc_monitor do
     cfg['mode'] = n[0].to_i
   when "scale"
     cfg['scale'] = n[0].to_sym
-    the_scale = cfg['scale']
-    puts "SSSSSSSSSSSSSSSSS", the_scale
-    osc_ctrl "/scale_match", (notes_in_scale cfg['tonics'], the_scale, cfg['tonics'][0]) ? 1 : 0
-    init_osc_keyboard(cfg['tonics'][0], the_scale)
+    puts "SSSSSSSSSSSSSSSSS", cfg['scale']
+    update_scale_match cfg
   end
 end
 # END OSC MESSAGE MONITORING LOOP
