@@ -43,28 +43,29 @@ define :init_time_state do |cfg|
 end
 
 define :reset_tonics do |cfg|
-  cfg['tonics'] = []
+  cfg['bass']['tonics'] = []
   cfg['bass']['pattern'] = []
+  cfg['chords']['tonics'] = []
   cfg['chords']['pattern'] = []
 end
 
 define :add_tonic do |cfg, tonic| 
-  cfg['tonics'] << tonic
-#  cfg['tonics'].push note
+  cfg['bass']['tonics'] << tonic
+  cfg['chords']['tonics'] << tonic  
 end
 
 define :init_bass_pattern do |cfg|
   cfg['bass']['pattern'] = []
-  cfg['tonics'].length.times do |i|
-    pos = dist_pos i, cfg['tonics'].length, 16
+  cfg['bass']['tonics'].length.times do |i|
+    pos = dist_pos i, cfg['bass']['tonics'].length, 16
     cfg['bass']['pattern'].push pos
   end
 end
 
 define :init_chords_pattern do |cfg|
   cfg['chords']['pattern'] = []
-  cfg['tonics'].length.times do |i|
-    pos = dist_pos i, cfg['tonics'].length, 16
+  cfg['chords']['tonics'].length.times do |i|
+    pos = dist_pos i, cfg['chords']['tonics'].length, 16
     cfg['chords']['pattern'].push pos
   end
 end
