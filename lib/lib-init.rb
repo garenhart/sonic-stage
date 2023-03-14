@@ -19,9 +19,9 @@ define :sample_group do |s|
   s.split("_").first
 end
 
-# Time State chords
-define :init_time_state_chords do |cfg|
-  set :chords, cfg['chords']
+# Time State chord
+define :init_time_state_chord do |cfg|
+  set :chord, cfg['chord']
 end
 
 # Time State bass
@@ -37,7 +37,7 @@ end
 
 # Time State
 define :init_time_state do |cfg|
-  init_time_state_chords cfg
+  init_time_state_chord cfg
   init_time_state_bass cfg
   init_time_state_drums cfg
 end
@@ -45,13 +45,13 @@ end
 define :reset_tonics do |cfg|
   cfg['bass']['tonics'] = []
   cfg['bass']['pattern'] = []
-  cfg['chords']['tonics'] = []
-  cfg['chords']['pattern'] = []
+  cfg['chord']['tonics'] = []
+  cfg['chord']['pattern'] = []
 end
 
 define :add_tonic do |cfg, tonic| 
   cfg['bass']['tonics'] << tonic
-  cfg['chords']['tonics'] << tonic  
+  cfg['chord']['tonics'] << tonic  
 end
 
 define :init_bass_pattern do |cfg|
@@ -62,11 +62,11 @@ define :init_bass_pattern do |cfg|
   end
 end
 
-define :init_chords_pattern do |cfg|
-  cfg['chords']['pattern'] = []
-  cfg['chords']['tonics'].length.times do |i|
-    pos = dist_pos i, cfg['chords']['tonics'].length, 16
-    cfg['chords']['pattern'].push pos
+define :init_chord_pattern do |cfg|
+  cfg['chord']['pattern'] = []
+  cfg['chord']['tonics'].length.times do |i|
+    pos = dist_pos i, cfg['chord']['tonics'].length, 16
+    cfg['chord']['pattern'].push pos
   end
 end
 

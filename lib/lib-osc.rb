@@ -69,15 +69,15 @@ define :init_osc_update_bass do
   osc_ctrl "/bass_auto", get(:bass_auto) ? 1 : 0
 end
 
-define :init_osc_update_chords do
+define :init_osc_update_chord do
   osc_ctrl "/chord_update", 0
-  osc_ctrl "/chord_auto", get(:chords_auto) ? 1 : 0
+  osc_ctrl "/chord_auto", get(:chord_auto) ? 1 : 0
 end
 
 define :init_osc_updates do
   init_osc_update_drums 
   init_osc_update_bass
-  init_osc_update_chords
+  init_osc_update_chord
 end
 
 define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
@@ -112,17 +112,17 @@ define :update_osc_bass_points do |cfg|
 end
 
 define :update_osc_chord_points do |cfg|
-  osc_ctrl "/chord_tempo_factor", cfg['chords']['tempo_factor']
-  tonic_names = notes_to_names(cfg['chords']['tonics'])
-  pos = insert_after_each_element(cfg['chords']['pattern'], 0)
+  osc_ctrl "/chord_tempo_factor", cfg['chord']['tempo_factor']
+  tonic_names = notes_to_names(cfg['chord']['tonics'])
+  pos = insert_after_each_element(cfg['chord']['pattern'], 0)
   pts = [tonic_names, pos]
   puts "CHORD PTS:", pts
   osc_ctrl("/chord_points", *[*tonic_names, *pos])
 end
 
 define :update_scale_match do |cfg|
-  osc_ctrl("/scale_match", (notes_in_scale cfg['chords']['tonics'], cfg['scale'], cfg['chords']['tonics'][0]) ? 1 : 0)
-  init_osc_keyboard(cfg['chords']['tonics'][0], cfg['scale'])
+  osc_ctrl("/scale_match", (notes_in_scale cfg['chord']['tonics'], cfg['scale'], cfg['chord']['tonics'][0]) ? 1 : 0)
+  init_osc_keyboard(cfg['chord']['tonics'][0], cfg['scale'])
 end
 
 define :init_osc_tonics do |cfg|
@@ -147,10 +147,10 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
   osc_ctrl "/bass_inst", cfg['bass']['synth']
-  osc_ctrl "/chord_on", cfg['chords']['on'] ? 1 : 0
-  osc_ctrl "/chord_amp", cfg['chords']['amp']
-  osc_ctrl "/chord_type", cfg['chords']['type']
-  osc_ctrl "/chord_inst", cfg['chords']['synth']
+  osc_ctrl "/chord_on", cfg['chord']['on'] ? 1 : 0
+  osc_ctrl "/chord_amp", cfg['chord']['amp']
+  osc_ctrl "/chord_type", cfg['chord']['type']
+  osc_ctrl "/chord_inst", cfg['chord']['synth']
 
   init_osc_tonics cfg
   init_osc_drums cfg
