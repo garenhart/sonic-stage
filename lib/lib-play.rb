@@ -32,21 +32,22 @@ end
 define :play_bass do |cfg|
   use_real_time
   use_bpm cfg['tempo']
-  on = cfg['bass']['on']
 
   cue :tick
 
-  tempo_factor = cfg['bass']['tempo_factor']
-  if (cfg['bass']['pattern'].size > 0) && (cfg['bass']['pattern'].size == cfg['bass']['tonics'].size)
-    use_synth cfg['bass']['synth'].to_sym
-    puts "INST", cfg['bass']['synth']
+  cfg_bass = get(:bass_state)
+  tempo_factor = cfg_bass['tempo_factor']
+  puts "bass=====: #{cfg_bass['pattern'].size} #{cfg_bass['tonics'].size}"
+  if ((cfg_bass['pattern'].size > 0) && (cfg_bass['pattern'].size == cfg_bass['tonics'].size))
+    use_synth cfg_bass['synth'].to_sym
+    puts "INST", cfg_bass['synth']
 
     density tempo_factor do
       16.times do |i|
-        pos = cfg['bass']['pattern'].index(i)
-        if (on && pos)
-          play cfg['bass']['tonics'][pos], amp: cfg['bass']['amp']
-          animate_POC(cfg['bass']['tonics'][pos])
+        pos = cfg_bass['pattern'].index(i)
+        if (cfg_bass['on'] && pos)
+          play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
+          animate_POC(cfg_bass['tonics'][pos])
         end
         sleep 0.25
       end
