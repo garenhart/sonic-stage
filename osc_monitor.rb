@@ -128,32 +128,6 @@ live_loop :osc_monitor do
     cfg['loop_mode'] = n[0].to_i
     cfg['pattern_mode'] = 0 if n[0].to_i > 0
 
-# bass section ===================================    
-  when "bass_tempo_factor" # update Time State
-    cfg['bass']['tempo_factor'] = n[0].to_i
-    init_time_state_bass cfg if get(:bass_auto)
-  
-  when "bass_update" # update Time State
-    init_time_state_bass cfg if n[0] == 0.0
-    
-  when "bass_auto"
-    set :bass_auto, n[0].to_i == 1 ? true : false
-
-  when "bass_inst"
-    cfg['bass']['synth'] = n[0].to_sym
-    
-  when "bass_line_updated"
-    # add elements with even indices (0, 2, 4...) of array n to bass pattern
-    # (we only need x coordinates), and convert to integer
-    cfg['bass']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
-    puts "bass_line_updated", cfg['bass']['pattern']
-
-  when "bass_on"
-    cfg['bass']['on'] = n[0]==1.0
-    
-  when "bass_amp"
-    cfg['bass']['amp'] = n[0]
-
 # chord section ==================================    
   when "chord_update" # update Time State
     init_time_state_chord cfg if n[0] == 0.0
@@ -176,14 +150,40 @@ live_loop :osc_monitor do
     # add elements with even indices (0, 2, 4...) of array n to bass pattern
     # (we only need x coordinates), and convert to integer
     cfg['chord']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
-    puts "chord_line_updated", cfg['chord']['pattern']
+    puts "chord_line_updated", cfg['chord']['pattern'], n
 
   when "chord_on"
     cfg['chord']['on'] = n[0]==1.0
   
   when "chord_amp"
     cfg['chord']['amp'] = n[0]
+
+  # bass section ===================================    
+  when "bass_tempo_factor" # update Time State
+    cfg['bass']['tempo_factor'] = n[0].to_i
+    init_time_state_bass cfg if get(:bass_auto)
+
+  when "bass_update" # update Time State
+    init_time_state_bass cfg if n[0] == 0.0
     
+  when "bass_auto"
+    set :bass_auto, n[0].to_i == 1 ? true : false
+
+  when "bass_inst"
+    init_bass_component(cfg, 'synth', n[0].to_sym)
+    
+  when "bass_line_updated"
+    # add elements with even indices (0, 2, 4...) of array n to bass pattern
+    # (we only need x coordinates), and convert to integer
+    init_bass_component(cfg, 'pattern', (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i })
+
+  when "bass_on"
+    init_bass_component(cfg, 'on', n[0]==1.0)
+    
+  when "bass_amp"
+    init_bass_component(cfg, 'amp', n[0])
+
+  
   # drum section ==================================
   when "drum_tempo_factor" # update Time State
     cfg['drums']['tempo_factor'] = n[0].to_i
