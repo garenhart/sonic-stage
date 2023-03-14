@@ -26,8 +26,8 @@ end
 
 # Time State bass
 define :init_time_state_bass do |cfg|
-  set :bass, cfg['bass']
-  puts "BASS SET", get(:bass)
+  set :bass_state, cfg['bass']
+  puts "BASS SET", get(:bass_state)
 end
 
 # Time State drums
@@ -60,6 +60,7 @@ define :init_bass_pattern do |cfg|
     pos = dist_pos i, cfg['bass']['tonics'].length, 16
     cfg['bass']['pattern'].push pos
   end
+  init_time_state_bass cfg if get(:bass_auto)
 end
 
 define :init_chord_pattern do |cfg|
@@ -68,6 +69,13 @@ define :init_chord_pattern do |cfg|
     pos = dist_pos i, cfg['chord']['tonics'].length, 16
     cfg['chord']['pattern'].push pos
   end
+  init_time_state_chord cfg if get(:chord_auto)    
+end
+
+# sets specific bass configuration component
+define :init_bass_component do |cfg, c, v|
+  cfg['bass'][c] = v
+  init_time_state_bass cfg if get(:bass_auto)
 end
 
 # sets specific drum configuration component
