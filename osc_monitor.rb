@@ -18,7 +18,7 @@ eval_file get(:sp_path)+"lib/lib-osc-animation.rb"
 eval_file get(:sp_path)+"lib/lib-play.rb"
 eval_file get(:sp_path)+"lib/lib-osc.rb"
 eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
-#require get(:sp_path)+"lib/modes.rb" # Load extra scales and chords from separate file
+#require get(:sp_path)+"lib/modes.rb" # Load extra scales and chord from separate file
 #ModeScales = Modes.scales
 
 # generic midi definitions
@@ -36,7 +36,7 @@ set :anim_port, 8000 # make sure to match Processing osc-port value
 
 set :drums_auto, true
 set :bass_auto, true
-set :chords_auto, true
+set :chord_auto, true
 
 puts "CTRL", :ctrl_ip, :ctrl_port
 # configuration folder path
@@ -103,7 +103,7 @@ live_loop :osc_monitor do
     # deserialize JSON file into cfg hash
     cfg = readJSON(cfgFile)
     init_osc_controls(cfg)
-    init_time_state_chords cfg if get(:chord_auto)
+    init_time_state_chord cfg if get(:chord_auto)
     init_time_state_bass cfg if get(:bass_auto)
     init_time_state_drums cfg if get(:drums_auto)
     
@@ -156,33 +156,33 @@ live_loop :osc_monitor do
 
 # chord section ==================================    
   when "chord_update" # update Time State
-    init_time_state_chords cfg if n[0] == 0.0
+    init_time_state_chord cfg if n[0] == 0.0
     
   when "chord_auto"
-    set :chords_auto, n[0].to_i == 1 ? true : false
+    set :chord_auto, n[0].to_i == 1 ? true : false
 
   when "chord_tempo_factor" # update Time State
-    cfg['chords']['tempo_factor'] = n[0].to_i
-    init_time_state_chords cfg if get(:chords_auto)
+    cfg['chord']['tempo_factor'] = n[0].to_i
+    init_time_state_chord cfg if get(:chord_auto)
 
   when "chord_inst"
-    cfg['chords']['synth'] = n[0].to_sym
+    cfg['chord']['synth'] = n[0].to_sym
     
   when "chord_type"
-    cfg['chords']['type'] = n[0].to_i
-    puts "TYPE", cfg['chords']['type']
+    cfg['chord']['type'] = n[0].to_i
+    puts "TYPE", cfg['chord']['type']
 
   when "chord_line_updated"
     # add elements with even indices (0, 2, 4...) of array n to bass pattern
     # (we only need x coordinates), and convert to integer
-    cfg['chords']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
-    puts "chord_line_updated", cfg['chords']['pattern']
+    cfg['chord']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
+    puts "chord_line_updated", cfg['chord']['pattern']
 
   when "chord_on"
-    cfg['chords']['on'] = n[0]==1.0
+    cfg['chord']['on'] = n[0]==1.0
   
   when "chord_amp"
-    cfg['chords']['amp'] = n[0]
+    cfg['chord']['amp'] = n[0]
     
   # drum section ==================================
   when "drum_tempo_factor" # update Time State
@@ -264,7 +264,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
           play note
           add_tonic cfg, note
           init_bass_pattern cfg
-          init_chords_pattern cfg
+          init_chord_pattern cfg
           init_osc_tonics cfg
       end
     end

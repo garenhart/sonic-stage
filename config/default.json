@@ -5,7 +5,7 @@
     "mode": 0,
     "scale": "ionian",
     "loop_mode": 0,
-    "chords":
+    "chord":
     {
         "tempo_factor": 1,
         "on": true,
