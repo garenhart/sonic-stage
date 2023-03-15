@@ -21,7 +21,7 @@ end
 
 # Time State chord
 define :init_time_state_chord do |cfg|
-  set :chord, cfg['chord']
+  set :chord_state, cfg['chord']
 end
 
 # Time State bass
@@ -76,6 +76,12 @@ end
 define :init_bass_component do |cfg, c, v|
   cfg['bass'][c] = v
   init_time_state_bass cfg if get(:bass_auto)
+end
+
+# sets specific chord configuration component
+define :init_chord_component do |cfg, c, v|
+  cfg['chord'][c] = v
+  init_time_state_chord cfg if get(:chord_auto)
 end
 
 # sets specific drum configuration component
