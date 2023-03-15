@@ -8,6 +8,15 @@
 #   return pattern.ring.tick == match
 # end
 
+define :play_cue do |cfg|
+  use_real_time
+  use_bpm cfg['tempo']
+  cue :tick
+  16.times do
+    sleep 0.25
+  end
+end
+
 define :play_drum do |drum, cfg|
   use_real_time
   use_bpm cfg['tempo']
@@ -33,7 +42,7 @@ define :play_bass do |cfg|
   use_real_time
   use_bpm cfg['tempo']
 
-  cue :tick
+  sync :tick
 
   cfg_bass = get(:bass_state)
   tempo_factor = cfg_bass['tempo_factor']
