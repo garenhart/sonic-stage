@@ -129,34 +129,32 @@ live_loop :osc_monitor do
     cfg['pattern_mode'] = 0 if n[0].to_i > 0
 
 # chord section ==================================    
+  when "chord_tempo_factor" # update Time State
+    cfg['chord']['tempo_factor'] = n[0].to_i
+    init_time_state_chord cfg if get(:chord_auto)
+
   when "chord_update" # update Time State
     init_time_state_chord cfg if n[0] == 0.0
     
   when "chord_auto"
     set :chord_auto, n[0].to_i == 1 ? true : false
 
-  when "chord_tempo_factor" # update Time State
-    cfg['chord']['tempo_factor'] = n[0].to_i
-    init_time_state_chord cfg if get(:chord_auto)
-
   when "chord_inst"
-    cfg['chord']['synth'] = n[0].to_sym
+    init_chord_component(cfg, "synth", n[0].to_sym)
     
   when "chord_type"
-    cfg['chord']['type'] = n[0].to_i
-    puts "TYPE", cfg['chord']['type']
+    init_chord_component(cfg, "type", n[0].to_i)    
 
   when "chord_line_updated"
     # add elements with even indices (0, 2, 4...) of array n to bass pattern
     # (we only need x coordinates), and convert to integer
-    cfg['chord']['pattern'] = (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i }
-    puts "chord_line_updated", cfg['chord']['pattern'], n
+    init_chord_component(cfg, "pattern", (n.select.with_index { |_, i| i.even? }).map { |x| x.to_i })
 
   when "chord_on"
-    cfg['chord']['on'] = n[0]==1.0
+    init_chord_component(cfg, "on", n[0]==1.0)
   
   when "chord_amp"
-    cfg['chord']['amp'] = n[0]
+    init_chord_component(cfg, "amp", n[0])
 
   # bass section ===================================    
   when "bass_tempo_factor" # update Time State
