@@ -90,6 +90,11 @@ with_fx :reverb, room: 0.6, mix: 0.4 do |r|
 end
 #END BASS LOOP
 
+# CUE LOOP (MUST BE LAST)
+live_loop :the_cue do
+  play_cue **cfg
+end
+
 # OSC MESSAGE MONITORING LOOP
 live_loop :osc_monitor do
 #  use_osc get(:ctrl_ip), get(:ctrl_port)
