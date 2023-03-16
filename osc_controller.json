@@ -1368,7 +1368,7 @@
                             "ephemeral": false,
                             "pips": true,
                             "points": "VAR{pts}",
-                            "snap": true,
+                            "snap": false,
                             "spring": false,
                             "rangeX": {
                               "min": 0,
@@ -2124,7 +2124,7 @@
                             "ephemeral": false,
                             "pips": true,
                             "points": "VAR{pts}",
-                            "snap": true,
+                            "snap": false,
                             "spring": false,
                             "rangeX": {
                               "min": 0,
