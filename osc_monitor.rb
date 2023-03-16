@@ -38,6 +38,9 @@ set :drums_auto, true
 set :bass_auto, true
 set :chord_auto, true
 
+set :bass_rec, false
+set :chord_rec, false
+
 puts "CTRL", :ctrl_ip, :ctrl_port
 # configuration folder path
 configPath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
@@ -237,13 +240,20 @@ live_loop :osc_monitor do
     init_drum_beat cfg, "cymbal", token[2].to_i, n[0].to_i.to_s
 # end drum section ==================================
 
-    # save mode and scale
+ # save mode and scale
   when "mode"
     cfg['mode'] = n[0].to_i
   when "scale"
     cfg['scale'] = n[0].to_sym
     puts "SSSSSSSSSSSSSSSSS", cfg['scale']
     update_scale_match cfg
+
+  # recording
+  when "bass_rec"
+    set :bass_rec, n[0].to_i == 1 ? true : false
+
+  when "chord_rec"
+    set :chord_rec, n[0].to_i == 1 ? true : false    
   end
 end
 # END OSC MESSAGE MONITORING LOOP
@@ -265,10 +275,8 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
         if pattern_mode == 1
           use_synth :piano
           play note
-          add_tonic cfg, note
-          init_bass_pattern cfg
-          init_chord_pattern cfg
-          init_osc_tonics cfg
+          add_tonic_bass cfg, note
+          add_tonic_chord cfg, note
       end
     end
     when 1
