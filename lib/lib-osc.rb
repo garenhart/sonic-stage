@@ -67,11 +67,13 @@ end
 define :init_osc_update_bass do
   osc_ctrl "/bass_update", 0
   osc_ctrl "/bass_auto", get(:bass_auto) ? 1 : 0
+  osc_ctrl "/bass_rec", get(:bass_rec) ? 1 : 0
 end
 
 define :init_osc_update_chord do
   osc_ctrl "/chord_update", 0
   osc_ctrl "/chord_auto", get(:chord_auto) ? 1 : 0
+  osc_ctrl "/chord_rec", get(:chord_rec) ? 1 : 0
 end
 
 define :init_osc_updates do
