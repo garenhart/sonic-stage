@@ -118,17 +118,12 @@ define :update_osc_chord_points do |cfg|
   pts = [tonic_names, pos]
   puts "CHORD PTS:", pts
   osc_ctrl("/chord_points", *[*tonic_names, *pos])
+  update_scale_match cfg
 end
 
 define :update_scale_match do |cfg|
   osc_ctrl("/scale_match", (notes_in_scale cfg['chord']['tonics'], cfg['scale'], cfg['chord']['tonics'][0]) ? 1 : 0)
   init_osc_keyboard(cfg['chord']['tonics'][0], cfg['scale'])
-end
-
-define :init_osc_tonics do |cfg|
-  update_osc_bass_points cfg
-  update_osc_chord_points cfg
-  update_scale_match cfg
 end
 
 define :init_osc_controls do |cfg, init_presets=false|
@@ -152,6 +147,7 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/chord_type", cfg['chord']['type']
   osc_ctrl "/chord_inst", cfg['chord']['synth']
 
-  init_osc_tonics cfg
+  update_osc_bass_points cfg
+  update_osc_chord_points cfg
   init_osc_drums cfg
 end

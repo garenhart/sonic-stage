@@ -49,9 +49,14 @@ define :reset_tonics do |cfg|
   cfg['chord']['pattern'] = []
 end
 
-define :add_tonic do |cfg, tonic| 
+define :add_tonic_bass do |cfg, tonic| 
   cfg['bass']['tonics'] << tonic
-  cfg['chord']['tonics'] << tonic  
+  init_bass_pattern cfg
+end
+
+define :add_tonic_chord do |cfg, tonic| 
+  cfg['chord']['tonics'] << tonic
+  init_chord_pattern cfg 
 end
 
 define :init_bass_pattern do |cfg|
@@ -60,6 +65,7 @@ define :init_bass_pattern do |cfg|
     pos = dist_pos i, cfg['bass']['tonics'].length, 16
     cfg['bass']['pattern'].push pos
   end
+  update_osc_bass_points cfg
   init_time_state_bass cfg if get(:bass_auto)
 end
 
@@ -69,7 +75,8 @@ define :init_chord_pattern do |cfg|
     pos = dist_pos i, cfg['chord']['tonics'].length, 16
     cfg['chord']['pattern'].push pos
   end
-  init_time_state_chord cfg if get(:chord_auto)    
+  update_osc_chord_points cfg
+  init_time_state_chord cfg if get(:chord_auto)   
 end
 
 # sets specific bass configuration component
