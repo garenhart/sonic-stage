@@ -264,25 +264,25 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
     use_real_time
     # use_bpm get(:tempo)
     # sync :tick
-    
+
     note, velocity = sync midi_in + "note_on"
-    pattern = cfg['pattern']
-    pattern_mode = cfg['pattern_mode']
-    case cfg['loop_mode']
-    when 0
-      case pattern
-      when 1
-        if pattern_mode == 1
-          use_synth :piano
-          play note
+
+    bass_rec = get(:bass_rec)
+    chord_rec = get(:chord_rec) 
+    
+    if (bass_rec || chord_rec) # recording
+      if (bass_rec)
+          use_synth cfg['bass']['synth'].to_sym
           add_tonic_bass cfg, note
+      end
+      if (chord_rec)
+          use_synth cfg['chord']['synth'].to_sym
           add_tonic_chord cfg, note
       end
-    end
-    when 1
+    else # not recording
       use_synth :piano
-      play note
-    end
+    end   
+    play note                
   end
 end
 # END MIDI MESSAGE MONITORING LOOP
