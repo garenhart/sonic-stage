@@ -163,6 +163,9 @@ live_loop :osc_monitor do
   
   when "chord_amp"
     init_chord_component(cfg, "amp", n[0])
+  
+  when "chord_del"
+    delete_chord_pattern cfg if n[0] == 0.0
 
   # bass section ===================================    
   when "bass_tempo_factor" # update Time State
@@ -189,6 +192,8 @@ live_loop :osc_monitor do
   when "bass_amp"
     init_bass_component(cfg, 'amp', n[0])
 
+  when "bass_del"    
+    delete_bass_pattern cfg if n[0] == 0.0
   
   # drum section ==================================
   when "drum_tempo_factor" # update Time State
