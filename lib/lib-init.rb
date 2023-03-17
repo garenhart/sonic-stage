@@ -69,6 +69,12 @@ define :init_bass_pattern do |cfg|
   init_time_state_bass cfg if get(:bass_auto)
 end
 
+define :delete_bass_pattern do |cfg|
+  cfg['bass']['pattern'] = []
+  cfg['bass']['tonics'] = []
+  init_time_state_bass cfg if get(:bass_auto)
+end
+
 define :init_chord_pattern do |cfg|
   cfg['chord']['pattern'] = []
   cfg['chord']['tonics'].length.times do |i|
@@ -77,6 +83,12 @@ define :init_chord_pattern do |cfg|
   end
   update_osc_chord_points cfg
   init_time_state_chord cfg if get(:chord_auto)   
+end
+
+define :delete_chord_pattern do |cfg|
+  cfg['chord']['pattern'] = []
+  cfg['chord']['tonics'] = []
+  init_time_state_chord cfg if get(:chord_auto)
 end
 
 # sets specific bass configuration component
