@@ -74,27 +74,6 @@
         "bypass": false,
         "widgets": [
           {
-            "type": "variable",
-            "lock": false,
-            "id": "ptc",
-            "comments": "",
-            "value": [
-              0,
-              2
-            ],
-            "default": "",
-            "linkId": "",
-            "address": "auto",
-            "preArgs": "",
-            "typeTags": "",
-            "decimals": 2,
-            "target": "",
-            "ignoreDefaults": false,
-            "bypass": false,
-            "onCreate": "",
-            "onValue": ""
-          },
-          {
             "type": "panel",
             "id": "panel_controller",
             "comments": "",
@@ -1006,6 +985,24 @@
                 "traversing": false,
                 "widgets": [
                   {
+                    "type": "variable",
+                    "lock": false,
+                    "id": "selected_pts_chord",
+                    "comments": "",
+                    "value": [],
+                    "default": "",
+                    "linkId": "",
+                    "address": "auto",
+                    "preArgs": "",
+                    "typeTags": "",
+                    "decimals": 2,
+                    "target": "",
+                    "ignoreDefaults": false,
+                    "bypass": false,
+                    "onCreate": "",
+                    "onValue": "console.log(\"Chord selection \" + value)"
+                  },
+                  {
                     "type": "panel",
                     "top": "auto",
                     "left": "auto",
@@ -1370,7 +1367,7 @@
                             "lineWidth": 2,
                             "padding": 28,
                             "html": "",
-                            "css": ".pad-@{tonic_point} {\n  --color-fill: lime;\n  //--color-stroke: green;\n}\n/* uncomment to color individual points \n(couldn't make it work with array var)\n.pad-0 {\n  --color-fill: red;\n  --color-stroke: red;\n}\n.pad-1 {\n  --color-fill: green;\n  --color-stroke: green;\n}\n.pad-2 {\n  --color-fill: yellow;\n  --color-stroke: purple;\n}\n*/\n/* etc */\n",
+                            "css": ".pad-@{tonic_point} {\n  --color-fill: lime;\n  //--color-stroke: green;\n}\n\nJS{{\nvar points = @{selected_pts_chord}\nif (points.length > 0) {\n  var css = ''\n  for (var i = 0; i < points.length; i++) {\n    css += \".pad-\" + points[i] + \"{--color-fill: red; /*--color-stroke: red;*/}\\n\"\n  }\n  return css\n}\n}} \n\n/* uncomment to color individual points \n(couldn't make it work with array var)\n.pad-0 {\n  --color-fill: red;\n  --color-stroke: red;\n}\n.pad-1 {\n  --color-fill: green;\n  --color-stroke: green;\n}\n.pad-2 {\n  --color-fill: yellow;\n  --color-stroke: purple;\n}\n*/\n/* etc */\n",
                             "value": "",
                             "default": "",
                             "linkId": "",
@@ -1412,7 +1409,7 @@
                             "logScaleX": false,
                             "logScaleY": false,
                             "sensitivity": 1,
-                            "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/chord_line_updated', ...value)\n}",
+                            "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/chord_line_updated', ...value)\n  // also add/remove touched point to/from the array\n  // if in delete mode\n  if (get(\"chord_del\") == 1) {\n    const pts = get(\"selected_pts_chord\")\n    const index = pts.indexOf(event.handle);\n    if (index > -1) { // only splice array when item is found\n      pts.splice(index, 1) // 2nd parameter means remove one item only\n    }\n    else {\n      pts.push(event.handle)\n    }\n    set(\"selected_pts_chord\", pts)\n  }\n  \n}",
                             "doubleTap": false,
                             "borderRadius": "auto"
                           }
@@ -1745,7 +1742,7 @@
                         "ignoreDefaults": false,
                         "bypass": false,
                         "onCreate": "",
-                        "onValue": "if (value === 0) {\n  if (get(\"delete_chord\") > 0) {\n  set('chord_points', [])\n  set(\"delete_chord\", 0)\n  send('/chord_del_all')\n  if (get('chord_auto') === 0) { set('chord_update', 1)}\n  }\n}\nelse { \n  set(\"chord_rec\", 0)\n  set(\"chord_del_cancel\", 1) \n  set(\"delete_chord\", 1)\n}\n",
+                        "onValue": "if (value === 0) {\n  if (get(\"delete_chord\") > 0) {\n  set('chord_points', [])\n  set(\"delete_chord\", 0)\n  send('/chord_del_all')\n  if (get('chord_auto') === 0) { set('chord_update', 1)}\n  }\n}\nelse { \n  set(\"chord_rec\", 0)\n  set(\"chord_del_cancel\", 1) \n  set(\"delete_chord\", 1)\n}\nset(\"selected_pts_chord\", [])",
                         "colorTextOn": "auto",
                         "label": "#{@{this} == 1 ? \"^recycle.spin\" : \"^recycle\"}",
                         "vertical": false,
@@ -1873,6 +1870,27 @@
                 "variables": "@{parent.variables}",
                 "traversing": false,
                 "widgets": [
+                  {
+                    "type": "variable",
+                    "lock": false,
+                    "id": "selected_pts_bass",
+                    "comments": "",
+                    "value": [
+                      3,
+                      5
+                    ],
+                    "default": "",
+                    "linkId": "",
+                    "address": "auto",
+                    "preArgs": "",
+                    "typeTags": "",
+                    "decimals": 2,
+                    "target": "",
+                    "ignoreDefaults": false,
+                    "bypass": false,
+                    "onCreate": "",
+                    "onValue": "console.log(\"Bass selection \" + value)"
+                  },
                   {
                     "type": "panel",
                     "top": "auto",
@@ -2241,7 +2259,7 @@
                             "lineWidth": 2,
                             "padding": 28,
                             "html": "",
-                            "css": "/*\nJS{{\nvar points = @{ptc}\nvar css = ''\nfor (var i = 0; i < points.length; i++) {\n  css += \".pad-\" + points[i] + \"{--color-fill: red; --color-stroke: red;}\\n\"\n}\nreturn css\n}} */",
+                            "css": "JS{{\nvar points = @{selected_pts_bass}\nif (points.length > 0) {\n  var css = ''\n  for (var i = 0; i < points.length; i++) {\n    css += \".pad-\" + points[i] + \"{--color-fill: red; /*--color-stroke: red;*/}\\n\"\n  }\n  return css\n}\n}} ",
                             "value": "",
                             "default": "",
                             "linkId": "",
@@ -2283,7 +2301,7 @@
                             "logScaleX": false,
                             "logScaleY": false,
                             "sensitivity": 1,
-                            "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/bass_line_updated', ...value)\n}",
+                            "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/bass_line_updated', ...value)\n  // also add/remove touched point to/from the array\n  // if in delete mode\n  if (get(\"bass_del\") == 1) {\n    const pts = get(\"selected_pts_bass\")\n    const index = pts.indexOf(event.handle);\n    if (index > -1) { // only splice array when item is found\n      pts.splice(index, 1) // 2nd parameter means remove one item only\n    }\n    else {\n      pts.push(event.handle)\n    }\n    set(\"selected_pts_bass\", pts)\n  }\n}",
                             "doubleTap": false
                           }
                         ],
@@ -2613,7 +2631,7 @@
                         "ignoreDefaults": false,
                         "bypass": false,
                         "onCreate": "",
-                        "onValue": "if (value === 0) {\n  if (get(\"delete_bass\") > 0) {\n  set('bass_points', [])\n  set(\"delete_bass\", 0)\n  send('/bass_del_all')\n  if (get('bass_auto') === 0) { set('bass_update', 1)}\n  }\n}\nelse { \n  set(\"bass_rec\", 0)\n  set(\"bass_del_cancel\", 1) \n  set(\"delete_bass\", 1)\n}",
+                        "onValue": "if (value === 0) {\n  if (get(\"delete_bass\") > 0) {\n  set('bass_points', [])\n  set(\"delete_bass\", 0)\n  send('/bass_del_all')\n  if (get('bass_auto') === 0) { set('bass_update', 1)}\n  }\n}\nelse { \n  set(\"bass_rec\", 0)\n  set(\"bass_del_cancel\", 1) \n  set(\"delete_bass\", 1)\n}\nset(\"selected_pts_bass\", [])\n",
                         "colorTextOn": "auto",
                         "label": "#{@{this} == 1 ? \"^recycle.spin\" : \"^recycle\"}",
                         "vertical": false,
