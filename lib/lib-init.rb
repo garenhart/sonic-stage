@@ -69,9 +69,19 @@ define :init_bass_pattern do |cfg|
   init_time_state_bass cfg if get(:bass_auto)
 end
 
-define :delete_bass_pattern do |cfg|
-  cfg['bass']['pattern'] = []
-  cfg['bass']['tonics'] = []
+define :delete_bass_pattern do |cfg, points|
+  if ((points == nil) || (points.length == 0))
+    cfg['bass']['pattern'] = []
+    cfg['bass']['tonics'] = []
+  else 
+    # sort points in descending order
+    points.sort! {|x,y| y <=> x}    
+    points.each do |p|
+      cfg['bass']['pattern'].delete_at(p)
+      cfg['bass']['tonics'].delete_at(p)
+    end
+  end
+  update_osc_bass_points cfg
   init_time_state_bass cfg if get(:bass_auto)
 end
 
@@ -85,9 +95,19 @@ define :init_chord_pattern do |cfg|
   init_time_state_chord cfg if get(:chord_auto)   
 end
 
-define :delete_chord_pattern do |cfg|
-  cfg['chord']['pattern'] = []
-  cfg['chord']['tonics'] = []
+define :delete_chord_pattern do |cfg, points|
+  if ((points == nil) || (points.length == 0))
+    cfg['chord']['pattern'] = []
+    cfg['chord']['tonics'] = []
+  else
+    # sort points in descending order
+    points.sort! {|x,y| y <=> x}      
+    points.each do |p|
+      cfg['chord']['pattern'].delete_at(p)
+      cfg['chord']['tonics'].delete_at(p)      
+    end
+  end
+  update_osc_chord_points cfg 
   init_time_state_chord cfg if get(:chord_auto)
 end
 
