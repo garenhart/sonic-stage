@@ -164,8 +164,10 @@ live_loop :osc_monitor do
   when "chord_amp"
     init_chord_component(cfg, "amp", n[0])
   
-  when "chord_del_all"
-    delete_chord_pattern cfg
+  when "chord_delete"
+    # cast n array to array of integers
+    n = n.map { |x| x.to_i }    
+    delete_chord_pattern cfg, n
 
   # bass section ===================================    
   when "bass_tempo_factor" # update Time State
@@ -192,8 +194,10 @@ live_loop :osc_monitor do
   when "bass_amp"
     init_bass_component(cfg, 'amp', n[0])
 
-  when "bass_del_all"    
-    delete_bass_pattern cfg
+  when "bass_delete"
+    # cast n array to array of integers
+    n = n.map { |x| x.to_i }    
+    delete_bass_pattern cfg, n
   
   # drum section ==================================
   when "drum_tempo_factor" # update Time State
