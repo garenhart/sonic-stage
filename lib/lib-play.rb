@@ -12,7 +12,7 @@ define :play_cue do |cfg|
   use_real_time
   use_bpm cfg['tempo']
   cue :tick
-  16.times do
+  cfg['bass']['count'].times do
     sleep 0.25
   end
 end
@@ -28,7 +28,8 @@ define :play_drum do |drum, cfg|
   amp = drums[drum]['amp']
 
   density tempo_factor do
-    beats.length.times do |i|
+    puts "drum=====: #{drums['count']} #{beats.size}"
+    drums['count'].times do |i|
       if drums[drum]['on'] && (beats[i] == "1")
         sample drums[drum]['sample'], amp: amp
         animate_drum drum, amp
@@ -52,7 +53,7 @@ define :play_bass do |cfg|
     puts "INST", cfg_bass['synth']
 
     density tempo_factor do
-      16.times do |i|
+      cfg_bass['count'].times do |i|
         pos = cfg_bass['pattern'].index(i)
         if (cfg_bass['on'] && pos)
           play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
@@ -110,7 +111,7 @@ define :play_chords do |cfg|
     cs = []
     last_pos = 0
     density tempo_factor do
-      16.times do |pos|
+      cfg_chord['count'].times do |pos|
         i = cfg_chord['pattern'].index(pos)
         if ( on && i)
           last_ind = pos
@@ -131,7 +132,7 @@ define :play_chords do |cfg|
           end        
         else
           chord_num = pos-last_pos
-          if (cs != nil) && (chord_num < cs.length) && (pos < 16)
+          if (cs != nil) && (chord_num < cs.length) && (pos < cfg_chord['count'])
             puts "III", pos
             play cs[chord_num], amp: cfg_chord['amp']
           end

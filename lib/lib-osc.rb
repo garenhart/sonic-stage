@@ -92,14 +92,18 @@ define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
   init_osc_samples inst_ctrl + "_v", sample_gr.to_sym
   sleep 0.125 # sleeping between populating and selecting seems to make it work 
   osc_ctrl inst_ctrl, (cfg['drums'][d]['sample'])
-  16.times do |i|
+  # populate drum beats osc widget with the beats from string
+  beat_count = cfg['drums'][d]['beats'].length  
+  beat_count.times do |i|
     osc_ctrl "/#{d}_beats/#{i}", cfg['drums'][d]['beats'][i] #should figure out how to populate beats without looping through array
   end
+
   # osc_ctrl "/#{d}_beats", cfg[d]['beats']
   # set (d.to_sym), cfg[d]['beats'] #set the beats to for the drum
 end
 
 define :init_osc_drums do |cfg|
+  osc_ctrl "/beat_pt_count", cfg['drums']['count']
   osc_ctrl "/drum_tempo_factor", cfg['drums']['tempo_factor']
   init_osc_drum "kick", "/kick_inst_groups", "/kick_inst", cfg
   init_osc_drum "snare", "/snare_inst_groups", "/snare_inst", cfg
@@ -107,6 +111,7 @@ define :init_osc_drums do |cfg|
 end
 
 define :update_osc_bass_points do |cfg|
+  osc_ctrl "/bass_pt_count", cfg['bass']['count']
   osc_ctrl "/bass_tempo_factor", cfg['bass']['tempo_factor']
   tonic_names = notes_to_names(cfg['bass']['tonics'])
   pos = insert_after_each_element(cfg['bass']['pattern'], 0)
@@ -116,6 +121,7 @@ define :update_osc_bass_points do |cfg|
 end
 
 define :update_osc_chord_points do |cfg|
+  osc_ctrl "/chord_pt_count", cfg['chord']['count']  
   osc_ctrl "/chord_tempo_factor", cfg['chord']['tempo_factor']
   tonic_names = notes_to_names(cfg['chord']['tonics'])
   pos = insert_after_each_element(cfg['chord']['pattern'], 0)
