@@ -62,7 +62,7 @@ end
 define :init_bass_pattern do |cfg|
   cfg['bass']['pattern'] = []
   cfg['bass']['tonics'].length.times do |i|
-    pos = dist_pos i, cfg['bass']['tonics'].length, 16
+    pos = dist_pos i, cfg['bass']['tonics'].length, cfg['bass']['count'] || 16
     cfg['bass']['pattern'].push pos
   end
   update_osc_bass_points cfg
@@ -88,7 +88,7 @@ end
 define :init_chord_pattern do |cfg|
   cfg['chord']['pattern'] = []
   cfg['chord']['tonics'].length.times do |i|
-    pos = dist_pos i, cfg['chord']['tonics'].length, 16
+    pos = dist_pos i, cfg['chord']['tonics'].length, cfg['chord']['count'] || 16
     cfg['chord']['pattern'].push pos
   end
   update_osc_chord_points cfg
@@ -132,5 +132,29 @@ end
 # sets specified drum beat
 define :init_drum_beat do |cfg, d, b, v|
   cfg['drums'][d]['beats'][b] = v  
+  init_time_state_drums cfg if get(:drums_auto)
+end
+
+# updates drum beats for a specific drum using new beat_count
+# appends  "0" chars to the end of the beat string
+# or removes chars from the end of the beat string
+define :update_drum_component_beats do |cfg, d, new_beat_count|
+  old_beat_count = cfg['drums'][d]['beats'].length
+  puts "length: #{old_beat_count}"
+  if new_beat_count > old_beat_count
+    (new_beat_count - old_beat_count).times do
+      cfg['drums'][d]['beats'] << "0"
+    end
+  elsif new_beat_count < old_beat_count
+    # remove trailing chars
+    cfg['drums'][d]['beats'] = cfg['drums'][d]['beats'][0..(new_beat_count-1)]  
+  end
+end
+
+define :update_drum_beats do |cfg, new_beat_count|
+  cfg['drums']['count'] = new_beat_count
+  update_drum_component_beats cfg, 'cymbal', new_beat_count
+  update_drum_component_beats cfg, 'snare', new_beat_count
+  update_drum_component_beats cfg, 'kick', new_beat_count  
   init_time_state_drums cfg if get(:drums_auto)
 end
