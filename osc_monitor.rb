@@ -200,6 +200,9 @@ live_loop :osc_monitor do
     delete_bass_pattern cfg, n
   
   # drum section ==================================
+  when "beat_pt_count"
+    update_drum_beats cfg, n[0].to_i
+    
   when "drum_tempo_factor" # update Time State
     cfg['drums']['tempo_factor'] = n[0].to_i
     init_time_state_drums cfg if get(:drums_auto)
