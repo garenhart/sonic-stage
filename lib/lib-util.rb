@@ -7,7 +7,7 @@
 # 'pseudo'-evenly distributes 'count' positions within number of 'slots'
 # returns distributed position for 'item_num' 
 define :dist_pos do |item_num, count, slots| 
-    pos = item_num * (slots / count)
+    pos = item_num * (slots / count) + 1
 end
 
 # Inserts 'el' after each element in 'arr' and returns the new array

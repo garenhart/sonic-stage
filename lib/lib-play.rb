@@ -54,7 +54,7 @@ define :play_bass do |cfg|
 
     density tempo_factor do
       cfg_bass['count'].times do |i|
-        pos = cfg_bass['pattern'].index(i)
+        pos = cfg_bass['pattern'].index(i+1)
         if (cfg_bass['on'] && pos)
           play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
           animate_POC(cfg_bass['tonics'][pos])
@@ -112,9 +112,8 @@ define :play_chords do |cfg|
     last_pos = 0
     density tempo_factor do
       cfg_chord['count'].times do |pos|
-        i = cfg_chord['pattern'].index(pos)
+        i = cfg_chord['pattern'].index(pos+1)
         if ( on && i)
-          last_ind = pos
           ind = note_ind(cfg_chord['tonics'][i], cfg_chord['tonics'][0], cfg['scale'])
           puts "Nearest", ind, cfg_chord['tonics'][i], cfg_chord['tonics'][0], cfg['scale']
           seq = ind == nil ? nil : [ind+1]
