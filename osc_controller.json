@@ -1559,7 +1559,7 @@
                             "points": "VAR{pts}",
                             "snap": false,
                             "spring": false,
-                            "rangeX": "JS{{    \n  var hash = {};\n  var chunks = @{chord_pt_count}\n  for (var i = 0; i < chunks; i++) {\n    hash[(i / (chunks-1)) * 100 + \"%\"] = i;\n  }\n  return hash;\n}}",
+                            "rangeX": "JS{{    \n  var hash = {};\n  var chunks = @{chord_pt_count}\n  for (var i = 0; i < chunks; i++) {\n    hash[(i / (chunks-1)) * 100 + \"%\"] = i+1;\n  }\n  return hash;\n}}",
                             "rangeY": {},
                             "logScaleX": false,
                             "logScaleY": false,
@@ -2474,7 +2474,7 @@
                             "points": "VAR{pts}",
                             "snap": false,
                             "spring": false,
-                            "rangeX": "JS{{    \n  var hash = {};\n  var chunks = @{bass_pt_count}\n  for (var i = 0; i < chunks; i++) {\n    hash[(i / (chunks-1)) * 100 + \"%\"] = i;\n  }\n  return hash;\n}}",
+                            "rangeX": "JS{{    \n  var hash = {};\n  var chunks = @{bass_pt_count}\n  for (var i = 0; i < chunks; i++) {\n    hash[(i / (chunks-1)) * 100 + \"%\"] = i+1;\n  }\n  return hash;\n}}",
                             "rangeY": {},
                             "logScaleX": false,
                             "logScaleY": false,
@@ -3378,7 +3378,7 @@
                             "tabs": [],
                             "widgetType": "button",
                             "quantity": "@{beat_pt_count}",
-                            "props": {}
+                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nreturn props\n}}"
                           },
                           {
                             "type": "panel",
@@ -3802,7 +3802,7 @@
                             "traversing": false,
                             "widgetType": "button",
                             "quantity": "@{beat_pt_count}",
-                            "props": {},
+                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nreturn props\n}}",
                             "value": "",
                             "default": "",
                             "linkId": "",
@@ -4256,7 +4256,7 @@
                             "traversing": false,
                             "widgetType": "button",
                             "quantity": "@{beat_pt_count}",
-                            "props": {},
+                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nreturn props\n}}",
                             "widgets": [],
                             "tabs": []
                           },
