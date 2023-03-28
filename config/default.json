@@ -5,6 +5,16 @@
     "mode": 0,
     "scale": "ionian",
     "loop_mode": 0,
+    "bass":
+    {
+        "count": 16,
+        "tempo_factor": 1,
+        "on": true,
+        "amp": 0.5,
+        "synth": "fm",
+        "tonics": [],
+        "pattern": []
+    },
     "chord":
     {
         "count": 16,
@@ -13,16 +23,6 @@
         "amp": 0.5,
         "type": 1,
         "synth": "piano",
-        "tonics": [],
-        "pattern": []
-    },
-    "bass":
-    {
-        "count": 16,
-        "tempo_factor": 1,
-        "on": true,
-        "amp": 0.5,
-        "synth": "fm",
         "tonics": [],
         "pattern": []
     },
