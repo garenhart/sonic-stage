@@ -158,3 +158,49 @@ define :update_drum_beats do |cfg, new_beat_count|
   update_drum_component_beats cfg, 'kick', new_beat_count  
   init_time_state_drums cfg if get(:drums_auto)
 end
+
+define :update_bass_count do |cfg, new_count|
+# if new_count < cfg['bass']['count']
+# iterate backwards through the pattern
+# and delete any points that are >= new_count
+# together with the corresponding tonic
+  if new_count < cfg['bass']['count']
+    cfg['bass']['pattern'].reverse_each do |p|
+      if p >= new_count
+        i = cfg['bass']['pattern'].index(p)
+        puts "deleting #{p} at #{i}"
+        cfg['bass']['pattern'].delete_at(i)
+        cfg['bass']['tonics'].delete_at(i)
+      end
+      puts "pattern: #{cfg['bass']['pattern']}"
+      puts "tonics: #{cfg['bass']['tonics']}"   
+    end
+  end
+
+  cfg['bass']['count'] = new_count
+  update_osc_bass_points cfg
+  init_time_state_bass cfg if get(:bass_auto)
+end
+
+define :update_chord_count do |cfg, new_count|
+  # if new_count < cfg['chord']['count']
+  # iterate backwards through the pattern
+  # and delete any points that are >= new_count
+  # together with the corresponding tonic
+    if new_count < cfg['chord']['count']
+      cfg['chord']['pattern'].reverse_each do |p|
+        if p >= new_count
+          i = cfg['chord']['pattern'].index(p)
+          puts "deleting #{p} at #{i}"
+          cfg['chord']['pattern'].delete_at(i)
+          cfg['chord']['tonics'].delete_at(i)
+        end
+        puts "pattern: #{cfg['chord']['pattern']}"
+        puts "tonics: #{cfg['chord']['tonics']}"   
+      end
+    end
+  
+    cfg['chord']['count'] = new_count
+    update_osc_chord_points cfg
+    init_time_state_chord cfg if get(:chord_auto)
+  end
