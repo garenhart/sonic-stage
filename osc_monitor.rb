@@ -137,6 +137,9 @@ live_loop :osc_monitor do
     cfg['pattern_mode'] = 0 if n[0].to_i > 0
 
 # chord section ==================================    
+  when "chord_pt_count"
+    update_chord_count cfg, n[0].to_i
+  
   when "chord_tempo_factor" # update Time State
     cfg['chord']['tempo_factor'] = n[0].to_i
     init_time_state_chord cfg if get(:chord_auto)
@@ -170,6 +173,9 @@ live_loop :osc_monitor do
     delete_chord_pattern cfg, n
 
   # bass section ===================================    
+  when "bass_pt_count"
+    update_bass_count cfg, n[0].to_i
+
   when "bass_tempo_factor" # update Time State
     cfg['bass']['tempo_factor'] = n[0].to_i
     init_time_state_bass cfg if get(:bass_auto)
