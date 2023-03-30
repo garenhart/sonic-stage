@@ -109,16 +109,28 @@ live_loop :osc_monitor do
   when "open"
     cfgFile = n[0]
     # deserialize JSON file into cfg hash
-    cfg = readJSON(cfgFile)
-    init_osc_controls(cfg)
-    init_time_state_chord cfg if get(:chord_auto)
-    init_time_state_bass cfg if get(:bass_auto)
-    init_time_state_drums cfg if get(:drums_auto)
+    data = readJSON(cfgFile)
+
+    ca = get(:chord_auto)
+    ba = get(:bass_auto)
+    da = get(:drums_auto)
+
+    # accept data only if all _auto states are true
+    # or new "tempo" is the same as current tempo
+    if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
+      cfg = data
+      init_osc_controls(cfg)
+      init_time_state_chord cfg if get(:chord_auto)
+      init_time_state_bass cfg if get(:bass_auto)
+      init_time_state_drums cfg if get(:drums_auto)
+    else
+      osc_ctrl "/NOTIFY", "triangle-exclamation", "Tempo mismatch! Cannot load " + cfgFile
+    end
     
   when "save"
     # serialize cfg hash into JSON file
     new_name = write_unique_JSON(cfgFile, cfg)
-    osc_ctrl "/NOTIFY", "clock", new_name + " saved"
+    osc_ctrl "/NOTIFY", "folder-plus", new_name + " saved"
     
   when "tempo"
     cfg['tempo'] = n[0].to_i
