@@ -246,6 +246,15 @@ live_loop :osc_monitor do
   when "cymbal_inst"
     init_drum_component cfg, "cymbal", "sample", n[0].to_sym
  
+  when "cymbal_onset"
+    init_drum_component cfg, "cymbal", "onset", n[0].to_i
+
+  when "snare_onset"
+    init_drum_component cfg, "snare", "onset", n[0].to_i
+
+  when "kick_onset"
+    init_drum_component cfg, "kick", "onset", n[0].to_i    
+
   when "cymbal_on"
     init_drum_component cfg, "cymbal", "on", n[0]==1.0
   when "snare_on"

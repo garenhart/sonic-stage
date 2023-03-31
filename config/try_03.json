@@ -8,7 +8,7 @@
   "bass": {
     "count": 28,
     "tempo_factor": 1,
-    "on": true,
+    "on": false,
     "amp": 0.5,
     "synth": "fm",
     "tonics": [      44,      39,      47,      46,      46,      39,      46,      44    ],
@@ -17,7 +17,7 @@
   "chord": {
     "count": 28,
     "tempo_factor": 1,
-    "on": true,
+    "on": false,
     "amp": 0.6299999952316284,
     "type": 1,
     "synth": "piano",
@@ -30,23 +30,23 @@
     "cymbal": {
       "on": true,
       "amp": 0.5,
-      "sample": "drum_cymbal_closed",
+      "sample": "loop_tabla",
       "onset": 0,
       "beats": "0101111001010001011000000000"
     },
     "snare": {
       "on": true,
       "amp": 0.5,
-      "sample": "drum_snare_soft",
-      "onset": 0,
-      "beats": "0000000000000000000000000000"
+      "sample": "guit_em9",
+      "onset": 1,
+      "beats": "0010011100001000100011100000"
     },
     "kick": {
       "on": true,
-      "amp": 0.9700000286102295,
-      "sample": "bd_tek",
-      "onset": 0,
-      "beats": "1010000110100010100110101010"
+      "amp": 0.3499999940395355,
+      "sample": "loop_safari",
+      "onset": 1,
+      "beats": "1010000111100010100110101010"
     }
   }
 }

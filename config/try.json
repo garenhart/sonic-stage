@@ -31,18 +31,21 @@
       "on": true,
       "amp": 0.5,
       "sample": "drum_cymbal_closed",
+      "onset": 0,
       "beats": "011110001000101010000000"
     },
     "snare": {
       "on": true,
       "amp": 0.5,
       "sample": "drum_snare_soft",
+      "onset": 0,
       "beats": "000001000010000000000000"
     },
     "kick": {
       "on": true,
       "amp": 0.5,
       "sample": "bd_tek",
+      "onset": 0,
       "beats": "100000100000000000101010"
     }
   }

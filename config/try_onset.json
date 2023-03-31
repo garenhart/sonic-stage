@@ -31,18 +31,21 @@
       "on": true,
       "amp": 0.5,
       "sample": "loop_tabla",
+      "onset": 0,
       "beats": "0101111001010001011000000000"
     },
     "snare": {
       "on": true,
       "amp": 0.5,
       "sample": "guit_harmonics",
+      "onset": 0,
       "beats": "0010011100001000100011100000"
     },
     "kick": {
       "on": true,
       "amp": 0.3499999940395355,
       "sample": "loop_safari",
+      "onset": 0,
       "beats": "1010000111100010100110101010"
     }
   }
