@@ -26,12 +26,13 @@ define :play_drum do |drum, cfg|
   tempo_factor = drums['tempo_factor']
   beats = drums[drum]['beats']
   amp = drums[drum]['amp']
+  ons = drums[drum]['onset']
 
   density tempo_factor do
     puts "drum=====: #{drums['count']} #{beats.size}"
     drums['count'].times do |i|
       if drums[drum]['on'] && (beats[i] == "1")
-        sample drums[drum]['sample'], amp: amp
+        sample drums[drum]['sample'], amp: amp, onset: (ons==1 ? pick : 0)
         animate_drum drum, amp
       end
       sleep 0.25
