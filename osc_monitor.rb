@@ -6,6 +6,11 @@
 ######################################
 
 use_debug false
+use_midi_logging false
+use_cue_logging false
+use_osc_logging false
+
+# use_transpose 0 #add optional transpose manually
 
 #load libraries
 require 'date'
@@ -22,9 +27,11 @@ eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
 #ModeScales = Modes.scales
 
 # generic midi definitions
-midi_in = "/midi:nanokey*/" # Korg nanoKey
+midi_in = "/midi*/" # This on seems to work for all midi devices
+
+# midi_in = "/midi:nanokey*/" # Korg nanoKey
 # midi_in = "/midi*midi*/" # Komplete Kontrol M32
-midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32 
+# midi_daw = "/midi*m_daw*/" # Komplete Kontrol M32 
 #######
 
 # Open Stage Control config
@@ -304,7 +311,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
     # use_bpm get(:tempo)
     # sync :tick
 
-    note, velocity = sync midi_in + "note_on"
+    note, vel = sync midi_in + "note_on"
 
     bass_rec = get(:bass_rec)
     chord_rec = get(:chord_rec) 
@@ -321,7 +328,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
     else # not recording
       use_synth :piano
     end   
-    play note                
+    play note, amp: vel/127.0, release: 1             
   end
 end
 # END MIDI MESSAGE MONITORING LOOP
