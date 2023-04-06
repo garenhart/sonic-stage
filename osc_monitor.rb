@@ -311,24 +311,33 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
     # use_bpm get(:tempo)
     # sync :tick
 
-    note, vel = sync midi_in + "note_on"
+    addr = midi_in + "note_*"
+    note, vel = sync addr
 
-    bass_rec = get(:bass_rec)
-    chord_rec = get(:chord_rec) 
-    
-    if (bass_rec || chord_rec) # recording
-      if (bass_rec)
-          use_synth cfg['bass']['synth'].to_sym
-          add_tonic_bass cfg, note
-      end
-      if (chord_rec)
-          use_synth cfg['chord']['synth'].to_sym
-          add_tonic_chord cfg, note
-      end
-    else # not recording
-      use_synth :piano
-    end   
-    play note, amp: vel/127.0, release: 1             
+    addr_data = parse_addr addr
+
+    puts "MIDI", note, vel, addr_data
+
+    if (addr_data[1] == "note_on" and vel > 0) # note_on 
+      bass_rec = get(:bass_rec)
+      chord_rec = get(:chord_rec) 
+      
+      if (bass_rec || chord_rec) # recording
+        if (bass_rec)
+            use_synth cfg['bass']['synth'].to_sym
+            add_tonic_bass cfg, note
+        end
+        if (chord_rec)
+            use_synth cfg['chord']['synth'].to_sym
+            add_tonic_chord cfg, note
+        end
+      else # not recording
+        use_synth :piano
+      end   
+      play note, amp: vel/127.0, release: 1
+    else # note_off or note_on with velocity 0
+      # stop
+    end               
   end
 end
 # END MIDI MESSAGE MONITORING LOOP
