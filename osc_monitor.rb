@@ -5,10 +5,11 @@
 # author: Garen H.
 ######################################
 
-use_debug false
-use_midi_logging false
-use_cue_logging false
-use_osc_logging false
+use_debug true
+use_midi_logging true
+use_cue_logging true
+use_osc_logging true
+use_arg_checks true
 
 # use_transpose 0 #add optional transpose manually
 
@@ -321,15 +322,15 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
     if (addr_data[1] == "note_on" and vel > 0) # note_on 
       bass_rec = get(:bass_rec)
       chord_rec = get(:chord_rec) 
-      
+     
       if (bass_rec || chord_rec) # recording
         if (bass_rec)
             use_synth cfg['bass']['synth'].to_sym
-            add_tonic_bass cfg, note
+            add_tonic_bass cfg, note, get(:beat)
         end
         if (chord_rec)
             use_synth cfg['chord']['synth'].to_sym
-            add_tonic_chord cfg, note
+            add_tonic_chord cfg, note, get(:beat)
         end
       else # not recording
         use_synth :piano

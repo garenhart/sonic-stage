@@ -1,5 +1,6 @@
 spi-osc+lib.code-workspace
 config/default_*.json
+config/try_*.json
 unit-test.rb
 config/unit-test.json
 animation1/animation1.pde
