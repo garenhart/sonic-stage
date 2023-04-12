@@ -12,7 +12,8 @@ define :play_cue do |cfg|
   use_real_time
   use_bpm cfg['tempo']
   cue :tick
-  cfg['bass']['count'].times do
+  cfg['bass']['count'].times do |i|
+    set :beat, i+1
     sleep 0.25
   end
 end

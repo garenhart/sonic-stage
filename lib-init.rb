@@ -49,25 +49,29 @@ define :reset_tonics do |cfg|
   cfg['chord']['pattern'] = []
 end
 
-define :add_tonic_bass do |cfg, tonic| 
+define :add_tonic_bass do |cfg, tonic, beat| 
   cfg['bass']['tonics'] << tonic
-  init_bass_pattern cfg
-end
-
-define :add_tonic_chord do |cfg, tonic| 
-  cfg['chord']['tonics'] << tonic
-  init_chord_pattern cfg 
-end
-
-define :init_bass_pattern do |cfg|
-  cfg['bass']['pattern'] = []
-  cfg['bass']['tonics'].length.times do |i|
-    pos = dist_pos i, cfg['bass']['tonics'].length, cfg['bass']['count'] || 16
-    cfg['bass']['pattern'].push pos
-  end
+  cfg['bass']['pattern'] << beat
   update_osc_bass_points cfg
   init_time_state_bass cfg if get(:bass_auto)
 end
+
+define :add_tonic_chord do |cfg, tonic, beat| 
+  cfg['chord']['tonics'] << tonic
+  cfg['chord']['pattern'] << beat
+  update_osc_chord_points cfg
+  init_time_state_chord cfg if get(:chord_auto)
+end
+
+# define :init_bass_pattern do |cfg|
+#   cfg['bass']['pattern'] = []
+#   cfg['bass']['tonics'].length.times do |i|
+#     pos = dist_pos i, cfg['bass']['tonics'].length, cfg['bass']['count'] || 16
+#     cfg['bass']['pattern'].push pos
+#   end
+#   update_osc_bass_points cfg
+#   init_time_state_bass cfg if get(:bass_auto)
+# end
 
 define :delete_bass_pattern do |cfg, points|
   if ((points == nil) || (points.length == 0))
@@ -85,15 +89,15 @@ define :delete_bass_pattern do |cfg, points|
   init_time_state_bass cfg if get(:bass_auto)
 end
 
-define :init_chord_pattern do |cfg|
-  cfg['chord']['pattern'] = []
-  cfg['chord']['tonics'].length.times do |i|
-    pos = dist_pos i, cfg['chord']['tonics'].length, cfg['chord']['count'] || 16
-    cfg['chord']['pattern'].push pos
-  end
-  update_osc_chord_points cfg
-  init_time_state_chord cfg if get(:chord_auto)   
-end
+# define :init_chord_pattern do |cfg|
+#   cfg['chord']['pattern'] = []
+#   cfg['chord']['tonics'].length.times do |i|
+#     pos = dist_pos i, cfg['chord']['tonics'].length, cfg['chord']['count'] || 16
+#     cfg['chord']['pattern'].push pos
+#   end
+#   update_osc_chord_points cfg
+#   init_time_state_chord cfg if get(:chord_auto)   
+# end
 
 define :delete_chord_pattern do |cfg, points|
   if ((points == nil) || (points.length == 0))
