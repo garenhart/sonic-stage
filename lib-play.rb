@@ -12,8 +12,9 @@ define :play_cue do |cfg|
   use_real_time
   use_bpm cfg['tempo']
   cue :tick
-  cfg['bass']['count'].times do |i|
+  cfg['drums']['count'].times do |i|
     set :beat, i+1
+    osc_ctrl "/current_beat", i+1
     sleep 0.25
   end
 end
