@@ -1080,6 +1080,24 @@
                     "tabs": [],
                     "borderRadius": "auto",
                     "tabsPosition": "top"
+                  },
+                  {
+                    "type": "variable",
+                    "lock": false,
+                    "id": "current_beat",
+                    "comments": "",
+                    "value": "",
+                    "default": "",
+                    "linkId": "",
+                    "address": "auto",
+                    "preArgs": "",
+                    "typeTags": "",
+                    "decimals": 2,
+                    "target": "",
+                    "ignoreDefaults": false,
+                    "bypass": false,
+                    "onCreate": "",
+                    "onValue": ""
                   }
                 ],
                 "tabs": [],
@@ -3394,7 +3412,7 @@
                             "tabs": [],
                             "widgetType": "button",
                             "quantity": "@{beat_pt_count}",
-                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nreturn props\n}}",
+                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nif (props.label == @{current_beat}) {\n  props.colorWidget = 'darkorange'\n}\n\nreturn props\n}}",
                             "tabsPosition": "top"
                           },
                           {
@@ -3866,7 +3884,7 @@
                             "traversing": false,
                             "widgetType": "button",
                             "quantity": "@{beat_pt_count}",
-                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nreturn props\n}}",
+                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nif (props.label == @{current_beat}) {\n  props.colorWidget = 'darkorange'\n}\n\nreturn props\n}}",
                             "value": "",
                             "default": "",
                             "linkId": "",
@@ -4368,7 +4386,7 @@
                             "traversing": false,
                             "widgetType": "button",
                             "quantity": "@{beat_pt_count}",
-                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nreturn props\n}}",
+                            "props": "JS{{\nvar props = {}\nvar labels = []\nfor (var i = 0; i < @{beat_pt_count}; i++) {\n  labels[i] = i+1\n}\n\nprops.label = labels[$]\nif (props.label == @{current_beat}) {\n  props.colorWidget = 'darkorange'\n}\n\nreturn props\n}}",
                             "widgets": [],
                             "tabs": [],
                             "tabsPosition": "top"
