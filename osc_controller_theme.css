@@ -1,0 +1,20 @@
+.fader-container {
+   --color-widget: darkorange;
+}
+
+/*
+.button-container {
+    --color-widget: darkorange;
+}
+
+.multixy-container {
+    --color-stroke: darkorange;
+ }
+*/
+.rounded-corners5 {
+    border-radius: 5px;
+}
+
+.rounded-corners5-matrix .widget {
+    border-radius: 5px;
+}
