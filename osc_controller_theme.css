@@ -1,16 +1,24 @@
 .fader-container {
-   --color-widget: darkorange;
-}
-
-/*
-.button-container {
     --color-widget: darkorange;
 }
 
-.multixy-container {
-    --color-stroke: darkorange;
- }
-*/
+.gh-button-control {
+    --color-widget: darkorange;
+}
+ 
+.gh-button-action {
+    --color-widget: darkorange;
+}
+ 
+.gh-button-alert {
+    --color-widget: red;
+}
+
+.gh-button-auto {
+    --color-widget: green;
+}
+ 
+
 .rounded-corners5 {
     border-radius: 5px;
 }
