@@ -2,6 +2,10 @@
     --color-widget: darkorange;
 }
 
+.multixy-container {
+    --color-stroke: darkorange;
+}
+
 .gh-button-control {
     --color-widget: darkorange;
 }
@@ -16,6 +20,8 @@
 
 .gh-button-auto {
     --color-widget: green;
+    --color-text: gray;
+    --color-text-on: darkorange;
 }
  
 
