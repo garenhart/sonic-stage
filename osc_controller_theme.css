@@ -12,10 +12,12 @@
  
 .gh-button-action {
     --color-widget: darkorange;
+    --color-text: gray;
 }
  
 .gh-button-alert {
     --color-widget: red;
+    --color-text: gray;
 }
 
 .gh-button-auto {
