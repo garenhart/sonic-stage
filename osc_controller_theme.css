@@ -8,6 +8,7 @@
 
 .gh-button-control {
     --color-widget: darkorange;
+    --color-text: gray;
 }
  
 .gh-button-action {
