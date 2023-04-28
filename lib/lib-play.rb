@@ -70,6 +70,32 @@ define :play_bass do |cfg|
   end
 end
 
+define :play_chords_simple do |cfg|
+  use_real_time
+  use_bpm cfg['tempo']
+  
+  sync :tick
+  
+  cfg_chord = get(:chord_state)
+  tempo_factor = cfg_chord['tempo_factor']
+
+  if (cfg_chord['pattern'].size > 0) && (cfg_chord['pattern'].size == cfg_chord['tonics'].size)
+    use_synth cfg_chord['synth'].to_sym
+ 
+    density tempo_factor do
+      cfg_chord['count'].times do |pos|
+        i = cfg_chord['pattern'].index(pos+1)
+        if (cfg_chord['on'] && i)
+          play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
+        end
+        sleep 0.25
+      end
+    end
+  else
+    sleep 0.25
+  end
+end
+
 define :play_chords do |cfg|
   use_real_time
   use_bpm cfg['tempo']
