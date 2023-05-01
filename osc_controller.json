@@ -5089,7 +5089,7 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onCreate": "",
-            "onValue": "console.log(\"bass beat point========== \" + value)"
+            "onValue": "//console.log(\"bass beat point========== \" + value)"
           },
           {
             "type": "variable",
@@ -5107,7 +5107,7 @@
             "ignoreDefaults": false,
             "bypass": false,
             "onCreate": "",
-            "onValue": "console.log(\"chord beat point========== \" + value)"
+            "onValue": "// console.log(\"chord beat point========== \" + value)"
           },
           {
             "type": "variable",
@@ -5200,6 +5200,47 @@
               "Aeolian #7": "aeolian7s",
               "Locrian #6": "locrian6s"
             },
+            "default": "",
+            "linkId": "",
+            "address": "auto",
+            "preArgs": "",
+            "typeTags": "",
+            "decimals": 2,
+            "target": "",
+            "ignoreDefaults": false,
+            "bypass": false,
+            "onValue": "",
+            "onCreate": "",
+            "lock": false
+          },
+          {
+            "type": "variable",
+            "lock": false,
+            "id": "scale_notes",
+            "comments": "scale notes array to populate keyboard_scale",
+            "value": [
+              49,
+              52,
+              60,
+              63
+            ],
+            "default": "",
+            "linkId": "",
+            "address": "auto",
+            "preArgs": "",
+            "typeTags": "",
+            "decimals": 2,
+            "target": "",
+            "ignoreDefaults": false,
+            "bypass": false,
+            "onCreate": "",
+            "onValue": "var count = getProp('keyboard_scale', 'keys')\nvar start = getProp('keyboard_scale', 'start')\nvar result = new Array(count);\nconsole.log(value)\nfor (var i = 0; i < count; i++) {\n  result[i] = value.includes(start+i) ? 1 : 0;\n}\nconsole.log(\"SCALE\", result)\nset('keyboard_scale', result)\n"
+          },
+          {
+            "type": "variable",
+            "id": "scale_match",
+            "comments": "",
+            "value": 1,
             "default": "",
             "linkId": "",
             "address": "auto",
@@ -5329,24 +5370,6 @@
             "bypass": false,
             "onCreate": "",
             "onValue": ""
-          },
-          {
-            "type": "variable",
-            "id": "scale_match",
-            "comments": "",
-            "value": 1,
-            "default": "",
-            "linkId": "",
-            "address": "auto",
-            "preArgs": "",
-            "typeTags": "",
-            "decimals": 2,
-            "target": "",
-            "ignoreDefaults": false,
-            "bypass": false,
-            "onValue": "",
-            "onCreate": "",
-            "lock": false
           },
           {
             "type": "variable",
