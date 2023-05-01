@@ -20,3 +20,12 @@ define :split_and_capitalize do |str, pattern|
     str.split(pattern).map {|x| x.capitalize}.join(" ")
 end
 
+# Extracts substring between '[' and ']' from string 'str'
+define :extract_between_brackets do |str|
+    str[/\[(.*?)\]/m, 1]
+end
+
+# Returns time difference in milliseconds between two times
+define :time_diff_ms do |start, finish|
+    (finish - start) * 1000.0
+end

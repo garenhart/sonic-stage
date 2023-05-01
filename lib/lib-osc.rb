@@ -53,10 +53,16 @@ define :init_osc_samples do |target, sg|
 end
 
 define :init_osc_keyboard do |tonic, mode|
+  start = Time.now
   scale_notes = scale tonic, mode
-  for note in 21..107
-    osc_ctrl "/keyboard_scale", note, (scale_notes.to_a.include? note) ? 1 : 0
-  end
+  sn = extract_between_brackets scale_notes.to_s
+  puts sn
+  osc_ctrl "/scale_notes", sn
+  # for note in 21..107
+  #   osc_ctrl "/keyboard_scale", note, (scale_notes.to_a.include? note) ? 1 : 0
+  # end
+  finish = Time.now
+  puts "init_osc_keyboard time: #{scale_notes.to_s}, #{mode}, #{time_diff_ms start, finish}"
 end
 
 define :init_osc_update_drums do
