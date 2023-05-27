@@ -157,12 +157,16 @@ define :play_chords do |cfg|
           puts "chord", cs
           if cs != nil
             play (tonic ? cs[0][0] : cs[0]), amp: cfg_chord['amp'] 
+            puts "II", (tonic ? cs[0][0] : cs[0])
+            animate_keyboard (tonic ? cs[0][0] : cs[0])
           end        
         else
           chord_num = pos-last_pos
           if (cs != nil) && (chord_num < cs.length) && (pos < cfg_chord['count'])
             puts "III", pos
             play cs[chord_num], amp: cfg_chord['amp']
+            puts cs[chord_num]
+            animate_keyboard cs[chord_num]
           end
         end
         sleep 0.25
