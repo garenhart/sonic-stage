@@ -70,7 +70,7 @@ define :play_bass do |cfg|
   end
 end
 
-define :play_chords_simple do |cfg|
+define :play_chords do |cfg|
   use_real_time
   use_bpm cfg['tempo']
   
@@ -87,6 +87,7 @@ define :play_chords_simple do |cfg|
         i = cfg_chord['pattern'].index(pos+1)
         if (cfg_chord['on'] && i)
           play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
+          animate_keyboard (cfg_chord['tonics'][i])
         end
         sleep 0.25
       end
@@ -96,7 +97,7 @@ define :play_chords_simple do |cfg|
   end
 end
 
-define :play_chords do |cfg|
+define :play_chords_complex do |cfg|
   use_real_time
   use_bpm cfg['tempo']
   
