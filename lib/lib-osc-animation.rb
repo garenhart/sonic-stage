@@ -20,6 +20,12 @@ define :animate_drum do |drum, amp|
   osc_anim "/#{drum}_amp", amp # drum component amp
 end
 
+# sends OSC messages with note
+define :animate_keyboard do |note|
+  osc_anim "/note", note
+end
+
+
 # directs osc message to Processing
 define :osc_anim do |path, *args|
   osc_send get(:anim_ip), get(:anim_port), path, *args
