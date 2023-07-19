@@ -97,16 +97,20 @@ define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
   osc_ctrl "/#{d}_amp", cfg['drums'][d]['amp']
   osc_ctrl gr_ctrl, sample_gr
   init_osc_samples inst_ctrl + "_v", sample_gr.to_sym
-  sleep 0.125 # sleeping between populating and selecting seems to make it work 
   osc_ctrl inst_ctrl, (cfg['drums'][d]['sample'])
+ 
   # populate drum beats osc widget with the beats from string
-  beat_count = cfg['drums'][d]['beats'].length  
-  beat_count.times do |i|
-    osc_ctrl "/#{d}_beats/#{i}", cfg['drums'][d]['beats'][i] #should figure out how to populate beats without looping through array
-  end
+  # beat_count = cfg['drums'][d]['beats'].length  
+  # beat_count.times do |i|
+  #   osc_ctrl "/#{d}_beats/#{i}", cfg['drums'][d]['beats'][i] #should figure out how to populate beats without looping through array
+  # end
 
-  # osc_ctrl "/#{d}_beats", cfg[d]['beats']
-  # set (d.to_sym), cfg[d]['beats'] #set the beats to for the drum
+  # populate drum beats osc widget with the beats from string
+  # sending one osc message with entire string and parsing in open stage control
+  # is a better idea than sending individual messages for each beat (above)
+  # because sending individual messages is slow and causes a time lag
+  osc_ctrl "/#{d}_beats_v", cfg['drums'][d]['beats']
+  #set (d.to_sym), cfg['drums'][d]['beats'] #set the beats to for the drum
 end
 
 define :init_osc_drums do |cfg|
