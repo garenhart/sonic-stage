@@ -4,6 +4,8 @@
 # author: Garen H.
 #######################
 
+rhythm = 1.0 # each beat is 1 whole note for 4/4 rhythm and lasts 1 sec for 60 BPM
+
 # define :pattern_match do |pattern, match=BEAT_on|
 #   return pattern.ring.tick == match
 # end
@@ -12,11 +14,15 @@ define :play_cue do |cfg|
   use_real_time
   use_bpm cfg['tempo']
   cue :tick
-  cfg['drums']['count'].times do |i|
-    set :beat, i+1
-    osc_ctrl "/current_beat", i+1
-    sleep 0.25
-  end
+  drums = get(:drums)
+  tempo_factor = drums['tempo_factor']
+  density tempo_factor do
+    cfg['drums']['count'].times do |i|
+      set :beat, i+1
+      osc_ctrl "/current_beat", i+1
+      sleep rhythm
+    end
+  end  
 end
 
 define :play_drum do |drum, cfg|
@@ -37,7 +43,7 @@ define :play_drum do |drum, cfg|
         sample drums[drum]['sample'], amp: amp, onset: (ons==1 ? pick : 0)
         animate_drum drum, amp
       end
-      sleep 0.25
+      sleep rhythm
     end
   end
 end
@@ -62,11 +68,11 @@ define :play_bass do |cfg|
           play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
           animate_POC(cfg_bass['tonics'][pos])
         end
-        sleep 0.25
+        sleep rhythm
       end
     end
   else
-    sleep 0.25
+    sleep rhythm
   end
 end
 
@@ -89,11 +95,11 @@ define :play_chords do |cfg|
           play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
           animate_keyboard (cfg_chord['tonics'][i])
         end
-        sleep 0.25
+        sleep rhythm
       end
     end
   else
-    sleep 0.25
+    sleep rhythm
   end
 end
 
@@ -170,11 +176,11 @@ define :play_chords_complex do |cfg|
             animate_keyboard cs[chord_num]
           end
         end
-        sleep 0.25
+        sleep rhythm
       end
     end
   else
-    sleep 0.25
+    sleep rhythm
   end
 end
 
