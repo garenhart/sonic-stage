@@ -4,7 +4,7 @@
 # author: Garen H.
 #######################
 
-rhythm = 1.0 # each beat is 1 whole note for 4/4 rhythm and lasts 1 sec for 60 BPM
+rhythm = 1.0 # each beat is a 1 whole note for 4/4 signature and lasts 1 sec for 60 BPM
 
 # define :pattern_match do |pattern, match=BEAT_on|
 #   return pattern.ring.tick == match
@@ -16,13 +16,13 @@ define :play_cue do |cfg|
   cue :tick
   drums = get(:drums)
   tempo_factor = drums['tempo_factor']
-  density tempo_factor do
-    cfg['drums']['count'].times do |i|
+  # density tempo_factor do
+    drums['count'].times do |i|
       set :beat, i+1
       osc_ctrl "/current_beat", i+1
       sleep rhythm
     end
-  end  
+  # end  
 end
 
 define :play_drum do |drum, cfg|
@@ -56,6 +56,7 @@ define :play_bass do |cfg|
 
   cfg_bass = get(:bass_state)
   tempo_factor = cfg_bass['tempo_factor']
+  
   puts "bass=====: #{cfg_bass['pattern'].size} #{cfg_bass['tonics'].size}"
   if ((cfg_bass['pattern'].size > 0) && (cfg_bass['pattern'].size == cfg_bass['tonics'].size))
     use_synth cfg_bass['synth'].to_sym
