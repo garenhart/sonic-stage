@@ -256,12 +256,30 @@ live_loop :osc_monitor do
  
   when "cymbal_onset"
     init_drum_component cfg, "cymbal", "onset", n[0].to_i
+  when "cymbal_range"
+    init_drum_component cfg, "cymbal", "range", n
+  when "cymbal_random"
+    init_drum_component cfg, "cymbal", "random", n[0]==1.0
+  when "cymbal_reverse"
+    init_drum_component cfg, "cymbal", "reverse", n[0]==1.0
 
   when "snare_onset"
     init_drum_component cfg, "snare", "onset", n[0].to_i
+  when "snare_range"
+    init_drum_component cfg, "snare", "range", n
+  when "snare_random"
+    init_drum_component cfg, "snare", "random", n[0]==1.0
+  when "snare_reverse"
+    init_drum_component cfg, "snare", "reverse", n[0]==1.0
 
   when "kick_onset"
     init_drum_component cfg, "kick", "onset", n[0].to_i    
+  when "kick_range"
+    init_drum_component cfg, "kick", "range", n
+  when "kick_random"
+    init_drum_component cfg, "kick", "random", n[0]==1.0
+  when "kick_reverse"
+    init_drum_component cfg, "kick", "reverse", n[0]==1.0
 
   when "cymbal_on"
     init_drum_component cfg, "cymbal", "on", n[0]==1.0

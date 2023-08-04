@@ -36,6 +36,9 @@
             "amp": 0.5,
             "sample": "drum_cymbal_closed",
             "onset": 0,
+            "range": [0, 1],
+            "random": false,
+            "reverse": false,
             "beats": "0000000000000000"
         },
         "snare":
@@ -44,6 +47,9 @@
             "amp": 0.5,
             "sample": "drum_snare_soft",
             "onset": 0,
+            "range": [0, 1],
+            "random": false,
+            "reverse": false,
             "beats": "0000000000000000"
         },
         "kick":
@@ -52,6 +58,9 @@
             "amp": 0.5,
             "sample": "bd_tek",
             "onset": 0,
+            "range": [0, 1],
+            "random": false,
+            "reverse": false,
             "beats": "0000000000000000"
         }
     }
