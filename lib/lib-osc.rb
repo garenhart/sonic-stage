@@ -95,6 +95,10 @@ define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
   osc_ctrl "/#{d}_onset", cfg['drums'][d]['onset']
   osc_ctrl "/#{d}_on", cfg['drums'][d]['on'] ? 1 : 0
   osc_ctrl "/#{d}_amp", cfg['drums'][d]['amp']
+  osc_ctrl "/#{d}_range", *cfg['drums'][d]['range']
+  osc_ctrl "/#{d}_random", cfg['drums'][d]['random'] ? 1 : 0
+  osc_ctrl "/#{d}_reverse", cfg['drums'][d]['reverse'] ? 1 : 0
+
   osc_ctrl gr_ctrl, sample_gr
   init_osc_samples inst_ctrl + "_v", sample_gr.to_sym
   osc_ctrl inst_ctrl, (cfg['drums'][d]['sample'])
