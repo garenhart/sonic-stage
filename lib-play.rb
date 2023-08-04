@@ -35,12 +35,26 @@ define :play_drum do |drum, cfg|
   beats = drums[drum]['beats']
   amp = drums[drum]['amp']
   ons = drums[drum]['onset']
+  start = drums[drum]['reverse'] ? drums[drum]['range'][1] : drums[drum]['range'][0]
+  finish = drums[drum]['reverse'] ? drums[drum]['range'][0] : drums[drum]['range'][1]
+
+  puts drum + " sample range ======" + start.to_s + "---" + finish.to_s
+
 
   density tempo_factor do
     puts "drum=====: #{drums['count']} #{beats.size}"
     drums['count'].times do |i|
       if drums[drum]['on'] && (beats[i] == "1")
-        sample drums[drum]['sample'], amp: amp, onset: (ons==1 ? pick : 0)
+        #sample drums[drum]['sample'], amp: amp, onset: (ons==1 ? pick : 0)
+        if (drums[drum]['random'])
+          sample drums[drum]['sample'], amp: amp, onset: pick
+        else  
+          if (start == finish)
+            sample drums[drum]['sample'], amp: amp, onset: 1
+          else
+            sample drums[drum]['sample'], amp: amp, start: start, finish: finish 
+          end
+        end  
         animate_drum drum, amp
       end
       sleep rhythm
