@@ -2,6 +2,10 @@
     --color-widget: darkorange;
 }
 
+.range-container {
+    --color-fill: darkorange;
+}
+
 .multixy-container {
     --color-stroke: darkorange;
 }
