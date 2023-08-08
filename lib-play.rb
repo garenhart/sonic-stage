@@ -50,7 +50,7 @@ define :play_drum do |drum, cfg|
           sample drums[drum]['sample'], amp: amp, onset: pick
         else  
           if (start == finish)
-            sample drums[drum]['sample'], amp: amp, onset: 1
+            sample drums[drum]['sample'], amp: amp, onset: 0
           else
             sample drums[drum]['sample'], amp: amp, start: start, finish: finish 
           end
