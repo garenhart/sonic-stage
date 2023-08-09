@@ -3508,7 +3508,7 @@
                                 "popupWidth": 280,
                                 "popupHeight": 200,
                                 "popupLeft": "auto",
-                                "popupTop": "auto",
+                                "popupTop": -200,
                                 "relative": true,
                                 "ignoreTabs": false,
                                 "colorText": "VAR{inst_color}",
