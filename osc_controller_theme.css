@@ -30,7 +30,10 @@
     --color-text: gray;
     --color-text-on: darkorange;
 }
- 
+
+.gh-popup {
+    opacity: 0.9;
+}
 
 .rounded-corners5 {
     border-radius: 5px;
