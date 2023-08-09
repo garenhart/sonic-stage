@@ -3511,7 +3511,7 @@
                                 "popupTop": "auto",
                                 "relative": true,
                                 "ignoreTabs": false,
-                                "colorText": "auto",
+                                "colorText": "VAR{inst_color}",
                                 "colorWidget": "auto",
                                 "colorStroke": "auto",
                                 "colorFill": "auto",
@@ -3545,7 +3545,7 @@
                                 "target": "",
                                 "ignoreDefaults": false,
                                 "bypass": false,
-                                "onCreate": "setVar(\"this\", \"inst\", \"instrument\")",
+                                "onCreate": "setVar(\"this\", \"inst\", \"instrument\")\nsetVar(\"this\", \"inst_color\", \"auto\")",
                                 "onValue": "if (get('drums_auto') === 0) { set('drums_update', 1)}",
                                 "widgets": [
                                   {
@@ -3778,7 +3778,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\nconsole.log(\"range: \" + value)",
+                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_cymbal_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
                                         "onTouch": ""
                                       },
                                       {
@@ -4198,7 +4198,7 @@
                                 "popupTop": -200,
                                 "relative": true,
                                 "ignoreTabs": false,
-                                "colorText": "auto",
+                                "colorText": "VAR{inst_color}",
                                 "colorWidget": "auto",
                                 "colorStroke": "auto",
                                 "colorFill": "auto",
@@ -4232,7 +4232,7 @@
                                 "target": "",
                                 "ignoreDefaults": false,
                                 "bypass": false,
-                                "onCreate": "setVar(\"this\", \"inst\", \"instrument\")",
+                                "onCreate": "setVar(\"this\", \"inst\", \"instrument\")\nsetVar(\"this\", \"inst_color\", \"auto\")",
                                 "onValue": "if (get('drums_auto') === 0) { set('drums_update', 1)}",
                                 "widgets": [
                                   {
@@ -4465,7 +4465,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\nconsole.log(\"range: \" + value)",
+                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_snare_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
                                         "onTouch": ""
                                       },
                                       {
@@ -4883,7 +4883,7 @@
                                 "popupTop": -200,
                                 "relative": true,
                                 "ignoreTabs": false,
-                                "colorText": "auto",
+                                "colorText": "VAR{inst_color}",
                                 "colorWidget": "auto",
                                 "colorStroke": "auto",
                                 "colorFill": "auto",
@@ -4917,7 +4917,7 @@
                                 "target": "",
                                 "ignoreDefaults": false,
                                 "bypass": false,
-                                "onCreate": "setVar(\"this\", \"inst\", \"instrument\")",
+                                "onCreate": "setVar(\"this\", \"inst\", \"instrument\")\nsetVar(\"this\", \"inst_color\", \"auto\")",
                                 "onValue": "if (get('drums_auto') === 0) { set('drums_update', 1)}",
                                 "widgets": [
                                   {
@@ -5150,7 +5150,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\nconsole.log(\"range: \" + value)",
+                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_kick_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
                                         "onTouch": ""
                                       },
                                       {
