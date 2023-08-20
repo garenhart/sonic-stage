@@ -15,14 +15,14 @@ define :animate_POC do |nv|
 end
 
 # sends OSC messages with drum component and corresponding amp
-define :animate_drum do |drum, amp|
+define :animate_drum do |drum_inst, amp|
   # osc "/drum", drum # drum component
-  osc_anim "/drum", drum, amp # drum component amp
+  osc_anim "/drum", drum_inst, amp # drum component amp
 end
 
 # sends OSC messages with note
-define :animate_keyboard do |note|
-  osc_anim "/note", note
+define :animate_keyboard do |key_inst, note, amp|
+  osc_anim "/key", key_inst, note, amp
 end
 
 
