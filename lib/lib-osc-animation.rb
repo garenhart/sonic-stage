@@ -17,7 +17,7 @@ end
 # sends OSC messages with drum component and corresponding amp
 define :animate_drum do |drum, amp|
   # osc "/drum", drum # drum component
-  osc_anim "/#{drum}_amp", amp # drum component amp
+  osc_anim "/drum", drum, amp # drum component amp
 end
 
 # sends OSC messages with note
