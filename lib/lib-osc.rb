@@ -164,6 +164,8 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/mode", cfg['mode']
   osc_ctrl "/scale", cfg['scale']
   osc_ctrl "/switch_loop", cfg['loop_mode']
+  osc_ctrl "/solo_inst", cfg['solo_inst']
+
   osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
   osc_ctrl "/bass_inst", cfg['bass']['synth']
