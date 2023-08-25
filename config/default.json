@@ -5,6 +5,7 @@
     "mode": 0,
     "scale": "ionian",
     "loop_mode": 0,
+    "solo_inst": "piano",
     "bass":
     {
         "count": 16,

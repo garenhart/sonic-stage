@@ -156,6 +156,11 @@ live_loop :osc_monitor do
     cfg['loop_mode'] = n[0].to_i
     cfg['pattern_mode'] = 0 if n[0].to_i > 0
 
+  when "solo_inst"
+    cfg['solo_inst'] = n[0].to_sym
+    
+
+
 # chord section ==================================    
   when "chord_pt_count"
     update_chord_count cfg, n[0].to_i
@@ -351,7 +356,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
             add_tonic_chord cfg, note, get(:beat)
         end
       else # not recording
-        use_synth :piano
+        use_synth cfg['solo_inst'].to_sym
       end   
       play note, amp: vel/127.0, release: 1
     else # note_off or note_on with velocity 0
