@@ -71,15 +71,15 @@ init_time_state cfg
 with_fx :reverb, room: 0.8, mix: 0.5 do |r|
 #  use_osc get(:anim_ip), get(:anim_port)
   live_loop :drum_kick do
-    play_drum "kick", **cfg
+    play_drum "kick", cfg
   end
   
   live_loop :drum_snare do
-    play_drum "snare", **cfg
+    play_drum "snare", cfg
   end
   
   live_loop :drum_cymbal do
-    play_drum "cymbal", **cfg
+    play_drum "cymbal", cfg
   end
 end
 # END DRUM LOOPS
@@ -87,7 +87,7 @@ end
 # CHORD LOOP
 with_fx :reverb, room: 0.8, mix: 0.6 do |r|
   live_loop :chord do
-    play_chords **cfg
+    play_chords cfg
   end
 end
 #END CHORD LOOP
@@ -96,14 +96,22 @@ end
 with_fx :reverb, room: 0.6, mix: 0.4 do |r|
 #  use_osc get(:anim_ip), get(:anim_port)
   live_loop :bass do
-    play_bass **cfg
+    play_bass cfg
   end
 end
 #END BASS LOOP
 
-# CUE LOOP (MUST BE LAST)
+# MIDI MESSAGE MONITORING LOOP
+with_fx :reverb, room: 0.8, mix: 0.6 do
+  live_loop :midi_monitor do
+    play_midi midi_in, cfg          
+  end
+end
+# END MIDI MESSAGE MONITORING LOOP
+
+# CUE LOOP (MUST BE LAST OF SYNC LOOPS!!!)
 live_loop :the_cue do
-  play_cue **cfg
+  play_cue cfg
 end
 
 # OSC MESSAGE MONITORING LOOP
@@ -327,42 +335,3 @@ live_loop :osc_monitor do
   end
 end
 # END OSC MESSAGE MONITORING LOOP
-
-# MIDI MESSAGE MONITORING LOOP
-with_fx :reverb, room: 0.8, mix: 0.6 do
-   live_loop :midi_monitor do
-    use_real_time
-    # use_bpm get(:tempo)
-    # sync :tick
-
-    addr = midi_in + "note_*"
-    note, vel = sync addr
-
-    addr_data = parse_addr addr
-
-    puts "MIDI", note, vel, addr_data
-
-    if (addr_data[1] == "note_on" and vel > 0) # note_on 
-      bass_rec = get(:bass_rec)
-      chord_rec = get(:chord_rec) 
-     
-      if (bass_rec || chord_rec) # recording
-        if (bass_rec)
-            use_synth cfg['bass']['synth'].to_sym
-            add_tonic_bass cfg, note, get(:beat)
-        end
-        if (chord_rec)
-            use_synth cfg['chord']['synth'].to_sym
-            add_tonic_chord cfg, note, get(:beat)
-        end
-      else # not recording
-        use_synth cfg['solo_inst'].to_sym
-      end   
-      play note, amp: vel/127.0, release: 1
-    else # note_off or note_on with velocity 0
-      # stop
-    end               
-  end
-end
-# END MIDI MESSAGE MONITORING LOOP
-
