@@ -199,6 +199,40 @@ define :play_chords_complex do |cfg|
   end
 end
 
+define :play_midi do |midi_in, cfg|
+  use_real_time
+  # use_bpm get(:tempo)
+  # sync :tick
+
+  addr = midi_in + "note_*"
+  note, vel = sync addr
+
+  addr_data = parse_addr addr
+
+  puts "MIDI", note, vel, addr_data
+
+  if (addr_data[1] == "note_on" and vel > 0) # note_on 
+    bass_rec = get(:bass_rec)
+    chord_rec = get(:chord_rec) 
+   
+    if (bass_rec || chord_rec) # recording
+      if (bass_rec)
+          use_synth cfg['bass']['synth'].to_sym
+          add_tonic_bass cfg, note, get(:beat)
+      end
+      if (chord_rec)
+          use_synth cfg['chord']['synth'].to_sym
+          add_tonic_chord cfg, note, get(:beat)
+      end
+    else # not recording
+      use_synth cfg['solo_inst'].to_sym
+    end   
+    play note, amp: vel/127.0, release: 1
+  else # note_off or note_on with velocity 0
+    # stop
+  end  
+end
+
 # returns index of nearest note in scale
 define :nearest_ind do |note, tonic, mode_scale|
   return nil if mode_scale.empty?
