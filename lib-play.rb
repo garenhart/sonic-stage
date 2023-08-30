@@ -81,7 +81,7 @@ define :play_bass do |cfg|
         pos = cfg_bass['pattern'].index(i+1)
         if (cfg_bass['on'] && pos)
           play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
-          animate_POC(cfg_bass['tonics'][pos])
+          animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp']
         end
         sleep rhythm
       end
@@ -228,6 +228,7 @@ define :play_midi do |midi_in, cfg|
       use_synth cfg['solo_inst'].to_sym
     end   
     play note, amp: vel/127.0, release: 1
+    animate_keyboard "solo", note, vel/127.0
   else # note_off or note_on with velocity 0
     # stop
   end  
