@@ -56,6 +56,8 @@ define :play_drum do |drum, cfg|
           end
         end  
         animate_drum drum, amp
+      else
+        animate_drum drum, 0.0  
       end
       sleep rhythm
     end
@@ -230,7 +232,7 @@ define :play_midi do |midi_in, cfg|
     play note, amp: vel/127.0, release: 1
     animate_keyboard "solo", note, vel/127.0
   else # note_off or note_on with velocity 0
-    # stop
+    animate_keyboard "solo", 0, 0.0
   end  
 end
 
