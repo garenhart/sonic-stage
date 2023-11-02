@@ -44,20 +44,22 @@ define :play_drum do |drum, cfg|
   density tempo_factor do
     puts "drum=====: #{drums['count']} #{beats.size}"
     drums['count'].times do |i|
-      if drums[drum]['on'] && (beats[i] == "1")
-        #sample drums[drum]['sample'], amp: amp, onset: (ons==1 ? pick : 0)
-        if (drums[drum]['random'])
-          sample drums[drum]['sample'], amp: amp, onset: pick
-        else  
-          if (start == finish)
-            sample drums[drum]['sample'], amp: amp, onset: 0
-          else
-            sample drums[drum]['sample'], amp: amp, start: start, finish: finish 
-          end
+      if drums[drum]['on'] 
+        if (beats[i] == "1")
+          #sample drums[drum]['sample'], amp: amp, onset: (ons==1 ? pick : 0)
+          if (drums[drum]['random'])
+            sample drums[drum]['sample'], amp: amp, onset: pick
+          else  
+            if (start == finish)
+              sample drums[drum]['sample'], amp: amp, onset: 0
+            else
+              sample drums[drum]['sample'], amp: amp, start: start, finish: finish 
+            end
+          end  
+          animate_drum drum, amp, 1
+        else
+          animate_drum drum, amp, 0
         end  
-        animate_drum drum, amp
-      else
-        animate_drum drum, 0.0  
       end
       sleep rhythm
     end
@@ -84,6 +86,8 @@ define :play_bass do |cfg|
         if (cfg_bass['on'] && pos)
           play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
           animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp']
+        else
+          animate_keyboard "bass", 0, 0.0
         end
         sleep rhythm
       end
