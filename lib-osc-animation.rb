@@ -15,9 +15,9 @@ define :animate_POC do |nv|
 end
 
 # sends OSC messages with drum component and corresponding amp
-define :animate_drum do |drum_inst, amp|
+define :animate_drum do |drum_inst, amp, beat_on|
   # osc "/drum", drum # drum component
-  osc_anim "/drum", drum_inst, amp # drum component amp
+  osc_anim "/drum", drum_inst, amp, beat_on
 end
 
 # sends OSC messages with note
