@@ -56,10 +56,12 @@ define :play_drum do |drum, cfg|
               sample drums[drum]['sample'], amp: amp, start: start, finish: finish 
             end
           end  
-          animate_drum drum, amp, 1
+          animate_drum drum, amp, 1, 1
         else
-          animate_drum drum, amp, 0
-        end  
+          animate_drum drum, amp, 0, 1
+        end
+      else
+        animate_drum drum, amp, 0, 0   
       end
       sleep rhythm
     end
