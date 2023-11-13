@@ -117,6 +117,8 @@ define :play_chords do |cfg|
         if (cfg_chord['on'] && i)
           play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
           animate_keyboard "chord", cfg_chord['tonics'][i], cfg_chord['amp']
+        else
+          animate_keyboard "chord", 0, 0.0    
         end
         sleep rhythm
       end
