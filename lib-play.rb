@@ -88,8 +88,8 @@ define :play_bass do |cfg|
         if (cfg_bass['on'] && pos)
           play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
           animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp']
-        else
-          animate_keyboard "bass", 0, 0.0
+        # else
+        #   animate_keyboard "bass", 0, 0.0
         end
         sleep rhythm
       end
@@ -117,8 +117,8 @@ define :play_chords do |cfg|
         if (cfg_chord['on'] && i)
           play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
           animate_keyboard "chord", cfg_chord['tonics'][i], cfg_chord['amp']
-        else
-          animate_keyboard "chord", 0, 0.0    
+        # else
+        #   animate_keyboard "chord", 0, 0.0    
         end
         sleep rhythm
       end
@@ -239,8 +239,8 @@ define :play_midi do |midi_in, cfg|
     end   
     play note, amp: vel/127.0, release: 1
     animate_keyboard "solo", note, vel/127.0
-  else # note_off or note_on with velocity 0
-    animate_keyboard "solo", 0, 0.0
+  # else # note_off or note_on with velocity 0
+  #   animate_keyboard "solo", 0, 0.0
   end  
 end
 
