@@ -5,11 +5,11 @@
 # author: Garen H.
 ######################################
 
-use_debug true
-use_midi_logging true
-use_cue_logging true
-use_osc_logging true
-use_arg_checks true
+use_debug false
+use_midi_logging false
+use_cue_logging false
+use_osc_logging false
+use_arg_checks false
 
 # use_transpose 0 #add optional transpose manually
 
@@ -133,14 +133,14 @@ live_loop :osc_monitor do
 
     # accept data only if all _auto states are true
     # or new "tempo" is the same as current tempo
-    if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
+if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
       cfg = data
       init_osc_controls(cfg)
       init_time_state_chord cfg if get(:chord_auto)
       init_time_state_bass cfg if get(:bass_auto)
       init_time_state_drums cfg if get(:drums_auto)
     else
-      osc_ctrl "/NOTIFY", "triangle-exclamation", "Tempo mismatch! Cannot load " + cfgFile
+    osc_ctrl "/NOTIFY", "triangle-exclamation", "Tempo mismatch! Cannot load " + cfgFile
     end
     
   when "save"
