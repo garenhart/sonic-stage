@@ -209,18 +209,7 @@ define :play_chords_complex do |cfg|
   end
 end
 
-define :play_midi do |midi_in, cfg|
-  use_real_time
-  # use_bpm get(:tempo)
-  # sync :tick
-
-  addr = midi_in + "note_*"
-  note, vel = sync addr
-
-  addr_data = parse_addr addr
-
-  puts "MIDI", note, vel, addr_data
-
+define :play_midi do |cfg, addr_data, note, vel|
   if (addr_data[1] == "note_on" and vel > 0) # note_on 
     bass_rec = get(:bass_rec)
     chord_rec = get(:chord_rec) 
@@ -239,8 +228,8 @@ define :play_midi do |midi_in, cfg|
     end   
     play note, amp: vel/127.0, release: 1
     animate_keyboard "solo", note, vel/127.0
-  # else # note_off or note_on with velocity 0
-  #   animate_keyboard "solo", 0, 0.0
+    # else # note_off or note_on with velocity 0
+    #   animate_keyboard "solo", 0, 0.0
   end  
 end
 
