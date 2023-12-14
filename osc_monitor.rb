@@ -104,7 +104,16 @@ end
 # MIDI MESSAGE MONITORING LOOP
 with_fx :reverb, room: 0.8, mix: 0.6 do
   live_loop :midi_monitor do
-    play_midi midi_in, cfg          
+    # WARNING: use_real_time must be set to true for this to work
+    # WARNING: moving following 4 lines to play_midi() causing
+    # first note to be skipped when new file is opened (why?)
+    use_real_time
+ 
+    addr = midi_in + "note_*"
+    note, vel = sync addr
+    addr_data = parse_addr addr
+    
+    play_midi cfg, addr_data, note, vel
   end
 end
 # END MIDI MESSAGE MONITORING LOOP
