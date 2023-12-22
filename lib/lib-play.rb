@@ -33,27 +33,26 @@ define :play_drum do |drum, cfg|
   drums = get(:drums)
   tempo_factor = drums['tempo_factor']
   beats = drums[drum]['beats']
-  amp = drums[drum]['amp']
-  ons = drums[drum]['onset']
-  start = drums[drum]['reverse'] ? drums[drum]['range'][1] : drums[drum]['range'][0]
-  finish = drums[drum]['reverse'] ? drums[drum]['range'][0] : drums[drum]['range'][1]
-
-  puts drum + " sample range ======" + start.to_s + "---" + finish.to_s
-
+  count = drums['count']
 
   density tempo_factor do
-    puts "drum=====: #{drums['count']} #{beats.size}"
-    drums['count'].times do |i|
-      if drums[drum]['on'] 
+    count.times do |i|
+      rt_drums = get(:drums) # drum data from Time State for params that we want to change in real time
+      amp = rt_drums[drum]['amp']
+      ons = rt_drums[drum]['onset']
+      start = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][1] : rt_drums[drum]['range'][0]
+      finish = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][0] : rt_drums[drum]['range'][1]
+
+      if rt_drums[drum]['on'] 
         if (beats[i] == "1")
           #sample drums[drum]['sample'], amp: amp, onset: (ons==1 ? pick : 0)
-          if (drums[drum]['random'])
-            sample drums[drum]['sample'], amp: amp, onset: pick
+          if (rt_drums[drum]['random'])
+            sample rt_drums[drum]['sample'], amp: amp, onset: pick
           else  
             if (start == finish)
-              sample drums[drum]['sample'], amp: amp, onset: 0
+              sample rt_drums[drum]['sample'], amp: amp, onset: 0
             else
-              sample drums[drum]['sample'], amp: amp, start: start, finish: finish 
+              sample rt_drums[drum]['sample'], amp: amp, start: start, finish: finish 
             end
           end  
           animate_drum drum, amp, 1, 1
