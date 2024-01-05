@@ -276,8 +276,6 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
   when "cymbal_inst"
     init_drum_component cfg, "cymbal", "sample", n[0].to_sym
  
-  when "cymbal_onset"
-    init_drum_component cfg, "cymbal", "onset", n[0].to_i
   when "cymbal_range"
     init_drum_component cfg, "cymbal", "range", n
   when "cymbal_random"
@@ -285,8 +283,6 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
   when "cymbal_reverse"
     init_drum_component cfg, "cymbal", "reverse", n[0]==1.0
 
-  when "snare_onset"
-    init_drum_component cfg, "snare", "onset", n[0].to_i
   when "snare_range"
     init_drum_component cfg, "snare", "range", n
   when "snare_random"
@@ -294,8 +290,6 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
   when "snare_reverse"
     init_drum_component cfg, "snare", "reverse", n[0]==1.0
 
-  when "kick_onset"
-    init_drum_component cfg, "kick", "onset", n[0].to_i    
   when "kick_range"
     init_drum_component cfg, "kick", "range", n
   when "kick_random"
