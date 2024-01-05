@@ -39,13 +39,11 @@ define :play_drum do |drum, cfg|
     count.times do |i|
       rt_drums = get(:drums) # drum data from Time State for params that we want to change in real time
       amp = rt_drums[drum]['amp']
-      ons = rt_drums[drum]['onset']
       start = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][1] : rt_drums[drum]['range'][0]
       finish = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][0] : rt_drums[drum]['range'][1]
 
       if rt_drums[drum]['on'] 
         if (beats[i] == "1")
-          #sample drums[drum]['sample'], amp: amp, onset: (ons==1 ? pick : 0)
           if (rt_drums[drum]['random'])
             sample rt_drums[drum]['sample'], amp: amp, onset: pick
           else  

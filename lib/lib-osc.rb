@@ -92,7 +92,6 @@ end
 
 define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
   sample_gr = sample_group(cfg['drums'][d]['sample'])
-  osc_ctrl "/#{d}_onset", cfg['drums'][d]['onset']
   osc_ctrl "/#{d}_on", cfg['drums'][d]['on'] ? 1 : 0
   osc_ctrl "/#{d}_amp", cfg['drums'][d]['amp']
   osc_ctrl "/#{d}_range", *cfg['drums'][d]['range']
