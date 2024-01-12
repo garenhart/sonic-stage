@@ -267,14 +267,22 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
     init_osc_samples "/kick_inst_v", n[0].to_sym
   when "kick_inst"
     init_drum_component cfg, "kick", "sample", n[0].to_sym
+  when "kick_pitch_shift"
+    init_drum_component cfg, "kick", "pitch_shift", n[0].to_i
+
   when "snare_inst_groups"
     init_osc_samples "/snare_inst_v", n[0].to_sym
   when "snare_inst"
     init_drum_component cfg, "snare", "sample", n[0].to_sym
+  when "snare_pitch_shift"
+    init_drum_component cfg, "snare", "pitch_shift", n[0].to_i
+
   when "cymbal_inst_groups"
     init_osc_samples "/cymbal_inst_v", n[0].to_sym
   when "cymbal_inst"
     init_drum_component cfg, "cymbal", "sample", n[0].to_sym
+  when "cymbal_pitch_shift"
+    init_drum_component cfg, "cymbal", "pitch_shift", n[0].to_i
  
   when "cymbal_range"
     init_drum_component cfg, "cymbal", "range", n

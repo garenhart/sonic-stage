@@ -35,6 +35,7 @@
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
+      "pitch_shift": 0,
       "beats": "0000101011110000"
     },
     "snare": {
@@ -44,6 +45,7 @@
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
+      "pitch_shift": 0,
       "beats": "0111000000000000"
     },
     "kick": {
@@ -53,6 +55,7 @@
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
+      "pitch_shift": 0,
       "beats": "1000010100001010"
     }
   }
