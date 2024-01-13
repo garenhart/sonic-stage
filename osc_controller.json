@@ -3518,7 +3518,7 @@
                                     "width": "auto",
                                     "height": "auto",
                                     "expand": false,
-                                    "colorText": "auto",
+                                    "colorText": "VAR{color}",
                                     "colorWidget": "auto",
                                     "colorStroke": "auto",
                                     "colorFill": "auto",
@@ -3588,7 +3588,7 @@
                                     "back": -1,
                                     "forth": 1,
                                     "release": "",
-                                    "onTouch": "if (event.type == 'stop') {\n  // send release message\n  send('/cymbal_pitch_shift', get(\"cymbal_pitch_shift\")) \n}"
+                                    "onTouch": "if (event.type == 'stop') {\n  var pitch_shift = get(\"cymbal_pitch_shift\")\n  // send release message\n  send('/cymbal_pitch_shift', pitch_shift)\n  // manage color\n  setVar(\"modal_cymbal_inst\", \"inst_color\", pitch_shift == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"button_cymbal_shift\", \"color\", pitch_shift == 0 ? \"auto\" : \"darkorange\")\n}"
                                   }
                                 ],
                                 "tabs": [],
@@ -4250,7 +4250,7 @@
                                     "width": "auto",
                                     "height": "auto",
                                     "expand": false,
-                                    "colorText": "auto",
+                                    "colorText": "VAR{color}",
                                     "colorWidget": "auto",
                                     "colorStroke": "auto",
                                     "colorFill": "auto",
@@ -4332,7 +4332,7 @@
                                     "back": -1,
                                     "forth": 1,
                                     "release": "",
-                                    "onTouch": "if (event.type == 'stop') {\n  // send release message\n  send('/snare_pitch_shift', get(\"snare_pitch_shift\")) \n}"
+                                    "onTouch": "if (event.type == 'stop') {\n  var pitch_shift = get(\"snare_pitch_shift\")\n  // send release message\n  send('/snare_pitch_shift', pitch_shift) \n  setVar(\"modal_snare_inst\", \"inst_color\", pitch_shift == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"button_snare_shift\", \"color\", pitch_shift == 0 ? \"auto\" : \"darkorange\")\n}"
                                   }
                                 ],
                                 "tabs": [],
@@ -4991,7 +4991,7 @@
                                     "width": "auto",
                                     "height": "auto",
                                     "expand": false,
-                                    "colorText": "auto",
+                                    "colorText": "VAR{color}",
                                     "colorWidget": "auto",
                                     "colorStroke": "auto",
                                     "colorFill": "auto",
@@ -5073,7 +5073,7 @@
                                     "back": -1,
                                     "forth": 1,
                                     "release": "",
-                                    "onTouch": "if (event.type == 'stop') {\n  // send release message\n  console.log(get(\"kick_pitch_shift\"))\n  send('/kick_pitch_shift', get(\"kick_pitch_shift\")) \n}"
+                                    "onTouch": "if (event.type == 'stop') {\n  var pitch_shift = get(\"kick_pitch_shift\")\n  // send release message\n  send('/kick_pitch_shift', pitch_shift) \n  setVar(\"modal_kick_inst\", \"inst_color\", pitch_shift == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"button_kick_shift\", \"color\", pitch_shift == 0 ? \"auto\" : \"darkorange\")\n}"
                                   }
                                 ],
                                 "tabs": [],
