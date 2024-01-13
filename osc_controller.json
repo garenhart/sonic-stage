@@ -3827,7 +3827,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\nsetVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\n"
                                       },
                                       {
                                         "type": "range",
@@ -3927,7 +3927,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\nsetVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
                                       }
                                     ],
                                     "tabs": []
@@ -4570,7 +4570,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\nsetVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
                                       },
                                       {
                                         "type": "range",
@@ -4670,7 +4670,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\nsetVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
                                       }
                                     ],
                                     "tabs": []
@@ -5311,7 +5311,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\nsetVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
                                       },
                                       {
                                         "type": "range",
@@ -5411,7 +5411,7 @@
                                         "ignoreDefaults": false,
                                         "bypass": false,
                                         "onCreate": "",
-                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\nsetVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
                                       }
                                     ],
                                     "tabs": []
