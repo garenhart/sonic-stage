@@ -67,9 +67,8 @@ init_osc_controls cfg, true
 init_time_state cfg
 # ---
 
-# DRUM LOOPS
-with_fx :reverb, room: 0.8, mix: 0.5 do |r|
-#  use_osc get(:anim_ip), get(:anim_port)
+with_fx :reverb, room: 0.9, mix: 0.5 do |r|
+  # DRUM LOOPS
   live_loop :drum_kick do
     play_drum "kick", cfg
   end
@@ -81,28 +80,16 @@ with_fx :reverb, room: 0.8, mix: 0.5 do |r|
   live_loop :drum_cymbal do
     play_drum "cymbal", cfg
   end
-end
-# END DRUM LOOPS
+  # END DRUM LOOPS
 
-# CHORD LOOP
-with_fx :reverb, room: 0.8, mix: 0.6 do |r|
   live_loop :chord do
     play_chords cfg
   end
-end
-#END CHORD LOOP
 
-# BASS LOOP
-with_fx :reverb, room: 0.6, mix: 0.4 do |r|
-#  use_osc get(:anim_ip), get(:anim_port)
   live_loop :bass do
     play_bass cfg
   end
-end
-#END BASS LOOP
 
-# MIDI MESSAGE MONITORING LOOP
-with_fx :reverb, room: 0.8, mix: 0.6 do
   live_loop :midi_monitor do
     # WARNING: use_real_time must be set to true for this to work
     # WARNING: moving following 4 lines to play_midi() causing
@@ -115,8 +102,7 @@ with_fx :reverb, room: 0.8, mix: 0.6 do
     
     play_midi cfg, addr_data, note, vel
   end
-end
-# END MIDI MESSAGE MONITORING LOOP
+end #FX
 
 # CUE LOOP (MUST BE LAST OF SYNC LOOPS!!!)
 live_loop :the_cue do
