@@ -306,7 +306,7 @@
                         "unit": "",
                         "asYouType": false,
                         "numeric": true,
-                        "validation": "",
+                        "validation": "([1-9]|[1-9][0-9]|[1-9][0-9][0-9])",
                         "maxLength": 3
                       }
                     ],
@@ -435,7 +435,7 @@
                         "unit": "",
                         "asYouType": false,
                         "numeric": true,
-                        "validation": "",
+                        "validation": "([1-9]|[1-9][0-9]|[1-9][0-9][0-9])",
                         "maxLength": 2
                       }
                     ],
@@ -1231,7 +1231,7 @@
                         "unit": "",
                         "asYouType": false,
                         "numeric": true,
-                        "validation": "",
+                        "validation": "([1-9]|[1-9][0-9])",
                         "maxLength": 2,
                         "typeTags": "",
                         "ignoreDefaults": false,
@@ -2138,7 +2138,7 @@
                         "unit": "",
                         "asYouType": false,
                         "numeric": true,
-                        "validation": "",
+                        "validation": "([1-9]|[1-9][0-9])",
                         "maxLength": 2,
                         "value": 16,
                         "default": "",
@@ -3035,7 +3035,7 @@
                         "unit": "",
                         "asYouType": false,
                         "numeric": true,
-                        "validation": "",
+                        "validation": "([1-9]|[1-9][0-9])",
                         "maxLength": 2,
                         "value": 16,
                         "default": "",
