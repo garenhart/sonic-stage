@@ -1,6 +1,6 @@
 {
   "createdWith": "Open Stage Control",
-  "version": "1.25.5",
+  "version": "1.25.7",
   "type": "session",
   "content": {
     "type": "root",
@@ -305,9 +305,9 @@
                         "borderRadius": "auto",
                         "unit": "",
                         "asYouType": false,
-                        "numeric": false,
+                        "numeric": true,
                         "validation": "",
-                        "maxLength": ""
+                        "maxLength": 3
                       }
                     ],
                     "tabs": [],
@@ -434,9 +434,9 @@
                         "borderRadius": "auto",
                         "unit": "",
                         "asYouType": false,
-                        "numeric": false,
+                        "numeric": true,
                         "validation": "",
-                        "maxLength": ""
+                        "maxLength": 2
                       }
                     ],
                     "tabs": [],
@@ -1232,7 +1232,7 @@
                         "asYouType": false,
                         "numeric": true,
                         "validation": "",
-                        "maxLength": "",
+                        "maxLength": 2,
                         "typeTags": "",
                         "ignoreDefaults": false,
                         "bypass": false
@@ -2139,7 +2139,7 @@
                         "asYouType": false,
                         "numeric": true,
                         "validation": "",
-                        "maxLength": "",
+                        "maxLength": 2,
                         "value": 16,
                         "default": "",
                         "linkId": "",
@@ -3036,7 +3036,7 @@
                         "asYouType": false,
                         "numeric": true,
                         "validation": "",
-                        "maxLength": "",
+                        "maxLength": 2,
                         "value": 16,
                         "default": "",
                         "linkId": "",
@@ -6727,6 +6727,7 @@
     "onCreate": "",
     "lock": false,
     "borderRadius": "auto",
-    "tabsPosition": "top"
+    "tabsPosition": "top",
+    "onPreload": ""
   }
 }
