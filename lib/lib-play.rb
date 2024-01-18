@@ -46,12 +46,12 @@ define :play_drum do |drum, cfg|
       if rt_drums[drum]['on'] 
         if (beats[i] == "1")
           if (rt_drums[drum]['random'])
-            sample rt_drums[drum]['sample'], amp: amp, onset: pick, pitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+            sample rt_drums[drum]['sample'], amp: amp, onset: pick, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
           else  
             if (start == finish)
-              sample rt_drums[drum]['sample'], amp: amp, onset: 0, pitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+              sample rt_drums[drum]['sample'], amp: amp, onset: 0, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
             else
-              sample rt_drums[drum]['sample'], amp: amp, start: start, finish: finish, pitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+              sample rt_drums[drum]['sample'], amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
             end
           end  
           animate_drum drum, amp, 1, 1
