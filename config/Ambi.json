@@ -1,0 +1,62 @@
+{
+  "tempo": 240,
+  "pattern_mode": 0,
+  "pattern": 1,
+  "mode": 0,
+  "scale": "ionian",
+  "loop_mode": 0,
+  "solo_inst": "piano",
+  "bass": {
+    "count": 24,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.5,
+    "synth": "fm",
+    "tonics": [    ],
+    "pattern": [    ]
+  },
+  "chord": {
+    "count": 24,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.5,
+    "type": 1,
+    "synth": "piano",
+    "tonics": [      81,      76,      74,      81,      76,      74,      81,      76,      74,      81,      76,      74    ],
+    "pattern": [      2,      4,      6,      8,      10,      12,      14,      16,      18,      20,      22,      24    ]
+  },
+  "drums": {
+    "count": 24,
+    "tempo_factor": 1,
+    "cymbal": {
+      "on": true,
+      "amp": 0.49000000953674316,
+      "sample": "bd_boom",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 3,
+      "beats": "110110110110110110110110"
+    },
+    "snare": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "ambi_piano",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": -10,
+      "beats": "000000010000000000010000"
+    },
+    "kick": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "ambi_piano",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": -5,
+      "beats": "010000000000010000000000"
+    }
+  }
+}
