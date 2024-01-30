@@ -16,15 +16,15 @@ use_arg_checks false
 #load libraries
 require 'date'
 
-eval_file get(:sp_path)+"lib/lib-util.rb"
-eval_file get(:sp_path)+"lib/lib-io.rb"
-eval_file get(:sp_path)+"lib/lib-init.rb"
-eval_file get(:sp_path)+"lib/lib-chord-gen.rb"
-eval_file get(:sp_path)+"lib/lib-osc-animation.rb"
-eval_file get(:sp_path)+"lib/lib-play.rb"
-eval_file get(:sp_path)+"lib/lib-osc.rb"
-eval_file get(:sp_path)+"lib/lib-dyn-live_loop.rb"
-#require get(:sp_path)+"lib/modes.rb" # Load extra scales and chord from separate file
+eval_file get(:sp_path)+"sonic-stage-lib/lib-util.rb"
+eval_file get(:sp_path)+"sonic-stage-lib/lib-io.rb"
+eval_file get(:sp_path)+"sonic-stage-lib/lib-init.rb"
+eval_file get(:sp_path)+"sonic-stage-lib/lib-chord-gen.rb"
+eval_file get(:sp_path)+"sonic-stage-lib/lib-osc-animation.rb"
+eval_file get(:sp_path)+"sonic-stage-lib/lib-play.rb"
+eval_file get(:sp_path)+"sonic-stage-lib/lib-osc.rb"
+eval_file get(:sp_path)+"sonic-stage-lib/lib-dyn-live_loop.rb"
+#require get(:sp_path)+"sonic-stage-lib/modes.rb" # Load extra scales and chord from separate file
 #ModeScales = Modes.scales
 
 # generic midi definitions
@@ -51,7 +51,7 @@ set :chord_rec, false
 
 puts "CTRL", :ctrl_ip, :ctrl_port
 # configuration folder path
-configPath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
+configPath = get(:sp_path) + "sonic-stage\\config\\" # path for config files
 cfg_def = "default.json"
 cfgFile = configPath + cfg_def
 # deserialize JSON file into cfg hash
