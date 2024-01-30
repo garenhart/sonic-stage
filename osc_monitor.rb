@@ -56,6 +56,7 @@ cfg_def = "default.json"
 cfgFile = configPath + cfg_def
 # deserialize JSON file into cfg hash
 cfg = readJSON(cfgFile)
+osc_ctrl "/cfg_path", configPath # set the osc control path
 osc_ctrl "/open", cfg_def # set the osc control file name
 
 puts "cfg", cfg
