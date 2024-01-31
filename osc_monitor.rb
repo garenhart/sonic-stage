@@ -16,14 +16,18 @@ use_arg_checks false
 #load libraries
 require 'date'
 
-eval_file get(:sp_path)+"sonic-stage-lib/lib-util.rb"
-eval_file get(:sp_path)+"sonic-stage-lib/lib-io.rb"
-eval_file get(:sp_path)+"sonic-stage-lib/lib-init.rb"
-eval_file get(:sp_path)+"sonic-stage-lib/lib-chord-gen.rb"
-eval_file get(:sp_path)+"sonic-stage-lib/lib-osc-animation.rb"
-eval_file get(:sp_path)+"sonic-stage-lib/lib-play.rb"
-eval_file get(:sp_path)+"sonic-stage-lib/lib-osc.rb"
-eval_file get(:sp_path)+"sonic-stage-lib/lib-dyn-live_loop.rb"
+sp_path = get(:sp_path) # get Sonic Pi path
+# construct path to sonic-stage-lib from ENV[HOME] variable
+sp_lib_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/'
+eval_file sp_lib_path + 'lib-util.rb'
+eval_file sp_lib_path + 'lib-io.rb'
+eval_file sp_lib_path + 'lib-init.rb'
+eval_file sp_lib_path + 'lib-osc-animation.rb'
+eval_file sp_lib_path + 'lib-play.rb'
+eval_file sp_lib_path + 'lib-osc.rb'
+eval_file sp_lib_path + 'lib-dyn-live_loop.rb'
+#eval_file sp_lib_path + 'lib-chord-gen.rb'
+
 #require get(:sp_path)+"sonic-stage-lib/modes.rb" # Load extra scales and chord from separate file
 #ModeScales = Modes.scales
 
