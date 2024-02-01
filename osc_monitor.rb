@@ -26,7 +26,7 @@ eval_file sp_lib_path + 'lib-osc-animation.rb'
 eval_file sp_lib_path + 'lib-play.rb'
 eval_file sp_lib_path + 'lib-osc.rb'
 eval_file sp_lib_path + 'lib-dyn-live_loop.rb'
-#eval_file sp_lib_path + 'lib-chord-gen.rb'
+eval_file sp_lib_path + 'lib-chord-gen.rb'
 
 #require get(:sp_path)+"sonic-stage-lib/modes.rb" # Load extra scales and chord from separate file
 #ModeScales = Modes.scales
