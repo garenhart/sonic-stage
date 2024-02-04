@@ -1,0 +1,62 @@
+{
+  "tempo": 360,
+  "pattern_mode": 0,
+  "pattern": 1,
+  "mode": 0,
+  "scale": "ionian",
+  "loop_mode": 0,
+  "solo_inst": "beep",
+  "bass": {
+    "count": 16,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.5,
+    "synth": "tri",
+    "tonics": [      60,      60,      59,      57,      55,      52,      60,      59    ],
+    "pattern": [      2,      5,      7,      8,      9,      10,      12,      14    ]
+  },
+  "chord": {
+    "count": 16,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.5,
+    "type": 1,
+    "synth": "piano",
+    "tonics": [    ],
+    "pattern": [    ]
+  },
+  "drums": {
+    "count": 16,
+    "tempo_factor": 1,
+    "cymbal": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "drum_cymbal_closed",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "0000000000000000"
+    },
+    "snare": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "hat_bdu",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "0101010101010101"
+    },
+    "kick": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "hat_cab",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "1010101010101010"
+    }
+  }
+}
