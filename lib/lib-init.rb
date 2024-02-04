@@ -186,25 +186,64 @@ define :update_bass_count do |cfg, new_count|
   init_time_state_bass cfg if get(:bass_auto)
 end
 
+define :clone_bass_pattern do |cfg|
+  # clone the bass pattern and tonics and concatenate to the end
+  # of the existing pattern and tonics, then update the osc widget
+  # if the pattern is empty, then do nothing
+  if cfg['bass']['pattern'].length > 0
+    # shift the pattern to the right by the "count" value
+    # and concatenate to the existing pattern
+    cfg['bass']['pattern'] += shift_pattern cfg['bass']['pattern'], cfg['bass']['count']
+    cfg['bass']['tonics'] += cfg['bass']['tonics']
+    cfg['bass']['count'] *= 2 # double the count
+    update_osc_bass_points cfg
+    init_time_state_bass cfg if get(:bass_auto)
+  end
+end
+
 define :update_chord_count do |cfg, new_count|
   # if new_count < cfg['chord']['count']
   # iterate backwards through the pattern
   # and delete any points that are >= new_count
   # together with the corresponding tonic
-    if new_count < cfg['chord']['count']
-      cfg['chord']['pattern'].reverse_each do |p|
-        if p >= new_count
-          i = cfg['chord']['pattern'].index(p)
-          puts "deleting #{p} at #{i}"
-          cfg['chord']['pattern'].delete_at(i)
-          cfg['chord']['tonics'].delete_at(i)
-        end
-        puts "pattern: #{cfg['chord']['pattern']}"
-        puts "tonics: #{cfg['chord']['tonics']}"   
+  if new_count < cfg['chord']['count']
+    cfg['chord']['pattern'].reverse_each do |p|
+      if p >= new_count
+        i = cfg['chord']['pattern'].index(p)
+        puts "deleting #{p} at #{i}"
+        cfg['chord']['pattern'].delete_at(i)
+        cfg['chord']['tonics'].delete_at(i)
       end
+      puts "pattern: #{cfg['chord']['pattern']}"
+      puts "tonics: #{cfg['chord']['tonics']}"   
     end
+  end
+
+  cfg['chord']['count'] = new_count
+  update_osc_chord_points cfg
+  init_time_state_chord cfg if get(:chord_auto)
+end
+
   
-    cfg['chord']['count'] = new_count
+define :clone_chord_pattern do |cfg|
+  # clone the chord pattern and tonics and concatenate to the end
+  # of the existing pattern and tonics, then update the osc widget
+  # if the pattern is empty, then do nothing
+  if cfg['chord']['pattern'].length > 0
+    # shift the pattern to the right by the "count" value
+    # and concatenate to the existing pattern
+    cfg['chord']['pattern'] += shift_pattern cfg['chord']['pattern'], cfg['chord']['count']
+    cfg['chord']['tonics'] += cfg['chord']['tonics']
+    cfg['chord']['count'] *= 2 # double the count
     update_osc_chord_points cfg
     init_time_state_chord cfg if get(:chord_auto)
   end
+end
+
+define :shift_pattern do |p, n|
+  # shift the pattern to the right by n
+  # and return the shifted pattern
+  p.map {|x| x + n}
+end
+
+  
