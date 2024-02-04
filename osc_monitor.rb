@@ -173,6 +173,9 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
   when "chord_pt_count"
     update_chord_count cfg, n[0].to_i
   
+  when "chord_dup_data"
+    clone_chord_pattern cfg
+
   when "chord_tempo_factor" # update Time State
     cfg['chord']['tempo_factor'] = n[0].to_i
     init_time_state_chord cfg if get(:chord_auto)
@@ -208,6 +211,9 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
   # bass section ===================================    
   when "bass_pt_count"
     update_bass_count cfg, n[0].to_i
+
+  when "bass_dup_data"
+    clone_bass_pattern cfg
 
   when "bass_tempo_factor" # update Time State
     cfg['bass']['tempo_factor'] = n[0].to_i
