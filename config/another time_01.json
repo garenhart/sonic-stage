@@ -1,0 +1,62 @@
+{
+  "tempo": 120,
+  "pattern_mode": 0,
+  "pattern": 1,
+  "mode": 0,
+  "scale": "ionian",
+  "loop_mode": 0,
+  "solo_inst": "beep",
+  "bass": {
+    "count": 16,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.5,
+    "synth": "fm",
+    "tonics": [      45,      48,      50,      52    ],
+    "pattern": [      1,      5,      9,      13    ]
+  },
+  "chord": {
+    "count": 16,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.5,
+    "type": 1,
+    "synth": "piano",
+    "tonics": [      86,      84,      83,      83,      81,      77,      75,      76    ],
+    "pattern": [      1,      4,      5,      7,      8,      9,      12,      13    ]
+  },
+  "drums": {
+    "count": 32,
+    "tempo_factor": 1,
+    "cymbal": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "drum_cymbal_closed",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "01100000001010100110000000101010"
+    },
+    "snare": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "drum_snare_soft",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "00010000010100000001000001010000"
+    },
+    "kick": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "bd_tek",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "00001111100000000000111110000000"
+    }
+  }
+}

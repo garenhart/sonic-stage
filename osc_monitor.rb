@@ -247,6 +247,9 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
   # drum section ==================================
   when "beat_pt_count"
     update_drum_beats cfg, n[0].to_i
+
+  when "drum_dup_data"
+    clone_drums_beats cfg
     
   when "drum_tempo_factor" # update Time State
     cfg['drums']['tempo_factor'] = n[0].to_i
