@@ -240,6 +240,26 @@ define :clone_chord_pattern do |cfg|
   end
 end
 
+define :clone_drums_beats do |cfg|
+  # clone the drum beats
+  cfg['drums']['count'] *= 2 # double the count
+  osc_ctrl "/beat_pt_count", cfg['drums']['count']
+  clone_drum_beats cfg, 'cymbal'
+  clone_drum_beats cfg, 'snare'
+  clone_drum_beats cfg, 'kick'
+end
+
+define :clone_drum_beats do |cfg, d|
+  # clone the drum beats and concatenate to the end
+  # of the existing beats, then update the osc widget
+  # if the beats are empty, then do nothing
+  if cfg['drums'][d]['beats'].length > 0
+    cfg['drums'][d]['beats'] += cfg['drums'][d]['beats']
+    osc_ctrl "/#{d}_beats_v", cfg['drums'][d]['beats']
+    init_time_state_drums cfg if get(:drums_auto)
+  end
+end
+
 define :shift_pattern do |p, n|
   # shift the pattern to the right by n
   # and return the shifted pattern
