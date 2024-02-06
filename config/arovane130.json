@@ -1,0 +1,62 @@
+{
+  "tempo": 130,
+  "pattern_mode": 0,
+  "pattern": 1,
+  "mode": 0,
+  "scale": "ionian",
+  "loop_mode": 0,
+  "solo_inst": "piano",
+  "bass": {
+    "count": 16,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.5,
+    "synth": "fm",
+    "tonics": [    ],
+    "pattern": [    ]
+  },
+  "chord": {
+    "count": 16,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.5,
+    "type": 1,
+    "synth": "piano",
+    "tonics": [    ],
+    "pattern": [    ]
+  },
+  "drums": {
+    "count": 16,
+    "tempo_factor": 1,
+    "cymbal": {
+      "on": false,
+      "amp": 0.5,
+      "sample": "drum_cymbal_closed",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "0000000000000000"
+    },
+    "snare": {
+      "on": false,
+      "amp": 0.5,
+      "sample": "drum_snare_soft",
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "0000000000000000"
+    },
+    "kick": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "arovane_beat_c",
+      "range": [        0.6700000166893005,        1.0      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 0,
+      "beats": "1000100010001000"
+    }
+  }
+}
