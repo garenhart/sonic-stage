@@ -5,18 +5,18 @@
   "mode": 0,
   "scale": "ionian",
   "loop_mode": 0,
-  "solo_inst": "piano",
+  "solo_inst": "pluck",
   "bass": {
     "count": 32,
     "tempo_factor": 1,
-    "on": true,
+    "on": false,
     "amp": 0.5,
-    "synth": "fm",
-    "tonics": [      57,      55,      58,      55,      53,      57,      53,      52,      55,      50,      53    ],
-    "pattern": [      1,      4,      5,      9,      12,      13,      17,      20,      21,      25,      24    ]
+    "synth": "bass_foundation",
+    "tonics": [    ],
+    "pattern": [    ]
   },
   "chord": {
-    "count": 32,
+    "count": 16,
     "tempo_factor": 1,
     "on": false,
     "amp": 0.5,
@@ -29,34 +29,34 @@
     "count": 32,
     "tempo_factor": 1,
     "cymbal": {
-      "on": true,
-      "amp": 0.5,
-      "sample": "loop_safari",
+      "on": false,
+      "amp": 1.0,
+      "sample": "tabla_tas3",
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
-      "pitch_shift": 0,
-      "beats": "10000000000000001000000000000000"
+      "pitch_shift": -4,
+      "beats": "00000000000000000000000000000000"
     },
     "snare": {
-      "on": true,
-      "amp": 0.5,
-      "sample": "tabla_ghe3",
+      "on": false,
+      "amp": 1.0,
+      "sample": "loop_safari",
+      "range": [        0.0,        1.0      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": -12,
+      "beats": "00000000000000000000000000000000"
+    },
+    "kick": {
+      "on": false,
+      "amp": 1.0,
+      "sample": "bd_boom",
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
-      "beats": "01001101010011010100110101010001"
-    },
-    "kick": {
-      "on": true,
-      "amp": 0.5,
-      "sample": "tabla_tun1",
-      "range": [        0,        1      ],
-      "random": false,
-      "reverse": false,
-      "pitch_shift": -1,
-      "beats": "00100010001000100010001000100010"
+      "beats": "00000000000000000000000000000000"
     }
   }
 }
