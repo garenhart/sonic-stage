@@ -42,7 +42,7 @@
       "on": true,
       "amp": 1.0,
       "sample": "loop_safari",
-      "range": [        0.0,        1.0      ],
+      "range": [        0,        1      ],
       "random": false,
       "reverse": false,
       "pitch_shift": -12,
