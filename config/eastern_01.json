@@ -10,7 +10,7 @@
     "count": 32,
     "tempo_factor": 1,
     "on": false,
-    "amp": 0.5,
+    "amp": 0.25,
     "synth": "bass_foundation",
     "tonics": [    ],
     "pattern": [    ]
@@ -19,7 +19,7 @@
     "count": 16,
     "tempo_factor": 1,
     "on": false,
-    "amp": 0.5,
+    "amp": 0.25,
     "type": 1,
     "synth": "piano",
     "tonics": [    ],
@@ -30,7 +30,7 @@
     "tempo_factor": 1,
     "cymbal": {
       "on": false,
-      "amp": 1.0,
+      "amp": 0.25,
       "sample": "tabla_tas3",
       "range": [        0,        1      ],
       "random": false,
@@ -40,7 +40,7 @@
     },
     "snare": {
       "on": false,
-      "amp": 1.0,
+      "amp": 0.25,
       "sample": "loop_safari",
       "range": [        0,        1      ],
       "random": false,
@@ -50,7 +50,7 @@
     },
     "kick": {
       "on": false,
-      "amp": 1.0,
+      "amp": 0.25,
       "sample": "bd_boom",
       "range": [        0,        1      ],
       "random": false,
