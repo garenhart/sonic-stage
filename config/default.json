@@ -6,6 +6,7 @@
   "scale": "ionian",
   "loop_mode": 0,
   "solo_inst": "piano",
+  "solo_on": true,
   "bass": {
     "count": 16,
     "tempo_factor": 1,

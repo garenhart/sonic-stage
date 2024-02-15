@@ -72,6 +72,8 @@ init_osc_controls cfg, true
 init_time_state cfg
 # ---
 
+# set_audio_latency! -100 # set audio latency to -100ms
+
 with_fx :reverb, room: 0.9, mix: 0.5 do |r|
   # DRUM LOOPS
   live_loop :drum_kick do
@@ -166,8 +168,9 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
 
   when "solo_inst"
     cfg['solo_inst'] = n[0].to_sym
-    
 
+  when "solo_on"
+      cfg['solo_on'] = n[0] == 1.0
 
 # chord section ==================================    
   when "chord_pt_count"
