@@ -208,7 +208,7 @@ define :play_chords_complex do |cfg|
 end
 
 define :play_midi do |cfg, addr_data, note, vel|
-  if (addr_data[1] == "note_on" and vel > 0) # note_on 
+  if (cfg['solo_on'] and addr_data[1] == "note_on" and vel > 0) # note_on 
     bass_rec = get(:bass_rec)
     chord_rec = get(:chord_rec) 
    
