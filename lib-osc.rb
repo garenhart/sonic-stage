@@ -31,16 +31,25 @@ define :init_osc_sample_groups do
     sg_str += ", " if sg_str.length > 2
     sg_str += "\"" + split_and_capitalize(n.to_s, "_") + "\": \"" + n.to_s + "\""
   end
+  # add a "Favorites" group to the end of the list
+  sg_str += ", \"Favorites\": \"favorites\""
   sg_str += "}"
   osc_ctrl "/sample_groups", sg_str 
 end
 
+define :sample_favorites do |target, cfg|
+  # get the drum portion of the target string (e.g. "/kick_inst_v" -> "kick")
+  d = target.split("_")[0].split("/")[1]
+  # return the ring of favorite samples from cfg[drums][d][fav]
+  return cfg['drums'][d]['fav'].map {|s| s.to_sym}
+end
+
 # populates osc variable target with the list of SPi sample names
 # for the specified sample group sg
-define :init_osc_samples do |target, sg|
+define :init_osc_samples do |target, sg, cfg|
   puts "pop", target, sg
   return if target==nil or sg==nil
-  sn = sample_names(sg)
+  sn = sg == :favorites ? sample_favorites(target, cfg) : sample_names(sg)
   sn_str = "{"
   # convert to array of strings
   for n in sn
@@ -100,8 +109,9 @@ define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
   osc_ctrl "/#{d}_pitch_shift", cfg['drums'][d]['pitch_shift']
 
   osc_ctrl gr_ctrl, sample_gr
-  init_osc_samples inst_ctrl + "_v", sample_gr.to_sym
+  init_osc_samples inst_ctrl + "_v", sample_gr.to_sym, cfg
   osc_ctrl inst_ctrl, (cfg['drums'][d]['sample'])
+  osc_ctrl "/#{d}_fav", drum_fav?(cfg, d, cfg['drums'][d]['sample']) ? 1 : 0 # set fav button
  
   # populate drum beats osc widget with the beats from string
   # beat_count = cfg['drums'][d]['beats'].length  
