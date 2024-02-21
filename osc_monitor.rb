@@ -135,14 +135,14 @@ live_loop :osc_monitor do
 
     # accept data only if all _auto states are true
     # or new "tempo" is the same as current tempo
-if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
+    if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
       cfg = data
       init_osc_controls(cfg)
       init_time_state_chord cfg if get(:chord_auto)
       init_time_state_bass cfg if get(:bass_auto)
       init_time_state_drums cfg if get(:drums_auto)
     else
-    osc_ctrl "/NOTIFY", "triangle-exclamation", "Tempo mismatch! Cannot load " + cfgFile
+      osc_ctrl "/NOTIFY", "triangle-exclamation", "Tempo mismatch! Cannot load " + cfgFile
     end
     
   when "save"
@@ -266,27 +266,44 @@ if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
 
   # drum instruments
   when "kick_inst_groups"
-    puts "KICK_INST", n[0].to_sym
-    init_osc_samples "/kick_inst_v", n[0].to_sym
+    init_osc_samples "/kick_inst_v", n[0].to_sym, cfg
   when "kick_inst"
     init_drum_component cfg, "kick", "sample", n[0].to_sym
   when "kick_pitch_shift"
     init_drum_component cfg, "kick", "pitch_shift", n[0].to_i
+  when "kick_fav"
+    if n[0] == 1.0 
+      add_fav_drum cfg, "kick" 
+    else
+      remove_fav_drum cfg, "kick"
+    end  
 
   when "snare_inst_groups"
-    init_osc_samples "/snare_inst_v", n[0].to_sym
+    init_osc_samples "/snare_inst_v", n[0].to_sym, cfg
   when "snare_inst"
     init_drum_component cfg, "snare", "sample", n[0].to_sym
   when "snare_pitch_shift"
     init_drum_component cfg, "snare", "pitch_shift", n[0].to_i
+  when "snare_fav"
+    if n[0] == 1.0 
+      add_fav_drum cfg, "snare" 
+    else
+      remove_fav_drum cfg, "snare"
+    end  
 
   when "cymbal_inst_groups"
-    init_osc_samples "/cymbal_inst_v", n[0].to_sym
+    init_osc_samples "/cymbal_inst_v", n[0].to_sym, cfg
   when "cymbal_inst"
     init_drum_component cfg, "cymbal", "sample", n[0].to_sym
   when "cymbal_pitch_shift"
     init_drum_component cfg, "cymbal", "pitch_shift", n[0].to_i
- 
+  when "cymbal_fav"
+    if n[0] == 1.0 
+      add_fav_drum cfg, "cymbal" 
+    else
+      remove_fav_drum cfg, "cymbal"
+    end  
+
   when "cymbal_range"
     init_drum_component cfg, "cymbal", "range", n
   when "cymbal_random"
