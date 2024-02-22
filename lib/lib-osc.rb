@@ -40,8 +40,8 @@ end
 define :sample_favorites do |target, cfg|
   # get the drum portion of the target string (e.g. "/kick_inst_v" -> "kick")
   d = target.split("_")[0].split("/")[1]
-  # return the ring of favorite samples from cfg[drums][d][fav]
-  return cfg['drums'][d]['fav'].map {|s| s.to_sym}
+  # return the ring of favorite samples from cfg[drums][d][fav] if it exists
+  return cfg['drums'][d]['fav'].map {|s| s.to_sym} if cfg['drums'][d]['fav'] != nil
 end
 
 # populates osc variable target with the list of SPi sample names
@@ -50,6 +50,8 @@ define :init_osc_samples do |target, sg, cfg|
   puts "pop", target, sg
   return if target==nil or sg==nil
   sn = sg == :favorites ? sample_favorites(target, cfg) : sample_names(sg)
+
+  return if sn == nil
   sn_str = "{"
   # convert to array of strings
   for n in sn
