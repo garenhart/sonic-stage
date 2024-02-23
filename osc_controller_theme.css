@@ -35,6 +35,11 @@
     opacity: 0.8;
 }
 
+.gh-synth-list{
+    --scrollbar-size: 40rem;
+    --color-scrollbar: darkorange;
+}
+
 .rounded-corners5 {
     border-radius: 5px;
 }
