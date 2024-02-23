@@ -2720,7 +2720,7 @@
                             "lineWidth": 2,
                             "padding": 28,
                             "html": "",
-                            "css": ".pad-@{tonic_point} {\n  --color-fill: lime;\n  //--color-stroke: green;\n}\n\n.pad-@{chord_beat_point} {\n  --color-fill: darkorange;\n  //--color-stroke: green;\n}\n\nJS{{\nvar sel_points = @{selected_pts_chord}\nif (sel_points.length > 0) {\n  var css = ''\n  for (var i = 0; i < sel_points.length; i++) {\n    css += \".pad-\" + sel_points[i] + \"{--color-fill: red; /*--color-stroke: red;*/}\\n\"\n  }\n  return css\n}\n}} \n\n/* uncomment to color individual points \n(couldn't make it work with array var)\n.pad-0 {\n  --color-fill: red;\n  --color-stroke: red;\n}\n.pad-1 {\n  --color-fill: green;\n  --color-stroke: green;\n}\n.pad-2 {\n  --color-fill: yellow;\n  --color-stroke: purple;\n}\n*/\n/* etc */\n",
+                            "css": ".pad-@{tonic_point} {\n  //--color-fill: lime;\n  //--color-stroke: green;\n}\n\n.pad-@{chord_beat_point} {\n  --color-fill: darkorange;\n  //--color-stroke: green;\n}\n\nJS{{\nvar sel_points = @{selected_pts_chord}\nif (sel_points.length > 0) {\n  var css = ''\n  for (var i = 0; i < sel_points.length; i++) {\n    css += \".pad-\" + sel_points[i] + \"{--color-fill: red; /*--color-stroke: red;*/}\\n\"\n  }\n  return css\n}\n}} \n\n/* uncomment to color individual points \n(couldn't make it work with array var)\n.pad-0 {\n  --color-fill: red;\n  --color-stroke: red;\n}\n.pad-1 {\n  --color-fill: green;\n  --color-stroke: green;\n}\n.pad-2 {\n  --color-fill: yellow;\n  --color-stroke: purple;\n}\n*/\n/* etc */\n",
                             "value": "",
                             "default": "",
                             "linkId": "",
