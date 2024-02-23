@@ -2712,7 +2712,7 @@
                             "expand": true,
                             "colorText": "auto",
                             "colorWidget": "auto",
-                            "colorStroke": "JS{{return @{chord_del} == 1 ? \"red\" : (@{scale_match} == 0 ? \"grey\" : \"auto\");}}",
+                            "colorStroke": "JS{{return @{chord_del} == 1 ? \"red\" : \"auto\";}}",
                             "colorFill": "auto",
                             "alphaStroke": "auto",
                             "alphaFillOff": "auto",
