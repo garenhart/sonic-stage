@@ -9,9 +9,12 @@ define :drum_fav? do |cfg, d, v|
 end 
 
 define :add_fav_drum do |cfg, d|
+    # add 'fav' key to the drums hash if it doesn't exist
+    cfg['drums'][d]['fav'] = [] unless cfg['drums'][d]['fav']    
+
     # add current selection to the favorites list
-    cfg['drums'][d]['fav'] << cfg['drums'][d]['sample'].to_s
-  end
+    cfg['drums'][d]['fav'] << cfg['drums'][d]['sample'].to_s unless drum_fav? cfg, d, cfg['drums'][d]['sample']
+end
   
 define :remove_fav_drum do |cfg, d|
     # remove current selection from the favorites list if it exists
