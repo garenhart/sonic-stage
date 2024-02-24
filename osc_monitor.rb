@@ -21,6 +21,7 @@ sp_path = get(:sp_path) # get Sonic Pi path
 sp_lib_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/'
 eval_file sp_lib_path + 'lib-util.rb'
 eval_file sp_lib_path + 'lib-io.rb'
+eval_file sp_lib_path + 'lib-fav.rb'
 eval_file sp_lib_path + 'lib-init.rb'
 eval_file sp_lib_path + 'lib-osc-animation.rb'
 eval_file sp_lib_path + 'lib-play.rb'
@@ -272,11 +273,7 @@ live_loop :osc_monitor do
   when "kick_pitch_shift"
     init_drum_component cfg, "kick", "pitch_shift", n[0].to_i
   when "kick_fav"
-    if n[0] == 1.0 
-      add_fav_drum cfg, "kick" 
-    else
-      remove_fav_drum cfg, "kick"
-    end  
+    update_fav_drums cfg, "kick", n[0]
 
   when "snare_inst_groups"
     init_osc_samples "/snare_inst_v", n[0].to_sym, cfg
@@ -285,11 +282,7 @@ live_loop :osc_monitor do
   when "snare_pitch_shift"
     init_drum_component cfg, "snare", "pitch_shift", n[0].to_i
   when "snare_fav"
-    if n[0] == 1.0 
-      add_fav_drum cfg, "snare" 
-    else
-      remove_fav_drum cfg, "snare"
-    end  
+    update_fav_drums cfg, "snare", n[0]
 
   when "cymbal_inst_groups"
     init_osc_samples "/cymbal_inst_v", n[0].to_sym, cfg
@@ -298,11 +291,7 @@ live_loop :osc_monitor do
   when "cymbal_pitch_shift"
     init_drum_component cfg, "cymbal", "pitch_shift", n[0].to_i
   when "cymbal_fav"
-    if n[0] == 1.0 
-      add_fav_drum cfg, "cymbal" 
-    else
-      remove_fav_drum cfg, "cymbal"
-    end  
+    update_fav_drums cfg, "cymbal", n[0]
 
   when "cymbal_range"
     init_drum_component cfg, "cymbal", "range", n
