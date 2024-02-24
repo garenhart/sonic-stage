@@ -127,15 +127,10 @@ define :init_chord_component do |cfg, c, v|
   init_time_state_chord cfg if get(:chord_auto)
 end
 
-define :drum_fav? do |cfg, d, v|
-  cfg['drums'][d]['fav'].include?(v.to_s) if cfg['drums'][d]['fav']
-end
-
 # sets specific drum configuration component
 define :init_drum_component do |cfg, d, c, v|
   cfg['drums'][d][c] = v
   init_time_state_drums cfg if get(:drums_auto)
-  puts "drum_fav?: #{drum_fav?(cfg, d, v)} #{d} #{v} #{cfg['drums'][d]['fav']}"
   (osc_ctrl "/#{d}_fav", drum_fav?(cfg, d, v) ? 1 : 0) if c == 'sample'
 end
 
@@ -270,14 +265,4 @@ define :shift_pattern do |p, n|
   # shift the pattern to the right by n
   # and return the shifted pattern
   p.map {|x| x + n}
-end
-
-define :add_fav_drum do |cfg, d|
-  # add current selection to the favorites list
-  cfg['drums'][d]['fav'] << cfg['drums'][d]['sample'].to_s
-end
-
-define :remove_fav_drum do |cfg, d|
-  # remove current selection from the favorites list if it exists
-  cfg['drums'][d]['fav'].delete(cfg['drums'][d]['sample'].to_s)
 end
