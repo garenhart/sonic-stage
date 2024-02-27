@@ -6,6 +6,7 @@
   "scale": "ionian",
   "loop_mode": 0,
   "solo_inst": "piano",
+  "fav": [],
   "solo_on": true,
   "bass": {
     "count": 16,
@@ -13,6 +14,7 @@
     "on": false,
     "amp": 0.5,
     "synth": "fm",
+    "fav": [],
     "tonics": [    ],
     "pattern": [    ]
   },
@@ -23,6 +25,7 @@
     "amp": 0.5,
     "type": 1,
     "synth": "piano",
+    "fav": [],
     "tonics": [    ],
     "pattern": [    ]
   },
