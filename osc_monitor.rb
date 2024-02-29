@@ -177,6 +177,9 @@ live_loop :osc_monitor do
   when "solo_fav"
     update_fav cfg, n[0]
 
+  when "solo_fav_all"
+    cfg['solo_fav_all'] = n[0] == 1.0
+
 # chord section ==================================    
   when "chord_pt_count"
     update_chord_count cfg, n[0].to_i
