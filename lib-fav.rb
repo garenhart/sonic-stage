@@ -54,5 +54,6 @@ define :update_fav do |cfg, add|
       add_fav cfg
     else
       remove_fav cfg
-    end    
+    end
+    init_osc_synths_fav cfg
 end
