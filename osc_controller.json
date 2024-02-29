@@ -1,6 +1,6 @@
 {
   "createdWith": "Open Stage Control",
-  "version": "1.25.7",
+  "version": "1.26.1",
   "type": "session",
   "content": {
     "type": "root",
@@ -1641,7 +1641,8 @@
                             "logScaleY": false,
                             "sensitivity": 1,
                             "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/bass_line_updated', ...value)\n  // also add/remove touched point to/from the array\n  // if in delete mode\n  if (get(\"bass_del\") == 1) {\n    const pts = get(\"selected_pts_bass\")\n    const index = pts.indexOf(event.handle);\n    if (index > -1) { // only splice array when item is found\n      pts.splice(index, 1) // 2nd parameter means remove one item only\n    }\n    else {\n      pts.push(event.handle)\n    }\n    set(\"selected_pts_bass\", pts)\n  }\n}",
-                            "doubleTap": false
+                            "doubleTap": false,
+                            "axisLock": ""
                           }
                         ],
                         "tabs": [],
@@ -1837,7 +1838,8 @@
                             "sensitivity": 1,
                             "steps": "",
                             "origin": "auto",
-                            "onTouch": ""
+                            "onTouch": "",
+                            "colorKnob": "auto"
                           },
                           {
                             "type": "button",
@@ -2746,7 +2748,8 @@
                             "logScaleY": false,
                             "sensitivity": 1,
                             "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/chord_line_updated', ...value)\n  // also add/remove touched point to/from the array\n  // if in delete mode\n  if (get(\"chord_del\") == 1) {\n    const pts = get(\"selected_pts_chord\")\n    const index = pts.indexOf(event.handle);\n    if (index > -1) { // only splice array when item is found\n      pts.splice(index, 1) // 2nd parameter means remove one item only\n    }\n    else {\n      pts.push(event.handle)\n    }\n    set(\"selected_pts_chord\", pts)\n  }\n  \n}",
-                            "doubleTap": false
+                            "doubleTap": false,
+                            "axisLock": ""
                           }
                         ],
                         "tabs": [],
@@ -2941,7 +2944,8 @@
                             "sensitivity": 1,
                             "steps": "",
                             "origin": "auto",
-                            "onTouch": ""
+                            "onTouch": "",
+                            "colorKnob": "auto"
                           },
                           {
                             "type": "button",
@@ -4170,7 +4174,8 @@
                                         "bypass": false,
                                         "onCreate": "",
                                         "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_cymbal_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
-                                        "onTouch": ""
+                                        "onTouch": "",
+                                        "colorKnob": "auto"
                                       },
                                       {
                                         "type": "button",
@@ -4327,7 +4332,8 @@
                                 "sensitivity": 1,
                                 "steps": "",
                                 "origin": "auto",
-                                "onTouch": ""
+                                "onTouch": "",
+                                "colorKnob": "auto"
                               },
                               {
                                 "type": "button",
@@ -4862,7 +4868,8 @@
                                         "bypass": false,
                                         "onCreate": "",
                                         "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_snare_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
-                                        "onTouch": ""
+                                        "onTouch": "",
+                                        "colorKnob": "auto"
                                       },
                                       {
                                         "type": "button",
@@ -5019,7 +5026,8 @@
                                 "sensitivity": 1,
                                 "steps": "",
                                 "origin": "auto",
-                                "onTouch": ""
+                                "onTouch": "",
+                                "colorKnob": "auto"
                               },
                               {
                                 "type": "button",
@@ -5552,7 +5560,8 @@
                                         "bypass": false,
                                         "onCreate": "",
                                         "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_kick_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
-                                        "onTouch": ""
+                                        "onTouch": "",
+                                        "colorKnob": "auto"
                                       },
                                       {
                                         "type": "button",
@@ -5709,7 +5718,8 @@
                                 "sensitivity": 1,
                                 "steps": "",
                                 "origin": "auto",
-                                "onTouch": ""
+                                "onTouch": "",
+                                "colorKnob": "auto"
                               },
                               {
                                 "type": "button",
@@ -6261,9 +6271,9 @@
                     "decoupled": false
                   },
                   {
-                    "type": "dropdown",
+                    "type": "button",
                     "lock": false,
-                    "id": "solo_inst",
+                    "id": "solo_fav_all",
                     "comments": "",
                     "value": "",
                     "default": "",
@@ -6277,11 +6287,11 @@
                     "bypass": false,
                     "onCreate": "",
                     "onValue": "",
-                    "top": "auto-Infinity",
-                    "left": "auto-Infinity",
+                    "top": 20,
+                    "left": 40,
                     "visible": true,
                     "interaction": true,
-                    "width": "15%",
+                    "width": "4%",
                     "height": "auto",
                     "expand": false,
                     "colorText": "auto",
@@ -6295,9 +6305,55 @@
                     "borderRadius": "auto",
                     "padding": "auto",
                     "html": "",
+                    "css": ":host {\n  class: gh-button-control\n}",
+                    "label": "#{@{this} === 1 ? \"^heart\" : \"^list\"}",
+                    "mode": "toggle",
+                    "colorTextOn": "auto",
+                    "wrap": false,
+                    "vertical": false,
+                    "on": 1,
+                    "off": 0,
+                    "doubleTap": false,
+                    "decoupled": false
+                  },
+                  {
+                    "type": "dropdown",
+                    "top": "auto-Infinity",
+                    "left": "auto-Infinity",
+                    "id": "solo_inst",
+                    "visible": true,
+                    "interaction": true,
+                    "comments": "",
+                    "width": "15%",
+                    "height": "auto",
+                    "expand": false,
+                    "colorText": "auto",
+                    "colorWidget": "auto",
+                    "colorStroke": "auto",
+                    "colorFill": "auto",
+                    "alphaStroke": "auto",
+                    "alphaFillOff": "auto",
+                    "alphaFillOn": "auto",
+                    "lineWidth": "auto",
+                    "padding": "auto",
+                    "html": "",
                     "css": ":host {\n  class: gh-synth-list\n}",
-                    "values": "@{synths}",
+                    "value": "",
+                    "default": "",
+                    "linkId": "",
+                    "address": "auto",
+                    "preArgs": "",
+                    "typeTags": "",
+                    "decimals": 2,
+                    "target": "",
+                    "ignoreDefaults": false,
+                    "bypass": false,
+                    "onValue": "",
+                    "onCreate": "",
+                    "lock": false,
+                    "borderRadius": "auto",
                     "label": "%key",
+                    "values": "#{@{solo_fav_all} === 0 ? @{synths} : @{synths_fav_solo}}",
                     "icon": false,
                     "align": "center"
                   },
@@ -6305,6 +6361,7 @@
                     "type": "button",
                     "top": 10,
                     "left": 30,
+                    "lock": false,
                     "id": "solo_fav",
                     "visible": true,
                     "interaction": true,
@@ -6320,8 +6377,9 @@
                     "alphaFillOff": "auto",
                     "alphaFillOn": "auto",
                     "lineWidth": "auto",
+                    "borderRadius": "auto",
                     "padding": "auto",
-                    "html": "",
+                    "html": "<i class=\"fa-solid fa-heart-circle-plus\"></i>",
                     "css": ":host {\n  class: gh-button-control\n}",
                     "value": "",
                     "default": "",
@@ -6333,10 +6391,8 @@
                     "target": "",
                     "ignoreDefaults": false,
                     "bypass": false,
-                    "onValue": "",
                     "onCreate": "",
-                    "lock": false,
-                    "borderRadius": "auto",
+                    "onValue": "",
                     "colorTextOn": "red",
                     "label": "^heart",
                     "vertical": false,
@@ -6975,6 +7031,60 @@
           {
             "type": "variable",
             "lock": false,
+            "id": "synths_fav_solo",
+            "comments": "",
+            "value": "",
+            "default": "",
+            "linkId": "",
+            "address": "auto",
+            "preArgs": "",
+            "typeTags": "",
+            "decimals": 2,
+            "target": "",
+            "ignoreDefaults": false,
+            "bypass": false,
+            "onCreate": "",
+            "onValue": ""
+          },
+          {
+            "type": "variable",
+            "lock": false,
+            "id": "synths_fav_bass",
+            "comments": "",
+            "value": "",
+            "default": "",
+            "linkId": "",
+            "address": "auto",
+            "preArgs": "",
+            "typeTags": "",
+            "decimals": 2,
+            "target": "",
+            "ignoreDefaults": false,
+            "bypass": false,
+            "onCreate": "",
+            "onValue": ""
+          },
+          {
+            "type": "variable",
+            "lock": false,
+            "id": "synths_fav_chord",
+            "comments": "",
+            "value": "",
+            "default": "",
+            "linkId": "",
+            "address": "auto",
+            "preArgs": "",
+            "typeTags": "",
+            "decimals": 2,
+            "target": "",
+            "ignoreDefaults": false,
+            "bypass": false,
+            "onCreate": "",
+            "onValue": ""
+          },
+          {
+            "type": "variable",
+            "lock": false,
             "id": "sample_groups",
             "comments": "",
             "value": "",
@@ -7402,7 +7512,8 @@
             "bypass": false,
             "onCreate": "",
             "onValue": "console.log(value)",
-            "onTouch": ""
+            "onTouch": "",
+            "colorKnob": "auto"
           }
         ],
         "tabs": [],

@@ -8,6 +8,7 @@
   "solo_inst": "piano",
   "fav": [],
   "solo_on": true,
+  "solo_fav_all": false,
   "bass": {
     "count": 16,
     "tempo_factor": 1,

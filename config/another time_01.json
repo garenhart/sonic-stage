@@ -5,8 +5,8 @@
   "mode": 0,
   "scale": "ionian",
   "loop_mode": 0,
-  "solo_inst": "beep",
-  "fav": [],
+  "solo_inst": "gabberkick",
+  "fav": [    "bass_foundation",    "chipbass",    "dpulse",    "dsaw",    "beep",    "dtri",    "fm"  ],
   "solo_on": true,
   "solo_fav_all": false,
   "bass": {
