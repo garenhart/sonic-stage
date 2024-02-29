@@ -9,6 +9,19 @@ define :osc_ctrl do |path, *args|
   osc_send get(:ctrl_ip), get(:ctrl_port), path, *args
 end
 
+define :init_osc_synths_fav do |cfg|
+  sn =cfg['fav']
+  sn_str = "{"
+  for n in sn
+    sn_str += ", " if sn_str.length > 2
+    sn_str += "\"" + split_and_capitalize(n.to_s, "_") + "\": \"" + n.to_s + "\""
+  end
+  sn_str += "}"
+  osc_ctrl "/synths_fav_solo", sn_str
+  # osc_ctrl "/synths_fav_bass", cfg['bass']['fav'] if cfg['bass']['fav'] != nil
+  # osc_ctrl "/synths_fav_chord", cfg['chord']['fav'] if cfg['chord']['fav'] != nil  
+end
+
 # populates osc variable with the list of SPi synth names
 define :init_osc_synths do
   sn = synth_names
@@ -19,7 +32,7 @@ define :init_osc_synths do
     sn_str += "\"" + split_and_capitalize(n.to_s, "_") + "\": \"" + n.to_s + "\""
   end
   sn_str += "}"
-  osc_ctrl "/synths", sn_str 
+  osc_ctrl "/synths", sn_str
 end
 
 # populates osc variable with the list of SPi sample group names
@@ -178,6 +191,7 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/switch_loop", cfg['loop_mode']
   osc_ctrl "/solo_inst", cfg['solo_inst']
   osc_ctrl "/solo_on", cfg['solo_on'] ? 1 : 0
+  osc_ctrl "/solo_fav_all", cfg['solo_fav_all'] ? 1 : 0
 
   osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
@@ -189,5 +203,6 @@ define :init_osc_controls do |cfg, init_presets=false|
 
   update_osc_bass_points cfg
   update_osc_chord_points cfg
+  init_osc_synths_fav cfg # populate favorite synths
   init_osc_drums cfg
 end
