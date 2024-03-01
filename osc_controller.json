@@ -6394,7 +6394,7 @@
                     "onCreate": "",
                     "onValue": "",
                     "colorTextOn": "red",
-                    "label": "^heart",
+                    "label": "#{@{this} === 1 ? \"^hand-holding-heart.flip-horizontal\" : \"^hand-holding-heart\"}",
                     "vertical": false,
                     "wrap": false,
                     "on": 1,
