@@ -6,6 +6,9 @@
   "scale": "ionian",
   "loop_mode": 0,
   "solo_inst": "beep",
+  "fav": [],
+  "solo_on": true,
+  "solo_fav_all": false,
   "bass": {
     "count": 16,
     "tempo_factor": 1,
