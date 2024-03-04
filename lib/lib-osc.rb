@@ -10,29 +10,17 @@ define :osc_ctrl do |path, *args|
 end
 
 define :init_osc_synths_fav do |cfg|
-  sn =cfg['fav']
-  sn_str = "{"
-  for n in sn
-    sn_str += ", " if sn_str.length > 2
-    sn_str += "\"" + split_and_capitalize(n.to_s, "_") + "\": \"" + n.to_s + "\""
-  end
-  sn_str += "}"
-  osc_ctrl "/synths_fav_solo", sn_str
+  sn = cfg['fav']
+  sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
+  osc_ctrl "/synths_fav_solo", "{#{sn_str}}"
   # osc_ctrl "/synths_fav_bass", cfg['bass']['fav'] if cfg['bass']['fav'] != nil
   # osc_ctrl "/synths_fav_chord", cfg['chord']['fav'] if cfg['chord']['fav'] != nil  
 end
 
 # populates osc variable with the list of SPi synth names
 define :init_osc_synths do
-  sn = synth_names
-  sn_str = "{"
-  # convert to array of strings
-  for n in sn
-    sn_str += ", " if sn_str.length > 2
-    sn_str += "\"" + split_and_capitalize(n.to_s, "_") + "\": \"" + n.to_s + "\""
-  end
-  sn_str += "}"
-  osc_ctrl "/synths", sn_str
+  sn_str = synth_names.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
+  osc_ctrl "/synths", "{#{sn_str}}"
 end
 
 # populates osc variable with the list of SPi sample group names
