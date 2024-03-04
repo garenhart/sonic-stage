@@ -26,16 +26,9 @@ end
 # populates osc variable with the list of SPi sample group names
 define :init_osc_sample_groups do
   sg = sample_groups
-  sg_str = "{"
-  # convert to array of strings
-  for n in sg
-    sg_str += ", " if sg_str.length > 2
-    sg_str += "\"" + split_and_capitalize(n.to_s, "_") + "\": \"" + n.to_s + "\""
-  end
-  # add a "Favorites" group to the end of the list
+  sg_str = sg.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
   sg_str += ", \"Favorites\": \"favorites\""
-  sg_str += "}"
-  osc_ctrl "/sample_groups", sg_str 
+  osc_ctrl "/sample_groups", "{#{sg_str}}"
 end
 
 define :sample_favorites do |target, cfg|
@@ -49,19 +42,13 @@ end
 # for the specified sample group sg
 define :init_osc_samples do |target, sg, cfg|
   puts "pop", target, sg
-  return if target==nil or sg==nil
-  sn = sg == :favorites ? sample_favorites(target, cfg) : sample_names(sg)
+  return if target.nil? || sg.nil?
 
-  return if sn == nil
-  sn_str = "{"
-  # convert to array of strings
-  for n in sn
-    sn_str += ", " if sn_str.length > 2
-    sn_str += "\"" + n.to_s + "\": \"" + n.to_s + "\""
-  end
-  sn_str += "}"
-  puts "Samples: ", sn_str
-  osc_ctrl target, sn_str
+  sn = sg == :favorites ? sample_favorites(target, cfg) : sample_names(sg)
+  return if sn.nil?
+
+  sn_str = sn.map { |n| "\"#{n}\": \"#{n}\"" }.join(", ")
+  osc_ctrl target, "{#{sn_str}}"
 end
 
 define :init_osc_keyboard do |tonic, mode|
