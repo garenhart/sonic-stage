@@ -6379,7 +6379,7 @@
                     "lineWidth": "auto",
                     "borderRadius": "auto",
                     "padding": "auto",
-                    "html": "<i class=\"fa-solid fa-heart-circle-plus\"></i>",
+                    "html": "",
                     "css": "",
                     "value": "",
                     "default": "",
