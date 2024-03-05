@@ -210,6 +210,12 @@ live_loop :osc_monitor do
 
   when "chord_on"
     init_chord_component(cfg, "on", n[0]==1.0)
+
+  when "chord_fav"
+    update_fav_chord cfg, n[0]
+
+  when "chord_fav_all"
+    cfg['chord_fav_all'] = n[0] == 1.0
   
   when "chord_amp"
     init_chord_component(cfg, "amp", n[0])
@@ -246,7 +252,13 @@ live_loop :osc_monitor do
 
   when "bass_on"
     init_bass_component(cfg, 'on', n[0]==1.0)
-    
+
+  when "bass_fav"
+    update_fav_bass cfg, n[0]
+
+  when "bass_fav_all"
+    cfg['bass_fav_all'] = n[0] == 1.0
+
   when "bass_amp"
     init_bass_component(cfg, 'amp', n[0])
 
