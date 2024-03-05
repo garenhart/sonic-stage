@@ -57,3 +57,58 @@ define :update_fav do |cfg, add|
     end
     init_osc_synths_fav cfg
 end
+
+define :chord_fav? do |cfg, v|
+    cfg['chord']['fav'].include?(v.to_s) if cfg['chord']['fav']
+end
+
+define :add_fav_chord do |cfg|
+    # add 'fav' key to the chord hash if it doesn't exist
+    cfg['chord']['fav'] = [] unless cfg['chord']['fav']
+
+    # add current selection to the favorites list
+    cfg['chord']['fav'] << cfg['chord']['synth'].to_s unless chord_fav? cfg, cfg['chord']['synth']
+end
+
+define :remove_fav_chord do |cfg|
+    # remove current selection from the favorites list if it exists
+    cfg['chord']['fav'].delete(cfg['chord']['synth'].to_s)
+end
+
+define :update_fav_chord do |cfg, add|
+    # update the favorites list
+    if add == 1.0
+      add_fav_chord cfg
+    else
+      remove_fav_chord cfg
+    end
+    init_osc_synths_fav_chord cfg
+end
+
+define :bass_fav? do |cfg, v|
+  cfg['bass']['fav'].include?(v.to_s) if cfg['bass']['fav']
+end
+
+define :add_fav_bass do |cfg|
+  # add 'fav' key to the bass hash if it doesn't exist
+  cfg['bass']['fav'] = [] unless cfg['bass']['fav']
+
+  # add current selection to the favorites list
+  cfg['bass']['fav'] << cfg['bass']['synth'].to_s unless bass_fav? cfg, cfg['bass']['synth']
+end
+
+define :remove_fav_bass do |cfg|
+  # remove current selection from the favorites list if it exists
+  cfg['bass']['fav'].delete(cfg['bass']['synth'].to_s)
+end
+
+define :update_fav_bass do |cfg, add|
+  # update the favorites list
+  if add == 1.0
+    add_fav_bass cfg
+  else
+    remove_fav_bass cfg
+  end
+  init_osc_synths_fav_bass cfg
+end
+

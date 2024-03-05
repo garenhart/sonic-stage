@@ -119,12 +119,14 @@ end
 define :init_bass_component do |cfg, c, v|
   cfg['bass'][c] = v
   init_time_state_bass cfg if get(:bass_auto)
+  osc_ctrl "/bass_fav", bass_fav?(cfg, cfg['bass']['synth']) ? 1 : 0 if c == 'synth'
 end
 
 # sets specific chord configuration component
 define :init_chord_component do |cfg, c, v|
   cfg['chord'][c] = v
   init_time_state_chord cfg if get(:chord_auto)
+  osc_ctrl "/chord_fav", chord_fav?(cfg, cfg['chord']['synth']) ? 1 : 0 if c == 'synth'
 end
 
 # sets specific drum configuration component

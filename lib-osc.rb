@@ -13,8 +13,18 @@ define :init_osc_synths_fav do |cfg|
   sn = cfg['fav']
   sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
   osc_ctrl "/synths_fav_solo", "{#{sn_str}}"
-  # osc_ctrl "/synths_fav_bass", cfg['bass']['fav'] if cfg['bass']['fav'] != nil
-  # osc_ctrl "/synths_fav_chord", cfg['chord']['fav'] if cfg['chord']['fav'] != nil  
+end
+
+define :init_osc_synths_fav_bass do |cfg|
+  sn = cfg['bass']['fav']
+  sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
+  osc_ctrl "/synths_fav_bass", "{#{sn_str}}"
+end
+
+define :init_osc_synths_fav_chord do |cfg|
+  sn = cfg['chord']['fav']
+  sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
+  osc_ctrl "/synths_fav_chord", "{#{sn_str}}"
 end
 
 # populates osc variable with the list of SPi synth names
@@ -172,13 +182,20 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
   osc_ctrl "/bass_inst", cfg['bass']['synth']
+  osc_ctrl "/bass_fav", bass_fav?(cfg, cfg['bass']['synth']) ? 1 : 0
+
   osc_ctrl "/chord_on", cfg['chord']['on'] ? 1 : 0
   osc_ctrl "/chord_amp", cfg['chord']['amp']
   osc_ctrl "/chord_type", cfg['chord']['type']
   osc_ctrl "/chord_inst", cfg['chord']['synth']
+  osc_ctrl "/chord_fav", chord_fav?(cfg, cfg['chord']['synth']) ? 1 : 0  
 
+  init_osc_drums cfg
   update_osc_bass_points cfg
   update_osc_chord_points cfg
-  init_osc_synths_fav cfg # populate favorite synths
-  init_osc_drums cfg
+
+  # populate favorite synths
+  init_osc_synths_fav cfg
+  init_osc_synths_fav_bass cfg
+  init_osc_synths_fav_chord cfg
 end
