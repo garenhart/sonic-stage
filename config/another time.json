@@ -22,7 +22,7 @@
   "chord": {
     "count": 16,
     "tempo_factor": 1,
-    "on": false,
+    "on": true,
     "amp": 0.5,
     "type": 1,
     "synth": "piano",
@@ -34,7 +34,7 @@
     "count": 16,
     "tempo_factor": 1,
     "cymbal": {
-      "on": true,
+      "on": false,
       "amp": 0.10000000149011612,
       "sample": "drum_cymbal_closed",
       "fav": [        "elec_ping",        "drum_cymbal_closed"      ],
@@ -45,7 +45,7 @@
       "beats": "0000000000000000"
     },
     "snare": {
-      "on": true,
+      "on": false,
       "amp": 0.09000000357627869,
       "sample": "drum_snare_soft",
       "fav": [        "ambi_lunar_land",        "elec_plip",        "elec_tick",        "drum_snare_soft"      ],
@@ -56,10 +56,10 @@
       "beats": "0000000000000000"
     },
     "kick": {
-      "on": true,
+      "on": false,
       "amp": 0.09000000357627869,
       "sample": "bd_tek",
-      "fav": [        "bd_sone"      ],
+      "fav": ["bd_sone", "vinyl_rewind", "bd_tek"],
       "range": [        0.0,        1.0      ],
       "random": false,
       "reverse": false,
