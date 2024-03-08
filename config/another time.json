@@ -6,7 +6,7 @@
   "scale": "ionian",
   "loop_mode": 0,
   "solo_inst": "beep",
-  "fav": [    "bass_foundation",    "chipbass",    "dpulse",    "dsaw",    "dtri",    "fm",    "beep"  ],
+  "fav": ["beep"],
   "solo_on": true,
   "solo_fav_all": true,
   "bass": {
@@ -22,7 +22,7 @@
   "chord": {
     "count": 16,
     "tempo_factor": 1,
-    "on": true,
+    "on": false,
     "amp": 0.5,
     "type": 1,
     "synth": "piano",
@@ -34,10 +34,10 @@
     "count": 16,
     "tempo_factor": 1,
     "cymbal": {
-      "on": false,
-      "amp": 0.0,
+      "on": true,
+      "amp": 0.10000000149011612,
       "sample": "drum_cymbal_closed",
-      "fav": [      ],
+      "fav": [        "elec_ping",        "drum_cymbal_closed"      ],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
@@ -45,10 +45,10 @@
       "beats": "0000000000000000"
     },
     "snare": {
-      "on": false,
-      "amp": 0.0,
+      "on": true,
+      "amp": 0.09000000357627869,
       "sample": "drum_snare_soft",
-      "fav": [      ],
+      "fav": [        "ambi_lunar_land",        "elec_plip",        "elec_tick",        "drum_snare_soft"      ],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
@@ -56,11 +56,11 @@
       "beats": "0000000000000000"
     },
     "kick": {
-      "on": false,
-      "amp": 0.0,
+      "on": true,
+      "amp": 0.09000000357627869,
       "sample": "bd_tek",
-      "fav": [      ],
-      "range": [        0,        1      ],
+      "fav": [        "bd_sone"      ],
+      "range": [        0.0,        1.0      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
