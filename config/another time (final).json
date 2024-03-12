@@ -6,7 +6,7 @@
   "scale": "ionian",
   "loop_mode": 0,
   "solo_inst": "beep",
-  "fav": [],
+  "fav": [  ],
   "solo_on": true,
   "solo_fav_all": false,
   "bass": {
@@ -15,7 +15,7 @@
     "on": true,
     "amp": 0.5,
     "synth": "fm",
-    "fav": [],
+    "fav": [    ],
     "tonics": [      45,      48,      50,      52    ],
     "pattern": [      1,      5,      9,      13    ]
   },
@@ -26,7 +26,7 @@
     "amp": 0.5,
     "type": 1,
     "synth": "piano",
-    "fav": [],
+    "fav": [    ],
     "tonics": [      86,      84,      83,      83,      81,      77,      75,      76    ],
     "pattern": [      1,      4,      5,      7,      8,      9,      12,      13    ]
   },
@@ -37,7 +37,7 @@
       "on": true,
       "amp": 0.5,
       "sample": "drum_cymbal_closed",
-      "fav": [],
+      "fav": [        "drum_cymbal_closed",        "elec_ping"      ],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
@@ -48,7 +48,7 @@
       "on": true,
       "amp": 0.5,
       "sample": "drum_snare_soft",
-      "fav": [],
+      "fav": [        "drum_snare_soft",        "elec_plip",        "ambi_lunar_land"      ],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
@@ -59,12 +59,12 @@
       "on": true,
       "amp": 0.5,
       "sample": "bd_tek",
-      "fav": [],
+      "fav": [        "vinyl_rewind",        "bd_tek"      ],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
-      "beats": "0000111110000000"
+      "beats": "1000111110000100"
     }
   }
 }
