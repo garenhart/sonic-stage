@@ -72,6 +72,7 @@ puts "cfg", cfg
 init_osc_controls cfg, true
 init_time_state cfg
 # ---
+sleep 1 # wait for init to finish
 
 # set_audio_latency! -100 # set audio latency to -100ms
 
