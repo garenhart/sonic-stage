@@ -69,7 +69,10 @@ puts "cfg", cfg
 # use_random_seed 31
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
+# init osc controls twice to avoid blank instruments
 init_osc_controls cfg, true
+init_osc_controls cfg, true
+
 init_time_state cfg
 # ---
 sleep 1 # wait for init to finish
@@ -139,7 +142,10 @@ live_loop :osc_monitor do
     # or new "tempo" is the same as current tempo
     if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
       cfg = data
-      init_osc_controls(cfg)
+      # init osc controls twice to avoid blank instruments
+      init_osc_controls cfg
+      init_osc_controls cfg
+
       init_time_state_chord cfg if get(:chord_auto)
       init_time_state_bass cfg if get(:bass_auto)
       init_time_state_drums cfg if get(:drums_auto)
@@ -216,7 +222,7 @@ live_loop :osc_monitor do
     update_fav_chord cfg, n[0]
 
   when "chord_fav_all"
-    cfg['chord_fav_all'] = n[0] == 1.0
+    cfg['chord']['fav_all'] = n[0] == 1.0
   
   when "chord_amp"
     init_chord_component(cfg, "amp", n[0])
@@ -258,7 +264,7 @@ live_loop :osc_monitor do
     update_fav_bass cfg, n[0]
 
   when "bass_fav_all"
-    cfg['bass_fav_all'] = n[0] == 1.0
+    cfg['bass']['fav_all'] = n[0] == 1.0
 
   when "bass_amp"
     init_bass_component(cfg, 'amp', n[0])

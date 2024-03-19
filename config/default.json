@@ -16,6 +16,7 @@
     "amp": 0.5,
     "synth": "fm",
     "fav": [],
+    "fav_all": false,
     "tonics": [    ],
     "pattern": [    ]
   },
@@ -27,6 +28,7 @@
     "type": 1,
     "synth": "piano",
     "fav": [],
+    "fav_all": false,
     "tonics": [    ],
     "pattern": [    ]
   },
