@@ -182,14 +182,16 @@ define :init_osc_controls do |cfg, init_presets=false|
 
   osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
-  osc_ctrl "/bass_inst", cfg['bass']['synth']
   osc_ctrl "/bass_fav", bass_fav?(cfg, cfg['bass']['synth']) ? 1 : 0
+  osc_ctrl "/bass_fav_all", cfg['bass']['fav_all'] ? 1 : 0
+  osc_ctrl "/bass_inst", cfg['bass']['synth']
 
   osc_ctrl "/chord_on", cfg['chord']['on'] ? 1 : 0
   osc_ctrl "/chord_amp", cfg['chord']['amp']
   osc_ctrl "/chord_type", cfg['chord']['type']
-  osc_ctrl "/chord_inst", cfg['chord']['synth']
   osc_ctrl "/chord_fav", chord_fav?(cfg, cfg['chord']['synth']) ? 1 : 0  
+  osc_ctrl "/chord_fav_all", cfg['chord']['fav_all'] ? 1 : 0
+  osc_ctrl "/chord_inst", cfg['chord']['synth']
 
   init_osc_drums cfg
   update_osc_bass_points cfg
