@@ -14,7 +14,7 @@
     "tempo_factor": 1,
     "on": true,
     "amp": 0.5,
-    "synth": "bass_foundation",
+    "synth": "pluck",
     "fav": [    ],
     "tonics": [    ],
     "pattern": [    ]
@@ -57,7 +57,7 @@
     },
     "kick": {
       "on": true,
-      "amp": 0.5099999904632568,
+      "amp": 0.8399999737739563,
       "sample": "bd_boom",
       "fav": [        "bd_sone",        "bd_boom"      ],
       "range": [        0,        1      ],
