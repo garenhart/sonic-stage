@@ -211,15 +211,18 @@ define :play_midi do |cfg, addr_data, note, vel|
   if (cfg['solo_on'] and addr_data[1] == "note_on" and vel > 0) # note_on 
     bass_rec = get(:bass_rec)
     chord_rec = get(:chord_rec) 
+    beat_count = get(:drums)['count']
+    next_beat = get(:beat) + 1
+    next_beat = 1 if next_beat > beat_count
    
     if (bass_rec || chord_rec) # recording
       if (bass_rec)
           use_synth cfg['bass']['synth'].to_sym
-          add_tonic_bass cfg, note, get(:beat)
+          add_tonic_bass cfg, note, next_beat # adding note to bass pattern's next beat seems more natural
       end
       if (chord_rec)
           use_synth cfg['chord']['synth'].to_sym
-          add_tonic_chord cfg, note, get(:beat)
+          add_tonic_chord cfg, note, next_beat # adding note to chord pattern's next beat seems more natural
       end
     else # not recording
       use_synth cfg['solo_inst'].to_sym
