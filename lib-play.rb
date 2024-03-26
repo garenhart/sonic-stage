@@ -217,18 +217,19 @@ define :play_midi do |cfg, addr_data, note, vel|
       if (bass_rec)
           use_synth cfg['bass']['synth'].to_sym
           add_tonic_bass cfg, note, next_beat > cfg['bass']['count'] ? 1 : next_beat
+          animate_keyboard "bass", note, vel/127.0
       end
       if (chord_rec)
           use_synth cfg['chord']['synth'].to_sym
           add_tonic_chord cfg, note, next_beat > get(:chord_state)['count'] ? 1 : next_beat
+          animate_keyboard "chord", note, vel/127.0
       end
+      play note, amp: vel/127.0, release: 1
     else # not recording
       use_synth cfg['solo_inst'].to_sym
-    end   
-    play note, amp: vel/127.0, release: 1
-    animate_keyboard "solo", note, vel/127.0
-    # else # note_off or note_on with velocity 0
-    #   animate_keyboard "solo", 0, 0.0
+      play note, amp: vel/127.0, release: 1
+      animate_keyboard "solo", note, vel/127.0
+     end   
   end  
 end
 
