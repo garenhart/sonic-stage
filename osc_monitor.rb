@@ -79,7 +79,7 @@ sleep 1 # wait for init to finish
 
 # set_audio_latency! -100 # set audio latency to -100ms
 
-with_fx :reverb, room: 0.9, mix: 0.5 do |r|
+# with_fx :reverb, room: 0.9, mix: 0.5 do |r|
   # DRUM LOOPS
   live_loop :drum_kick do
     play_drum "kick", cfg
@@ -114,7 +114,7 @@ with_fx :reverb, room: 0.9, mix: 0.5 do |r|
     
     play_midi cfg, addr_data, note, vel
   end
-end #FX
+# end #FX
 
 # CUE LOOP (MUST BE LAST OF SYNC LOOPS!!!)
 live_loop :the_cue do
