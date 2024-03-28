@@ -35,7 +35,7 @@
     "tempo_factor": 1,
     "cymbal": {
       "on": true,
-      "amp": 0.5099999904632568,
+      "amp": 0.3,
       "sample": "tabla_tas3",
       "fav": [        "tabla_tas3",        "tabla_ghe4"      ],
       "range": [        0,        1      ],
@@ -46,7 +46,7 @@
     },
     "snare": {
       "on": true,
-      "amp": 0.5099999904632568,
+      "amp": 0.85,
       "sample": "loop_safari",
       "fav": [        "loop_tabla",        "loop_safari"      ],
       "range": [        0,        1      ],
@@ -57,7 +57,7 @@
     },
     "kick": {
       "on": true,
-      "amp": 0.8399999737739563,
+      "amp": 0.85,
       "sample": "bd_boom",
       "fav": [        "bd_sone",        "bd_boom"      ],
       "range": [        0,        1      ],
