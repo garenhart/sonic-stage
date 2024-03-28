@@ -35,33 +35,35 @@ define :play_drum do |drum, cfg|
   beats = drums[drum]['beats']
   count = drums['count']
 
-  density tempo_factor do
-    count.times do |i|
-      rt_drums = get(:drums) # drum data from Time State for params that we want to change in real time
-      amp = rt_drums[drum]['amp']
-      start = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][1] : rt_drums[drum]['range'][0]
-      finish = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][0] : rt_drums[drum]['range'][1]
-      pitch_shift = rt_drums[drum]['pitch_shift']
+  with_fx :reverb, room: 0.9, mix: 0.5 do
+    density tempo_factor do
+      count.times do |i|
+        rt_drums = get(:drums) # drum data from Time State for params that we want to change in real time
+        amp = rt_drums[drum]['amp']
+        start = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][1] : rt_drums[drum]['range'][0]
+        finish = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][0] : rt_drums[drum]['range'][1]
+        pitch_shift = rt_drums[drum]['pitch_shift']
 
-      if rt_drums[drum]['on'] 
-        if (beats[i] == "1")
-          if (rt_drums[drum]['random'])
-            sample rt_drums[drum]['sample'], amp: amp, onset: pick, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
-          else  
-            if (start == finish)
-              sample rt_drums[drum]['sample'], amp: amp, onset: 0, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
-            else
-              sample rt_drums[drum]['sample'], amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
-            end
-          end  
-          animate_drum drum, amp, 1, 1
+        if rt_drums[drum]['on'] 
+          if (beats[i] == "1")
+            if (rt_drums[drum]['random'])
+              sample rt_drums[drum]['sample'], amp: amp, onset: pick, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+            else  
+              if (start == finish)
+                sample rt_drums[drum]['sample'], amp: amp, onset: 0, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+              else
+                sample rt_drums[drum]['sample'], amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+              end
+            end  
+            animate_drum drum, amp, 1, 1
+          else
+            animate_drum drum, amp, 0, 1
+          end
         else
-          animate_drum drum, amp, 0, 1
+          animate_drum drum, amp, 0, 0   
         end
-      else
-        animate_drum drum, amp, 0, 0   
+        sleep rhythm
       end
-      sleep rhythm
     end
   end
 end
@@ -80,16 +82,18 @@ define :play_bass do |cfg|
     use_synth cfg_bass['synth'].to_sym
     puts "INST", cfg_bass['synth']
 
-    density tempo_factor do
-      cfg_bass['count'].times do |i|
-        pos = cfg_bass['pattern'].index(i+1)
-        if (cfg_bass['on'] && pos)
-          play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
-          animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp']
-        # else
-        #   animate_keyboard "bass", 0, 0.0
+    with_fx :reverb, room: 0.9, mix: 0.5 do
+      density tempo_factor do
+        cfg_bass['count'].times do |i|
+          pos = cfg_bass['pattern'].index(i+1)
+          if (cfg_bass['on'] && pos)
+            play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
+            animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp']
+          # else
+          #   animate_keyboard "bass", 0, 0.0
+          end
+          sleep rhythm
         end
-        sleep rhythm
       end
     end
   else
@@ -109,16 +113,18 @@ define :play_chords do |cfg|
   if (cfg_chord['pattern'].size > 0) && (cfg_chord['pattern'].size == cfg_chord['tonics'].size)
     use_synth cfg_chord['synth'].to_sym
  
-    density tempo_factor do
-      cfg_chord['count'].times do |pos|
-        i = cfg_chord['pattern'].index(pos+1)
-        if (cfg_chord['on'] && i)
-          play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
-          animate_keyboard "chord", cfg_chord['tonics'][i], cfg_chord['amp']
-        # else
-        #   animate_keyboard "chord", 0, 0.0    
+    with_fx :reverb, room: 0.9, mix: 0.5 do
+        density tempo_factor do
+        cfg_chord['count'].times do |pos|
+          i = cfg_chord['pattern'].index(pos+1)
+          if (cfg_chord['on'] && i)
+            play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
+            animate_keyboard "chord", cfg_chord['tonics'][i], cfg_chord['amp']
+          # else
+          #   animate_keyboard "chord", 0, 0.0    
+          end
+          sleep rhythm
         end
-        sleep rhythm
       end
     end
   else
@@ -169,37 +175,39 @@ define :play_chords_complex do |cfg|
 
     cs = []
     last_pos = 0
-    density tempo_factor do
-      cfg_chord['count'].times do |pos|
-        i = cfg_chord['pattern'].index(pos+1)
-        if ( on && i)
-          ind = note_ind(cfg_chord['tonics'][i], cfg_chord['tonics'][0], cfg['scale'])
-          puts "Nearest", ind, cfg_chord['tonics'][i], cfg_chord['tonics'][0], cfg['scale']
-          seq = ind == nil ? nil : [ind+1]
-          chord_tonic = cfg_chord['tonics'][0]
-          while cfg_chord['tonics'][i] < chord_tonic do # bring tonic down to corresponding octave if current tonic[i] is lower than tonic[0]
-            chord_tonic -= 12
+    with_fx :reverb, room: 0.9, mix: 0.5 do
+      density tempo_factor do
+        cfg_chord['count'].times do |pos|
+          i = cfg_chord['pattern'].index(pos+1)
+          if ( on && i)
+            ind = note_ind(cfg_chord['tonics'][i], cfg_chord['tonics'][0], cfg['scale'])
+            puts "Nearest", ind, cfg_chord['tonics'][i], cfg_chord['tonics'][0], cfg['scale']
+            seq = ind == nil ? nil : [ind+1]
+            chord_tonic = cfg_chord['tonics'][0]
+            while cfg_chord['tonics'][i] < chord_tonic do # bring tonic down to corresponding octave if current tonic[i] is lower than tonic[0]
+              chord_tonic -= 12
+            end
+            while cfg_chord['tonics'][i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
+              chord_tonic += 12
+            end
+            cs = chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
+            puts "chord", cs
+            if cs != nil
+              play (tonic ? cs[0][0] : cs[0]), amp: cfg_chord['amp'] 
+              puts "II", (tonic ? cs[0][0] : cs[0])
+              animate_keyboard (tonic ? cs[0][0] : cs[0])
+            end        
+          else
+            chord_num = pos-last_pos
+            if (cs != nil) && (chord_num < cs.length) && (pos < cfg_chord['count'])
+              puts "III", pos
+              play cs[chord_num], amp: cfg_chord['amp']
+              puts cs[chord_num]
+              animate_keyboard cs[chord_num]
+            end
           end
-          while cfg_chord['tonics'][i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
-            chord_tonic += 12
-          end
-          cs = chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
-          puts "chord", cs
-          if cs != nil
-            play (tonic ? cs[0][0] : cs[0]), amp: cfg_chord['amp'] 
-            puts "II", (tonic ? cs[0][0] : cs[0])
-            animate_keyboard (tonic ? cs[0][0] : cs[0])
-          end        
-        else
-          chord_num = pos-last_pos
-          if (cs != nil) && (chord_num < cs.length) && (pos < cfg_chord['count'])
-            puts "III", pos
-            play cs[chord_num], amp: cfg_chord['amp']
-            puts cs[chord_num]
-            animate_keyboard cs[chord_num]
-          end
+          sleep rhythm
         end
-        sleep rhythm
       end
     end
   else
@@ -224,10 +232,16 @@ define :play_midi do |cfg, addr_data, note, vel|
           add_tonic_chord cfg, note, next_beat > get(:chord_state)['count'] ? 1 : next_beat
           animate_keyboard "chord", note, vel/127.0
       end
-      play note, amp: vel/127.0, release: 1
+      with_fx :reverb, room: 0.9, mix: 0.5 do
+        play note, amp: vel/127.0, release: 1
+      end
     else # not recording
-      use_synth cfg['solo_inst'].to_sym
-      play note, amp: vel/127.0, release: 1
+      # with_fx :echo, mix: 0.4, phase: 2 do
+        with_fx :reverb, mix: 0.6, room: 0.8 do
+          use_synth cfg['solo_inst'].to_sym
+          play note, amp: vel/127.0, release: 1
+        end
+      # end
       animate_keyboard "solo", note, vel/127.0
      end   
   end  
