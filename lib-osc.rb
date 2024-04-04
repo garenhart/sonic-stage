@@ -12,7 +12,8 @@ end
 # populate osc variable with the list of SPi fx names
 define :init_osc_fx do
   fx_str = fx_names.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
-  osc_ctrl "/fx_names", "{#{fx_str}}"
+  # add "None" to the list of fx names
+  osc_ctrl "/fx_names", "{\"None\": \"none\", #{fx_str}}"
 end
 
 define :init_osc_synths_fav do |cfg|
