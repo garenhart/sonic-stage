@@ -7155,7 +7155,7 @@
                                     "onValue": ""
                                   },
                                   {
-                                    "type": "fader",
+                                    "type": "range",
                                     "top": 50,
                                     "left": 60,
                                     "lock": false,
@@ -7195,7 +7195,6 @@
                                     "logScale": false,
                                     "sensitivity": 1,
                                     "steps": "",
-                                    "origin": "auto",
                                     "value": "",
                                     "default": "",
                                     "linkId": "",
@@ -7211,7 +7210,7 @@
                                     "onTouch": ""
                                   },
                                   {
-                                    "type": "fader",
+                                    "type": "range",
                                     "top": 130,
                                     "left": 50,
                                     "lock": false,
@@ -7251,7 +7250,6 @@
                                     "logScale": false,
                                     "sensitivity": 1,
                                     "steps": "",
-                                    "origin": "auto",
                                     "value": "",
                                     "default": "",
                                     "linkId": "",
@@ -7358,7 +7356,7 @@
                                     "onValue": ""
                                   },
                                   {
-                                    "type": "fader",
+                                    "type": "range",
                                     "top": 60,
                                     "left": 50,
                                     "lock": false,
@@ -7398,7 +7396,6 @@
                                     "logScale": false,
                                     "sensitivity": 1,
                                     "steps": "",
-                                    "origin": "auto",
                                     "value": "",
                                     "default": "",
                                     "linkId": "",
@@ -7414,7 +7411,7 @@
                                     "onTouch": ""
                                   },
                                   {
-                                    "type": "fader",
+                                    "type": "range",
                                     "top": 100,
                                     "left": 40,
                                     "lock": false,
@@ -7454,7 +7451,6 @@
                                     "logScale": false,
                                     "sensitivity": 1,
                                     "steps": "",
-                                    "origin": "auto",
                                     "value": "",
                                     "default": "",
                                     "linkId": "",
