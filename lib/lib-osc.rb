@@ -9,6 +9,12 @@ define :osc_ctrl do |path, *args|
   osc_send get(:ctrl_ip), get(:ctrl_port), path, *args
 end
 
+# populate osc variable with the list of SPi fx names
+define :init_osc_fx do
+  fx_str = fx_names.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
+  osc_ctrl "/fx_names", "{#{fx_str}}"
+end
+
 define :init_osc_synths_fav do |cfg|
   sn = cfg['fav']
   sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
@@ -162,11 +168,29 @@ define :update_scale_match do |cfg|
   init_osc_keyboard(cfg['chord']['tonics'][0], cfg['scale'])
 end
 
+# set the fx values for the specified prefix, e.g. solo_fx, bass_fx, chord_fx
+define :set_fx do |prefix, cfg|
+  fx_max = 2
+
+  for i in 0..fx_max
+    if cfg[prefix] && cfg[prefix][i]
+      osc_ctrl "/#{prefix}#{i+1}", cfg[prefix][i][0] if cfg[prefix][i][0]
+      osc_ctrl "/#{prefix}#{i+1}_1", cfg[prefix][i][1] if cfg[prefix][i][1]
+      osc_ctrl "/#{prefix}#{i+1}_2", cfg[prefix][i][2] if cfg[prefix][i][2]
+    else
+      osc_ctrl "/#{prefix}#{i+1}", ""
+      osc_ctrl "/#{prefix}#{i+1}_1", 0.0
+      osc_ctrl "/#{prefix}#{i+1}_2", 0.0
+    end
+  end
+end
+
 define :init_osc_controls do |cfg, init_presets=false|
   if init_presets
     init_osc_updates
     init_osc_synths
     init_osc_sample_groups
+    init_osc_fx
   end
 
   osc_ctrl "/tempo", cfg['tempo']
@@ -179,6 +203,8 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/solo_fav_all", cfg['solo_fav_all'] ? 1 : 0
   osc_ctrl "/solo_inst", cfg['solo_inst']
   osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo_inst']) ? 1 : 0
+  
+  set_fx("solo_fx", cfg)
 
   osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
