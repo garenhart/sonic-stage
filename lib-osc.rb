@@ -175,12 +175,22 @@ define :set_fx do |prefix, cfg|
   for i in 0..fx_max
     if cfg[prefix] && cfg[prefix][i]
       osc_ctrl "/#{prefix}#{i+1}", cfg[prefix][i][0] if cfg[prefix][i][0]
-      osc_ctrl "/#{prefix}#{i+1}_1", cfg[prefix][i][1] if cfg[prefix][i][1]
-      osc_ctrl "/#{prefix}#{i+1}_2", cfg[prefix][i][2] if cfg[prefix][i][2]
+
+      if cfg[prefix][i][1].is_a? Array
+        osc_ctrl "/#{prefix}#{i+1}_1", *cfg[prefix][i][1]
+      else
+        osc_ctrl "/#{prefix}#{i+1}_1", *[cfg[prefix][i][1], cfg[prefix][i][1]]
+      end
+
+      if cfg[prefix][i][2].is_a? Array
+        osc_ctrl "/#{prefix}#{i+1}_2", *cfg[prefix][i][2]
+      else
+        osc_ctrl "/#{prefix}#{i+1}_2", *[cfg[prefix][i][2], cfg[prefix][i][2]]  
+      end
     else
       osc_ctrl "/#{prefix}#{i+1}", ""
-      osc_ctrl "/#{prefix}#{i+1}_1", 0.0
-      osc_ctrl "/#{prefix}#{i+1}_2", 0.0
+      osc_ctrl "/#{prefix}#{i+1}_1", *[0.0, 0.0]
+      osc_ctrl "/#{prefix}#{i+1}_2", *[0.0, 0.0]
     end
   end
 end
