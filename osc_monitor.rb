@@ -187,6 +187,24 @@ live_loop :osc_monitor do
   when "solo_fav_all"
     cfg['solo_fav_all'] = n[0] == 1.0
 
+  when "solo_fx1"
+    init_fx_component cfg, "solo", 0, 0, n[0].to_sym
+
+  when "solo_fx1_1"
+    init_fx_component cfg, "solo", 0, 1, n
+
+  when "solo_fx1_2"
+    init_fx_component cfg, "solo", 0, 2, n
+
+  when "solo_fx2"
+    init_fx_component cfg, "solo", 1, 0, n[0].to_sym
+
+  when "solo_fx2_1"
+    init_fx_component cfg, "solo", 1, 1, n
+
+  when "solo_fx2_2"
+    init_fx_component cfg, "solo", 1, 2, n
+
 # chord section ==================================    
   when "chord_pt_count"
     update_chord_count cfg, n[0].to_i
