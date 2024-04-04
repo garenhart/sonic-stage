@@ -9,6 +9,7 @@
   "fav": [    "beep"  ],
   "solo_on": true,
   "solo_fav_all": true,
+  "solo_fx": [["reverb", 0.6, 0.8]],
   "bass": {
     "count": 16,
     "tempo_factor": 1,
