@@ -268,3 +268,14 @@ define :shift_pattern do |p, n|
   # and return the shifted pattern
   p.map {|x| x + n}
 end
+
+define :init_fx_component do |cfg, inst, n, nn, v|
+  puts "init_fx_component: #{inst} #{n} #{nn} #{v}"
+  if cfg["#{inst}_fx"]
+    cfg["#{inst}_fx"][n] ||= ["", 0, 0]
+    cfg["#{inst}_fx"][n][nn] = v
+  else
+    cfg["#{inst}_fx"] = [["", 0, 0]]
+    cfg["#{inst}_fx"][n][nn] = v
+  end  
+end
