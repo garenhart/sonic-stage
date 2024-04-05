@@ -269,9 +269,8 @@ def fx_chain(cfg_fx)
     chain = lambda do
       cfg_fx.map do |fx|
         options = { with_fx: fx[0].to_sym }
-        options[:mix] = fx[1].is_a?(Array) ? rrand(fx[1][0], fx[1][1]) : fx[1]
-        options[:room] = fx[2].is_a?(Array) ? rrand(fx[2][0], fx[2][1]) : fx[2] if fx[0].to_sym == :reverb
-        options[:phase] = fx[2].is_a?(Array) ? rrand(fx[2][0], fx[2][1]) : fx[2] if fx[0].to_sym == :echo
+        options[fx_option_name(fx[0], 1).to_sym] = fx[1].is_a?(Array) ? rrand(fx[1][0], fx[1][1]) : fx[1]
+        options[fx_option_name(fx[0], 2).to_sym] = fx[2].is_a?(Array) ? rrand(fx[2][0], fx[2][1]) : fx[2]
         options
       end
     end
