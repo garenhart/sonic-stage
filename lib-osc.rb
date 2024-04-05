@@ -171,11 +171,12 @@ end
 
 # set the fx values for the specified prefix, e.g. solo_fx, bass_fx, chord_fx
 define :set_fx do |prefix, cfg|
-  fx_max = 2
+  fx_max = 1
 
   for i in 0..fx_max
     if cfg[prefix] && cfg[prefix][i]
       osc_ctrl "/#{prefix}#{i+1}", cfg[prefix][i][0] if cfg[prefix][i][0]
+      update_osc_fx_option_names prefix, cfg[prefix][i][0], i+1
 
       if cfg[prefix][i][1].is_a? Array
         osc_ctrl "/#{prefix}#{i+1}_1", *cfg[prefix][i][1]
@@ -192,8 +193,19 @@ define :set_fx do |prefix, cfg|
       osc_ctrl "/#{prefix}#{i+1}", ""
       osc_ctrl "/#{prefix}#{i+1}_1", *[0.0, 0.0]
       osc_ctrl "/#{prefix}#{i+1}_2", *[0.0, 0.0]
+      update_osc_fx_option_names prefix, "none", i+1
     end
   end
+end
+
+define :update_osc_fx_option_names do |prefix, fx, fx_num|
+  puts "update_osc_fx_option_names", prefix, fx, fx_num
+
+  # strip the _fx suffix from the prefix if present 
+  # to ensure prefixes solo_fx, bass_fx, chord_fx are accepted as well as solo, bass, chord
+  prefix = prefix[0..-4] if prefix.end_with? "_fx"  
+  osc_ctrl "/name_#{prefix}_fx#{fx_num}_1", fx_option_name(fx, 1)
+  osc_ctrl "/name_#{prefix}_fx#{fx_num}_2", fx_option_name(fx, 2)
 end
 
 define :init_osc_controls do |cfg, init_presets=false|
