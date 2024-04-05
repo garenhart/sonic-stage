@@ -22,6 +22,7 @@ sp_lib_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/'
 eval_file sp_lib_path + 'lib-util.rb'
 eval_file sp_lib_path + 'lib-io.rb'
 eval_file sp_lib_path + 'lib-fav.rb'
+eval_file sp_lib_path + 'lib-fx.rb'
 eval_file sp_lib_path + 'lib-init.rb'
 eval_file sp_lib_path + 'lib-osc-animation.rb'
 eval_file sp_lib_path + 'lib-play.rb'
@@ -189,6 +190,7 @@ live_loop :osc_monitor do
 
   when "solo_fx1"
     init_fx_component cfg, "solo", 0, 0, n[0].to_sym
+    update_osc_fx_option_names "solo", n[0], 1
 
   when "solo_fx1_1"
     init_fx_component cfg, "solo", 0, 1, n
@@ -198,6 +200,7 @@ live_loop :osc_monitor do
 
   when "solo_fx2"
     init_fx_component cfg, "solo", 1, 0, n[0].to_sym
+    update_osc_fx_option_names "solo", n[0], 2
 
   when "solo_fx2_1"
     init_fx_component cfg, "solo", 1, 1, n
