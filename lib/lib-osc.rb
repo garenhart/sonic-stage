@@ -204,8 +204,8 @@ define :update_osc_fx_option_names do |prefix, fx, fx_num|
   # strip the _fx suffix from the prefix if present 
   # to ensure prefixes solo_fx, bass_fx, chord_fx are accepted as well as solo, bass, chord
   prefix = prefix[0..-4] if prefix.end_with? "_fx"  
-  osc_ctrl "/name_#{prefix}_fx#{fx_num}_1", fx_option_name(fx, 1)
-  osc_ctrl "/name_#{prefix}_fx#{fx_num}_2", fx_option_name(fx, 2)
+  osc_ctrl "/name_#{prefix}_fx#{fx_num}_1/label", fx_option_name(fx, 1)
+  osc_ctrl "/name_#{prefix}_fx#{fx_num}_2/label", fx_option_name(fx, 2)
 end
 
 define :init_osc_controls do |cfg, init_presets=false|
