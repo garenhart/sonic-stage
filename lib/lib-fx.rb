@@ -36,7 +36,7 @@ define :init_fx_component do |cfg, inst, n, nn, v|
   end  
 end
 
-def fx_chain_rand(cfg_fx)
+define :fx_chain_rand do |cfg_fx|
   if cfg_fx && cfg_fx.length > 0
     chain = lambda do
       [
@@ -55,7 +55,7 @@ def fx_chain_rand(cfg_fx)
   chain.call
 end
 
-def fx_chain(cfg_fx)
+define :fx_chain do |cfg_fx|
   if cfg_fx && cfg_fx.length > 0
     chain = lambda do
       cfg_fx.map do |fx|
@@ -77,7 +77,8 @@ end
 
 # This method and the idea of using it is borrowed from 
 # @amiika here: https://in-thread.sonic-pi.net/t/snake-jazz-also-is-there-an-fx-stack/5932/3
-def with_effects(x, &block)
+# gh: only works with def, not define
+def with_effects (x, &block)
   x = x.dup
   if x.length>0 then
     n = x.shift
