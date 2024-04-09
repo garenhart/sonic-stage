@@ -39,13 +39,13 @@ define :add_fav do |cfg|
     cfg['fav'] = [] unless cfg['fav']
 
     # add current selection to the favorites list
-    cfg['fav'] << cfg['solo_inst'].to_s unless solo_fav? cfg, cfg['solo_inst']
+    cfg['fav'] << cfg['solo']['inst'].to_s unless solo_fav? cfg, cfg['solo']['inst']
     cfg['fav'].uniq!
 end
 
 define :remove_fav do |cfg|
     # remove current selection from the favorites list if it exists
-    cfg['fav'].delete(cfg['solo_inst'].to_s)
+    cfg['fav'].delete(cfg['solo']['inst'].to_s)
 end
 
 define :update_fav do |cfg, add|

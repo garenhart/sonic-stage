@@ -222,10 +222,10 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/mode", cfg['mode']
   osc_ctrl "/scale", cfg['scale']
   osc_ctrl "/switch_loop", cfg['loop_mode']
-  osc_ctrl "/solo_on", cfg['solo_on'] ? 1 : 0
+  osc_ctrl "/solo_on", cfg['solo']['on'] ? 1 : 0
   osc_ctrl "/solo_fav_all", cfg['solo_fav_all'] ? 1 : 0
-  osc_ctrl "/solo_inst", cfg['solo_inst']
-  osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo_inst']) ? 1 : 0
+  osc_ctrl "/solo_inst", cfg['solo']['inst']
+  osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo']['inst']) ? 1 : 0
   
   set_fx("solo_fx", cfg)
 
