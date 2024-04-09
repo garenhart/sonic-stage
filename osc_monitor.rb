@@ -186,7 +186,7 @@ live_loop :osc_monitor do
     update_fav cfg, n[0]
 
   when "solo_fav_all"
-    cfg['solo_fav_all'] = n[0] == 1.0
+    cfg['solo']['fav_all'] = n[0] == 1.0
 
   when "solo_fx1_fx"
     init_fx_component cfg, "solo", 0, 0, n[0].to_sym
