@@ -7234,7 +7234,7 @@
                                         "gradient": [],
                                         "snap": false,
                                         "spring": false,
-                                        "doubleTap": false,
+                                        "doubleTap": true,
                                         "range": "VAR{r}",
                                         "logScale": false,
                                         "sensitivity": 1,
