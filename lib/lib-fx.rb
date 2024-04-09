@@ -6,6 +6,7 @@
 
 # returns the name of the fx option based on the fx and option number
 define :fx_option_name do |fx, option|
+  puts "fx_option_name: #{fx} #{option}"
     option_name = ""
     case option
     when 1
@@ -24,4 +25,13 @@ define :fx_option_name do |fx, option|
     return option_name
 end
   
-  
+define :init_fx_component do |cfg, inst, n, nn, v|
+  puts "init_fx_component: #{inst} #{n} #{nn} #{v}"
+  if cfg[inst]['fx']
+    cfg[inst]['fx'][n] ||= ["", 0, 0]
+    cfg[inst]['fx'][n][nn] = v
+  else
+    cfg[inst]['fx'] = [["", 0, 0]]
+    cfg[inst]['fx'][n][nn] = v
+  end  
+end  
