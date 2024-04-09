@@ -236,7 +236,7 @@ define :play_midi do |cfg, addr_data, note, vel|
         play note, amp: vel/127.0, release: 1
       end
     else # not recording
-      with_effects fx_chain(cfg['solo_fx']) do
+      with_effects fx_chain(cfg['solo']['fx']) do
         use_synth cfg['solo']['inst'].to_sym
         play note, amp: vel/127.0, release: 1
       end
@@ -266,8 +266,10 @@ end
 
 def fx_chain(cfg_fx)
   if cfg_fx && cfg_fx.length > 0
+    puts "FX =============================", cfg_fx
     chain = lambda do
       cfg_fx.map do |fx|
+        puts "FX", fx
         options = { with_fx: fx[0].to_sym }
         options[fx_option_name(fx[0], 1).to_sym] = fx[1].is_a?(Array) ? rrand(fx[1][0], fx[1][1]) : fx[1]
         options[fx_option_name(fx[0], 2).to_sym] = fx[2].is_a?(Array) ? rrand(fx[2][0], fx[2][1]) : fx[2]
