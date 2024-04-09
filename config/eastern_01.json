@@ -5,11 +5,13 @@
   "mode": 0,
   "scale": "ionian",
   "loop_mode": 0,
-  "solo_inst": "pluck",
-  "fav": [  ],
-  "solo_on": true,
-  "solo_fav_all": false,
-  "solo_fx": [["reverb", 0.6, 0.8], ["echo", 0.4, [0.5, 0.8]]],
+  "solo": {
+    "on": true,
+    "inst": "pluck",
+    "fav": [],
+    "fav_all": false,
+    "fx": [["reverb", 0.6, 0.8], ["echo", 0.4, [0.5, 0.8]]]
+  },
   "bass": {
     "count": 32,
     "tempo_factor": 1,

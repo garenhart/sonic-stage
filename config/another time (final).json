@@ -5,10 +5,13 @@
   "mode": 0,
   "scale": "ionian",
   "loop_mode": 0,
-  "solo_inst": "beep",
-  "fav": [  ],
-  "solo_on": true,
-  "solo_fav_all": false,
+  "solo": {
+    "on": true,
+    "inst": "beep",
+    "fav": [],
+    "fav_all": false,
+    "fx": [["reverb", 0.6, 0.9], ["none", 0.5, 0.9]]
+  },
   "bass": {
     "count": 16,
     "tempo_factor": 1,

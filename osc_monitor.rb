@@ -189,7 +189,7 @@ live_loop :osc_monitor do
     cfg['solo']['fav_all'] = n[0] == 1.0
 
   when "solo_fx1_fx"
-    init_fx_component cfg, "solo", 0, 0, n[0].to_sym
+    init_fx_component cfg, "solo", 0, 0, n[0]
     update_osc_fx_option_names "solo", n[0], 1
 
   when "solo_fx1_opt1_value"
@@ -199,7 +199,7 @@ live_loop :osc_monitor do
     init_fx_component cfg, "solo", 0, 2, n
 
   when "solo_fx2_fx"
-    init_fx_component cfg, "solo", 1, 0, n[0].to_sym
+    init_fx_component cfg, "solo", 1, 0, n[0]
     update_osc_fx_option_names "solo", n[0], 2
 
   when "solo_fx2_opt1_value"
