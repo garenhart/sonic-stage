@@ -176,11 +176,11 @@ live_loop :osc_monitor do
     cfg['pattern_mode'] = 0 if n[0].to_i > 0
 
   when "solo_inst"
-    cfg['solo_inst'] = n[0].to_sym
-    osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo_inst']) ? 1 : 0
+    cfg['solo']['inst'] = n[0].to_sym
+    osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo']['inst']) ? 1 : 0
 
   when "solo_on"
-    cfg['solo_on'] = n[0] == 1.0
+    cfg['solo']['on'] = n[0] == 1.0
 
   when "solo_fav"
     update_fav cfg, n[0]

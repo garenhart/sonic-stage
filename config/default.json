@@ -5,9 +5,11 @@
   "mode": 0,
   "scale": "ionian",
   "loop_mode": 0,
-  "solo_inst": "piano",
+  "solo": {
+    "on": true,
+    "inst": "piano"
+  },
   "fav": [],
-  "solo_on": true,
   "solo_fav_all": false,
   "solo_fx": [["none", 0.5, 0.9], ["none", 0.5, 0.9]],
   "bass": {
