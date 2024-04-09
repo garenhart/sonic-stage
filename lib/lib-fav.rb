@@ -31,21 +31,21 @@ define :update_fav_drums do |cfg, d, add|
 end
 
 define :solo_fav? do |cfg, v|
-    cfg['fav'].include?(v.to_s) if cfg['fav']
+    cfg['solo']['fav'].include?(v.to_s) if cfg['solo']['fav']
 end
 
 define :add_fav do |cfg|
     # add 'fav' key to the samples hash if it doesn't exist
-    cfg['fav'] = [] unless cfg['fav']
+    cfg['solo']['fav'] = [] unless cfg['solo']['fav']
 
     # add current selection to the favorites list
-    cfg['fav'] << cfg['solo']['inst'].to_s unless solo_fav? cfg, cfg['solo']['inst']
-    cfg['fav'].uniq!
+    cfg['solo']['fav'] << cfg['solo']['inst'].to_s unless solo_fav? cfg, cfg['solo']['inst']
+    cfg['solo']['fav'].uniq!
 end
 
 define :remove_fav do |cfg|
     # remove current selection from the favorites list if it exists
-    cfg['fav'].delete(cfg['solo']['inst'].to_s)
+    cfg['solo']['fav'].delete(cfg['solo']['inst'].to_s)
 end
 
 define :update_fav do |cfg, add|

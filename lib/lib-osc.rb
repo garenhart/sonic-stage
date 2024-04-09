@@ -17,7 +17,7 @@ define :init_osc_fx do
 end
 
 define :init_osc_synths_fav do |cfg|
-  sn = cfg['fav']
+  sn = cfg['solo']['fav']
   sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
   osc_ctrl "/synths_fav_solo", "{#{sn_str}}"
 end
@@ -223,7 +223,7 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/scale", cfg['scale']
   osc_ctrl "/switch_loop", cfg['loop_mode']
   osc_ctrl "/solo_on", cfg['solo']['on'] ? 1 : 0
-  osc_ctrl "/solo_fav_all", cfg['solo_fav_all'] ? 1 : 0
+  osc_ctrl "/solo_fav_all", cfg['solo']['fav_all'] ? 1 : 0
   osc_ctrl "/solo_inst", cfg['solo']['inst']
   osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo']['inst']) ? 1 : 0
   
