@@ -192,7 +192,7 @@ define :set_fx do |prefix, cfg|
     else
       osc_ctrl "/#{prefix}_fx#{i+1}_fx", "none"
       osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *[0.0, 0.0]
-      osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *[0.0, 0.0]
+      osc_ctrl "/#{prefix}_fx#{i+1}_opt2_value", *[0.0, 0.0]
       update_osc_fx_option_names prefix, "none", i+1
     end
   end
