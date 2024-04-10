@@ -82,7 +82,7 @@ define :play_bass do |cfg|
     use_synth cfg_bass['synth'].to_sym
     puts "INST", cfg_bass['synth']
 
-    with_fx :reverb, room: 0.9, mix: 0.5 do
+    with_effects fx_chain(cfg['bass']['fx']) do
       density tempo_factor do
         cfg_bass['count'].times do |i|
           pos = cfg_bass['pattern'].index(i+1)
@@ -113,8 +113,8 @@ define :play_chords do |cfg|
   if (cfg_chord['pattern'].size > 0) && (cfg_chord['pattern'].size == cfg_chord['tonics'].size)
     use_synth cfg_chord['synth'].to_sym
  
-    with_fx :reverb, room: 0.9, mix: 0.5 do
-        density tempo_factor do
+    with_effects fx_chain(cfg['chord']['fx']) do
+      density tempo_factor do
         cfg_chord['count'].times do |pos|
           i = cfg_chord['pattern'].index(pos+1)
           if (cfg_chord['on'] && i)
@@ -175,7 +175,7 @@ define :play_chords_complex do |cfg|
 
     cs = []
     last_pos = 0
-    with_fx :reverb, room: 0.9, mix: 0.5 do
+    with_effects fx_chain(cfg['chord']['fx']) do
       density tempo_factor do
         cfg_chord['count'].times do |pos|
           i = cfg_chord['pattern'].index(pos+1)
@@ -225,15 +225,18 @@ define :play_midi do |cfg, addr_data, note, vel|
       if (bass_rec)
           use_synth cfg['bass']['synth'].to_sym
           add_tonic_bass cfg, note, next_beat > cfg['bass']['count'] ? 1 : next_beat
+          with_effects fx_chain(cfg['bass']['fx']) do
+            play note, amp: vel/127.0, release: 1
+          end
           animate_keyboard "bass", note, vel/127.0
       end
       if (chord_rec)
           use_synth cfg['chord']['synth'].to_sym
           add_tonic_chord cfg, note, next_beat > get(:chord_state)['count'] ? 1 : next_beat
+          with_effects fx_chain(cfg['chord']['fx']) do
+            play note, amp: vel/127.0, release: 1
+          end
           animate_keyboard "chord", note, vel/127.0
-      end
-      with_fx :reverb, room: 0.9, mix: 0.5 do
-        play note, amp: vel/127.0, release: 1
       end
     else # not recording
       with_effects fx_chain(cfg['solo']['fx']) do
