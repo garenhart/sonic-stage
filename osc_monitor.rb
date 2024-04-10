@@ -268,8 +268,6 @@ live_loop :osc_monitor do
     init_fx_component cfg, "chord", 1, 2, n
 
 
-
-
   when "chord_amp"
     init_chord_component(cfg, "amp", n[0])
   
@@ -330,7 +328,7 @@ live_loop :osc_monitor do
     init_fx_component cfg, "bass", 1, 1, n
 
   when "bass_fx2_opt2_value"
-    init_fx_component cfg, "solo", 1, 2, n
+    init_fx_component cfg, "bass", 1, 2, n
 
 
   when "bass_amp"
