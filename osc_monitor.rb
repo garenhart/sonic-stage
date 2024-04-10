@@ -244,7 +244,32 @@ live_loop :osc_monitor do
 
   when "chord_fav_all"
     cfg['chord']['fav_all'] = n[0] == 1.0
-  
+
+    
+
+  when "chord_fx1_fx"
+    init_fx_component cfg, "chord", 0, 0, n[0]
+    update_osc_fx_option_names "chord", n[0], 1
+
+  when "chord_fx1_opt1_value"
+    init_fx_component cfg, "chord", 0, 1, n
+
+  when "chord_fx1_opt2_value"
+    init_fx_component cfg, "chord", 0, 2, n
+
+  when "chord_fx2_fx"
+    init_fx_component cfg, "chord", 1, 0, n[0]
+    update_osc_fx_option_names "chord", n[0], 2
+
+  when "chord_fx2_opt1_value"
+    init_fx_component cfg, "chord", 1, 1, n
+
+  when "chord_fx2_opt2_value"
+    init_fx_component cfg, "chord", 1, 2, n
+
+
+
+
   when "chord_amp"
     init_chord_component(cfg, "amp", n[0])
   
@@ -286,6 +311,27 @@ live_loop :osc_monitor do
 
   when "bass_fav_all"
     cfg['bass']['fav_all'] = n[0] == 1.0
+
+  when "bass_fx1_fx"
+    init_fx_component cfg, "bass", 0, 0, n[0]
+    update_osc_fx_option_names "bass", n[0], 1
+
+  when "bass_fx1_opt1_value"
+    init_fx_component cfg, "bass", 0, 1, n
+
+  when "bass_fx1_opt2_value"
+    init_fx_component cfg, "bass", 0, 2, n
+
+  when "bass_fx2_fx"
+    init_fx_component cfg, "bass", 1, 0, n[0]
+    update_osc_fx_option_names "bass", n[0], 2
+
+  when "bass_fx2_opt1_value"
+    init_fx_component cfg, "bass", 1, 1, n
+
+  when "bass_fx2_opt2_value"
+    init_fx_component cfg, "solo", 1, 2, n
+
 
   when "bass_amp"
     init_bass_component(cfg, 'amp', n[0])
