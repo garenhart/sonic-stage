@@ -190,7 +190,7 @@ define :set_fx do |prefix, cfg|
         osc_ctrl "/#{prefix}_fx#{i+1}_opt2_value", *[cfg[prefix]['fx'][i][2], cfg[prefix]['fx'][i][2]]  
       end
     else
-      osc_ctrl "/#{prefix}_fx#{i+1}_fx", ""
+      osc_ctrl "/#{prefix}_fx#{i+1}_fx", "none"
       osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *[0.0, 0.0]
       osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *[0.0, 0.0]
       update_osc_fx_option_names prefix, "none", i+1
@@ -224,8 +224,6 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/solo_inst", cfg['solo']['inst']
   osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo']['inst']) ? 1 : 0
   
-  set_fx('solo', cfg)
-
   osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
   osc_ctrl "/bass_fav", bass_fav?(cfg, cfg['bass']['synth']) ? 1 : 0
@@ -238,6 +236,10 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/chord_fav", chord_fav?(cfg, cfg['chord']['synth']) ? 1 : 0  
   osc_ctrl "/chord_fav_all", cfg['chord']['fav_all'] ? 1 : 0
   osc_ctrl "/chord_inst", cfg['chord']['synth']
+
+  set_fx('solo', cfg)
+  set_fx('bass', cfg)
+  set_fx('chord', cfg)
 
   init_osc_drums cfg
   update_osc_bass_points cfg
