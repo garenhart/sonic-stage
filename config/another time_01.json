@@ -10,15 +10,16 @@
     "inst": "beep",
     "fav": ["beep"],
     "fav_all": true,
-    "fx": [["reverb", 0.6, 0.8]]
+    "fx": [["reverb", 0.5, 0.8], ["none", 0.5, 0.9]]
   },
   "bass": {
     "count": 16,
     "tempo_factor": 1,
     "on": true,
-    "amp": 0.5,
+    "amp": 0.8,
     "synth": "fm",
     "fav": [    ],
+    "fx": [["reverb", 0.5, 0.9], ["none", 0.5, 0.9]],
     "tonics": [    ],
     "pattern": [    ]
   },
@@ -30,6 +31,7 @@
     "type": 1,
     "synth": "piano",
     "fav": [    ],
+    "fx": [["reverb", 0.5, 0.9], ["none", 0.5, 0.9]],
     "tonics": [    ],
     "pattern": [    ]
   },
