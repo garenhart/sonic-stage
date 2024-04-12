@@ -4,25 +4,42 @@
 # author: Garen H.
 #######################
 
-# returns the name of the fx option based on the fx and option number
-define :fx_option_name do |fx, option|
-  puts "fx_option_name: #{fx} #{option}"
-    option_name = ""
-    case option
-    when 1
-      option_name = "mix"
-    when 2
-      option_name = "room"
-    end
-  
-    case fx
-    when "echo"
-      case option
-      when 2
-        option_name = "phase"
-      end
-    end
-    return option_name
+# returns the name of the most essential fx option based on the fx and option priority (1 or 2)
+# e.g. fx_option_name("echo", 1) => "phase"
+define :fx_option_name do |fx, n|
+  case fx
+  when "echo"
+    n == 1 ? "phase" : "decay"
+  when "whammy"
+    n == 1 ? "grainsize" : "smooth"
+  when "flanger"
+    n == 1 ? "feedback" : "depth"
+  when "tremolo"
+    n == 1 ? "phase" : "depth"
+  when "bitcrusher"
+    n == 1 ? "bits" : "mix"
+  when "reverb", "gverb"
+    n == 1 ? "room" : "mix"
+  when "distortion"
+    n == 1 ? "distort" : "mix"
+  when "wooble", "ixi_techno"
+    n == 1 ? "phase" : "cutoff"
+  when "slicer"                        
+    n == 1 ? "phase" : "wave"
+  when "rhpf", "rhpf", "rlpf", "hpf", "lpf"
+    n == 1 ? "cutoff" : "res"
+  when "compressor"
+    n == 1 ? "amp" : "mix"
+  when "pan"
+    n == 1 ? "pan" : "amp"
+  when "ring_mod"
+    n == 1 ? "freq" : "amp"
+  when "vowel"
+    n == 1 ? "voice" : "mix"
+  else
+    # the most common options
+    n == 1 ? "phase" : "decay"
+  end
 end
   
 define :init_fx_component do |cfg, inst, n, nn, v|
