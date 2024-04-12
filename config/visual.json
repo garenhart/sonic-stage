@@ -5,10 +5,13 @@
   "mode": 0,
   "scale": "ionian",
   "loop_mode": 0,
-  "solo_inst": "piano",
-  "fav": [],
-  "solo_on": true,
-  "solo_fav_all": false,
+  "solo": {
+    "on": true,
+    "inst": "piano",
+    "fav": [],
+    "fav_all": false,
+    "fx": [["none", 0.9, 0.5], ["none", 0.9, 0.5]]
+  },
   "bass": {
     "count": 16,
     "tempo_factor": 1,
