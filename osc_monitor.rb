@@ -29,6 +29,7 @@ eval_file sp_lib_path + 'lib-play.rb'
 eval_file sp_lib_path + 'lib-osc.rb'
 eval_file sp_lib_path + 'lib-dyn-live_loop.rb'
 eval_file sp_lib_path + 'lib-chord-gen.rb'
+eval_file sp_lib_path + 'lib-mon.rb'
 
 #require get(:sp_path)+"sonic-stage-lib/modes.rb" # Load extra scales and chord from separate file
 #ModeScales = Modes.scales
@@ -128,7 +129,15 @@ live_loop :osc_monitor do
   addr = "/osc:#{get(:ctrl_ip)}:#{get(:ctrl_port)}/**"
   n = sync addr
   token = parse_addr addr
-  
+ 
+  # if token[1] starts with "solo" or "chord" or "bass" or "kick" or "snare" or "cymbal"
+  # then call inst_mon(token[1], inst, cfg) where inst is the first element of token[1]
+  t = token[1].split("_")[0]
+  if t == "kick"  || t == "snare" || t == "cymbal" #t == "solo" || t == "chord" || t == "bass"
+    puts "TOKEN========", t
+    drum_mon token, t, n, cfg
+  else
+
   case token[1]
   when "open"
     cfgFile = n[0]
@@ -356,79 +365,6 @@ live_loop :osc_monitor do
   when "drums_auto"
     set :drums_auto, n[0].to_i == 1 ? true : false
 
-  # drum instruments
-  when "kick_inst_groups"
-    init_osc_samples "/kick_inst_v", n[0].to_sym, cfg
-  when "kick_inst"
-    init_drum_component cfg, "kick", "sample", n[0].to_sym
-  when "kick_pitch_shift"
-    init_drum_component cfg, "kick", "pitch_shift", n[0].to_i
-  when "kick_fav"
-    update_fav_drums cfg, "kick", n[0]
-
-  when "snare_inst_groups"
-    init_osc_samples "/snare_inst_v", n[0].to_sym, cfg
-  when "snare_inst"
-    init_drum_component cfg, "snare", "sample", n[0].to_sym
-  when "snare_pitch_shift"
-    init_drum_component cfg, "snare", "pitch_shift", n[0].to_i
-  when "snare_fav"
-    update_fav_drums cfg, "snare", n[0]
-
-  when "cymbal_inst_groups"
-    init_osc_samples "/cymbal_inst_v", n[0].to_sym, cfg
-  when "cymbal_inst"
-    init_drum_component cfg, "cymbal", "sample", n[0].to_sym
-  when "cymbal_pitch_shift"
-    init_drum_component cfg, "cymbal", "pitch_shift", n[0].to_i
-  when "cymbal_fav"
-    update_fav_drums cfg, "cymbal", n[0]
-
-  when "cymbal_range"
-    init_drum_component cfg, "cymbal", "range", n
-  when "cymbal_random"
-    init_drum_component cfg, "cymbal", "random", n[0]==1.0
-  when "cymbal_reverse"
-    init_drum_component cfg, "cymbal", "reverse", n[0]==1.0
-
-  when "snare_range"
-    init_drum_component cfg, "snare", "range", n
-  when "snare_random"
-    init_drum_component cfg, "snare", "random", n[0]==1.0
-  when "snare_reverse"
-    init_drum_component cfg, "snare", "reverse", n[0]==1.0
-
-  when "kick_range"
-    init_drum_component cfg, "kick", "range", n
-  when "kick_random"
-    init_drum_component cfg, "kick", "random", n[0]==1.0
-  when "kick_reverse"
-    init_drum_component cfg, "kick", "reverse", n[0]==1.0
-
-  when "cymbal_on"
-    init_drum_component cfg, "cymbal", "on", n[0]==1.0
-  when "snare_on"
-    init_drum_component cfg, "snare", "on", n[0]==1.0
-  when "kick_on"
-    init_drum_component cfg, "kick", "on", n[0]==1.0
-
-  # drum amps
-  when "cymbal_amp"
-    init_drum_component cfg, "cymbal", "amp", n[0]
-  when "snare_amp"
-    init_drum_component cfg, "snare", "amp", n[0]
-  when "kick_amp"
-    init_drum_component cfg, "kick", "amp", n[0]
-   
-  # drum beats
-  when "kick_beats"
-    init_drum_beat cfg, "kick", token[2].to_i, n[0].to_i.to_s
-  when "snare_beats"
-    init_drum_beat cfg, "snare", token[2].to_i, n[0].to_i.to_s
-  when "cymbal_beats"
-    init_drum_beat cfg, "cymbal", token[2].to_i, n[0].to_i.to_s
-# end drum section ==================================
-
  # save mode and scale
   when "mode"
     cfg['mode'] = n[0].to_i
@@ -444,5 +380,6 @@ live_loop :osc_monitor do
   when "chord_rec"
     set :chord_rec, n[0].to_i == 1 ? true : false    
   end
+end
 end
 # END OSC MESSAGE MONITORING LOOP
