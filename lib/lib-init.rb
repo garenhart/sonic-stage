@@ -268,3 +268,7 @@ define :shift_pattern do |p, n|
   # and return the shifted pattern
   p.map {|x| x + n}
 end
+
+define :cfg_inst_root do |cfg, inst|
+  return (inst == 'kick' || inst == 'snare' || inst == 'cymbal') ? cfg['drums'][inst] : cfg[inst]
+end

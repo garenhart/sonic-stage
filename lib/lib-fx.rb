@@ -44,12 +44,15 @@ end
   
 define :init_fx_component do |cfg, inst, n, nn, v|
   puts "init_fx_component: #{inst} #{n} #{nn} #{v}"
-  if cfg[inst]['fx']
-    cfg[inst]['fx'][n] ||= ["none", 0, 0]
-    cfg[inst]['fx'][n][nn] = v
+
+  inst_root = cfg_inst_root cfg, inst
+  
+  if inst_root['fx']
+    inst_root['fx'][n] ||= ["none", 0, 0]
+    inst_root['fx'][n][nn] = v
   else
-    cfg[inst]['fx'] = [["none", 0, 0], ["none", 0, 0]]
-    cfg[inst]['fx'][n][nn] = v
+    inst_root['fx'] = [["none", 0, 0], ["none", 0, 0]]
+    inst_root['fx'][n][nn] = v
   end  
 end
 
