@@ -10,7 +10,7 @@
     "inst": "piano",
     "fav": [],
     "fav_all": false,
-    "fx": [["none", 0.9, 0.5], ["none", 0.9, 0.5]]
+    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]]
   },
   "bass": {
     "count": 16,
@@ -20,6 +20,7 @@
     "synth": "fm",
     "fav": [],
     "fav_all": false,
+    "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
     "tonics": [    ],
     "pattern": [    ]
   },
@@ -32,6 +33,7 @@
     "synth": "piano",
     "fav": [],
     "fav_all": false,
+    "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
     "tonics": [    ],
     "pattern": [    ]
   },
@@ -43,6 +45,7 @@
       "amp": 0.5,
       "sample": "drum_cymbal_closed",
       "fav": [],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
@@ -54,6 +57,7 @@
       "amp": 0.5,
       "sample": "drum_snare_soft",
       "fav": [],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
@@ -65,6 +69,7 @@
       "amp": 0.5,
       "sample": "bd_tek",
       "fav": [],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
