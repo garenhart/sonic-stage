@@ -35,7 +35,8 @@ define :play_drum do |drum, cfg|
   beats = drums[drum]['beats']
   count = drums['count']
 
-  with_fx :reverb, room: 0.9, mix: 0.5 do
+#  with_fx :reverb, room: 0.9, mix: 0.5 do
+  with_effects fx_chain(drums[drum]['fx']) do
     density tempo_factor do
       count.times do |i|
         rt_drums = get(:drums) # drum data from Time State for params that we want to change in real time
