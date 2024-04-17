@@ -10,7 +10,7 @@
     "inst": "beep",
     "fav": [],
     "fav_all": false,
-    "fx": [["reverb", 0.6, 0.9], ["none", 0.9, 0.5]]
+    "fx": [["reverb", 0.4, 0.5], ["none", 0.9, 0.5]]
   },
   "bass": {
     "count": 16,
