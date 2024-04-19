@@ -185,6 +185,16 @@ live_loop :osc_monitor do
       cfg['solo']['inst'] = n[0].to_sym
       osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo']['inst']) ? 1 : 0
 
+    when "solo_inst_prev"
+      prev_f = prev_fav cfg, "solo"      
+      cfg['solo']['inst'] = prev_f if prev_f
+      osc_ctrl "/solo_inst", cfg['solo']['inst']
+
+    when "solo_inst_next"
+      next_f = next_fav cfg, "solo"
+      cfg['solo']['inst'] = next_f if next_f            
+      osc_ctrl "/solo_inst", cfg['solo']['inst']
+
     when "solo_on"
       cfg['solo']['on'] = n[0] == 1.0
 
@@ -233,7 +243,17 @@ live_loop :osc_monitor do
 
     when "chord_inst"
       init_chord_component(cfg, "synth", n[0].to_sym)
-      
+
+    when "chord_inst_prev"
+      prev_f = prev_fav cfg, 'chord'      
+      init_chord_component(cfg, 'synth', prev_f) if prev_f
+      osc_ctrl "/chord_inst", cfg['chord']['synth']
+
+    when "chord_inst_next"
+      next_f = next_fav cfg, 'chord'
+      init_chord_component(cfg, 'synth', next_f) if next_f
+      osc_ctrl "/chord_inst", cfg['chord']['synth']
+
     when "chord_type"
       init_chord_component(cfg, "type", n[0].to_i)    
 
@@ -301,6 +321,16 @@ live_loop :osc_monitor do
 
     when "bass_inst"
       init_bass_component(cfg, 'synth', n[0].to_sym)
+
+    when "bass_inst_prev"
+      prev_f = prev_fav cfg, 'bass'      
+      init_bass_component(cfg, 'synth', prev_f) if prev_f
+      osc_ctrl "/bass_inst", cfg['bass']['synth']
+
+    when "bass_inst_next"
+      next_f = next_fav cfg, 'bass'
+      init_bass_component(cfg, 'synth', next_f) if next_f
+      osc_ctrl "/bass_inst", cfg['bass']['synth']
       
     when "bass_line_updated"
       # add elements with even indices (0, 2, 4...) of array n to bass pattern
