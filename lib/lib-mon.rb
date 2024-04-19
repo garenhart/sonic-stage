@@ -10,6 +10,14 @@ define :drum_mon do |token, inst, n, cfg|
       init_osc_samples "/#{inst}_inst_v", n[0].to_sym, cfg
     when "#{inst}_inst"
       init_drum_component cfg, inst, "sample", n[0].to_sym
+    when "#{inst}_inst_prev"
+      prev_f = prev_fav cfg, inst
+      init_drum_component cfg, inst, "sample", prev_f if prev_f            
+      osc_ctrl "/#{inst}_inst", (cfg['drums'][inst]['sample'])
+    when "#{inst}_inst_next"
+      next_f = next_fav cfg, inst
+      init_drum_component cfg, inst, "sample", next_f if next_f      
+      osc_ctrl "/#{inst}_inst", (cfg['drums'][inst]['sample'])   
     when "#{inst}_pitch_shift"
       init_drum_component cfg, inst, "pitch_shift", n[0].to_i
     when "#{inst}_fav"

@@ -112,3 +112,30 @@ define :update_fav_bass do |cfg, add|
   init_osc_synths_fav_bass cfg
 end
 
+# returns previous favorite instrument if it exists
+define :prev_fav do |cfg, inst|
+  if (inst == 'kick' || inst == 'snare' || inst == 'cymbal')
+    cfg_root = cfg['drums'][inst]
+    cur_inst = cfg_root['sample']
+  else
+    cfg_root = cfg[inst]
+    cur_inst = (inst == 'solo') ? cfg_root['inst'] : cfg_root['synth']        
+  end
+  if cfg_root['fav']
+    return prev_element(cfg_root['fav'], cur_inst.to_s)
+  end
+end
+
+# returns next favorite instrument if it exists
+define :next_fav do |cfg, inst|
+  if (inst == 'kick' || inst == 'snare' || inst == 'cymbal')
+    cfg_root = cfg['drums'][inst]
+    cur_inst = cfg_root['sample']
+  else
+    cfg_root = cfg[inst]    
+    cur_inst = (inst == 'solo') ? cfg_root['inst'] : cfg_root['synth']        
+  end
+  if cfg_root['fav']
+    return next_element(cfg_root['fav'], cur_inst.to_s)
+  end
+end
