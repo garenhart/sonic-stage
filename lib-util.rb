@@ -29,3 +29,14 @@ end
 define :time_diff_ms do |start, finish|
     (finish - start) * 1000.0
 end
+
+# given a ring and an element, returns the previous element in the ring
+define :prev_element do |r, el|
+    return r[(r.index(el) - 1) % r.length] if r && r.length > 0
+end
+
+# given a ring and an element, returns the next element in the ring
+define :next_element do |r, el|
+    return r[(r.index(el) + 1) % r.length] if r && r.length > 0
+end
+
