@@ -8,7 +8,7 @@
   "solo": {
     "on": true,
     "inst": "beep",
-    "fav": [      "beep"    ],
+    "fav": [      "beep",      "pretty_bell",      "organ_tonewheel"    ],
     "fav_all": false,
     "fx": [      [        "reverb",        0.8,        0.5      ],      [        "none",        0.9,        0.5      ]    ]
   },
