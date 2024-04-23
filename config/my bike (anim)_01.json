@@ -11,7 +11,7 @@
     "fav": [      "beep",      "pretty_bell",      "organ_tonewheel"    ],
     "fav_all": false,
     "fx": [      [        "reverb",        0.8,        0.5      ],      [        "none",        0.9,        0.5      ]    ],
-    "animate": false
+    "animate": true
   },
   "bass": {
     "count": 16,
@@ -50,7 +50,7 @@
       "reverse": false,
       "pitch_shift": 0,
       "beats": "0000000000000000",
-      "animate": false
+      "animate": true
     },
     "snare": {
       "on": true,
@@ -63,7 +63,7 @@
       "reverse": false,
       "pitch_shift": 0,
       "beats": "0000000000000000",
-      "animate": false
+      "animate": true
     },
     "kick": {
       "on": true,
@@ -76,7 +76,7 @@
       "reverse": false,
       "pitch_shift": 0,
       "beats": "0000000000000000",
-      "animate": false
+      "animate": true
     }
   }
 }
