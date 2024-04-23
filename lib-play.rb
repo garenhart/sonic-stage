@@ -56,12 +56,12 @@ define :play_drum do |drum, cfg|
                 sample rt_drums[drum]['sample'], amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
               end
             end  
-            animate_drum drum, amp, 1, 1
+            animate_drum drum, amp, 1, 1 if rt_drums[drum]['animate']
           else
-            animate_drum drum, amp, 0, 1
+            animate_drum drum, amp, 0, 1 if rt_drums[drum]['animate']
           end
         else
-          animate_drum drum, amp, 0, 0   
+          animate_drum drum, amp, 0, 0 if rt_drums[drum]['animate']
         end
         sleep rhythm
       end
@@ -89,7 +89,7 @@ define :play_bass do |cfg|
           pos = cfg_bass['pattern'].index(i+1)
           if (cfg_bass['on'] && pos)
             play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
-            animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp']
+            animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp'] if cfg_bass['animate']
           # else
           #   animate_keyboard "bass", 0, 0.0
           end
@@ -120,7 +120,7 @@ define :play_chords do |cfg|
           i = cfg_chord['pattern'].index(pos+1)
           if (cfg_chord['on'] && i)
             play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
-            animate_keyboard "chord", cfg_chord['tonics'][i], cfg_chord['amp']
+            animate_keyboard "chord", cfg_chord['tonics'][i], cfg_chord['amp'] if cfg_chord['animate']
           # else
           #   animate_keyboard "chord", 0, 0.0    
           end
@@ -229,7 +229,7 @@ define :play_midi do |cfg, addr_data, note, vel|
           with_effects fx_chain(cfg['bass']['fx']) do
             play note, amp: vel/127.0, release: 1
           end
-          animate_keyboard "bass", note, vel/127.0
+          animate_keyboard "bass", note, vel/127.0 if cfg['bass']['animate']
       end
       if (chord_rec)
           use_synth cfg['chord']['synth'].to_sym
@@ -237,14 +237,14 @@ define :play_midi do |cfg, addr_data, note, vel|
           with_effects fx_chain(cfg['chord']['fx']) do
             play note, amp: vel/127.0, release: 1
           end
-          animate_keyboard "chord", note, vel/127.0
+          animate_keyboard "chord", note, vel/127.0 if cfg['chord']['animate']
       end
     else # not recording
       with_effects fx_chain(cfg['solo']['fx']) do
         use_synth cfg['solo']['inst'].to_sym
         play note, amp: vel/127.0, release: 1
       end
-      animate_keyboard "solo", note, vel/127.0
+      animate_keyboard "solo", note, vel/127.0 if cfg['solo']['animate']
      end   
   end  
 end
