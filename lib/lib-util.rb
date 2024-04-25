@@ -30,13 +30,22 @@ define :time_diff_ms do |start, finish|
     (finish - start) * 1000.0
 end
 
-# given a ring and an element, returns the previous element in the ring
-define :prev_element do |r, el|
-    return r[(r.index(el) - 1) % r.length] if r && r.length > 0
+# Returns the next element in the ring after 'element'
+# Returns nil if ring is empty or element is not found
+define :next_element do |ring, element|
+    return nil if ring.empty?
+    index = ring.index(element)
+    return nil if index.nil?
+    next_index = (index + 1) % ring.size
+    return ring[next_index]
 end
 
-# given a ring and an element, returns the next element in the ring
-define :next_element do |r, el|
-    return r[(r.index(el) + 1) % r.length] if r && r.length > 0
+# Returns the previous element in the ring before 'element'
+# Returns nil if ring is empty or element is not found
+define :prev_element do |ring, element|
+    return nil if ring.empty?
+    index = ring.index(element)
+    return nil if index.nil?
+    prev_index = (index - 1) % ring.size
+    return ring[prev_index]
 end
-
