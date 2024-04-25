@@ -40,8 +40,8 @@
     "count": 16,
     "tempo_factor": 1,
     "cymbal": {
-      "on": false,
-      "amp": 0.10000000149011612,
+      "on": true,
+      "amp": 0.8,
       "sample": "drum_cymbal_closed",
       "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
       "fav": [        "elec_ping",        "drum_cymbal_closed"      ],
@@ -53,8 +53,8 @@
       "animate": false
     },
     "snare": {
-      "on": false,
-      "amp": 0.09000000357627869,
+      "on": true,
+      "amp": 0.8,
       "sample": "drum_snare_soft",
       "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
       "fav": [        "ambi_lunar_land",        "elec_plip",        "drum_snare_soft"      ],
@@ -66,8 +66,8 @@
       "animate": false
     },
     "kick": {
-      "on": false,
-      "amp": 0.09000000357627869,
+      "on": true,
+      "amp": 0.8,
       "sample": "bd_tek",
       "fav": [        "bd_sone",        "vinyl_rewind",        "bd_tek"      ],
       "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],

@@ -1,0 +1,79 @@
+{
+  "tempo": 240,
+  "pattern_mode": 0,
+  "pattern": 1,
+  "mode": 0,
+  "scale": "ionian",
+  "loop_mode": 0,
+  "solo": {
+    "on": true,
+    "inst": "piano",
+    "fav": [      "piano"    ],
+    "fav_all": false,
+    "fx": [      [        "reverb",        [          1.7300000190734863,          1.7300000190734863        ],        [          0.6499999761581421,          0.6499999761581421        ]      ],      [        "none",        0.9,        0.5      ]    ]
+  },
+  "bass": {
+    "count": 24,
+    "tempo_factor": 1,
+    "on": false,
+    "amp": 0.5,
+    "synth": "fm",
+    "fav": [    ],
+    "fx": [      [        "reverb",        0.9,        0.5      ],      [        "none",        0.9,        0.5      ]    ],
+    "tonics": [    ],
+    "pattern": [    ]
+  },
+  "chord": {
+    "count": 24,
+    "tempo_factor": 1,
+    "on": false,
+    "amp": 0.36000001430511475,
+    "type": 1,
+    "synth": "piano",
+    "fav": [      "sc808_claves",      "piano"    ],
+    "fx": [      [        "reverb",        [          2.0,          2.0        ],        [          0.7200000286102295,          0.7200000286102295        ]      ],      [        "none",        0.9,        0.5      ]    ],
+    "tonics": [      81,      76,      74,      81,      76,      74,      81,      76,      74,      81,      76,      74    ],
+    "pattern": [      2,      4,      6,      8,      10,      12,      14,      16,      18,      20,      22,      24    ],
+    "fav_all": true
+  },
+  "drums": {
+    "count": 24,
+    "tempo_factor": 1,
+    "cymbal": {
+      "on": true,
+      "amp": 0.5099999904632568,
+      "sample": "bd_boom",
+      "fav": [        "bd_sone",        "bd_boom",        "ambi_glass_hum"      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 3,
+      "beats": "110110110110110110110110"
+    },
+    "snare": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "ambi_piano",
+      "fav": [      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "echo",          0.9,          0.5        ]      ],
+      "range": [        0.0,        1.0      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": -10,
+      "beats": "000000010000000000010000"
+    },
+    "kick": {
+      "on": true,
+      "amp": 0.5,
+      "sample": "ambi_piano",
+      "fav": [      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          [            2.2100000381469727,            2.2100000381469727          ],          0.5        ]      ],
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": -5,
+      "beats": "010000000000010000000000"
+    }
+  }
+}
