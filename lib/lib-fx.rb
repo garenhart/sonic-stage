@@ -14,6 +14,8 @@ define :fx_option_name do |fx, n|
     n == 1 ? "grainsize" : "smooth"
   when "flanger"
     n == 1 ? "feedback" : "depth"
+  when "eq"
+    n == 1 ? "low" : "high"        
   when "tremolo"
     n == 1 ? "phase" : "depth"
   when "bitcrusher"
