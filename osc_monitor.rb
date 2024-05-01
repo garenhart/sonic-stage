@@ -59,7 +59,7 @@ set :chord_rec, false
 puts "CTRL", :ctrl_ip, :ctrl_port
 # configuration folder path
 configPath = get(:sp_path) + "sonic-stage\\config\\" # path for config files
-cfg_def = "default.json"
+cfg_def = "_default.json"
 cfgFile = configPath + cfg_def
 # deserialize JSON file into cfg hash
 cfg = readJSON(cfgFile)
