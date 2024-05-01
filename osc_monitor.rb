@@ -35,7 +35,7 @@ eval_file sp_lib_path + 'lib-mon.rb'
 #ModeScales = Modes.scales
 
 # generic midi definitions
-midi_in = "/midi*/" # This on seems to work for all midi devices
+midi_in = "/midi*/" # This one seems to work for most midi devices
 
 # midi_in = "/midi:nanokey*/" # Korg nanoKey
 # midi_in = "/midi*midi*/" # Komplete Kontrol M32
