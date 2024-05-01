@@ -10,7 +10,7 @@
     "inst": "piano",
     "fav": [      "piano"    ],
     "fav_all": false,
-    "fx": [      [        "reverb",        [          1.7300000190734863,          1.7300000190734863        ],        [          0.6499999761581421,          0.6499999761581421        ]      ],      [        "none",        0.9,        0.5      ]    ]
+    "fx": [      [        "reverb",        [          4.0,          4.0        ],        [          3.0,          3.0        ]      ],      [        "compressor",        [          2.0,          2.0        ],        [          1.0,          1.0        ]      ]    ]
   },
   "bass": {
     "count": 24,
@@ -31,7 +31,7 @@
     "type": 1,
     "synth": "piano",
     "fav": [      "sc808_claves",      "piano"    ],
-    "fx": [      [        "reverb",        [          2.0,          2.0        ],        [          0.7200000286102295,          0.7200000286102295        ]      ],      [        "none",        0.9,        0.5      ]    ],
+    "fx": [      [        "reverb",        [          4.0,          4.0        ],        [          3.0,          3.0        ]      ],      [        "none",        0.9,        0.5      ]    ],
     "tonics": [      81,      76,      74,      81,      76,      74,      81,      76,      74,      81,      76,      74    ],
     "pattern": [      2,      4,      6,      8,      10,      12,      14,      16,      18,      20,      22,      24    ],
     "fav_all": true
@@ -40,19 +40,19 @@
     "count": 24,
     "tempo_factor": 1,
     "cymbal": {
-      "on": true,
-      "amp": 0.5099999904632568,
+      "on": false,
+      "amp": 0.7200000286102295,
       "sample": "bd_boom",
       "fav": [        "bd_sone",        "bd_boom",        "ambi_glass_hum"      ],
-      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          [            1.0,            1.0          ],          [            1.0,            1.0          ]        ]      ],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 3,
-      "beats": "110110110110110110110110"
+      "beats": "100100100100100100100100"
     },
     "snare": {
-      "on": true,
+      "on": false,
       "amp": 0.5,
       "sample": "ambi_piano",
       "fav": [      ],
@@ -64,10 +64,10 @@
       "beats": "000000010000000000010000"
     },
     "kick": {
-      "on": true,
+      "on": false,
       "amp": 0.5,
-      "sample": "ambi_piano",
-      "fav": [      ],
+      "sample": "loop_drone_g_97",
+      "fav": [        "ambi_piano",        "loop_3d_printer",        "loop_drone_g_97",        "loop_electric"      ],
       "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          [            2.2100000381469727,            2.2100000381469727          ],          0.5        ]      ],
       "range": [        0,        1      ],
       "random": false,
