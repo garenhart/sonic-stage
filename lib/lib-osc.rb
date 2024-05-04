@@ -44,7 +44,7 @@ end
 define :init_osc_sample_groups do
   sg = sample_groups
   sg_str = sg.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
-  sg_str += ", \"Favorites\": \"favorites\""
+  sg_str += ", \"^heart Favorites\": \"favorites\""
   osc_ctrl "/sample_groups", "{#{sg_str}}"
 end
 
