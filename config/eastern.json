@@ -71,7 +71,7 @@
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
-      "pitch_shift": 0,
+      "pitch_shift": 10,
       "beats": "00000000000000000000000000000000"
     }
   }
