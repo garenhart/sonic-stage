@@ -56,7 +56,7 @@
       "amp": 0.5,
       "sample": "ambi_piano",
       "fav": [      ],
-      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "echo",          0.9,          0.5        ]      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
       "range": [        0.0,        1.0      ],
       "random": false,
       "reverse": false,
