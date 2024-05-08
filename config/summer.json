@@ -1,0 +1,80 @@
+{
+  "tempo": 130,
+  "pattern_mode": 0,
+  "pattern": 1,
+  "mode": 0,
+  "scale": "ionian",
+  "loop_mode": 0,
+  "solo": {
+    "on": true,
+    "inst": "fm",
+    "fav": [    ],
+    "fav_all": false,
+    "fx": [      [        "reverb",        0.9,        0.5      ],      [        "none",        0.9,        0.5      ]    ]
+  },
+  "bass": {
+    "count": 32,
+    "tempo_factor": 1,
+    "on": true,
+    "amp": 0.46000000834465027,
+    "synth": "fm",
+    "fav": [    ],
+    "fav_all": false,
+    "fx": [      [        "reverb",        [          1.0,          1.0        ],        [          0.6000000238418579,          0.6000000238418579        ]      ],      [        "none",        0.9,        0.5      ]    ],
+    "tonics": [    ],
+    "pattern": [    ]
+  },
+  "chord": {
+    "count": 32,
+    "tempo_factor": 1,
+    "on": false,
+    "amp": 0.0,
+    "type": 1,
+    "synth": "piano",
+    "fav": [    ],
+    "fav_all": false,
+    "fx": [      [        "reverb",        0.8,        0.5      ],      [        "none",        0.9,        0.5      ]    ],
+    "tonics": [    ],
+    "pattern": [    ]
+  },
+  "drums": {
+    "count": 32,
+    "tempo_factor": 1,
+    "cymbal": {
+      "on": false,
+      "amp": 0.36000001430511475,
+      "sample": "ambi_glass_rub",
+      "fav": [      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": -14,
+      "beats": "00000000000000000000000000000000"
+    },
+    "snare": {
+      "on": false,
+      "amp": 0.3799999952316284,
+      "sample": "ambi_glass_hum",
+      "fav": [      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": 7,
+      "beats": "00000000000000000000000000000000"
+    },
+    "kick": {
+      "on": false,
+      "amp": 0.3799999952316284,
+      "sample": "arovane_beat_e",
+      "fav": [        "arovane_beat_c",        "arovane_beat_a",        "arovane_beat_b",        "arovane_beat_d",        "arovane_beat_e"      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
+      "range": [        0,        1      ],
+      "random": false,
+      "reverse": false,
+      "pitch_shift": -12,
+      "beats": "00000000000000000000000000000000"
+    }
+  }
+}
