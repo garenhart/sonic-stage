@@ -22,7 +22,8 @@
     "fav_all": false,
     "fx": [      [        "reverb",        [          1.0,          1.0        ],        [          0.6000000238418579,          0.6000000238418579        ]      ],      [        "none",        0.9,        0.5      ]    ],
     "tonics": [    ],
-    "pattern": [    ]
+    "pattern": [    ],
+    "animate": false
   },
   "chord": {
     "count": 32,
@@ -49,8 +50,9 @@
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
-      "pitch_shift": -2,
-      "beats": "00000000000000000000000000000000"
+      "pitch_shift": -14,
+      "beats": "00000000000000000000000000000000",
+      "animate": false
     },
     "snare": {
       "on": false,
@@ -62,7 +64,8 @@
       "random": false,
       "reverse": false,
       "pitch_shift": 7,
-      "beats": "00000000000000000000000000000000"
+      "beats": "00000000000000000000000000000000",
+      "animate": false
     },
     "kick": {
       "on": false,
@@ -74,7 +77,8 @@
       "random": false,
       "reverse": false,
       "pitch_shift": -12,
-      "beats": "00000000000000000000000000000000"
+      "beats": "00000000000000000000000000000000",
+      "animate": false
     }
   }
 }
