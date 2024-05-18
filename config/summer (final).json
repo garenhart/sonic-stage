@@ -42,32 +42,32 @@
     "tempo_factor": 1,
     "cymbal": {
       "on": false,
-      "amp": 0.2199999988079071,
+      "amp": 0.5400000214576721,
       "sample": "ambi_glass_rub",
-      "fav": [      ],
-      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
+      "fav": [        "ambi_glass_rub",        "guit_e_fifths",        "guit_harmonics"      ],
+      "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          [            2.0,            2.0          ],          [            1.0,            1.0          ]        ]      ],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
-      "pitch_shift": -2,
-      "beats": "00010000000100000010000000100000"
+      "pitch_shift": 0,
+      "beats": "10000000100000001000000010000000"
     },
     "snare": {
       "on": false,
-      "amp": 0.33000001311302185,
+      "amp": 0.5400000214576721,
       "sample": "ambi_glass_hum",
-      "fav": [      ],
+      "fav": [        "ambi_glass_hum",        "guit_harmonics"      ],
       "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
-      "pitch_shift": 7,
-      "beats": "10000000100000001000000010000000"
+      "pitch_shift": 0,
+      "beats": "00001000000010000000100000001000"
     },
     "kick": {
       "on": false,
-      "amp": 0.3499999940395355,
-      "sample": "arovane_beat_e",
+      "amp": 0.5400000214576721,
+      "sample": "arovane_beat_c",
       "fav": [        "arovane_beat_c",        "arovane_beat_a",        "arovane_beat_b",        "arovane_beat_d",        "arovane_beat_e"      ],
       "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
       "range": [        0,        1      ],
