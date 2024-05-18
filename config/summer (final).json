@@ -67,7 +67,7 @@
     "kick": {
       "on": false,
       "amp": 0.5400000214576721,
-      "sample": "arovane_beat_c",
+      "sample": "arovane_beat_e",
       "fav": [        "arovane_beat_c",        "arovane_beat_a",        "arovane_beat_b",        "arovane_beat_d",        "arovane_beat_e"      ],
       "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
       "range": [        0,        1      ],
