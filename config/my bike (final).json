@@ -41,14 +41,14 @@
     "cymbal": {
       "on": true,
       "amp": 0.5,
-      "sample": "drum_cymbal_closed",
+      "sample": "hat_cab",
       "fav": [],
       "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
-      "beats": "0000000000000000"
+      "beats": "1010101010101010"
     },
     "snare": {
       "on": true,
@@ -65,14 +65,14 @@
     "kick": {
       "on": true,
       "amp": 0.5,
-      "sample": "hat_cab",
+      "sample": "bd_tek",
       "fav": [],
       "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
       "range": [        0,        1      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
-      "beats": "1010101010101010"
+      "beats": "0000000000000000"
     }
   }
 }

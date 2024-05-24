@@ -42,7 +42,7 @@
     "cymbal": {
       "on": true,
       "amp": 0.5,
-      "sample": "drum_cymbal_closed",
+      "sample": "hat_cab",
       "fav": [      ],
       "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
       "range": [        0,        1      ],
@@ -68,7 +68,7 @@
     "kick": {
       "on": true,
       "amp": 0.5,
-      "sample": "hat_cab",
+      "sample": "bd_tek",
       "fav": [      ],
       "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
       "range": [        0,        1      ],
