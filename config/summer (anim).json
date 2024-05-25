@@ -10,7 +10,8 @@
     "inst": "fm",
     "fav": [    ],
     "fav_all": false,
-    "fx": [      [        "reverb",        0.9,        0.5      ],      [        "none",        0.9,        0.5      ]    ]
+    "fx": [      [        "reverb",        0.9,        0.5      ],      [        "none",        0.9,        0.5      ]    ],
+    "animate": true
   },
   "bass": {
     "count": 32,
