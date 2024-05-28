@@ -69,7 +69,7 @@
     "kick": {
       "on": true,
       "amp": 0.5,
-      "sample": "hat_cab",
+      "sample": "bd_ada",
       "fav": [      ],
       "fx": [        [          "reverb",          0.8,          0.5        ],        [          "none",          0.9,          0.5        ]      ],
       "range": [        0,        1      ],
