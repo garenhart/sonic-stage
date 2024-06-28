@@ -35,33 +35,33 @@ define :play_drum do |drum, cfg|
   beats = drums[drum]['beats']
   count = drums['count']
 
-#  with_fx :reverb, room: 0.9, mix: 0.5 do
   with_effects fx_chain(drums[drum]['fx']) do
     density tempo_factor do
       count.times do |i|
         rt_drums = get(:drums) # drum data from Time State for params that we want to change in real time
-        amp = rt_drums[drum]['amp']
-        start = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][1] : rt_drums[drum]['range'][0]
-        finish = rt_drums[drum]['reverse'] ? rt_drums[drum]['range'][0] : rt_drums[drum]['range'][1]
-        pitch_shift = rt_drums[drum]['pitch_shift']
+        rt_drum = rt_drums[drum]
+        amp = rt_drum['amp']
+        start = rt_drum['reverse'] ? rt_drum['range'][1] : rt_drum['range'][0]
+        finish = rt_drum['reverse'] ? rt_drum['range'][0] : rt_drum['range'][1]
+        pitch_shift = rt_drum['pitch_shift']
 
-        if rt_drums[drum]['on'] 
+        if rt_drum['on'] 
           if (beats[i] == "1")
-            if (rt_drums[drum]['random'])
-              sample rt_drums[drum]['sample'], amp: amp, onset: pick, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+            if (rt_drum['random'])
+                sample rt_drum['sample'], amp: amp, onset: pick, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
             else  
               if (start == finish)
-                sample rt_drums[drum]['sample'], amp: amp, onset: 0, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+                  sample rt_drum['sample'], amp: amp, onset: 0, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
               else
-                sample rt_drums[drum]['sample'], amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
+                  sample rt_drum['sample'], amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001
               end
             end  
-            animate_drum drum, amp, 1, 1 if rt_drums[drum]['animate']
+            animate_drum drum, amp, 1, 1 if rt_drum['animate']
           else
-            animate_drum drum, amp, 0, 1 if rt_drums[drum]['animate']
+            animate_drum drum, amp, 0, 1 if rt_drum['animate']
           end
         else
-          animate_drum drum, amp, 0, 0 if rt_drums[drum]['animate']
+          animate_drum drum, amp, 0, 0 if rt_drum['animate']
         end
         sleep rhythm
       end
@@ -88,10 +88,8 @@ define :play_bass do |cfg|
         cfg_bass['count'].times do |i|
           pos = cfg_bass['pattern'].index(i+1)
           if (cfg_bass['on'] && pos)
-            play cfg_bass['tonics'][pos], amp: cfg_bass['amp']
+            play_synth cfg_bass, pos
             animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp'] if cfg_bass['animate']
-          # else
-          #   animate_keyboard "bass", 0, 0.0
           end
           sleep rhythm
         end
@@ -116,13 +114,11 @@ define :play_chords do |cfg|
  
     with_effects fx_chain(cfg['chord']['fx']) do
       density tempo_factor do
-        cfg_chord['count'].times do |pos|
-          i = cfg_chord['pattern'].index(pos+1)
-          if (cfg_chord['on'] && i)
-            play (cfg_chord['tonics'][i]), amp: cfg_chord['amp']
+        cfg_chord['count'].times do |i|
+          pos = cfg_chord['pattern'].index(i+1)
+          if (cfg_chord['on'] && pos)
+            play_synth cfg_chord, pos
             animate_keyboard "chord", cfg_chord['tonics'][i], cfg_chord['amp'] if cfg_chord['animate']
-          # else
-          #   animate_keyboard "chord", 0, 0.0    
           end
           sleep rhythm
         end
@@ -247,6 +243,14 @@ define :play_midi do |cfg, addr_data, note, vel|
       animate_keyboard "solo", note, vel/127.0 if cfg['solo']['animate']
      end   
   end  
+end
+
+define :play_synth do |cfg_inst, pos|
+  if cfg_inst['adsr'] == nil
+    play cfg_inst['tonics'][pos], amp: cfg_inst['amp']
+  else
+    play cfg_inst['tonics'][pos], amp: cfg_inst['amp'], attack: cfg_inst['adsr'][0], attack_level: cfg_inst['adsr'][1], decay: cfg_inst['adsr'][2], decay_level: cfg_inst['adsr'][3], sustain: cfg_inst['adsr'][4], sustain_level: cfg_inst['adsr'][5], release: cfg_inst['adsr'][6], release_level: cfg_inst['adsr'][7]
+  end
 end
 
 # returns index of nearest note in scale

@@ -207,6 +207,24 @@ define :update_osc_fx_option_names do |prefix, fx, fx_num|
   osc_ctrl "/#{prefix}_fx#{fx_num}_opt2_name/label", fx_option_name(fx, 2)
 end
 
+define :init_osc_inst_envelope do |prefix, cfg|
+  inst_root = cfg_inst_root cfg, prefix
+  if inst_root['adsr'] == nil
+    osc_ctrl "/#{prefix}_env_adsr", *[0, 1, 0, 1, 0, 1, 1, 0]
+  else
+    osc_ctrl "/#{prefix}_env_adsr", *inst_root['adsr']
+  end
+end
+
+define :init_osc_inst_envelopes do |cfg|
+  init_osc_inst_envelope "solo", cfg
+  init_osc_inst_envelope "bass", cfg
+  init_osc_inst_envelope "chord", cfg
+  init_osc_inst_envelope "kick", cfg
+  init_osc_inst_envelope "snare", cfg
+  init_osc_inst_envelope "cymbal", cfg
+end
+
 define :init_osc_controls do |cfg, init_presets=false|
   if init_presets
     init_osc_updates
@@ -254,4 +272,6 @@ define :init_osc_controls do |cfg, init_presets=false|
   init_osc_synths_fav cfg
   init_osc_synths_fav_bass cfg
   init_osc_synths_fav_chord cfg
+  
+  init_osc_inst_envelopes cfg
 end
