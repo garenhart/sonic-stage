@@ -62,7 +62,7 @@ configPath = get(:sp_path) + "sonic-stage\\config\\" # path for config files
 cfg_def = "_default.json"
 cfgFile = configPath + cfg_def
 # deserialize JSON file into cfg hash
-cfg = readJSON(cfgFile)
+cfg = initJSON(cfgFile)
 osc_ctrl "/cfg_path", configPath # set the osc control path
 osc_ctrl "/open", cfg_def # set the osc control file name
 
@@ -139,7 +139,7 @@ live_loop :osc_monitor do
     when "open"
       cfgFile = n[0]
       # deserialize JSON file into cfg hash
-      data = readJSON(cfgFile)
+      data = initJSON(cfgFile)
 
       ca = get(:chord_auto)
       ba = get(:bass_auto)
