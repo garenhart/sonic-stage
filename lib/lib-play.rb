@@ -223,7 +223,7 @@ define :play_midi do |cfg, addr_data, note, vel|
           use_synth cfg['bass']['synth'].to_sym
           add_tonic_bass cfg, note, next_beat > cfg['bass']['count'] ? 1 : next_beat
           with_effects fx_chain(cfg['bass']['fx']) do
-            play note, amp: vel/127.0, release: 1
+            play_note note, vel/127.0, cfg['bass']
           end
           animate_keyboard "bass", note, vel/127.0 if cfg['bass']['animate']
       end
@@ -231,14 +231,14 @@ define :play_midi do |cfg, addr_data, note, vel|
           use_synth cfg['chord']['synth'].to_sym
           add_tonic_chord cfg, note, next_beat > get(:chord_state)['count'] ? 1 : next_beat
           with_effects fx_chain(cfg['chord']['fx']) do
-            play note, amp: vel/127.0, release: 1
+            play_note note, vel/127.0, cfg['chord']
           end
           animate_keyboard "chord", note, vel/127.0 if cfg['chord']['animate']
       end
     else # not recording
       with_effects fx_chain(cfg['solo']['fx']) do
         use_synth cfg['solo']['inst'].to_sym
-        play note, amp: vel/127.0, release: 1
+        play_note note, vel/127.0, cfg['solo']
       end
       animate_keyboard "solo", note, vel/127.0 if cfg['solo']['animate']
      end   
@@ -246,11 +246,11 @@ define :play_midi do |cfg, addr_data, note, vel|
 end
 
 define :play_synth do |cfg_inst, pos|
-  if cfg_inst['adsr'] == nil
-    play cfg_inst['tonics'][pos], amp: cfg_inst['amp']
-  else
     play cfg_inst['tonics'][pos], amp: cfg_inst['amp'], attack: cfg_inst['adsr'][0], attack_level: cfg_inst['adsr'][1], decay: cfg_inst['adsr'][2], decay_level: cfg_inst['adsr'][3], sustain: cfg_inst['adsr'][4], sustain_level: cfg_inst['adsr'][5], release: cfg_inst['adsr'][6], release_level: cfg_inst['adsr'][7]
-  end
+end
+
+define :play_note do |note, amp, cfg_inst|
+    play note, amp: amp, attack: cfg_inst['adsr'][0], attack_level: cfg_inst['adsr'][1], decay: cfg_inst['adsr'][2], decay_level: cfg_inst['adsr'][3], sustain: cfg_inst['adsr'][4], sustain_level: cfg_inst['adsr'][5], release: cfg_inst['adsr'][6], release_level: cfg_inst['adsr'][7]
 end
 
 # returns index of nearest note in scale

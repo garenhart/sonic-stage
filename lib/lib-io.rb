@@ -7,6 +7,39 @@
 # configuration folder path
 # configPath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
 
+define :initJSON do |file_name|
+    data = readJSON(file_name)
+    return ensure_defaults(data)
+end
+
+define :ensure_defaults do |data|
+    data = ensure_adsr(data)
+    return data
+end
+
+define :ensure_adsr do |data|
+    # ensure all necessary keys are present
+    if data["solo"]["adsr"] == nil
+        data["solo"]["adsr"] = [0.0, 1.0, 0.1, 0.9, 0.2, 0.9, 1.0, 0.0]
+    end
+    if data["bass"]["adsr"] == nil
+        data["bass"]["adsr"] = [0.0, 1.0, 0.1, 0.9, 0.2, 0.9, 1.0, 0.0]
+    end
+    if data["chord"]["adsr"] == nil
+        data["chord"]["adsr"] = [0.0, 1.0, 0.1, 0.9, 0.2, 0.9, 1.0, 0.0]        
+    end
+    if data["drums"]["cymbal"]["adsr"] == nil
+        data["drums"]["cymbal"]["adsr"] = [0.0, 1.0, 0.1, 0.9, 0.2, 0.9, 1.0, 0.0]
+    end
+    if data["drums"]["kick"]["adsr"] == nil
+        data["drums"]["kick"]["adsr"] = [0.0, 1.0, 0.1, 0.9, 0.2, 0.9, 1.0, 0.0]
+    end
+    if data["drums"]["snare"]["adsr"] == nil
+        data["drums"]["snare"]["adsr"] = [0.0, 1.0, 0.1, 0.9, 0.2, 0.9, 1.0, 0.0]
+    end
+    return data
+end
+
 # read from JSON file and return parsed hash
 define :readJSON do |file_name|
     file = File.read(file_name) 
