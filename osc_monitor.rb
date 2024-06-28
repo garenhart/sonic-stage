@@ -204,6 +204,9 @@ live_loop :osc_monitor do
     when "solo_fav_all"
       cfg['solo']['fav_all'] = n[0] == 1.0
 
+    when "solo_env_adsr"
+      cfg['solo']['adsr'] = n
+ 
     when "solo_fx1_fx"
       init_fx_component cfg, "solo", 0, 0, n[0]
       update_osc_fx_option_names "solo", n[0], 1
@@ -271,7 +274,8 @@ live_loop :osc_monitor do
     when "chord_fav_all"
       cfg['chord']['fav_all'] = n[0] == 1.0
 
-      
+    when "chord_env_adsr"
+      init_chord_component(cfg, 'adsr', n)      
 
     when "chord_fx1_fx"
       init_fx_component cfg, "chord", 0, 0, n[0]
@@ -345,6 +349,9 @@ live_loop :osc_monitor do
 
     when "bass_fav_all"
       cfg['bass']['fav_all'] = n[0] == 1.0
+
+    when "bass_env_adsr"
+      init_bass_component(cfg, 'adsr', n)
 
     when "bass_fx1_fx"
       init_fx_component cfg, "bass", 0, 0, n[0]
