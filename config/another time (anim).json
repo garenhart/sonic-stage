@@ -11,6 +11,7 @@
     "fav": ["beep"],
     "fav_all": true,
     "fx": [["reverb", 0.4, 0.5], ["none", 0.9, 0.5]],
+    "adsr":  [0.0, 1.0, 0.1, 0.9, 0.2, 0.9, 0.7, 0.0],
     "animate": true
   },
   "bass": {
