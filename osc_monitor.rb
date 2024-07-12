@@ -73,8 +73,6 @@ puts "cfg", cfg
 
 # init osc controls twice to avoid blank instruments
 init_osc_controls cfg, true
-init_osc_controls cfg, true
-
 init_time_state cfg
 # ---
 sleep 1 # wait for init to finish
@@ -110,7 +108,7 @@ sleep 1 # wait for init to finish
     # first note to be skipped when new file is opened (why?)
     use_real_time
  
-    addr = midi_in + "note_*"
+    addr = midi_in + "note_on"
     note, vel = sync addr
     addr_data = parse_addr addr
     
