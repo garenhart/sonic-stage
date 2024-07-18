@@ -245,8 +245,30 @@ define :play_midi do |cfg, addr_data, note, vel|
   end  
 end
 
+define :play_midi_solo do |cfg, addr_data, note, vel|
+  play_synth_note cfg['solo']['inst'].to_sym, note, vel/127.0, cfg['solo']['adsr']
+  animate_keyboard "solo", note, vel/127.0 if cfg['solo']['animate']
+end
+
+define :play_midi_bass do |bass_rec, cfg, addr_data, note, vel, next_beat|
+    add_tonic_bass cfg, note, next_beat > cfg['bass']['count'] ? 1 : next_beat
+    play_synth_note cfg['bass']['synth'].to_sym, note, vel/127.0, cfg['bass']['adsr']
+    animate_keyboard "bass", note, vel/127.0 if cfg['bass']['animate']
+end
+
+define :play_midi_chord do |chord_rec, cfg, addr_data, note, vel, next_beat|
+    add_tonic_chord cfg, note, next_beat > cfg['chord']['count'] ? 1 : next_beat
+    play_synth_note cfg['chord']['synth'].to_sym, note, vel/127.0, cfg['chord']['adsr']
+    animate_keyboard "chord", note, vel/127.0 if cfg['chord']['animate']
+end
+
+
 define :play_synth do |cfg_inst, pos|
     play cfg_inst['tonics'][pos], amp: cfg_inst['amp'], attack: cfg_inst['adsr'][0], attack_level: cfg_inst['adsr'][1], decay: cfg_inst['adsr'][2], decay_level: cfg_inst['adsr'][3], sustain: cfg_inst['adsr'][4], sustain_level: cfg_inst['adsr'][5], release: cfg_inst['adsr'][6], release_level: cfg_inst['adsr'][7]
+end
+
+define :play_synth_note do |inst, note, amp, adsr|
+  synth inst, note: note, amp: amp, attack: adsr[0], attack_level: adsr[1], decay: adsr[2], decay_level: adsr[3], sustain: adsr[4], sustain_level: adsr[5], release: adsr[6], release_level: adsr[7]
 end
 
 define :play_note do |note, amp, cfg_inst|
