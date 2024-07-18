@@ -53,8 +53,8 @@ set :drums_auto, true
 set :bass_auto, true
 set :chord_auto, true
 
-set :bass_rec, false
-set :chord_rec, false
+bass_rec = false
+chord_rec = false
 
 puts "CTRL", :ctrl_ip, :ctrl_port
 # configuration folder path
@@ -79,42 +79,73 @@ sleep 1 # wait for init to finish
 
 # set_audio_latency! -100 # set audio latency to -100ms
 
-# with_fx :reverb, room: 0.9, mix: 0.5 do |r|
-  # DRUM LOOPS
-  live_loop :drum_kick do
-    play_drum "kick", cfg
-  end
-  
-  live_loop :drum_snare do
-    play_drum "snare", cfg
-  end
-  
-  live_loop :drum_cymbal do
-    play_drum "cymbal", cfg
-  end
-  # END DRUM LOOPS
+live_loop :drum_kick do
+  play_drum "kick", cfg
+end
 
-  live_loop :chord do
-    play_chords cfg
-  end
+live_loop :drum_snare do
+  play_drum "snare", cfg
+end
 
-  live_loop :bass do
-    play_bass cfg
-  end
+live_loop :drum_cymbal do
+  play_drum "cymbal", cfg
+end
+# END DRUM LOOPS
 
-  live_loop :midi_monitor do
+live_loop :chord do
+  play_chords cfg
+end
+
+live_loop :bass do
+  play_bass cfg
+end
+
+with_effects fx_chain(cfg['solo']['fx']) do
+  live_loop :midi_solo do
     # WARNING: use_real_time must be set to true for this to work
     # WARNING: moving following 4 lines to play_midi() causing
     # first note to be skipped when new file is opened (why?)
     use_real_time
- 
+
     addr = midi_in + "note_on"
     note, vel = sync addr
     addr_data = parse_addr addr
     
-    play_midi cfg, addr_data, note, vel
+    play_midi_solo cfg, addr_data, note, vel  if (cfg['solo']['on'] && !bass_rec && !chord_rec)
   end
-# end #FX
+end
+
+with_effects fx_chain(cfg['bass']['fx']) do
+  live_loop :midi_bass do
+    # WARNING: use_real_time must be set to true for this to work
+    # WARNING: moving following 4 lines to play_midi() causing
+    # first note to be skipped when new file is opened (why?)
+    use_real_time
+
+    addr = midi_in + "note_on"
+    note, vel = sync addr
+    addr_data = parse_addr addr
+    
+    play_midi_bass bass_rec, cfg, addr_data, note, vel, get(:beat) + 1 if bass_rec
+
+  end
+end
+
+with_effects fx_chain(cfg['chord']['fx']) do
+  live_loop :midi_chord do
+    # WARNING: use_real_time must be set to true for this to work
+    # WARNING: moving following 4 lines to play_midi() causing
+    # first note to be skipped when new file is opened (why?)
+    use_real_time
+
+    addr = midi_in + "note_on"
+    note, vel = sync addr
+    addr_data = parse_addr addr
+    
+    play_midi_chord chord_rec, cfg, addr_data, note, vel, get(:beat) + 1 if chord_rec
+  end
+end
+
 
 # CUE LOOP (MUST BE LAST OF SYNC LOOPS!!!)
 live_loop :the_cue do
@@ -407,10 +438,10 @@ live_loop :osc_monitor do
 
     # recording
     when "bass_rec"
-      set :bass_rec, n[0].to_i == 1 ? true : false
+      bass_rec = n[0].to_i == 1 ? true : false
 
     when "chord_rec"
-      set :chord_rec, n[0].to_i == 1 ? true : false    
+      chord_rec = n[0].to_i == 1 ? true : false    
     end
   end
 end
