@@ -176,33 +176,24 @@ define :set_fx do |prefix, cfg|
   inst_root = cfg_inst_root cfg, prefix
 
   for i in 0..fx_max
-    if inst_root['fx'] && inst_root['fx'][i]
-      osc_ctrl "/#{prefix}_fx#{i+1}_fx", inst_root['fx'][i][0] if inst_root['fx'][i][0]
-      update_osc_fx_option_names prefix, inst_root['fx'][i][0], i+1
+    osc_ctrl "/#{prefix}_fx#{i+1}_fx", inst_root['fx'][i][0]
+    update_osc_fx_option_names prefix, inst_root['fx'][i][0], i+1
 
-      if inst_root['fx'][i][1].is_a? Array
-        osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *inst_root['fx'][i][1]
-      else
-        osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *[inst_root['fx'][i][1], inst_root['fx'][i][1]]
-      end
-
-      if inst_root['fx'][i][2].is_a? Array
-        osc_ctrl "/#{prefix}_fx#{i+1}_opt2_value", *inst_root['fx'][i][2]
-      else
-        osc_ctrl "/#{prefix}_fx#{i+1}_opt2_value", *[inst_root['fx'][i][2], inst_root['fx'][i][2]]  
-      end
+    if inst_root['fx'][i][1].is_a? Array
+      osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *inst_root['fx'][i][1]
     else
-      osc_ctrl "/#{prefix}_fx#{i+1}_fx", "none"
-      osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *[0.0, 0.0]
-      osc_ctrl "/#{prefix}_fx#{i+1}_opt2_value", *[0.0, 0.0]
-      update_osc_fx_option_names prefix, "none", i+1
+      osc_ctrl "/#{prefix}_fx#{i+1}_opt1_value", *[inst_root['fx'][i][1], inst_root['fx'][i][1]]
+    end
+
+    if inst_root['fx'][i][2].is_a? Array
+      osc_ctrl "/#{prefix}_fx#{i+1}_opt2_value", *inst_root['fx'][i][2]
+    else
+      osc_ctrl "/#{prefix}_fx#{i+1}_opt2_value", *[inst_root['fx'][i][2], inst_root['fx'][i][2]]  
     end
   end
 end
 
 define :update_osc_fx_option_names do |prefix, fx, fx_num|
-  puts "update_osc_fx_option_names", prefix, fx, fx_num
-
   osc_ctrl "/#{prefix}_fx#{fx_num}_opt1_name/label", fx_option_name(fx, 1)
   osc_ctrl "/#{prefix}_fx#{fx_num}_opt2_name/label", fx_option_name(fx, 2)
 end
