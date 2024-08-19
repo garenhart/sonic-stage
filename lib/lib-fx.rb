@@ -99,7 +99,6 @@ end
 
 # This method and the idea of using it is borrowed from 
 # @amiika here: https://in-thread.sonic-pi.net/t/snake-jazz-also-is-there-an-fx-stack/5932/3
-# gh: only works with def, not define
 def with_effects (x, &block)
   x = x.dup
   if x.length>0 then
