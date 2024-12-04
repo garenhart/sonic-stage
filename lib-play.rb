@@ -54,6 +54,8 @@ define :play_drum do |drum, cfg|
                   sample rt_drum['sample'], amp: amp, onset: 0, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001 #, attack: rt_drum['adsr'][0], attack_level: rt_drum['adsr'][1], decay: rt_drum['adsr'][2], decay_level: rt_drum['adsr'][3], sustain: rt_drum['adsr'][4], sustain_level: rt_drum['adsr'][5], release: rt_drum['adsr'][6], release_level: rt_drum['adsr'][7]
               else
                   sample rt_drum['sample'], amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001 #, attack: rt_drum['adsr'][0], attack_level: rt_drum['adsr'][1], decay: rt_drum['adsr'][2], decay_level: rt_drum['adsr'][3], sustain: rt_drum['adsr'][4], sustain_level: rt_drum['adsr'][5], release: rt_drum['adsr'][6], release_level: rt_drum['adsr'][7]
+                  # uncomment the following line to play custom samples
+                  # sample gov_fma_wav + "excerpts/" + "Beach_fma-178536_001_00-00-17.wav", amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001 #, attack: rt_drum['adsr'][0], attack_level: rt_drum['adsr'][1], decay: rt_drum['adsr'][2], decay_level: rt_drum['adsr'][3], sustain: rt_drum['adsr'][4], sustain_level: rt_drum['adsr'][5], release: rt_drum['adsr'][6], release_level: rt_drum['adsr'][7]
               end
             end  
             animate_drum drum, amp, 1, 1 if rt_drum['animate']
