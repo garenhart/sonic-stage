@@ -5,7 +5,7 @@
 #######################
 
 # configuration folder path
-# configPath = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
+# config_path = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
 
 eval_file ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/lib-defaults.rb' #include defaults library for ensuring default values
 

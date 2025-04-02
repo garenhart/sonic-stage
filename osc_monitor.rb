@@ -16,20 +16,23 @@ use_arg_checks false
 #load libraries
 require 'date'
 
-sp_path = get(:sp_path) # get Sonic Pi path
+#sp_path = get(:sp_path) # get Sonic Pi path
 # construct path to sonic-stage-lib from ENV[HOME] variable
-sp_lib_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/'
-eval_file sp_lib_path + 'lib-util.rb'
-eval_file sp_lib_path + 'lib-io.rb'
-eval_file sp_lib_path + 'lib-fav.rb'
-eval_file sp_lib_path + 'lib-fx.rb'
-eval_file sp_lib_path + 'lib-init.rb'
-eval_file sp_lib_path + 'lib-osc-animation.rb'
-eval_file sp_lib_path + 'lib-play.rb'
-eval_file sp_lib_path + 'lib-osc.rb'
-eval_file sp_lib_path + 'lib-dyn-live_loop.rb'
-eval_file sp_lib_path + 'lib-chord-gen.rb'
-eval_file sp_lib_path + 'lib-mon.rb'
+lib_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage/lib/'
+# configuration folder path
+config_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage/config/'
+
+eval_file lib_path + 'lib-util.rb'
+eval_file lib_path + 'lib-io.rb'
+eval_file lib_path + 'lib-fav.rb'
+eval_file lib_path + 'lib-fx.rb'
+eval_file lib_path + 'lib-init.rb'
+eval_file lib_path + 'lib-osc-animation.rb'
+eval_file lib_path + 'lib-play.rb'
+eval_file lib_path + 'lib-osc.rb'
+eval_file lib_path + 'lib-dyn-live_loop.rb'
+eval_file lib_path + 'lib-chord-gen.rb'
+eval_file lib_path + 'lib-mon.rb'
 
 #require get(:sp_path)+"sonic-stage-lib/modes.rb" # Load extra scales and chord from separate file
 #ModeScales = Modes.scales
@@ -57,13 +60,12 @@ bass_rec = false
 chord_rec = false
 
 puts "CTRL", :ctrl_ip, :ctrl_port
-# configuration folder path
-configPath = get(:sp_path) + "sonic-stage\\config\\" # path for config files
+
 cfg_def = "_default.json"
-cfgFile = configPath + cfg_def
+cfgFile = config_path + cfg_def
 # deserialize JSON file into cfg hash
 cfg = initJSON(cfgFile)
-osc_ctrl "/cfg_path", configPath # set the osc control path
+osc_ctrl "/cfg_path", config_path # set the osc control path
 osc_ctrl "/open", cfg_def # set the osc control file name
 
 puts "cfg", cfg
