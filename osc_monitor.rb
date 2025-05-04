@@ -16,9 +16,10 @@ use_arg_checks false
 #load libraries
 require 'date'
 
-#sp_path = get(:sp_path) # get Sonic Pi path
 # construct path to sonic-stage-lib from ENV[HOME] variable
-lib_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage/lib/'
+set :lib_path, ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage/lib/'
+lib_path = get(:lib_path)
+
 # configuration folder path
 config_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage/config/'
 

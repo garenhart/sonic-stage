@@ -7,7 +7,8 @@
 # configuration folder path
 # config_path = get(:sp_path) + "live-impro\\sonic-pi-open-stage-control\\config\\" #path for config files
 
-eval_file ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/lib-defaults.rb' #include defaults library for ensuring default values
+# eval_file ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/lib-defaults.rb' #include defaults library for ensuring default values
+eval_file get(:lib_path) + 'lib-defaults.rb'
 
 define :initJSON do |file_name|
     data = readJSON(file_name)

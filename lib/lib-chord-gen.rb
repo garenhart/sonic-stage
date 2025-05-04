@@ -4,7 +4,8 @@
 # author: Garen H.
 #######################
 
-eval_file ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/lib-modes.rb' #include modes patch library for extended modes/scales/chords
+# eval_file ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage-lib/lib-modes.rb' #include modes patch library for extended modes/scales/chords
+eval_file get(:lib_path) + 'lib-modes.rb'
 
 # chordSeq - returns chord sequence of specified degrees (degs) within mode for specified tonic
 # seven - seventh chord (default = true)
