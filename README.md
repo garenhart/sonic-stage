@@ -26,7 +26,7 @@ For Processing (optional):
 ### Step 1: Clone the Repository
 Clone the `sonic-stage` repository to your local machine:
 ```bash
-git clone https://github.com/your-repo/sonic-stage.git
+git clone https://github.com/garenhart/sonic-stage
 ```
 
 ### Step 2: Install Sonic Pi
