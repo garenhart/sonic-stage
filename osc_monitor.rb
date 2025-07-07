@@ -17,11 +17,11 @@ use_arg_checks false
 require 'date'
 
 # construct path to sonic-stage-lib from ENV[HOME] variable
-set :lib_path, ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage/lib/'
+set :lib_path, ENV['HOME'] + '/dev/sonic-stage/lib/'
 lib_path = get(:lib_path)
 
 # configuration folder path
-config_path = ENV['HOME'] + '/dev/sonic-pi-projects/sonic-stage/config/'
+config_path = ENV['HOME'] + '/dev/sonic-stage/config/'
 
 eval_file lib_path + 'lib-util.rb'
 eval_file lib_path + 'lib-io.rb'
