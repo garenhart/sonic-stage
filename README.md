@@ -51,6 +51,7 @@ If you want to enable visualizations:
 The project is organized as follows:
 ```
 sonic-stage/
+  sonic-stage.rb       # Wrapper script to launch main script (avoids buffer overflow)
   osc_monitor.rb       # Main Sonic Pi script
   osc_controller.json  # Open Stage Control configuration
   config/              # JSON configuration files for music arrangements
@@ -73,11 +74,17 @@ If you are using Processing for visualizations:
 2. Update the OSC port (if desired) by modifying the `oscP5 = new OscP5(this, 8000);` line in the sketch.
 
 ### Step 3: Configure Sonic Pi
+#### Substep 3a: Configure osc_monitor.rb
 1. Open the `osc_monitor.rb` in Sonic Pi or your preferred text editor.
 2. Update the `lib_path` and `config_path` variables if necessary to match your local directory structure.
 3. Update the 'ctrl_ip' and 'ctrl_port' variables to match the Open Stage Control configuration.
 4. If using Processing, update the 'anim_ip' and 'anim_port' variables to match the Processing configuration.
 5. Save the changes.
+
+#### Substep 3b: Configure sonic-stage.rb
+1. Open the `sonic-stage.rb` in Sonic Pi or your preferred text editor.
+2. Update the run_file statement to match your local directory structure.
+3. Save the changes.
 
 ### Communication Flow
 ```
@@ -108,14 +115,14 @@ If you want visualizations:
 2. Run the sketch to start the visualization.
 
 #### Step 3: Start Sonic Pi
-1. Open Sonic Pi and load the `osc_monitor.rb` file.
+1. Open Sonic Pi and load the `sonic-stage.rb` file.
 2. Ensure that Open Stage Control (and optionally Processing) are already running.
-3. Run the code in Sonic Pi to start generating audio (and optionally sending OSC messages to Processing).
+3. Run the code in Sonic Pi to start generating audio and communicating via OSC messages with Open Source Control (and optionally with Processing).
 
 ## Troubleshooting
 - **Port Conflicts**: Ensure no other applications are using ports `7777` or `8000`.
 - **Missing Libraries**: Verify that `oscP5` and `controlP5` are installed in Processing (if using Processing).
-- **Configuration Errors**: Double-check the paths in `osc_monitor.rb` and `osc_controller.json`.
+- **Configuration Errors**: Double-check the paths in `sonic-stage.rb`, 'osc_monitor.rb' and `osc_controller.json`.
 - **Latency Issues**: Run all components on the same machine for minimal latency.
 
 ## License

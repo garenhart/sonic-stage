@@ -4,3 +4,4 @@ unit-test.rb
 config/unit-test.json
 
 sonic-stage.code-workspace
+.DS_Store
