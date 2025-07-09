@@ -42,7 +42,7 @@ If you want to enable visualizations:
 1. Download Processing from the [official website](https://processing.org/).
 2. Install the required libraries:
    - Open Processing.
-   - Go to `Sketch > Import Library > Add Library`.
+   - Go to `Sketch > Import Library > Add Library (or Manage Libraries)`.
    - Search for `oscP5` and `controlP5` and install them.
 
 ## Configuration
