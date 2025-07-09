@@ -28,6 +28,10 @@ Clone the `sonic-stage` repository to your local machine:
 ```bash
 git clone https://github.com/garenhart/sonic-stage
 ```
+Clone the `sonic-stage-visualizer` to your local machine (this step is optional):
+```bash
+git clone https://github.com/garenhart/sonic-stage-visualizer
+```
 
 ### Step 2: Install Sonic Pi
 1. Download and install Sonic Pi from the [official website](https://sonic-pi.net/).
@@ -70,7 +74,7 @@ sonic-stage/
 
 ### Step 2: Configure Processing (Optional)
 If you are using Processing for visualizations:
-1. Open one of the Processing sketches (e.g., `keyboard_and_drums/keyboard_and_drums.pde`).
+1. Open one of the Processing sketches from your cloned sonic-stage-visualizer (e.g., `keyboard_and_drums/keyboard_and_drums.pde`).
 2. Update the OSC port (if desired) by modifying the `oscP5 = new OscP5(this, 8000);` line in the sketch.
 
 ### Step 3: Configure Sonic Pi
