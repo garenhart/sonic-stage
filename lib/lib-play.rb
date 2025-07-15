@@ -120,7 +120,7 @@ define :play_chords do |cfg|
           pos = cfg_chord['pattern'].index(i+1)
           if (cfg_chord['on'] && pos)
             play_synth cfg_chord, pos
-            animate_keyboard "chord", cfg_chord['tonics'][i], cfg_chord['amp'] if cfg_chord['animate']
+            animate_keyboard "chord", cfg_chord['tonics'][pos], cfg_chord['amp'] if cfg_chord['animate']
           end
           sleep rhythm
         end
