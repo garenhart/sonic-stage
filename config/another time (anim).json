@@ -23,7 +23,8 @@
     "fav": [    ],
     "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
     "tonics": [    ],
-    "pattern": [    ]
+    "pattern": [    ],
+    "animate": true
   },
   "chord": {
     "count": 16,
@@ -35,7 +36,8 @@
     "fav": [    ],
     "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
     "tonics": [    ],
-    "pattern": [    ]
+    "pattern": [    ],
+    "animate": true
   },
   "drums": {
     "count": 16,
