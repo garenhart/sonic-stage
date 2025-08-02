@@ -78,17 +78,27 @@ If you are using Processing for visualizations:
 2. Update the OSC port (if desired) by modifying the `oscP5 = new OscP5(this, 8000);` line in the sketch.
 
 ### Step 3: Configure Sonic Pi
-#### Substep 3a: Configure osc_monitor.rb
-1. Open the `osc_monitor.rb` in Sonic Pi or your preferred text editor.
-2. Update the `lib_path` and `config_path` variables if necessary to match your local directory structure.
-3. Update the 'ctrl_ip' and 'ctrl_port' variables to match the Open Stage Control configuration.
-4. If using Processing, update the 'anim_ip' and 'anim_port' variables to match the Processing configuration.
-5. Save the changes.
+#### Substep 3a: Configure Sonic Pi init.rb
+1. Open your Sonic Pi configuration file (`init.rb`) located in:
+   - Windows: `%USERPROFILE%\.sonic-pi\config\init.rb`
+   - macOS: `~/.sonic-pi/config/init.rb`
+   - Linux: `~/.sonic-pi/config/init.rb`
+2. Add the following line to set your project path:
+   ```ruby
+   set :ss_path, "C:/path/to/your/sonic-stage/"
+   ```
+   Replace the path with your actual sonic-stage project directory.
+3. Save the file and restart Sonic Pi for changes to take effect.
 
-#### Substep 3b: Configure sonic-stage.rb
-1. Open the `sonic-stage.rb` in Sonic Pi or your preferred text editor.
-2. Update the run_file statement to match your local directory structure.
-3. Save the changes.
+#### Substep 3b: Configure osc_monitor.rb (Optional)
+The script will automatically use the `:ss_path` variable for library and configuration paths. If you need to customize OSC settings:
+1. Open the `osc_monitor.rb` in Sonic Pi or your preferred text editor.
+2. Update the 'ctrl_ip' and 'ctrl_port' variables to match the Open Stage Control configuration.
+3. If using Processing, update the 'anim_ip' and 'anim_port' variables to match the Processing configuration.
+4. Save the changes.
+
+#### Substep 3c: Configure sonic-stage.rb (Optional)
+No configuration needed - this wrapper script automatically uses the `:ss_path` variable to load the main script.
 
 ### Communication Flow
 ```

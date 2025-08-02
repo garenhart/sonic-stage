@@ -16,12 +16,14 @@ use_arg_checks false
 #load libraries
 require 'date'
 
-# construct path to sonic-stage-lib from ENV[HOME] variable
-set :lib_path, ENV['HOME'] + '/dev/sonic-stage/lib/'
+# Use the ss_path variable from init.rb as the base path
+project_root = get(:ss_path)
+
+set :lib_path, project_root + 'lib/'
 lib_path = get(:lib_path)
 
 # configuration folder path
-config_path = ENV['HOME'] + '/dev/sonic-stage/config/'
+config_path = project_root + 'config/'
 
 eval_file lib_path + 'lib-util.rb'
 eval_file lib_path + 'lib-io.rb'
