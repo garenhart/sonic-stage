@@ -88,6 +88,10 @@ If you are using Processing for visualizations:
    set :ss_path, "C:/path/to/your/sonic-stage/"
    ```
    Replace the path with your actual sonic-stage project directory.
+   
+   **Important**: Use the full absolute path without the "~" symbol. For example:
+   - ✅ Good: `/Users/username/dev/sonic-stage/`
+   - ❌ Bad: `~/dev/sonic-stage/`
 3. Save the file and restart Sonic Pi for changes to take effect.
 
 #### Substep 3b: Configure osc_monitor.rb (Optional)
