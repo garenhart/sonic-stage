@@ -116,6 +116,9 @@ with_effects fx_chain(cfg['solo']['fx']) do
     note, vel = sync addr
     addr_data = parse_addr addr
     
+    # Skip if velocity is 0 (note_off sent as note_on with vel=0)
+    next if vel == 0
+    
     play_midi_solo cfg, addr_data, note, vel  if (cfg['solo']['on'] && !bass_rec && !chord_rec)
   end
 end
@@ -130,6 +133,9 @@ with_effects fx_chain(cfg['bass']['fx']) do
     addr = midi_in + "note_on"
     note, vel = sync addr
     addr_data = parse_addr addr
+    
+    # Skip if velocity is 0 (note_off sent as note_on with vel=0)
+    next if vel == 0
     
     play_midi_bass bass_rec, cfg, addr_data, note, vel, get(:beat) + 1 if bass_rec
 
@@ -146,6 +152,9 @@ with_effects fx_chain(cfg['chord']['fx']) do
     addr = midi_in + "note_on"
     note, vel = sync addr
     addr_data = parse_addr addr
+    
+    # Skip if velocity is 0 (note_off sent as note_on with vel=0)
+    next if vel == 0
     
     play_midi_chord chord_rec, cfg, addr_data, note, vel, get(:beat) + 1 if chord_rec
   end
