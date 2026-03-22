@@ -105,52 +105,46 @@ live_loop :bass do
   play_bass cfg
 end
 
-with_effects fx_chain(cfg['solo']['fx']) do
-  live_loop :midi_solo do
-    # WARNING: use_real_time must be set to true for this to work
-    # WARNING: moving following 4 lines to play_midi() causing
-    # first note to be skipped when new file is opened (why?)
-    use_real_time
+live_loop :midi_solo do
+  # WARNING: use_real_time must be set to true for this to work
+  # WARNING: moving following 4 lines to play_midi() causing
+  # first note to be skipped when new file is opened (why?)
+  use_real_time
 
-    addr = midi_in + "note_on"
-    note, vel = sync addr
-    addr_data = parse_addr addr
-    
-    # Play solo if velocity > 0, solo mode is on, and not recording bass or chord (to avoid conflicts)
-    play_midi_solo cfg, addr_data, note, vel if vel != 0 && cfg['solo']['on'] && !bass_rec && !chord_rec
-  end
+  addr = midi_in + "note_on"
+  note, vel = sync addr
+  addr_data = parse_addr addr
+  
+  # Play solo if velocity > 0, solo mode is on, and not recording bass or chord (to avoid conflicts)
+  play_midi_solo cfg, addr_data, note, vel if vel != 0 && cfg['solo']['on'] && !bass_rec && !chord_rec
 end
 
-with_effects fx_chain(cfg['bass']['fx']) do
-  live_loop :midi_bass do
-    # WARNING: use_real_time must be set to true for this to work
-    # WARNING: moving following 4 lines to play_midi() causing
-    # first note to be skipped when new file is opened (why?)
-    use_real_time
+live_loop :midi_bass do
+  # WARNING: use_real_time must be set to true for this to work
+  # WARNING: moving following 4 lines to play_midi() causing
+  # first note to be skipped when new file is opened (why?)
+  use_real_time
 
-    addr = midi_in + "note_on"
-    note, vel = sync addr
-    addr_data = parse_addr addr
-    
-    # Play bass if velocity > 0 and recording
-    play_midi_bass bass_rec, cfg, addr_data, note, vel, get(:beat) + 1 if vel != 0 && bass_rec
-  end
+  addr = midi_in + "note_on"
+  note, vel = sync addr
+  addr_data = parse_addr addr
+  
+  # Play bass if velocity > 0 and recording
+  play_midi_bass bass_rec, cfg, addr_data, note, vel, get(:beat) + 1 if vel != 0 && bass_rec
 end
 
-with_effects fx_chain(cfg['chord']['fx']) do
-  live_loop :midi_chord do
-    # WARNING: use_real_time must be set to true for this to work
-    # WARNING: moving following 4 lines to play_midi() causing
-    # first note to be skipped when new file is opened (why?)
-    use_real_time
+live_loop :midi_chord do
+  # WARNING: use_real_time must be set to true for this to work
+  # WARNING: moving following 4 lines to play_midi() causing
+  # first note to be skipped when new file is opened (why?)
+  use_real_time
 
-    addr = midi_in + "note_on"
-    note, vel = sync addr
-    addr_data = parse_addr addr
-    
-    # Play chord if velocity > 0 and recording  
-    play_midi_chord chord_rec, cfg, addr_data, note, vel, get(:beat) + 1 if vel != 0 && chord_rec
-  end
+  addr = midi_in + "note_on"
+  note, vel = sync addr
+  addr_data = parse_addr addr
+  
+  # Play chord if velocity > 0 and recording  
+  play_midi_chord chord_rec, cfg, addr_data, note, vel, get(:beat) + 1 if vel != 0 && chord_rec
 end
 
 
