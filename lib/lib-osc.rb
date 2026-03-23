@@ -144,23 +144,21 @@ define :init_osc_drums do |cfg|
 end
 
 define :update_osc_bass_points do |cfg|
-  osc_ctrl "/bass_pt_count", cfg['bass']['count']
-  osc_ctrl "/bass_tempo_factor", cfg['bass']['tempo_factor']
-  tonic_names = notes_to_names(cfg['bass']['tonics'])
-  pos = insert_after_each_element(cfg['bass']['pattern'], 0)
-  pts = [tonic_names, pos]
-  puts "BASS PTS:", pts
-  osc_ctrl("/bass_points", *[*tonic_names, *pos])
+  bass = cfg['bass']
+  osc_ctrl "/bass_pt_count", bass['count']
+  osc_ctrl "/bass_tempo_factor", bass['tempo_factor']
+  tonic_names = notes_to_names(bass['tonics'])
+  pos = bass['pattern'].flat_map {|x| [x, 0]}
+  osc_ctrl("/bass_points", *tonic_names, *pos)
 end
 
 define :update_osc_chord_points do |cfg|
-  osc_ctrl "/chord_pt_count", cfg['chord']['count']  
-  osc_ctrl "/chord_tempo_factor", cfg['chord']['tempo_factor']
-  tonic_names = notes_to_names(cfg['chord']['tonics'])
-  pos = insert_after_each_element(cfg['chord']['pattern'], 0)
-  pts = [tonic_names, pos]
-  puts "CHORD PTS:", pts
-  osc_ctrl("/chord_points", *[*tonic_names, *pos])
+  chord = cfg['chord']
+  osc_ctrl "/chord_pt_count", chord['count']
+  osc_ctrl "/chord_tempo_factor", chord['tempo_factor']
+  tonic_names = notes_to_names(chord['tonics'])
+  pos = chord['pattern'].flat_map {|x| [x, 0]}
+  osc_ctrl("/chord_points", *tonic_names, *pos)
   update_scale_match cfg
 end
 
