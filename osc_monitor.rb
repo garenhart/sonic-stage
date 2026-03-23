@@ -113,13 +113,20 @@ live_loop :midi_solo do
 
   addr = midi_in + "note_on"
   note, vel = sync addr
-  addr_data = parse_addr addr
   
   # Play solo if velocity > 0, solo mode is on, and not recording bass or chord (to avoid conflicts)
-  play_midi_solo cfg, addr_data, note, vel if vel != 0 && cfg['solo']['on'] && !bass_rec && !chord_rec
+  play_midi_solo cfg, note, vel if vel != 0 && cfg['solo']['on'] && !bass_rec && !chord_rec
 end
 
-live_loop :midi_bass do
+perf: reduce MIDI perf: reduce MIDI perf: reduce MIDI latency and remove debug overhead
+
+- Remove puts debug calls from fx_chain and update_osc_bass/chord_points
+- Fix fx_chain double lambda invocation (chain.call was called twice)
+- Drop unused addr_data/parse_addr from midi live loops and play_midi_* signatures
+- Drop unused bass_rec/chord_rec params from play_midi_bass/chord
+- Replace insert_after_each_element with flat_map; remove unused helper
+- Cache cfg['bass'] and cfg['chord'] locals to reduce repeated hash lookups
+- Check recording boolean before vel != 0 in midi loops for early short-circuit do
   # WARNING: use_real_time must be set to true for this to work
   # WARNING: moving following 4 lines to play_midi() causing
   # first note to be skipped when new file is opened (why?)
@@ -127,10 +134,9 @@ live_loop :midi_bass do
 
   addr = midi_in + "note_on"
   note, vel = sync addr
-  addr_data = parse_addr addr
   
-  # Play bass if velocity > 0 and recording
-  play_midi_bass bass_rec, cfg, addr_data, note, vel, get(:beat) + 1 if vel != 0 && bass_rec
+  # Play bass if recording and velocity > 0
+  play_midi_bass cfg, note, vel, get(:beat) + 1 if bass_rec && vel != 0
 end
 
 live_loop :midi_chord do
@@ -141,10 +147,9 @@ live_loop :midi_chord do
 
   addr = midi_in + "note_on"
   note, vel = sync addr
-  addr_data = parse_addr addr
   
-  # Play chord if velocity > 0 and recording  
-  play_midi_chord chord_rec, cfg, addr_data, note, vel, get(:beat) + 1 if vel != 0 && chord_rec
+  # Play chord if recording and velocity > 0
+  play_midi_chord cfg, note, vel, get(:beat) + 1 if chord_rec && vel != 0
 end
 
 

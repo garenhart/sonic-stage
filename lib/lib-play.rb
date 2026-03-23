@@ -247,14 +247,14 @@ define :play_midi do |cfg, addr_data, note, vel|
   end  
 end
 
-define :play_midi_solo do |cfg, addr_data, note, vel|
+define :play_midi_solo do |cfg, note, vel|
   with_effects fx_chain(cfg['solo']['fx']) do
     play_synth_note cfg['solo']['inst'].to_sym, note, vel/127.0, cfg['solo']['adsr']
   end
   animate_keyboard "solo", note, vel/127.0 if cfg['solo']['animate']
 end
 
-define :play_midi_bass do |bass_rec, cfg, addr_data, note, vel, next_beat|
+define :play_midi_bass do |cfg, note, vel, next_beat|
   with_effects fx_chain(cfg['bass']['fx']) do
     play_synth_note cfg['bass']['synth'].to_sym, note, vel/127.0, cfg['bass']['adsr']
   end
@@ -262,7 +262,7 @@ define :play_midi_bass do |bass_rec, cfg, addr_data, note, vel, next_beat|
   add_tonic_bass cfg, note, next_beat > cfg['bass']['count'] ? 1 : next_beat
 end
 
-define :play_midi_chord do |chord_rec, cfg, addr_data, note, vel, next_beat|
+define :play_midi_chord do |cfg, note, vel, next_beat|
   with_effects fx_chain(cfg['chord']['fx']) do
     play_synth_note cfg['chord']['synth'].to_sym, note, vel/127.0, cfg['chord']['adsr']
   end
