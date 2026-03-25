@@ -118,15 +118,7 @@ live_loop :midi_solo do
   play_midi_solo cfg, note, vel if vel != 0 && cfg['solo']['on'] && !bass_rec && !chord_rec
 end
 
-perf: reduce MIDI perf: reduce MIDI perf: reduce MIDI latency and remove debug overhead
-
-- Remove puts debug calls from fx_chain and update_osc_bass/chord_points
-- Fix fx_chain double lambda invocation (chain.call was called twice)
-- Drop unused addr_data/parse_addr from midi live loops and play_midi_* signatures
-- Drop unused bass_rec/chord_rec params from play_midi_bass/chord
-- Replace insert_after_each_element with flat_map; remove unused helper
-- Cache cfg['bass'] and cfg['chord'] locals to reduce repeated hash lookups
-- Check recording boolean before vel != 0 in midi loops for early short-circuit do
+live_loop :midi_bass do
   # WARNING: use_real_time must be set to true for this to work
   # WARNING: moving following 4 lines to play_midi() causing
   # first note to be skipped when new file is opened (why?)
