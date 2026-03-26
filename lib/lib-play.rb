@@ -255,6 +255,7 @@ define :play_midi_solo do |cfg, note, vel|
 end
 
 define :play_midi_bass do |cfg, note, vel, next_beat|
+  use_bpm cfg['tempo']
   with_effects fx_chain(cfg['bass']['fx']) do
     play_synth_note cfg['bass']['synth'].to_sym, note, vel/127.0, cfg['bass']['adsr']
   end
@@ -263,6 +264,7 @@ define :play_midi_bass do |cfg, note, vel, next_beat|
 end
 
 define :play_midi_chord do |cfg, note, vel, next_beat|
+  use_bpm cfg['tempo']
   with_effects fx_chain(cfg['chord']['fx']) do
     play_synth_note cfg['chord']['synth'].to_sym, note, vel/127.0, cfg['chord']['adsr']
   end
