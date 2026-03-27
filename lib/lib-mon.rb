@@ -34,6 +34,10 @@ define :drum_mon do |token, inst, n, cfg|
       init_drum_component cfg, inst, "amp", n[0]
     when "#{inst}_beats"
       init_drum_beat cfg, inst, token[2].to_i, n[0].to_i.to_s
+    when "#{inst}_reset_beats"
+      cfg['drums'][inst]['beats'] = "0" * cfg['drums']['count']
+      init_time_state_drums cfg
+      osc_ctrl "/#{inst}_beats_v", cfg['drums'][inst]['beats']
     when "#{inst}_env_adsr"
       init_drum_component cfg, inst, "adsr", n
     else
