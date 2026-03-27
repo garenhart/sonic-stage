@@ -47,3 +47,18 @@
 .rounded-corners5-matrix .widget {
     border-radius: 5px;
 }
+
+/* Modal popup opacity classes (applied via :host { class: X }) */
+:host(.gh-modal-inst) .popup {
+    opacity: 0.9;
+}
+
+:host(.gh-modal-reset) .popup {
+    opacity: 0.95;
+}
+
+/* ADSR overlay multixy widget */
+:host(.gh-adsr-overlay) {
+    background: transparent;
+    z-index: 10000;
+}
