@@ -6,14 +6,13 @@ Strips Open Stage Control JSON properties that match OSC schema defaults,
 removing verbosity without changing any widget behaviour.
 
 Usage:
-    python3 scripts/clean_osc_controller.py
-Outputs:
-    osc_controller.clean.json  (original is untouched)
-    prints a summary of lines before/after and properties removed
+    python3 scripts/clean_osc_controller.py              # writes osc_controller.clean.json
+    python3 scripts/clean_osc_controller.py --inplace    # overwrites osc_controller.json in place
 """
 
 import json
 import copy
+import sys
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -134,8 +133,9 @@ def clean_node(node):
 
 
 def main():
+    inplace = "--inplace" in sys.argv
     src = Path("osc_controller.json")
-    dst = Path("osc_controller.clean.json")
+    dst = src if inplace else Path("osc_controller.clean.json")
 
     print(f"Loading {src} …")
     with src.open() as f:
@@ -148,7 +148,11 @@ def main():
     cleaned = copy.deepcopy(data)
     clean_node(cleaned)
 
-    print(f"Writing {dst} …")
+    if inplace:
+        print(f"Writing {dst} (in-place) …")
+    else:
+        print(f"Writing {dst} …")
+
     with dst.open("w") as f:
         json.dump(cleaned, f, indent=2)
         f.write("\n")

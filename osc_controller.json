@@ -1,6 +1,6 @@
 {
   "createdWith": "Open Stage Control",
-  "version": "1.26.2",
+  "version": "1.30.2",
   "type": "session",
   "content": {
     "type": "root",
@@ -59,7 +59,8 @@
                         "align": "center",
                         "value": "Beats",
                         "vertical": false,
-                        "wrap": false
+                        "wrap": false,
+                        "interaction": false
                       },
                       {
                         "type": "input",
@@ -73,7 +74,8 @@
                         "asYouType": false,
                         "numeric": true,
                         "validation": "([1-9]|[1-9][0-9]|[1-9][0-9][0-9])",
-                        "maxLength": 2
+                        "maxLength": 2,
+                        "noCanvas": false
                       }
                     ]
                   },
@@ -117,7 +119,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "dropdown",
@@ -157,7 +160,8 @@
                         "value": "Mode",
                         "align": "center",
                         "vertical": false,
-                        "wrap": false
+                        "wrap": false,
+                        "interaction": false
                       },
                       {
                         "type": "dropdown",
@@ -206,7 +210,8 @@
                             "value": "Scale",
                             "align": "center",
                             "vertical": false,
-                            "wrap": false
+                            "wrap": false,
+                            "interaction": false
                           },
                           {
                             "type": "led",
@@ -225,7 +230,8 @@
                               "max": 1
                             },
                             "logScale": false,
-                            "value": "@{scale_match}"
+                            "value": "@{scale_match}",
+                            "interaction": false
                           }
                         ]
                       },
@@ -305,7 +311,8 @@
                         "asYouType": false,
                         "numeric": true,
                         "validation": "([1-9]|[1-9][0-9])",
-                        "maxLength": 2
+                        "maxLength": 2,
+                        "noCanvas": false
                       },
                       {
                         "type": "dropdown",
@@ -341,7 +348,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -359,7 +367,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "variable",
@@ -392,7 +401,8 @@
                         "mode": "momentary",
                         "doubleTap": false,
                         "decoupled": false,
-                        "onValue": "globals.show_comment(\"\")\n"
+                        "onValue": "globals.show_comment(\"\")\n",
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -408,7 +418,8 @@
                         "mode": "momentary",
                         "doubleTap": false,
                         "decoupled": false,
-                        "onValue": "globals.show_comment(\"\")\nset(\"bass_pt_count\", get(\"bass_pt_count\")*2)"
+                        "onValue": "globals.show_comment(\"\")\nset(\"bass_pt_count\", get(\"bass_pt_count\")*2)",
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -424,7 +435,8 @@
                         "mode": "momentary",
                         "doubleTap": false,
                         "decoupled": false,
-                        "onValue": "globals.show_comment(\"\")\nset(\"bass_pt_count\", get(\"bass_pt_count\")/2)"
+                        "onValue": "globals.show_comment(\"\")\nset(\"bass_pt_count\", get(\"bass_pt_count\")/2)",
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -442,7 +454,8 @@
                         "on": 1,
                         "off": 0,
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       }
                     ]
                   },
@@ -485,7 +498,10 @@
                             "sensitivity": 1,
                             "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/bass_line_updated', ...value)\n  // also add/remove touched point to/from the array\n  // if in delete mode\n  if (get(\"bass_del\") == 1) {\n    const pts = get(\"selected_pts_bass\")\n    const index = pts.indexOf(event.handle);\n    if (index > -1) { // only splice array when item is found\n      pts.splice(index, 1) // 2nd parameter means remove one item only\n    }\n    else {\n      pts.push(event.handle)\n    }\n    set(\"selected_pts_bass\", pts)\n  }\n}",
                             "doubleTap": false,
-                            "axisLock": ""
+                            "axisLock": "",
+                            "pointsAttr": [],
+                            "stepsX": false,
+                            "stepsY": false
                           }
                         ]
                       },
@@ -528,7 +544,8 @@
                             "on": 1,
                             "off": 0,
                             "mode": "tap",
-                            "decoupled": false
+                            "decoupled": false,
+                            "click": false
                           },
                           {
                             "type": "modal",
@@ -654,7 +671,10 @@
                                           1,
                                           0
                                         ],
-                                        "onValue": "console.log(value)"
+                                        "onValue": "console.log(value)",
+                                        "pointsAttr": [],
+                                        "stepsX": false,
+                                        "stepsY": false
                                       },
                                       {
                                         "type": "plot",
@@ -677,7 +697,8 @@
                                         "logScaleX": false,
                                         "logScaleY": false,
                                         "origin": "auto",
-                                        "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}"
+                                        "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}",
+                                        "interaction": false
                                       }
                                     ]
                                   },
@@ -738,7 +759,8 @@
                                                 "logScale": false,
                                                 "sensitivity": 1,
                                                 "steps": "",
-                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                "touchZone": "all"
                                               },
                                               {
                                                 "type": "button",
@@ -759,7 +781,8 @@
                                                 "off": 0,
                                                 "mode": "push",
                                                 "doubleTap": false,
-                                                "decoupled": false
+                                                "decoupled": false,
+                                                "click": false
                                               }
                                             ]
                                           },
@@ -794,7 +817,8 @@
                                                 "logScale": false,
                                                 "sensitivity": 1,
                                                 "steps": "",
-                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                "touchZone": "all"
                                               },
                                               {
                                                 "type": "button",
@@ -814,7 +838,8 @@
                                                 "off": 0,
                                                 "mode": "push",
                                                 "doubleTap": false,
-                                                "decoupled": false
+                                                "decoupled": false,
+                                                "click": false
                                               }
                                             ]
                                           }
@@ -870,7 +895,8 @@
                                                 "logScale": false,
                                                 "sensitivity": 1,
                                                 "steps": "",
-                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                "touchZone": "all"
                                               },
                                               {
                                                 "type": "button",
@@ -890,7 +916,8 @@
                                                 "off": 0,
                                                 "mode": "push",
                                                 "doubleTap": false,
-                                                "decoupled": false
+                                                "decoupled": false,
+                                                "click": false
                                               }
                                             ]
                                           },
@@ -925,7 +952,8 @@
                                                 "logScale": false,
                                                 "sensitivity": 1,
                                                 "steps": "",
-                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                "touchZone": "all"
                                               },
                                               {
                                                 "type": "button",
@@ -945,7 +973,8 @@
                                                 "off": 0,
                                                 "mode": "push",
                                                 "doubleTap": false,
-                                                "decoupled": false
+                                                "decoupled": false,
+                                                "click": false
                                               }
                                             ]
                                           }
@@ -971,7 +1000,8 @@
                                         "off": 0,
                                         "mode": "toggle",
                                         "doubleTap": false,
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       },
                                       {
                                         "type": "button",
@@ -984,13 +1014,15 @@
                                         "on": 1,
                                         "off": 0,
                                         "doubleTap": false,
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
                                     ]
                                   }
                                 ]
                               }
-                            ]
+                            ],
+                            "click": false
                           },
                           {
                             "type": "button",
@@ -1006,7 +1038,8 @@
                             "off": 0,
                             "mode": "tap",
                             "doubleTap": false,
-                            "decoupled": false
+                            "decoupled": false,
+                            "click": false
                           },
                           {
                             "type": "fader",
@@ -1033,7 +1066,8 @@
                             "sensitivity": 1,
                             "steps": "",
                             "origin": "auto",
-                            "colorKnob": "auto"
+                            "colorKnob": "auto",
+                            "touchZone": "all"
                           },
                           {
                             "type": "button",
@@ -1049,7 +1083,8 @@
                             "mode": "toggle",
                             "doubleTap": false,
                             "onValue": "if (get('bass_auto') === 0) { set('bass_update', 1)}",
-                            "decoupled": false
+                            "decoupled": false,
+                            "click": false
                           }
                         ]
                       }
@@ -1080,7 +1115,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -1097,7 +1133,8 @@
                         "off": 0,
                         "mode": "push",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "variable",
@@ -1139,7 +1176,8 @@
                         "numeric": true,
                         "validation": "([1-9]|[1-9][0-9])",
                         "maxLength": 2,
-                        "value": 16
+                        "value": 16,
+                        "noCanvas": false
                       },
                       {
                         "type": "dropdown",
@@ -1175,7 +1213,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -1193,7 +1232,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "variable",
@@ -1207,7 +1247,7 @@
                     "type": "panel",
                     "top": "auto-Infinity",
                     "left": "auto-Infinity",
-                    "id": "panel_bass_extra",
+                    "id": "panel_chord_extra",
                     "width": "4%",
                     "padding": 0,
                     "layout": "vertical",
@@ -1228,7 +1268,8 @@
                         "off": 0,
                         "mode": "momentary",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -1244,7 +1285,8 @@
                         "off": 0,
                         "mode": "momentary",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -1260,7 +1302,8 @@
                         "off": 0,
                         "mode": "momentary",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -1278,7 +1321,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       }
                     ]
                   },
@@ -1319,7 +1363,10 @@
                             "sensitivity": 1,
                             "onTouch": "// GH - \"Snap-to-grid\" script adjusting all coordinates to nearest whole number\nif ((event.handle !== undefined) && (event.type === 'stop')) {\n  for (var i=0; i<value.length; i++) {\n    value[i] = Number(value[i].toFixed())\n  }\n  set(this, value)\n  send('/chord_line_updated', ...value)\n  // also add/remove touched point to/from the array\n  // if in delete mode\n  if (get(\"chord_del\") == 1) {\n    const pts = get(\"selected_pts_chord\")\n    const index = pts.indexOf(event.handle);\n    if (index > -1) { // only splice array when item is found\n      pts.splice(index, 1) // 2nd parameter means remove one item only\n    }\n    else {\n      pts.push(event.handle)\n    }\n    set(\"selected_pts_chord\", pts)\n  }\n  \n}",
                             "doubleTap": false,
-                            "axisLock": ""
+                            "axisLock": "",
+                            "pointsAttr": [],
+                            "stepsX": false,
+                            "stepsY": false
                           }
                         ]
                       },
@@ -1360,7 +1407,8 @@
                             "on": 1,
                             "off": 0,
                             "mode": "tap",
-                            "decoupled": false
+                            "decoupled": false,
+                            "click": false
                           },
                           {
                             "type": "modal",
@@ -1486,7 +1534,10 @@
                                           1,
                                           0
                                         ],
-                                        "onValue": "console.log(value)"
+                                        "onValue": "console.log(value)",
+                                        "pointsAttr": [],
+                                        "stepsX": false,
+                                        "stepsY": false
                                       },
                                       {
                                         "type": "plot",
@@ -1509,7 +1560,8 @@
                                         "logScaleX": false,
                                         "logScaleY": false,
                                         "origin": "auto",
-                                        "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}"
+                                        "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}",
+                                        "interaction": false
                                       }
                                     ]
                                   },
@@ -1570,7 +1622,8 @@
                                                 "logScale": false,
                                                 "sensitivity": 1,
                                                 "steps": "",
-                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                "touchZone": "all"
                                               },
                                               {
                                                 "type": "button",
@@ -1591,7 +1644,8 @@
                                                 "off": 0,
                                                 "mode": "push",
                                                 "doubleTap": false,
-                                                "decoupled": false
+                                                "decoupled": false,
+                                                "click": false
                                               }
                                             ]
                                           },
@@ -1626,7 +1680,8 @@
                                                 "logScale": false,
                                                 "sensitivity": 1,
                                                 "steps": "",
-                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                "touchZone": "all"
                                               },
                                               {
                                                 "type": "button",
@@ -1646,7 +1701,8 @@
                                                 "off": 0,
                                                 "mode": "push",
                                                 "doubleTap": false,
-                                                "decoupled": false
+                                                "decoupled": false,
+                                                "click": false
                                               }
                                             ]
                                           }
@@ -1702,7 +1758,8 @@
                                                 "logScale": false,
                                                 "sensitivity": 1,
                                                 "steps": "",
-                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                "touchZone": "all"
                                               },
                                               {
                                                 "type": "button",
@@ -1722,7 +1779,8 @@
                                                 "off": 0,
                                                 "mode": "push",
                                                 "doubleTap": false,
-                                                "decoupled": false
+                                                "decoupled": false,
+                                                "click": false
                                               }
                                             ]
                                           },
@@ -1757,7 +1815,8 @@
                                                 "logScale": false,
                                                 "sensitivity": 1,
                                                 "steps": "",
-                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                "touchZone": "all"
                                               },
                                               {
                                                 "type": "button",
@@ -1777,7 +1836,8 @@
                                                 "off": 0,
                                                 "mode": "push",
                                                 "doubleTap": false,
-                                                "decoupled": false
+                                                "decoupled": false,
+                                                "click": false
                                               }
                                             ]
                                           }
@@ -1803,7 +1863,8 @@
                                         "off": 0,
                                         "mode": "toggle",
                                         "doubleTap": false,
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       },
                                       {
                                         "type": "button",
@@ -1816,13 +1877,15 @@
                                         "on": 1,
                                         "off": 0,
                                         "doubleTap": false,
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
                                     ]
                                   }
                                 ]
                               }
-                            ]
+                            ],
+                            "click": false
                           },
                           {
                             "type": "button",
@@ -1838,7 +1901,8 @@
                             "on": 1,
                             "off": 0,
                             "mode": "tap",
-                            "decoupled": false
+                            "decoupled": false,
+                            "click": false
                           },
                           {
                             "type": "fader",
@@ -1865,7 +1929,8 @@
                             "sensitivity": 1,
                             "steps": "",
                             "origin": "auto",
-                            "colorKnob": "auto"
+                            "colorKnob": "auto",
+                            "touchZone": "all"
                           },
                           {
                             "type": "button",
@@ -1883,7 +1948,8 @@
                             "mode": "toggle",
                             "doubleTap": false,
                             "onValue": "if (get('chord_auto') === 0) { set('chord_update', 1)}",
-                            "decoupled": false
+                            "decoupled": false,
+                            "click": false
                           }
                         ]
                       }
@@ -1914,7 +1980,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -1931,7 +1998,8 @@
                         "off": 0,
                         "mode": "push",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "variable",
@@ -1971,7 +2039,8 @@
                         "numeric": true,
                         "validation": "([1-9]|[1-9][0-9])",
                         "maxLength": 2,
-                        "value": 16
+                        "value": 16,
+                        "noCanvas": false
                       },
                       {
                         "type": "dropdown",
@@ -2005,7 +2074,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -2023,7 +2093,8 @@
                         "off": 0,
                         "mode": "toggle",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "variable",
@@ -2057,7 +2128,8 @@
                         "off": 0,
                         "mode": "momentary",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
@@ -2075,13 +2147,14 @@
                         "off": 0,
                         "mode": "momentary",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       },
                       {
                         "type": "button",
                         "top": "auto-Infinity",
                         "left": "auto-Infinity",
-                        "id": "chord_half",
+                        "id": "drum_half",
                         "comments": "Chord beats halved",
                         "height": "12%",
                         "onValue": "globals.show_comment(\"\")\nset(\"beat_pt_count\", get(\"beat_pt_count\")/2)",
@@ -2093,7 +2166,8 @@
                         "off": 0,
                         "mode": "momentary",
                         "doubleTap": false,
-                        "decoupled": false
+                        "decoupled": false,
+                        "click": false
                       }
                     ]
                   },
@@ -2181,9 +2255,11 @@
                                         "on": 1,
                                         "off": 0,
                                         "mode": "tap",
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
-                                    ]
+                                    ],
+                                    "click": false
                                   }
                                 ]
                               },
@@ -2201,7 +2277,8 @@
                                 "on": 1,
                                 "off": 0,
                                 "mode": "tap",
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               },
                               {
                                 "type": "modal",
@@ -2275,7 +2352,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\nsetVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\n"
+                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\nsetVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\n",
+                                        "click": false
                                       },
                                       {
                                         "type": "range",
@@ -2303,7 +2381,8 @@
                                         "sensitivity": 1,
                                         "steps": 16,
                                         "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_cymbal_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
-                                        "colorKnob": "auto"
+                                        "colorKnob": "auto",
+                                        "touchZone": "all"
                                       },
                                       {
                                         "type": "button",
@@ -2321,7 +2400,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\nsetVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_cymbal_inst', 'inst') + \": \")\nsetVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")",
+                                        "click": false
                                       },
                                       {
                                         "type": "button",
@@ -2339,7 +2419,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "var add_remove = value===0 ? \"Add to\" : \"Remove from\"\nglobals.show_comment(\"\", getVar('modal_cymbal_inst', 'inst') + \": \" + add_remove)"
+                                        "onValue": "var add_remove = value===0 ? \"Add to\" : \"Remove from\"\nglobals.show_comment(\"\", getVar('modal_cymbal_inst', 'inst') + \": \" + add_remove)",
+                                        "click": false
                                       }
                                     ]
                                   },
@@ -2431,7 +2512,10 @@
                                               1,
                                               0
                                             ],
-                                            "onValue": "console.log(value)"
+                                            "onValue": "console.log(value)",
+                                            "pointsAttr": [],
+                                            "stepsX": false,
+                                            "stepsY": false
                                           },
                                           {
                                             "type": "plot",
@@ -2454,7 +2538,8 @@
                                             "logScaleX": false,
                                             "logScaleY": false,
                                             "origin": "auto",
-                                            "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}"
+                                            "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}",
+                                            "interaction": false
                                           }
                                         ]
                                       },
@@ -2515,7 +2600,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -2536,7 +2622,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               },
@@ -2571,7 +2658,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -2591,7 +2679,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               }
@@ -2647,7 +2736,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -2667,7 +2757,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               },
@@ -2702,7 +2793,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -2722,7 +2814,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               }
@@ -2732,7 +2825,8 @@
                                       }
                                     ]
                                   }
-                                ]
+                                ],
+                                "click": false
                               },
                               {
                                 "type": "button",
@@ -2748,7 +2842,8 @@
                                 "off": 0,
                                 "mode": "tap",
                                 "doubleTap": false,
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               },
                               {
                                 "type": "fader",
@@ -2776,7 +2871,8 @@
                                 "sensitivity": 1,
                                 "steps": "",
                                 "origin": "auto",
-                                "colorKnob": "auto"
+                                "colorKnob": "auto",
+                                "touchZone": "all"
                               },
                               {
                                 "type": "button",
@@ -2794,7 +2890,8 @@
                                 "mode": "toggle",
                                 "doubleTap": false,
                                 "decoupled": false,
-                                "onValue": "if (get('drums_auto') === 0) { set('drums_update', 1)}"
+                                "onValue": "if (get('drums_auto') === 0) { set('drums_update', 1)}",
+                                "click": false
                               }
                             ]
                           }
@@ -2874,9 +2971,11 @@
                                         "on": 1,
                                         "off": 0,
                                         "mode": "tap",
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
-                                    ]
+                                    ],
+                                    "click": false
                                   }
                                 ]
                               },
@@ -2894,7 +2993,8 @@
                                 "off": 0,
                                 "mode": "tap",
                                 "doubleTap": false,
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               },
                               {
                                 "type": "modal",
@@ -2968,7 +3068,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\nsetVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\nsetVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")",
+                                        "click": false
                                       },
                                       {
                                         "type": "range",
@@ -2996,7 +3097,8 @@
                                         "sensitivity": 1,
                                         "steps": 16,
                                         "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_snare_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
-                                        "colorKnob": "auto"
+                                        "colorKnob": "auto",
+                                        "touchZone": "all"
                                       },
                                       {
                                         "type": "button",
@@ -3014,7 +3116,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\nsetVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_snare_inst', 'inst') + \": \")\nsetVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")",
+                                        "click": false
                                       },
                                       {
                                         "type": "button",
@@ -3032,7 +3135,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "var add_remove = value===0 ? \"Add to\" : \"Remove from\"\nglobals.show_comment(\"\", getVar('modal_snare_inst', 'inst') + \": \" + add_remove)"
+                                        "onValue": "var add_remove = value===0 ? \"Add to\" : \"Remove from\"\nglobals.show_comment(\"\", getVar('modal_snare_inst', 'inst') + \": \" + add_remove)",
+                                        "click": false
                                       }
                                     ]
                                   },
@@ -3124,7 +3228,10 @@
                                               1,
                                               0
                                             ],
-                                            "onValue": "console.log(value)"
+                                            "onValue": "console.log(value)",
+                                            "pointsAttr": [],
+                                            "stepsX": false,
+                                            "stepsY": false
                                           },
                                           {
                                             "type": "plot",
@@ -3147,7 +3254,8 @@
                                             "logScaleX": false,
                                             "logScaleY": false,
                                             "origin": "auto",
-                                            "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}"
+                                            "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}",
+                                            "interaction": false
                                           }
                                         ]
                                       },
@@ -3208,7 +3316,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -3229,7 +3338,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               },
@@ -3264,7 +3374,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -3284,7 +3395,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               }
@@ -3340,7 +3452,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -3360,7 +3473,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               },
@@ -3395,7 +3509,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -3415,7 +3530,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               }
@@ -3425,7 +3541,8 @@
                                       }
                                     ]
                                   }
-                                ]
+                                ],
+                                "click": false
                               },
                               {
                                 "type": "button",
@@ -3441,7 +3558,8 @@
                                 "off": 0,
                                 "mode": "tap",
                                 "doubleTap": false,
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               },
                               {
                                 "type": "fader",
@@ -3469,7 +3587,8 @@
                                 "sensitivity": 1,
                                 "steps": "",
                                 "origin": "auto",
-                                "colorKnob": "auto"
+                                "colorKnob": "auto",
+                                "touchZone": "all"
                               },
                               {
                                 "type": "button",
@@ -3487,7 +3606,8 @@
                                 "mode": "toggle",
                                 "doubleTap": false,
                                 "onValue": "if (get('drums_auto') === 0) { set('drums_update', 1)}",
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               }
                             ]
                           }
@@ -3569,9 +3689,11 @@
                                         "on": 1,
                                         "off": 0,
                                         "mode": "tap",
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
-                                    ]
+                                    ],
+                                    "click": false
                                   }
                                 ]
                               },
@@ -3589,7 +3711,8 @@
                                 "on": 1,
                                 "off": 0,
                                 "mode": "tap",
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               },
                               {
                                 "type": "modal",
@@ -3658,7 +3781,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\nsetVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\nsetVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")",
+                                        "click": false
                                       },
                                       {
                                         "type": "range",
@@ -3683,7 +3807,8 @@
                                         "sensitivity": 1,
                                         "steps": 16,
                                         "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\n// set modal label color to orange if range is modified \nsetVar(\"modal_kick_inst\", \"inst_color\", JSON.stringify(value) == JSON.stringify([0, 1]) ? \"auto\" : \"darkorange\")\nconsole.log(\"range: \" + value)",
-                                        "colorKnob": "auto"
+                                        "colorKnob": "auto",
+                                        "touchZone": "all"
                                       },
                                       {
                                         "type": "button",
@@ -3699,7 +3824,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\nsetVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")"
+                                        "onValue": "globals.show_comment(value, getVar('modal_kick_inst', 'inst') + \": \")\nsetVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")",
+                                        "click": false
                                       },
                                       {
                                         "type": "button",
@@ -3715,7 +3841,8 @@
                                         "mode": "toggle",
                                         "doubleTap": false,
                                         "decoupled": false,
-                                        "onValue": "var add_remove = value===0 ? \"Add to\" : \"Remove from\"\nglobals.show_comment(\"\", getVar('modal_kick_inst', 'inst') + \": \" + add_remove)"
+                                        "onValue": "var add_remove = value===0 ? \"Add to\" : \"Remove from\"\nglobals.show_comment(\"\", getVar('modal_kick_inst', 'inst') + \": \" + add_remove)",
+                                        "click": false
                                       }
                                     ]
                                   },
@@ -3807,7 +3934,10 @@
                                               1,
                                               0
                                             ],
-                                            "onValue": "console.log(value)"
+                                            "onValue": "console.log(value)",
+                                            "pointsAttr": [],
+                                            "stepsX": false,
+                                            "stepsY": false
                                           },
                                           {
                                             "type": "plot",
@@ -3830,7 +3960,8 @@
                                             "logScaleX": false,
                                             "logScaleY": false,
                                             "origin": "auto",
-                                            "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}"
+                                            "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}",
+                                            "interaction": false
                                           }
                                         ]
                                       },
@@ -3891,7 +4022,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -3912,7 +4044,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               },
@@ -3947,7 +4080,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -3967,7 +4101,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               }
@@ -4023,7 +4158,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -4043,7 +4179,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               },
@@ -4078,7 +4215,8 @@
                                                     "logScale": false,
                                                     "sensitivity": 1,
                                                     "steps": "",
-                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                                    "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                                    "touchZone": "all"
                                                   },
                                                   {
                                                     "type": "button",
@@ -4098,7 +4236,8 @@
                                                     "off": 0,
                                                     "mode": "push",
                                                     "doubleTap": false,
-                                                    "decoupled": false
+                                                    "decoupled": false,
+                                                    "click": false
                                                   }
                                                 ]
                                               }
@@ -4108,7 +4247,8 @@
                                       }
                                     ]
                                   }
-                                ]
+                                ],
+                                "click": false
                               },
                               {
                                 "type": "button",
@@ -4124,7 +4264,8 @@
                                 "on": 1,
                                 "off": 0,
                                 "mode": "tap",
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               },
                               {
                                 "type": "fader",
@@ -4152,7 +4293,8 @@
                                 "sensitivity": 1,
                                 "steps": "",
                                 "origin": "auto",
-                                "colorKnob": "auto"
+                                "colorKnob": "auto",
+                                "touchZone": "all"
                               },
                               {
                                 "type": "button",
@@ -4170,7 +4312,8 @@
                                 "mode": "toggle",
                                 "doubleTap": false,
                                 "decoupled": false,
-                                "onValue": "if (get('drums_auto') === 0) { set('drums_update', 1)}"
+                                "onValue": "if (get('drums_auto') === 0) { set('drums_update', 1)}",
+                                "click": false
                               }
                             ]
                           }
@@ -4316,7 +4459,8 @@
                     "off": 0,
                     "mode": "tap",
                     "doubleTap": false,
-                    "decoupled": false
+                    "decoupled": false,
+                    "click": false
                   },
                   {
                     "type": "button",
@@ -4331,7 +4475,8 @@
                     "off": 0,
                     "mode": "tap",
                     "doubleTap": false,
-                    "decoupled": false
+                    "decoupled": false,
+                    "click": false
                   },
                   {
                     "type": "input",
@@ -4344,7 +4489,8 @@
                     "asYouType": false,
                     "numeric": true,
                     "validation": "([1-9]|[1-9][0-9]|[1-9][0-9][0-9])",
-                    "maxLength": 3
+                    "maxLength": 3,
+                    "noCanvas": false
                   },
                   {
                     "type": "button",
@@ -4361,7 +4507,8 @@
                     "off": 0,
                     "mode": "tap",
                     "doubleTap": false,
-                    "decoupled": false
+                    "decoupled": false,
+                    "click": false
                   },
                   {
                     "type": "button",
@@ -4377,7 +4524,8 @@
                     "off": 0,
                     "mode": "toggle",
                     "doubleTap": false,
-                    "decoupled": false
+                    "decoupled": false,
+                    "click": false
                   },
                   {
                     "type": "button",
@@ -4393,7 +4541,8 @@
                     "off": 0,
                     "mode": "tap",
                     "doubleTap": false,
-                    "decoupled": false
+                    "decoupled": false,
+                    "click": false
                   },
                   {
                     "type": "modal",
@@ -4518,7 +4667,10 @@
                                   1,
                                   0
                                 ],
-                                "onValue": "console.log(value)"
+                                "onValue": "console.log(value)",
+                                "pointsAttr": [],
+                                "stepsX": false,
+                                "stepsY": false
                               },
                               {
                                 "type": "plot",
@@ -4541,7 +4693,8 @@
                                 "logScaleX": false,
                                 "logScaleY": false,
                                 "origin": "auto",
-                                "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}"
+                                "value": "JS{{\n        var result = [[0, 0]];\n        var array = @{@{parent.id}_adsr};\n        for (var i = 0; i < 4; i++) {\n            result.push([array[i*2], array[i*2+1]]);\n        }\n        return result;\n}}",
+                                "interaction": false
                               }
                             ]
                           },
@@ -4600,7 +4753,8 @@
                                         "logScale": false,
                                         "sensitivity": 1,
                                         "steps": "",
-                                        "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                        "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                        "touchZone": "all"
                                       },
                                       {
                                         "type": "button",
@@ -4621,7 +4775,8 @@
                                         "off": 0,
                                         "mode": "push",
                                         "doubleTap": false,
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
                                     ]
                                   },
@@ -4656,7 +4811,8 @@
                                         "logScale": false,
                                         "sensitivity": 1,
                                         "steps": "",
-                                        "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                        "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                        "touchZone": "all"
                                       },
                                       {
                                         "type": "button",
@@ -4676,7 +4832,8 @@
                                         "off": 0,
                                         "mode": "push",
                                         "doubleTap": false,
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
                                     ]
                                   }
@@ -4732,7 +4889,8 @@
                                         "logScale": false,
                                         "sensitivity": 1,
                                         "steps": "",
-                                        "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                        "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                        "touchZone": "all"
                                       },
                                       {
                                         "type": "button",
@@ -4752,7 +4910,8 @@
                                         "off": 0,
                                         "mode": "push",
                                         "doubleTap": false,
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
                                     ]
                                   },
@@ -4787,7 +4946,8 @@
                                         "logScale": false,
                                         "sensitivity": 1,
                                         "steps": "",
-                                        "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)"
+                                        "onValue": "if (getVar('this', 'r').max < value[1]) {\n  // Set range max to next smallest int greater than value[1]\n  setVar('this', 'r', {\"min\": 0, \"max\": Math.ceil(value[1])})\n}\nglobals.show_comment(value)",
+                                        "touchZone": "all"
                                       },
                                       {
                                         "type": "button",
@@ -4807,7 +4967,8 @@
                                         "off": 0,
                                         "mode": "push",
                                         "doubleTap": false,
-                                        "decoupled": false
+                                        "decoupled": false,
+                                        "click": false
                                       }
                                     ]
                                   }
@@ -4833,7 +4994,8 @@
                                 "off": 0,
                                 "mode": "toggle",
                                 "doubleTap": false,
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               },
                               {
                                 "type": "button",
@@ -4846,13 +5008,15 @@
                                 "on": 1,
                                 "off": 0,
                                 "doubleTap": false,
-                                "decoupled": false
+                                "decoupled": false,
+                                "click": false
                               }
                             ]
                           }
                         ]
                       }
-                    ]
+                    ],
+                    "click": false
                   },
                   {
                     "type": "button",
@@ -4868,7 +5032,8 @@
                     "off": 0,
                     "mode": "tap",
                     "doubleTap": false,
-                    "decoupled": false
+                    "decoupled": false,
+                    "click": false
                   },
                   {
                     "type": "input",
@@ -4880,7 +5045,8 @@
                     "asYouType": false,
                     "numeric": false,
                     "validation": "",
-                    "maxLength": ""
+                    "maxLength": "",
+                    "noCanvas": false
                   },
                   {
                     "type": "file",
@@ -4893,7 +5059,8 @@
                     "hidePath": true,
                     "directory": "@{cfg_path}",
                     "extension": "*.json",
-                    "allowDir": false
+                    "allowDir": false,
+                    "click": false
                   },
                   {
                     "type": "button",
@@ -4908,7 +5075,8 @@
                     "off": 0,
                     "mode": "momentary",
                     "doubleTap": false,
-                    "decoupled": false
+                    "decoupled": false,
+                    "click": false
                   }
                 ]
               },
@@ -5228,7 +5396,8 @@
               0
             ],
             "onValue": "set('bp', 0)\nset('bp_pos', 0)\n\n//set('bp', 3)\n//set('bp_pos', [0, 0, 0, 0, 0, 0])\n\n",
-            "decoupled": false
+            "decoupled": false,
+            "click": false
           },
           {
             "type": "variable",
@@ -5252,7 +5421,8 @@
             "mode": "push",
             "doubleTap": false,
             "onValue": "set('bp', 3)\nset('bp_pos', [1, 0.5, 5, 0.2, 14, 0.8])\n//updateProp('multixy_2', 'value')",
-            "decoupled": false
+            "decoupled": false,
+            "click": false
           },
           {
             "type": "range",
@@ -5281,7 +5451,8 @@
             "sensitivity": 1,
             "steps": 5,
             "onValue": "console.log(value)",
-            "colorKnob": "auto"
+            "colorKnob": "auto",
+            "touchZone": "all"
           }
         ]
       }
