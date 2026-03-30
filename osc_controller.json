@@ -5097,10 +5097,10 @@
           },
           {
             "type": "encoder",
-            "id": "encoder_cymbal_shift_lg",
-            "visible": "@{cymbal_shift_active}",
+            "id": "encoder_shift_lg",
+            "visible": "JS{{ return @{cymbal_shift_active} || @{snare_shift_active} || @{kick_shift_active} }}",
             "interaction": false,
-            "top": "33%",
+            "top": "JS{{ if (@{cymbal_shift_active}) return '33%'; if (@{snare_shift_active}) return '50%'; return '67%'; }}",
             "left": "82%",
             "width": 120,
             "height": 120,
@@ -5108,7 +5108,7 @@
             "colorText": "VAR{color, auto}",
             "colorWidget": "VAR{color, auto}",
             "css": ":host {\n  background: var(--color-background);\n  border: 2px solid var(--color-widget);\n}\n.label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
-            "html": "<div class=\"label\">\n  <h1>@{cymbal_pitch_shift}</h1>\n</div>",
+            "html": "JS{{ if (@{cymbal_shift_active}) return '<div class=\"label\"><h1>'+@{cymbal_pitch_shift}+'</h1></div>'; if (@{snare_shift_active}) return '<div class=\"label\"><h1>'+@{snare_pitch_shift}+'</h1></div>'; if (@{kick_shift_active}) return '<div class=\"label\"><h1>'+@{kick_pitch_shift}+'</h1></div>'; return ''; }}",
             "mode": "circular",
             "doubleTap": false,
             "range": {
@@ -5120,61 +5120,7 @@
             "back": -1,
             "forth": 1,
             "release": "",
-            "linkId": "cymbal_shift_link"
-          },
-          {
-            "type": "encoder",
-            "id": "encoder_snare_shift_lg",
-            "visible": "@{snare_shift_active}",
-            "interaction": false,
-            "top": "50%",
-            "left": "82%",
-            "width": 120,
-            "height": 120,
-            "expand": "false",
-            "colorText": "VAR{color, auto}",
-            "colorWidget": "VAR{color, auto}",
-            "css": ":host {\n  background: var(--color-background);\n  border: 2px solid var(--color-widget);\n}\n.label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
-            "html": "<div class=\"label\">\n  <h1>@{snare_pitch_shift}</h1>\n</div>",
-            "mode": "circular",
-            "doubleTap": false,
-            "range": {
-              "min": 0,
-              "max": 1
-            },
-            "sensitivity": 1,
-            "ticks": 12,
-            "back": -1,
-            "forth": 1,
-            "release": "",
-            "linkId": "snare_shift_link"
-          },
-          {
-            "type": "encoder",
-            "id": "encoder_kick_shift_lg",
-            "visible": "@{kick_shift_active}",
-            "interaction": false,
-            "top": "67%",
-            "left": "82%",
-            "width": 120,
-            "height": 120,
-            "expand": "false",
-            "colorText": "VAR{color, auto}",
-            "colorWidget": "VAR{color, auto}",
-            "css": ":host {\n  background: var(--color-background);\n  border: 2px solid var(--color-widget);\n}\n.label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
-            "html": "<div class=\"label\">\n  <h1>@{kick_pitch_shift}</h1>\n</div>",
-            "mode": "circular",
-            "doubleTap": false,
-            "range": {
-              "min": 0,
-              "max": 1
-            },
-            "sensitivity": 1,
-            "ticks": 12,
-            "back": -1,
-            "forth": 1,
-            "release": "",
-            "linkId": "kick_shift_link"
+            "linkId": "JS{{ if (@{cymbal_shift_active}) return 'cymbal_shift_link'; if (@{snare_shift_active}) return 'snare_shift_link'; return 'kick_shift_link'; }}"
           },
           {
             "type": "variable",
@@ -5416,19 +5362,19 @@
             "type": "variable",
             "id": "cymbal_pitch_shift",
             "value": 0,
-            "onValue": "setVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_cymbal_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_cymbal_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
+            "onValue": "setVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_cymbal_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
           },
           {
             "type": "variable",
             "id": "snare_pitch_shift",
             "value": 0,
-            "onValue": "  setVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"encoder_snare_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"encoder_snare_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
+            "onValue": "  setVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"encoder_snare_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"encoder_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
           },
           {
             "type": "variable",
             "id": "kick_pitch_shift",
             "value": 0,
-            "onValue": "setVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_kick_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_kick_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
+            "onValue": "setVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_kick_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
           },
           {
             "type": "variable",
