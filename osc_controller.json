@@ -4346,7 +4346,8 @@
                             "colorWidget": "VAR{color, auto}",
                             "html": "<div class=\"label\">\n  <h1>@{cymbal_pitch_shift}</h1>\n</div>",
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
-                            "onValue": "console.log(value)\n\nvar shift = get(\"cymbal_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"cymbal_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"cymbal_pitch_shift\", 0)\n}",
+                            "linkId": "cymbal_shift_link",
+                            "onValue": "var shift = get(\"cymbal_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"cymbal_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"cymbal_pitch_shift\", 0)\n}",
                             "mode": "circular",
                             "doubleTap": true,
                             "range": {
@@ -4359,7 +4360,7 @@
                             "back": -1,
                             "forth": 1,
                             "release": "",
-                            "onTouch": "if (event.type == 'stop') {\n  var pitch_shift = get(\"cymbal_pitch_shift\")\n  // send release message\n  send('/cymbal_pitch_shift', pitch_shift)\n}"
+                            "onTouch": "if (event.type == 'start') {\n  set('cymbal_shift_active', 1)\n}\nif (event.type == 'stop') {\n  set('cymbal_shift_active', 0)\n  var pitch_shift = get(\"cymbal_pitch_shift\")\n  // send release message\n  send('/cymbal_pitch_shift', pitch_shift)\n}"
                           }
                         ]
                       },
@@ -4380,7 +4381,8 @@
                             "colorWidget": "VAR{color, auto}",
                             "html": "<div class=\"label\">\n  <h1>@{snare_pitch_shift}</h1>\n</div>",
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
-                            "onValue": "console.log(value)\n\nvar shift = get(\"snare_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"snare_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"snare_pitch_shift\", 0)\n}",
+                            "linkId": "snare_shift_link",
+                            "onValue": "var shift = get(\"snare_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"snare_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"snare_pitch_shift\", 0)\n}",
                             "mode": "circular",
                             "doubleTap": true,
                             "range": {
@@ -4393,7 +4395,7 @@
                             "back": -1,
                             "forth": 1,
                             "release": "",
-                            "onTouch": "if (event.type == 'stop') {\n  var pitch_shift = get(\"snare_pitch_shift\")\n  // send release message\n  send('/snare_pitch_shift', pitch_shift) \n}"
+                            "onTouch": "if (event.type == 'start') {\n  set('snare_shift_active', 1)\n}\nif (event.type == 'stop') {\n  set('snare_shift_active', 0)\n  var pitch_shift = get(\"snare_pitch_shift\")\n  // send release message\n  send('/snare_pitch_shift', pitch_shift) \n}"
                           }
                         ]
                       },
@@ -4414,7 +4416,8 @@
                             "colorWidget": "VAR{color, auto}",
                             "html": "<div class=\"label\">\n  <h1>@{kick_pitch_shift}</h1>\n</div>",
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
-                            "onValue": "console.log(value)\n\nvar shift = get(\"kick_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"kick_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"kick_pitch_shift\", 0)\n}",
+                            "linkId": "kick_shift_link",
+                            "onValue": "var shift = get(\"kick_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"kick_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"kick_pitch_shift\", 0)\n}",
                             "mode": "circular",
                             "doubleTap": true,
                             "range": {
@@ -4427,7 +4430,7 @@
                             "back": -1,
                             "forth": 1,
                             "release": "",
-                            "onTouch": "if (event.type == 'stop') {\n  var pitch_shift = get(\"kick_pitch_shift\")\n  // send release message\n  send('/kick_pitch_shift', pitch_shift) \n}"
+                            "onTouch": "if (event.type == 'start') {\n  set('kick_shift_active', 1)\n}\nif (event.type == 'stop') {\n  set('kick_shift_active', 0)\n  var pitch_shift = get(\"kick_pitch_shift\")\n  // send release message\n  send('/kick_pitch_shift', pitch_shift) \n}"
                           }
                         ]
                       }
@@ -5093,6 +5096,102 @@
             ]
           },
           {
+            "type": "encoder",
+            "id": "encoder_cymbal_shift_lg",
+            "visible": "@{cymbal_shift_active}",
+            "interaction": false,
+            "top": "33%",
+            "left": "82%",
+            "width": 120,
+            "height": 120,
+            "expand": "false",
+            "colorText": "VAR{color, auto}",
+            "colorWidget": "VAR{color, auto}",
+            "css": "background: var(--color-background);\nborder: 2px solid var(--color-widget);",
+            "html": "<div class=\"label\">\n  <h1>@{cymbal_pitch_shift}</h1>\n</div>",
+            "mode": "circular",
+            "doubleTap": false,
+            "range": {
+              "min": 0,
+              "max": 1
+            },
+            "sensitivity": 1,
+            "ticks": 12,
+            "back": -1,
+            "forth": 1,
+            "release": "",
+            "linkId": "cymbal_shift_link"
+          },
+          {
+            "type": "encoder",
+            "id": "encoder_snare_shift_lg",
+            "visible": "@{snare_shift_active}",
+            "interaction": false,
+            "top": "50%",
+            "left": "82%",
+            "width": 120,
+            "height": 120,
+            "expand": "false",
+            "colorText": "VAR{color, auto}",
+            "colorWidget": "VAR{color, auto}",
+            "css": "background: var(--color-background);\nborder: 2px solid var(--color-widget);",
+            "html": "<div class=\"label\">\n  <h1>@{snare_pitch_shift}</h1>\n</div>",
+            "mode": "circular",
+            "doubleTap": false,
+            "range": {
+              "min": 0,
+              "max": 1
+            },
+            "sensitivity": 1,
+            "ticks": 12,
+            "back": -1,
+            "forth": 1,
+            "release": "",
+            "linkId": "snare_shift_link"
+          },
+          {
+            "type": "encoder",
+            "id": "encoder_kick_shift_lg",
+            "visible": "@{kick_shift_active}",
+            "interaction": false,
+            "top": "67%",
+            "left": "82%",
+            "width": 120,
+            "height": 120,
+            "expand": "false",
+            "colorText": "VAR{color, auto}",
+            "colorWidget": "VAR{color, auto}",
+            "css": "background: var(--color-background);\nborder: 2px solid var(--color-widget);",
+            "html": "<div class=\"label\">\n  <h1>@{kick_pitch_shift}</h1>\n</div>",
+            "mode": "circular",
+            "doubleTap": false,
+            "range": {
+              "min": 0,
+              "max": 1
+            },
+            "sensitivity": 1,
+            "ticks": 12,
+            "back": -1,
+            "forth": 1,
+            "release": "",
+            "linkId": "kick_shift_link"
+          },
+          {
+            "type": "variable",
+            "id": "cymbal_shift_active",
+            "default": 0
+          },
+          {
+            "type": "variable",
+            "id": "snare_shift_active",
+            "default": 0
+          },
+          {
+            "type": "variable",
+            "id": "kick_shift_active",
+            "default": 0
+          },
+          {
             "type": "variable",
             "id": "current_beat"
           },
@@ -5317,19 +5416,19 @@
             "type": "variable",
             "id": "cymbal_pitch_shift",
             "value": 0,
-            "onValue": "setVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_cymbal_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
+            "onValue": "setVar(\"modal_cymbal_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_cymbal_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_cymbal_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
           },
           {
             "type": "variable",
             "id": "snare_pitch_shift",
             "value": 0,
-            "onValue": "  setVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"encoder_snare_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
+            "onValue": "  setVar(\"modal_snare_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"encoder_snare_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\n  setVar(\"encoder_snare_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
           },
           {
             "type": "variable",
             "id": "kick_pitch_shift",
             "value": 0,
-            "onValue": "setVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_kick_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
+            "onValue": "setVar(\"modal_kick_inst\", \"inst_color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_kick_shift\", \"color\", value == 0 ? \"auto\" : \"darkorange\")\nsetVar(\"encoder_kick_shift_lg\", \"color\", value == 0 ? \"auto\" : \"darkorange\")"
           },
           {
             "type": "variable",
