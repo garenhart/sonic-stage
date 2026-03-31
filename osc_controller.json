@@ -4348,7 +4348,7 @@
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
                             "linkId": "cymbal_shift_link",
                             "onValue": "var shift = get(\"cymbal_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"cymbal_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"cymbal_pitch_shift\", 0)\n}",
-                            "mode": "circular",
+                            "mode": "vertical",
                             "doubleTap": true,
                             "range": {
                               "min": 0,
@@ -4383,7 +4383,7 @@
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
                             "linkId": "snare_shift_link",
                             "onValue": "var shift = get(\"snare_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"snare_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"snare_pitch_shift\", 0)\n}",
-                            "mode": "circular",
+                            "mode": "vertical",
                             "doubleTap": true,
                             "range": {
                               "min": 0,
@@ -4418,7 +4418,7 @@
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
                             "linkId": "kick_shift_link",
                             "onValue": "var shift = get(\"kick_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"kick_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"kick_pitch_shift\", 0)\n}",
-                            "mode": "circular",
+                            "mode": "vertical",
                             "doubleTap": true,
                             "range": {
                               "min": 0,
@@ -5109,7 +5109,7 @@
             "colorWidget": "VAR{color, auto}",
             "css": ":host {\n  background: var(--color-background);\n  border: 2px solid var(--color-widget);\n}\n.label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
             "html": "JS{{ if (@{cymbal_shift_active}) return '<div class=\"label\"><h1>'+@{cymbal_pitch_shift}+'</h1></div>'; if (@{snare_shift_active}) return '<div class=\"label\"><h1>'+@{snare_pitch_shift}+'</h1></div>'; if (@{kick_shift_active}) return '<div class=\"label\"><h1>'+@{kick_pitch_shift}+'</h1></div>'; return ''; }}",
-            "mode": "circular",
+            "mode": "vertical",
             "doubleTap": false,
             "range": {
               "min": 0,
