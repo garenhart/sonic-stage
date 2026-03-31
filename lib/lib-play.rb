@@ -12,7 +12,7 @@ rhythm = 1.0 # each beat is a 1 whole note for 4/4 signature and lasts 1 sec for
 
 define :play_cue do |cfg|
   use_real_time
-  use_bpm cfg['tempo']
+  use_bpm get(:tempo)
   cue :tick
   drums = get(:drums)
   tempo_factor = drums['tempo_factor']
@@ -27,8 +27,8 @@ end
 
 define :play_drum do |drum, cfg|
   use_real_time
-  use_bpm cfg['tempo']
   sync :tick
+  use_bpm get(:tempo)
   # get drum data from Time State
   drums = get(:drums)
   tempo_factor = drums['tempo_factor']
@@ -73,9 +73,8 @@ end
 
 define :play_bass do |cfg|
   use_real_time
-  use_bpm cfg['tempo']
-
   sync :tick
+  use_bpm get(:tempo)
 
   cfg_bass = get(:bass_state)
   tempo_factor = cfg_bass['tempo_factor']
@@ -85,7 +84,7 @@ define :play_bass do |cfg|
     use_synth cfg_bass['synth'].to_sym
     puts "INST", cfg_bass['synth']
 
-    with_effects fx_chain(cfg['bass']['fx']) do
+    with_effects fx_chain(cfg_bass['fx']) do
       density tempo_factor do
         cfg_bass['count'].times do |i|
           pos = cfg_bass['pattern'].index(i+1)
@@ -104,9 +103,8 @@ end
 
 define :play_chords do |cfg|
   use_real_time
-  use_bpm cfg['tempo']
-  
   sync :tick
+  use_bpm get(:tempo)
   
   cfg_chord = get(:chord_state)
   tempo_factor = cfg_chord['tempo_factor']
@@ -114,7 +112,7 @@ define :play_chords do |cfg|
   if (cfg_chord['pattern'].size > 0) && (cfg_chord['pattern'].size == cfg_chord['tonics'].size)
     use_synth cfg_chord['synth'].to_sym
  
-    with_effects fx_chain(cfg['chord']['fx']) do
+    with_effects fx_chain(cfg_chord['fx']) do
       density tempo_factor do
         cfg_chord['count'].times do |i|
           pos = cfg_chord['pattern'].index(i+1)
@@ -133,9 +131,8 @@ end
 
 define :play_chords_complex do |cfg|
   use_real_time
-  use_bpm cfg['tempo']
-  
   sync :tick
+  use_bpm get(:tempo)
   
   cfg_chord = get(:chord_state)
   tempo_factor = cfg_chord['tempo_factor']
@@ -174,7 +171,7 @@ define :play_chords_complex do |cfg|
 
     cs = []
     last_pos = 0
-    with_effects fx_chain(cfg['chord']['fx']) do
+    with_effects fx_chain(cfg_chord['fx']) do
       density tempo_factor do
         cfg_chord['count'].times do |pos|
           i = cfg_chord['pattern'].index(pos+1)
@@ -255,7 +252,7 @@ define :play_midi_solo do |cfg, note, vel|
 end
 
 define :play_midi_bass do |cfg, note, vel, next_beat|
-  use_bpm cfg['tempo']
+  use_bpm get(:tempo)
   with_effects fx_chain(cfg['bass']['fx']) do
     play_synth_note cfg['bass']['synth'].to_sym, note, vel/127.0, cfg['bass']['adsr']
   end
@@ -264,7 +261,7 @@ define :play_midi_bass do |cfg, note, vel, next_beat|
 end
 
 define :play_midi_chord do |cfg, note, vel, next_beat|
-  use_bpm cfg['tempo']
+  use_bpm get(:tempo)
   with_effects fx_chain(cfg['chord']['fx']) do
     play_synth_note cfg['chord']['synth'].to_sym, note, vel/127.0, cfg['chord']['adsr']
   end

@@ -35,8 +35,14 @@ define :init_time_state_drums do |cfg|
   set :drums, cfg['drums']
 end
 
+# Time State tempo
+define :init_time_state_tempo do |cfg|
+  set :tempo, cfg['tempo']
+end
+
 # Time State
 define :init_time_state do |cfg|
+  init_time_state_tempo cfg
   init_time_state_chord cfg
   init_time_state_bass cfg
   init_time_state_drums cfg

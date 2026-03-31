@@ -77,8 +77,8 @@ puts "cfg", cfg
 # prog = [{tonic: :D, type: 'm7-5', invert: -1}, {tonic: :G, type: '7', invert: -1},{tonic: :C, type: 'mM7', invert: 1}]
 
 # init osc controls twice to avoid blank instruments
-init_osc_controls cfg, true
 init_time_state cfg
+init_osc_controls cfg, true
 # ---
 sleep 1 # wait for init to finish
 
@@ -176,13 +176,15 @@ live_loop :osc_monitor do
       # or new "tempo" is the same as current tempo
       if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
         cfg = data
-        # init osc controls twice to avoid blank instruments
-        init_osc_controls cfg
-        init_osc_controls cfg
-
+        # update time state FIRST for immediate tempo/state sync across threads
+        init_time_state_tempo cfg
         init_time_state_chord cfg if get(:chord_auto)
         init_time_state_bass cfg if get(:bass_auto)
         init_time_state_drums cfg if get(:drums_auto)
+
+        # init osc controls twice to avoid blank instruments
+        init_osc_controls cfg
+        init_osc_controls cfg
       else
         osc_ctrl "/NOTIFY", "triangle-exclamation", "Tempo mismatch! Cannot load " + cfgFile
       end
@@ -194,6 +196,7 @@ live_loop :osc_monitor do
       
     when "tempo"
       cfg['tempo'] = n[0].to_i
+      set :tempo, n[0].to_i
       
     when "pattern"
       cfg['pattern'] = n[0].to_i
