@@ -12,7 +12,7 @@
         "type": "tab",
         "id": "controller",
         "colorBg": "auto",
-        "label": "Sonic Pi Stage",
+        "label": "Sonic Stage",
         "widgets": [
           {
             "type": "panel",
