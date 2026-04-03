@@ -92,6 +92,28 @@ init_osc_controls cfg, true  # Second param reinitializes
 - **UI Sync**: `init_osc_controls()` populates UI with available synths/samples/effects
 - **Visual Sync**: Animation cues sent via OSC to Processing on port 8000
 
+## Visualizer Integration (sonic-stage-visualizer)
+The companion repo `sonic-stage-visualizer` (sibling directory `../sonic-stage-visualizer/`) contains Processing sketches that receive OSC from Sonic Pi on port **8000**.
+
+### OSC Message Contract (Sonic Pi → Processing)
+Sent via `lib-osc-animation.rb` using `osc_anim` (wraps `osc_send` to `:anim_ip`/`:anim_port`):
+
+| OSC Path | Args | Sender Function | Purpose |
+|----------|------|-----------------|---------|
+| `/drum` | `instrument:String, amp:Float, beat_on:Int, on:Int` | `animate_drum` | Drum hit events (kick/snare/cymbal) |
+| `/key` | `instrument:String, note:Int, amp:Float` | `animate_keyboard` | Note events (solo/bass/chord) |
+
+### Visualizer Sketches
+- **`bezier_and_ellipses/`** — Bezier curves and 3D spheres. Class hierarchy: `SoundEvent` → `DrumEvent` (→ `DrumKick`, `DrumSnare`, `DrumCymbal`) and `SoundEvent` → `KeyEvent` (→ `KeySolo`, `KeyBass`, `KeyChord`). Drums render as animated bezier patterns; keys render as labeled 3D spheres with velocity.
+- **`keyboard_and_drums/`** — Piano keyboard + particle drum explosions. Uses `PianoKeyboard` for visual key presses and `ParticleController`/`Particle` for drum image-pixel particle effects. Renders drum image with particle bursts at instrument-specific positions.
+
+### State Keys for Visualizer Communication
+```ruby
+set :anim_ip, "127.0.0.1"
+set :anim_port, 8000
+```
+Both sketches listen on port 8000 via `oscP5 = new OscP5(this, 8000)` and handle `/drum` and `/key` in their `oscEvent()` method.
+
 ## Performance Considerations
 - Real-time audio requires minimal function call overhead in live loops
 - Configuration changes update global state without restarting loops
