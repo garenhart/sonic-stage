@@ -21,7 +21,7 @@ define :drum_mon do |token, inst, n, cfg|
     when "#{inst}_pitch_shift"
       init_drum_component cfg, inst, "pitch_shift", n[0].to_i
     when "#{inst}_fav"
-      update_fav_drums cfg, inst, n[0]
+      update_fav_inst cfg, inst, n[0]
     when "#{inst}_range"
       init_drum_component cfg, inst, "range", n
     when "#{inst}_random"

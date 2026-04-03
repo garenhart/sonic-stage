@@ -11,41 +11,24 @@ end
 
 # populate osc variable with the list of SPi fx names
 define :init_osc_fx do
-  fx_str = fx_names.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
-  # add "None" to the list of fx names
-  osc_ctrl "/fx_names", "{\"None\": \"none\", #{fx_str}}"
+  osc_ctrl "/fx_names", "{\"None\": \"none\", #{build_json_choices(fx_names)}}"
 end
 
-define :init_osc_synths_fav do |cfg|
-  sn = cfg['solo']['fav']
-  sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
-  osc_ctrl "/synths_fav_solo", "{#{sn_str}}"
-end
-
-define :init_osc_synths_fav_bass do |cfg|
-  sn = cfg['bass']['fav']
-  sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
-  osc_ctrl "/synths_fav_bass", "{#{sn_str}}"
-end
-
-define :init_osc_synths_fav_chord do |cfg|
-  sn = cfg['chord']['fav']
-  sn_str = sn.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
-  osc_ctrl "/synths_fav_chord", "{#{sn_str}}"
+# Populates favorites dropdown for any non-drum instrument
+define :init_osc_synths_fav_inst do |cfg, inst|
+  root = cfg_inst_root(cfg, inst)
+  fav = root['fav'] || []
+  osc_ctrl "/synths_fav_#{inst}", "{#{build_json_choices(fav)}}"
 end
 
 # populates osc variable with the list of SPi synth names
 define :init_osc_synths do
-  sn_str = synth_names.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
-  osc_ctrl "/synths", "{#{sn_str}}"
+  osc_ctrl "/synths", "{#{build_json_choices(synth_names)}}"
 end
 
 # populates osc variable with the list of SPi sample group names
 define :init_osc_sample_groups do
-  sg = sample_groups
-  sg_str = sg.map { |n| "\"#{split_and_capitalize(n.to_s, "_")}\": \"#{n.to_s}\"" }.join(", ")
-  sg_str += ", \"^heart Favorites\": \"favorites\""
-  osc_ctrl "/sample_groups", "{#{sg_str}}"
+  osc_ctrl "/sample_groups", "{#{build_json_choices(sample_groups)}, \"^heart Favorites\": \"favorites\"}"
 end
 
 define :sample_favorites do |target, cfg|
@@ -58,14 +41,12 @@ end
 # populates osc variable target with the list of SPi sample names
 # for the specified sample group sg
 define :init_osc_samples do |target, sg, cfg|
-  puts "pop", target, sg
   return if target.nil? || sg.nil?
 
   sn = sg == :favorites ? sample_favorites(target, cfg) : sample_names(sg)
   return if sn.nil?
 
-  sn_str = sn.map { |n| "\"#{n}\": \"#{n}\"" }.join(", ")
-  osc_ctrl target, "{#{sn_str}}"
+  osc_ctrl target, "{#{build_json_choices(sn, false)}}"
 end
 
 define :init_osc_keyboard do |tonic, mode|
@@ -108,7 +89,7 @@ end
 
 define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
   # get the sample group for the drum ('favorites' if the selected sample is also in the favorites list)
-  sample_gr = drum_fav?(cfg, d, cfg['drums'][d]['sample']) ? 'favorites' : sample_group(cfg['drums'][d]['sample'])
+  sample_gr = inst_fav?(cfg, d, cfg['drums'][d]['sample']) ? 'favorites' : sample_group(cfg['drums'][d]['sample'])
   osc_ctrl "/#{d}_on", cfg['drums'][d]['on'] ? 1 : 0
   osc_ctrl "/#{d}_amp", cfg['drums'][d]['amp']
   osc_ctrl "/#{d}_range", *cfg['drums'][d]['range']
@@ -119,7 +100,7 @@ define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
   osc_ctrl gr_ctrl, sample_gr
   init_osc_samples inst_ctrl + "_v", sample_gr.to_sym, cfg
   osc_ctrl inst_ctrl, (cfg['drums'][d]['sample'])
-  osc_ctrl "/#{d}_fav", drum_fav?(cfg, d, cfg['drums'][d]['sample']) ? 1 : 0 # set fav button
+  osc_ctrl "/#{d}_fav", inst_fav?(cfg, d, cfg['drums'][d]['sample']) ? 1 : 0 # set fav button
  
   # populate drum beats osc widget with the beats from string
   # beat_count = cfg['drums'][d]['beats'].length  
@@ -231,18 +212,18 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/solo_on", cfg['solo']['on'] ? 1 : 0
   osc_ctrl "/solo_fav_all", cfg['solo']['fav_all'] ? 1 : 0
   osc_ctrl "/solo_inst", cfg['solo']['inst']
-  osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo']['inst']) ? 1 : 0
+  osc_ctrl "/solo_fav", inst_fav?(cfg, 'solo', cfg['solo']['inst']) ? 1 : 0
   
   osc_ctrl "/bass_on", cfg['bass']['on'] ? 1 : 0
   osc_ctrl "/bass_amp", cfg['bass']['amp']
-  osc_ctrl "/bass_fav", bass_fav?(cfg, cfg['bass']['synth']) ? 1 : 0
+  osc_ctrl "/bass_fav", inst_fav?(cfg, 'bass', cfg['bass']['synth']) ? 1 : 0
   osc_ctrl "/bass_fav_all", cfg['bass']['fav_all'] ? 1 : 0
   osc_ctrl "/bass_inst", cfg['bass']['synth']
 
   osc_ctrl "/chord_on", cfg['chord']['on'] ? 1 : 0
   osc_ctrl "/chord_amp", cfg['chord']['amp']
   osc_ctrl "/chord_type", cfg['chord']['type']
-  osc_ctrl "/chord_fav", chord_fav?(cfg, cfg['chord']['synth']) ? 1 : 0  
+  osc_ctrl "/chord_fav", inst_fav?(cfg, 'chord', cfg['chord']['synth']) ? 1 : 0  
   osc_ctrl "/chord_fav_all", cfg['chord']['fav_all'] ? 1 : 0
   osc_ctrl "/chord_inst", cfg['chord']['synth']
 
@@ -258,9 +239,9 @@ define :init_osc_controls do |cfg, init_presets=false|
   update_osc_chord_points cfg
 
   # populate favorite synths
-  init_osc_synths_fav cfg
-  init_osc_synths_fav_bass cfg
-  init_osc_synths_fav_chord cfg
+  init_osc_synths_fav_inst cfg, 'solo'
+  init_osc_synths_fav_inst cfg, 'bass'
+  init_osc_synths_fav_inst cfg, 'chord'
   
   init_osc_inst_envelopes cfg
 end

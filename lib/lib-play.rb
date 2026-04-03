@@ -29,68 +29,55 @@ define :play_drum do |drum, cfg|
   use_real_time
   sync :tick
   use_bpm get(:tempo)
-  # get drum data from Time State
   drums = get(:drums)
-  tempo_factor = drums['tempo_factor']
   beats = drums[drum]['beats']
   count = drums['count']
 
   with_effects fx_chain(drums[drum]['fx']) do
-    density tempo_factor do
+    density drums['tempo_factor'] do
       count.times do |i|
-        rt_drums = get(:drums) # drum data from Time State for params that we want to change in real time
-        rt_drum = rt_drums[drum]
+        rt_drum = get(:drums)[drum] # real-time params from Time State
         amp = rt_drum['amp']
-        start = rt_drum['reverse'] ? rt_drum['range'][1] : rt_drum['range'][0]
-        finish = rt_drum['reverse'] ? rt_drum['range'][0] : rt_drum['range'][1]
-        pitch_shift = rt_drum['pitch_shift']
+        beat_on = rt_drum['on'] && beats[i] == "1"
 
-        if rt_drum['on'] 
-          if (beats[i] == "1")
-            if (rt_drum['random'])
-                sample rt_drum['sample'], amp: amp, onset: pick, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001 #, attack: rt_drum['adsr'][0], attack_level: rt_drum['adsr'][1], decay: rt_drum['adsr'][2], decay_level: rt_drum['adsr'][3], sustain: rt_drum['adsr'][4], sustain_level: rt_drum['adsr'][5], release: rt_drum['adsr'][6], release_level: rt_drum['adsr'][7]
-            else  
-              if (start == finish)
-                  sample rt_drum['sample'], amp: amp, onset: 0, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001 #, attack: rt_drum['adsr'][0], attack_level: rt_drum['adsr'][1], decay: rt_drum['adsr'][2], decay_level: rt_drum['adsr'][3], sustain: rt_drum['adsr'][4], sustain_level: rt_drum['adsr'][5], release: rt_drum['adsr'][6], release_level: rt_drum['adsr'][7]
-              else
-                  sample rt_drum['sample'], amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001 #, attack: rt_drum['adsr'][0], attack_level: rt_drum['adsr'][1], decay: rt_drum['adsr'][2], decay_level: rt_drum['adsr'][3], sustain: rt_drum['adsr'][4], sustain_level: rt_drum['adsr'][5], release: rt_drum['adsr'][6], release_level: rt_drum['adsr'][7]
-                  # TODO: Implement custom samples support. Uncomment following line to play custom samples
-                  # sample gov_fma_wav + "excerpts/" + "Beach_fma-178536_001_00-00-17.wav", amp: amp, start: start, finish: finish, rpitch: pitch_shift, pitch_dis: 0.001, time_dis: 0.001 #, attack: rt_drum['adsr'][0], attack_level: rt_drum['adsr'][1], decay: rt_drum['adsr'][2], decay_level: rt_drum['adsr'][3], sustain: rt_drum['adsr'][4], sustain_level: rt_drum['adsr'][5], release: rt_drum['adsr'][6], release_level: rt_drum['adsr'][7]
-              end
-            end  
-            animate_drum drum, amp, 1, 1 if rt_drum['animate']
+        if beat_on
+          opts = { amp: amp, rpitch: rt_drum['pitch_shift'], pitch_dis: 0.001, time_dis: 0.001 }
+          if rt_drum['random']
+            opts[:onset] = pick
+          elsif rt_drum['range'][0] == rt_drum['range'][1]
+            opts[:onset] = 0
           else
-            animate_drum drum, amp, 0, 1 if rt_drum['animate']
+            opts[:start] = rt_drum['reverse'] ? rt_drum['range'][1] : rt_drum['range'][0]
+            opts[:finish] = rt_drum['reverse'] ? rt_drum['range'][0] : rt_drum['range'][1]
           end
-        else
-          animate_drum drum, amp, 0, 0 if rt_drum['animate']
+          sample rt_drum['sample'], **opts
         end
+
+        animate_drum drum, amp, (beat_on ? 1 : 0), (rt_drum['on'] ? 1 : 0) if rt_drum['animate']
         sleep rhythm
       end
     end
   end
 end
 
-define :play_bass do |cfg|
+# Shared playback logic for bass and chord instruments
+define :play_tonal_instrument do |state_key, label|
   use_real_time
   sync :tick
   use_bpm get(:tempo)
 
-  cfg_bass = get(:bass_state)
-  tempo_factor = cfg_bass['tempo_factor']
-  
-  puts "bass=====: #{cfg_bass['pattern'].size} #{cfg_bass['tonics'].size}"
-  if ((cfg_bass['pattern'].size > 0) && (cfg_bass['pattern'].size == cfg_bass['tonics'].size))
-    use_synth cfg_bass['synth'].to_sym
-    puts "INST", cfg_bass['synth']
+  cfg_inst = get(state_key)
 
-    with_effects fx_chain(cfg_bass['fx']) do
-      density tempo_factor do
-        cfg_bass['count'].times do |i|
-          pos = cfg_bass['pattern'].index(i+1)
-          if (cfg_bass['on'] && pos)
-            play_synth cfg_bass, pos
-            animate_keyboard "bass", cfg_bass['tonics'][pos], cfg_bass['amp'] if cfg_bass['animate']
+  if cfg_inst['pattern'].size > 0 && cfg_inst['pattern'].size == cfg_inst['tonics'].size
+    use_synth cfg_inst['synth'].to_sym
+
+    with_effects fx_chain(cfg_inst['fx']) do
+      density cfg_inst['tempo_factor'] do
+        cfg_inst['count'].times do |i|
+          pos = cfg_inst['pattern'].index(i + 1)
+          if cfg_inst['on'] && pos
+            play_synth cfg_inst, pos
+            animate_keyboard label, cfg_inst['tonics'][pos], cfg_inst['amp'] if cfg_inst['animate']
           end
           sleep rhythm
         end
@@ -101,32 +88,12 @@ define :play_bass do |cfg|
   end
 end
 
-define :play_chords do |cfg|
-  use_real_time
-  sync :tick
-  use_bpm get(:tempo)
-  
-  cfg_chord = get(:chord_state)
-  tempo_factor = cfg_chord['tempo_factor']
+define :play_bass do |cfg|
+  play_tonal_instrument :bass_state, "bass"
+end
 
-  if (cfg_chord['pattern'].size > 0) && (cfg_chord['pattern'].size == cfg_chord['tonics'].size)
-    use_synth cfg_chord['synth'].to_sym
- 
-    with_effects fx_chain(cfg_chord['fx']) do
-      density tempo_factor do
-        cfg_chord['count'].times do |i|
-          pos = cfg_chord['pattern'].index(i+1)
-          if (cfg_chord['on'] && pos)
-            play_synth cfg_chord, pos
-            animate_keyboard "chord", cfg_chord['tonics'][pos], cfg_chord['amp'] if cfg_chord['animate']
-          end
-          sleep rhythm
-        end
-      end
-    end
-  else
-    sleep rhythm
-  end
+define :play_chords do |cfg|
+  play_tonal_instrument :chord_state, "chord"
 end
 
 define :play_chords_complex do |cfg|
@@ -211,39 +178,6 @@ define :play_chords_complex do |cfg|
   end
 end
 
-define :play_midi do |cfg, addr_data, note, vel|
-  if (cfg['solo']['on'] and addr_data[1] == "note_on" and vel > 0) # note_on 
-    bass_rec = get(:bass_rec)
-    chord_rec = get(:chord_rec) 
-    next_beat = get(:beat) + 1
-   
-    if (bass_rec || chord_rec) # recording
-      if (bass_rec)
-          use_synth cfg['bass']['synth'].to_sym
-          add_tonic_bass cfg, note, next_beat > cfg['bass']['count'] ? 1 : next_beat
-          with_effects fx_chain(cfg['bass']['fx']) do
-            play_note note, vel/127.0, cfg['bass']
-          end
-          animate_keyboard "bass", note, vel/127.0 if cfg['bass']['animate']
-      end
-      if (chord_rec)
-          use_synth cfg['chord']['synth'].to_sym
-          add_tonic_chord cfg, note, next_beat > get(:chord_state)['count'] ? 1 : next_beat
-          with_effects fx_chain(cfg['chord']['fx']) do
-            play_note note, vel/127.0, cfg['chord']
-          end
-          animate_keyboard "chord", note, vel/127.0 if cfg['chord']['animate']
-      end
-    else # not recording
-      with_effects fx_chain(cfg['solo']['fx']) do
-        use_synth cfg['solo']['inst'].to_sym
-        play_note note, vel/127.0, cfg['solo']
-      end
-      animate_keyboard "solo", note, vel/127.0 if cfg['solo']['animate']
-     end   
-  end  
-end
-
 define :play_midi_solo do |cfg, note, vel|
   with_effects fx_chain(cfg['solo']['fx']) do
     play_synth_note cfg['solo']['inst'].to_sym, note, vel/127.0, cfg['solo']['adsr']
@@ -271,15 +205,11 @@ end
 
 
 define :play_synth do |cfg_inst, pos|
-    play cfg_inst['tonics'][pos], amp: cfg_inst['amp'], attack: cfg_inst['adsr'][0], attack_level: cfg_inst['adsr'][1], decay: cfg_inst['adsr'][2], decay_level: cfg_inst['adsr'][3], sustain: cfg_inst['adsr'][4], sustain_level: cfg_inst['adsr'][5], release: cfg_inst['adsr'][6], release_level: cfg_inst['adsr'][7]
+    play cfg_inst['tonics'][pos], amp: cfg_inst['amp'], **adsr_opts(cfg_inst['adsr'])
 end
 
 define :play_synth_note do |inst, note, amp, adsr|
-  synth inst, note: note, amp: amp, attack: adsr[0], attack_level: adsr[1], decay: adsr[2], decay_level: adsr[3], sustain: adsr[4], sustain_level: adsr[5], release: adsr[6], release_level: adsr[7]
-end
-
-define :play_note do |note, amp, cfg_inst|
-    play note, amp: amp, attack: cfg_inst['adsr'][0], attack_level: cfg_inst['adsr'][1], decay: cfg_inst['adsr'][2], decay_level: cfg_inst['adsr'][3], sustain: cfg_inst['adsr'][4], sustain_level: cfg_inst['adsr'][5], release: cfg_inst['adsr'][6], release_level: cfg_inst['adsr'][7]
+  synth inst, note: note, amp: amp, **adsr_opts(adsr)
 end
 
 # returns index of nearest note in scale

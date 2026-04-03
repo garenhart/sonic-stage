@@ -44,3 +44,36 @@ define :prev_element do |ring, element|
     prev_index = (index - 1) % ring.size
     return ring[prev_index]
 end
+
+# Returns true if inst is a drum component (kick, snare, cymbal)
+define :is_drum? do |inst|
+  inst == 'kick' || inst == 'snare' || inst == 'cymbal'
+end
+
+# Returns the correct config section for any instrument
+define :cfg_inst_root do |cfg, inst|
+  is_drum?(inst) ? cfg['drums'][inst] : cfg[inst]
+end
+
+# Returns the config key that holds the instrument/sample name
+define :inst_name_key do |inst|
+  case inst
+  when 'solo' then 'inst'
+  when 'kick', 'snare', 'cymbal' then 'sample'
+  else 'synth'
+  end
+end
+
+# Returns ADSR envelope parameters as a hash
+define :adsr_opts do |adsr|
+  { attack: adsr[0], attack_level: adsr[1], decay: adsr[2], decay_level: adsr[3],
+    sustain: adsr[4], sustain_level: adsr[5], release: adsr[6], release_level: adsr[7] }
+end
+
+# Builds a JSON-like key:value string for OSC dropdown population
+define :build_json_choices do |items, format_keys=true|
+  items.map { |n|
+    k = format_keys ? split_and_capitalize(n.to_s, "_") : n.to_s
+    "\"#{k}\": \"#{n}\""
+  }.join(", ")
+end

@@ -125,21 +125,21 @@ end
 define :init_bass_component do |cfg, c, v|
   cfg['bass'][c] = v
   init_time_state_bass cfg if get(:bass_auto)
-  osc_ctrl "/bass_fav", bass_fav?(cfg, cfg['bass']['synth']) ? 1 : 0 if c == 'synth'
+  osc_ctrl "/bass_fav", inst_fav?(cfg, 'bass', cfg['bass']['synth']) ? 1 : 0 if c == 'synth'
 end
 
 # sets specific chord configuration component
 define :init_chord_component do |cfg, c, v|
   cfg['chord'][c] = v
   init_time_state_chord cfg if get(:chord_auto)
-  osc_ctrl "/chord_fav", chord_fav?(cfg, cfg['chord']['synth']) ? 1 : 0 if c == 'synth'
+  osc_ctrl "/chord_fav", inst_fav?(cfg, 'chord', cfg['chord']['synth']) ? 1 : 0 if c == 'synth'
 end
 
 # sets specific drum configuration component
 define :init_drum_component do |cfg, d, c, v|
   cfg['drums'][d][c] = v
   init_time_state_drums cfg if get(:drums_auto)
-  (osc_ctrl "/#{d}_fav", drum_fav?(cfg, d, v) ? 1 : 0) if c == 'sample'
+  (osc_ctrl "/#{d}_fav", inst_fav?(cfg, d, v) ? 1 : 0) if c == 'sample'
 end
 
 # sets specified drum beat
@@ -273,8 +273,4 @@ define :shift_pattern do |p, n|
   # shift the pattern to the right by n
   # and return the shifted pattern
   p.map {|x| x + n}
-end
-
-define :cfg_inst_root do |cfg, inst|
-  return (inst == 'kick' || inst == 'snare' || inst == 'cymbal') ? cfg['drums'][inst] : cfg[inst]
 end

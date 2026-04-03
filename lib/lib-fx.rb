@@ -58,48 +58,26 @@ define :init_fx_component do |cfg, inst, n, nn, v|
   end  
 end
 
-define :fx_chain_rand do |cfg_fx|
-  if cfg_fx && cfg_fx.length > 0
-    chain = lambda do
-      [
-        {with_fx: :echo, phase: rrand(0,0.5)},
-        {with_fx: :whammy, grainsize: rrand(0,2.0)},
-        {with_fx: :flanger, feedback: rrand(0,0.5)},
-        {with_fx: :tremolo, phase: rrand(0,0.5)},
-        {with_fx: :bitcrusher, bits: rand_i(3..5)}
-      ].pick(3) # Use all or pick some randomly
-    end
-  else
-    chain = lambda do
-      [{with_fx: :none}]
-    end
-  end
-  chain.call
-end
-
 define :fx_chain do |cfg_fx|
   if cfg_fx && cfg_fx.length > 0
-    cfg_fx.map do |fx|
+    cfg_fx.filter_map do |fx|
+      next nil if fx[0] == "none"
       options = { with_fx: fx[0].to_sym }
       options[fx_option_name(fx[0], 1).to_sym] = fx[1].is_a?(Array) ? rrand(fx[1][0], fx[1][1]) : fx[1]
       options[fx_option_name(fx[0], 2).to_sym] = fx[2].is_a?(Array) ? rrand(fx[2][0], fx[2][1]) : fx[2]
       options
     end
   else
-    [{ with_fx: :none }]
+    []
   end
 end
 
 # This method and the idea of using it is borrowed from 
 # @amiika here: https://in-thread.sonic-pi.net/t/snake-jazz-also-is-there-an-fx-stack/5932/3
-def with_effects (x, &block)
-  x = x.dup
-  if x.length>0 then
-    n = x.shift
-    if n[:with_fx] then
-      with_fx n[:with_fx], n do
-        with_effects(x, &block)
-      end
+def with_effects(chain, idx=0, &block)
+  if idx < chain.length
+    with_fx chain[idx][:with_fx], chain[idx] do
+      with_effects(chain, idx + 1, &block)
     end
   else
     yield

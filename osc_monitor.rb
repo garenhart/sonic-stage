@@ -158,9 +158,12 @@ live_loop :osc_monitor do
   token = parse_addr addr
  
   t = token[1].split("_")[0]
-  if t == "kick"  || t == "snare" || t == "cymbal"
-    puts "TOKEN========", t
+  if is_drum?(t)
     drum_mon token, t, n, cfg
+  elsif ["solo", "bass", "chord"].include?(t) && token[1].include?("_fx")
+    fx_mon token, t, n, cfg
+    init_time_state_bass cfg if t == "bass" && get(:bass_auto)
+    init_time_state_chord cfg if t == "chord" && get(:chord_auto)
   else
     case token[1]
     when "open"
@@ -213,7 +216,7 @@ live_loop :osc_monitor do
 
     when "solo_inst"
       cfg['solo']['inst'] = n[0].to_sym
-      osc_ctrl "/solo_fav", solo_fav?(cfg, cfg['solo']['inst']) ? 1 : 0
+      osc_ctrl "/solo_fav", inst_fav?(cfg, 'solo', cfg['solo']['inst']) ? 1 : 0
 
     when "solo_inst_prev"
       prev_f = prev_fav cfg, "solo"      
@@ -229,33 +232,13 @@ live_loop :osc_monitor do
       cfg['solo']['on'] = n[0] == 1.0
 
     when "solo_fav"
-      update_fav cfg, n[0]
+      update_fav_inst cfg, 'solo', n[0]
 
     when "solo_fav_all"
       cfg['solo']['fav_all'] = n[0] == 1.0
 
     when "solo_env_adsr"
       cfg['solo']['adsr'] = n
- 
-    when "solo_fx1_fx"
-      init_fx_component cfg, "solo", 0, 0, n[0]
-      update_osc_fx_option_names "solo", n[0], 1
-
-    when "solo_fx1_opt1_value"
-      init_fx_component cfg, "solo", 0, 1, n
-
-    when "solo_fx1_opt2_value"
-      init_fx_component cfg, "solo", 0, 2, n
-
-    when "solo_fx2_fx"
-      init_fx_component cfg, "solo", 1, 0, n[0]
-      update_osc_fx_option_names "solo", n[0], 2
-
-    when "solo_fx2_opt1_value"
-      init_fx_component cfg, "solo", 1, 1, n
-
-    when "solo_fx2_opt2_value"
-      init_fx_component cfg, "solo", 1, 2, n
 
   # chord section ==================================    
     when "chord_pt_count"
@@ -299,34 +282,13 @@ live_loop :osc_monitor do
       init_chord_component(cfg, "on", n[0]==1.0)
 
     when "chord_fav"
-      update_fav_chord cfg, n[0]
+      update_fav_inst cfg, 'chord', n[0]
 
     when "chord_fav_all"
       cfg['chord']['fav_all'] = n[0] == 1.0
 
     when "chord_env_adsr"
       init_chord_component(cfg, 'adsr', n)      
-
-    when "chord_fx1_fx"
-      init_fx_component cfg, "chord", 0, 0, n[0]
-      update_osc_fx_option_names "chord", n[0], 1
-
-    when "chord_fx1_opt1_value"
-      init_fx_component cfg, "chord", 0, 1, n
-
-    when "chord_fx1_opt2_value"
-      init_fx_component cfg, "chord", 0, 2, n
-
-    when "chord_fx2_fx"
-      init_fx_component cfg, "chord", 1, 0, n[0]
-      update_osc_fx_option_names "chord", n[0], 2
-
-    when "chord_fx2_opt1_value"
-      init_fx_component cfg, "chord", 1, 1, n
-
-    when "chord_fx2_opt2_value"
-      init_fx_component cfg, "chord", 1, 2, n
-
 
     when "chord_amp"
       init_chord_component(cfg, "amp", n[0])
@@ -375,34 +337,13 @@ live_loop :osc_monitor do
       init_bass_component(cfg, 'on', n[0]==1.0)
 
     when "bass_fav"
-      update_fav_bass cfg, n[0]
+      update_fav_inst cfg, 'bass', n[0]
 
     when "bass_fav_all"
       cfg['bass']['fav_all'] = n[0] == 1.0
 
     when "bass_env_adsr"
       init_bass_component(cfg, 'adsr', n)
-
-    when "bass_fx1_fx"
-      init_fx_component cfg, "bass", 0, 0, n[0]
-      update_osc_fx_option_names "bass", n[0], 1
-
-    when "bass_fx1_opt1_value"
-      init_fx_component cfg, "bass", 0, 1, n
-
-    when "bass_fx1_opt2_value"
-      init_fx_component cfg, "bass", 0, 2, n
-
-    when "bass_fx2_fx"
-      init_fx_component cfg, "bass", 1, 0, n[0]
-      update_osc_fx_option_names "bass", n[0], 2
-
-    when "bass_fx2_opt1_value"
-      init_fx_component cfg, "bass", 1, 1, n
-
-    when "bass_fx2_opt2_value"
-      init_fx_component cfg, "bass", 1, 2, n
-
 
     when "bass_amp"
       init_bass_component(cfg, 'amp', n[0])
@@ -434,7 +375,6 @@ live_loop :osc_monitor do
       cfg['mode'] = n[0].to_i
     when "scale"
       cfg['scale'] = n[0].to_sym
-      puts "SSSSSSSSSSSSSSSSS", cfg['scale']
       update_scale_match cfg
 
     # recording
