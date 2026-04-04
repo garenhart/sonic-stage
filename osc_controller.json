@@ -12502,7 +12502,7 @@
                             "html": "<div class=\"label\">\n  <h1>@{cymbal_pitch_shift}</h1>\n</div>",
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
                             "linkId": "cymbal_shift_link",
-                            "onValue": "var shift = get(\"cymbal_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"cymbal_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"cymbal_pitch_shift\", 0)\n}",
+                            "onValue": "var shift = get(\"cymbal_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"cymbal_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"cymbal_pitch_shift\", 0)\n  send('/cymbal_pitch_shift', 0)\n}",
                             "mode": "vertical",
                             "doubleTap": true,
                             "range": {
@@ -12603,7 +12603,7 @@
                             "html": "<div class=\"label\">\n  <h1>@{snare_pitch_shift}</h1>\n</div>",
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
                             "linkId": "snare_shift_link",
-                            "onValue": "var shift = get(\"snare_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"snare_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"snare_pitch_shift\", 0)\n}",
+                            "onValue": "var shift = get(\"snare_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"snare_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"snare_pitch_shift\", 0)\n  send('/snare_pitch_shift', 0)\n}",
                             "mode": "vertical",
                             "doubleTap": true,
                             "range": {
@@ -12704,7 +12704,7 @@
                             "html": "<div class=\"label\">\n  <h1>@{kick_pitch_shift}</h1>\n</div>",
                             "css": ".label {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  top: 50%;\n  line-height: 0;\n  pointer-events: none;\n}",
                             "linkId": "kick_shift_link",
-                            "onValue": "var shift = get(\"kick_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"kick_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"kick_pitch_shift\", 0)\n}",
+                            "onValue": "var shift = get(\"kick_pitch_shift\");\nif ((value == -1 && shift > -72) || (value == 1 && shift < 24)) {\n  set(\"kick_pitch_shift\", shift+value)\n}\nelse if (value == \"\") {\n  set(\"kick_pitch_shift\", 0)\n  send('/kick_pitch_shift', 0)\n}",
                             "mode": "vertical",
                             "doubleTap": true,
                             "range": {
