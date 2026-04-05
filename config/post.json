@@ -29,7 +29,7 @@
   "chord": {
     "count": 16,
     "tempo_factor": 1,
-    "on": false,
+    "on": true,
     "amp": 0.5,
     "type": 1,
     "synth": "piano",
@@ -70,7 +70,7 @@
       "adsr": [        0.0,        1.0,        0.18000000715255737,        0.8500000238418579,        0.7300000190734863,        0.8299999833106995,        1.0,        0.0]
     },
     "kick": {
-      "on": false,
+      "on": true,
       "amp": 1.0,
       "sample": "hat_mess",
       "fav": [],
