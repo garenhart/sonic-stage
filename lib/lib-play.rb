@@ -179,27 +179,30 @@ define :play_chords_complex do |cfg|
 end
 
 define :play_midi_solo do |cfg, note, vel|
+  amp = vel/127.0 * 2
   with_effects fx_chain(cfg['solo']['fx']) do
-    play_synth_note cfg['solo']['inst'].to_sym, note, vel/127.0, cfg['solo']['adsr']
+    play_synth_note cfg['solo']['inst'].to_sym, note, amp, cfg['solo']['adsr']
   end
-  animate_keyboard "solo", note, vel/127.0 if cfg['solo']['animate']
+  animate_keyboard "solo", note, amp if cfg['solo']['animate']
 end
 
 define :play_midi_bass do |cfg, note, vel, next_beat|
   use_bpm get(:tempo)
+  amp = vel/127.0 * 2
   with_effects fx_chain(cfg['bass']['fx']) do
-    play_synth_note cfg['bass']['synth'].to_sym, note, vel/127.0, cfg['bass']['adsr']
+    play_synth_note cfg['bass']['synth'].to_sym, note, amp, cfg['bass']['adsr']
   end
-  animate_keyboard "bass", note, vel/127.0 if cfg['bass']['animate']
+  animate_keyboard "bass", note, amp if cfg['bass']['animate']
   add_tonic_bass cfg, note, next_beat > cfg['bass']['count'] ? 1 : next_beat
 end
 
 define :play_midi_chord do |cfg, note, vel, next_beat|
   use_bpm get(:tempo)
+  amp = vel/127.0 * 2
   with_effects fx_chain(cfg['chord']['fx']) do
-    play_synth_note cfg['chord']['synth'].to_sym, note, vel/127.0, cfg['chord']['adsr']
+    play_synth_note cfg['chord']['synth'].to_sym, note, amp, cfg['chord']['adsr']
   end
-  animate_keyboard "chord", note, vel/127.0 if cfg['chord']['animate']
+  animate_keyboard "chord", note, amp if cfg['chord']['animate']
   add_tonic_chord cfg, note, next_beat > cfg['chord']['count'] ? 1 : next_beat
 end
 
