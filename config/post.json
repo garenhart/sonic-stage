@@ -59,7 +59,7 @@
     "snare": {
       "on": true,
       "amp": 1.0,
-      "sample": "drum_tom_mid_soft",
+      "sample": "drum_tom_hi_soft",
       "fav": [],
       "fx": [        [          "reverb",          0.8,          0.5],        [          "none",          [            2.2200000286102295,            3.9100000858306885],          [            2.509999990463257,            3.940000057220459]]],
       "range": [        0,        1],
@@ -72,7 +72,7 @@
     "kick": {
       "on": true,
       "amp": 1.0,
-      "sample": "hat_mess",
+      "sample": "drum_tom_lo_soft",
       "fav": [],
       "fx": [        [          "reverb",          0.8,          0.5],        [          "tremolo",          [            2.75,            4.0],          [            2.3499999046325684,            3.7799999713897705]]],
       "range": [        0,        1],
