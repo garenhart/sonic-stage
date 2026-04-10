@@ -74,10 +74,11 @@ define :play_tonal_instrument do |state_key, label|
     with_effects fx_chain(cfg_inst['fx']) do
       density cfg_inst['tempo_factor'] do
         cfg_inst['count'].times do |i|
+          rt_inst = get(state_key) # real-time params from Time State
           pos = cfg_inst['pattern'].index(i + 1)
-          if cfg_inst['on'] && pos
-            play_synth cfg_inst, pos
-            animate_keyboard label, cfg_inst['tonics'][pos], cfg_inst['amp'] if cfg_inst['animate']
+          if rt_inst['on'] && pos
+            play cfg_inst['tonics'][pos], amp: rt_inst['amp'], **adsr_opts(cfg_inst['adsr'])
+            animate_keyboard label, cfg_inst['tonics'][pos], rt_inst['amp'] if rt_inst['animate']
           end
           sleep rhythm
         end
