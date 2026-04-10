@@ -188,7 +188,7 @@ end
 
 define :play_midi_bass do |cfg, note, vel, next_beat|
   use_bpm get(:tempo)
-  amp = vel/127.0 * 2
+  amp = vel/127.0 * 2 * cfg['bass']['amp']
   with_effects fx_chain(cfg['bass']['fx']) do
     play_synth_note cfg['bass']['synth'].to_sym, note, amp, cfg['bass']['adsr']
   end
@@ -198,7 +198,7 @@ end
 
 define :play_midi_chord do |cfg, note, vel, next_beat|
   use_bpm get(:tempo)
-  amp = vel/127.0 * 2
+  amp = vel/127.0 * 2 * cfg['chord']['amp']
   with_effects fx_chain(cfg['chord']['fx']) do
     play_synth_note cfg['chord']['synth'].to_sym, note, amp, cfg['chord']['adsr']
   end
