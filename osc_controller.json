@@ -14970,7 +14970,7 @@
           {
             "type": "script",
             "id": "cymbal_beats_v",
-            "onValue": "for (var i = 0; i < value.length; i++) {\n  set('cymbal_beats/' + i, value[i])\n}",
+            "onValue": "set('beat_pt_count', value.length, {send:false})\nfor (var i = 0; i < value.length; i++) {\n  set('cymbal_beats/' + i, value[i])\n}",
             "onKeyboard": "",
             "keyBinding": "",
             "keyRepeat": true,
@@ -14992,7 +14992,7 @@
           {
             "type": "script",
             "id": "snare_beats_v",
-            "onValue": "for (var i = 0; i < value.length; i++) {\n  set('snare_beats/' + i, value[i])\n}",
+            "onValue": "set('beat_pt_count', value.length, {send:false})\nfor (var i = 0; i < value.length; i++) {\n  set('snare_beats/' + i, value[i])\n}",
             "onKeyboard": "",
             "keyBinding": "",
             "keyRepeat": true,
@@ -15014,7 +15014,7 @@
           {
             "type": "script",
             "id": "kick_beats_v",
-            "onValue": "for (var i = 0; i < value.length; i++) {\n  set('kick_beats/' + i, value[i])\n}",
+            "onValue": "set('beat_pt_count', value.length, {send:false})\nfor (var i = 0; i < value.length; i++) {\n  set('kick_beats/' + i, value[i])\n}",
             "onKeyboard": "",
             "keyBinding": "",
             "keyRepeat": true,

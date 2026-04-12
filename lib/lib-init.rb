@@ -252,10 +252,13 @@ end
 define :clone_drums_beats do |cfg|
   # clone the drum beats
   cfg['drums']['count'] *= 2 # double the count
-  osc_ctrl "/beat_pt_count", cfg['drums']['count']
+  # Don't send /beat_pt_count here — the *_beats_v scripts set it
+  # synchronously before updating buttons, avoiding a race condition
+  # where the matrix rebuilds asynchronously and buttons don't exist yet
   clone_drum_beats cfg, 'cymbal'
   clone_drum_beats cfg, 'snare'
   clone_drum_beats cfg, 'kick'
+  init_time_state_drums cfg if get(:drums_auto)
 end
 
 define :clone_drum_beats do |cfg, d|
@@ -265,7 +268,6 @@ define :clone_drum_beats do |cfg, d|
   if cfg['drums'][d]['beats'].length > 0
     cfg['drums'][d]['beats'] += cfg['drums'][d]['beats']
     osc_ctrl "/#{d}_beats_v", cfg['drums'][d]['beats']
-    init_time_state_drums cfg if get(:drums_auto)
   end
 end
 
