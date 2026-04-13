@@ -58,12 +58,27 @@ define :unique_filename do |file_name|
     return file_name_new
 end
 
+# compact JSON: 2-space indented objects, single-line arrays
+define :compact_json do |obj, indent=0|
+    sp = "  " * indent
+    if obj.is_a?(Hash)
+      return "{}" if obj.empty?
+      entries = obj.map { |k, v| "#{sp}  #{k.to_json}: #{compact_json(v, indent + 1)}" }
+      "{\n#{entries.join(",\n")}\n#{sp}}"
+    elsif obj.is_a?(Array)
+      obj.to_json.gsub(',', ', ')
+    else
+      obj.to_json
+    end
+end
+
 # save hash into JSON file with unique name
 # with error handling
 # and return the name
 define :write_unique_JSON do |file_name, hash|    
     file_name_new = unique_filename(file_name)
-    File.write(file_name_new, JSON.pretty_generate(hash, array_nl: "")) # array_nl: "" puts array in one string, but still retains appropriate indentation which makes in worse
+    # File.write(file_name_new, JSON.pretty_generate(hash, array_nl: "")) # array_nl: "" puts array in one string, but retains long indentation
+    File.write(file_name_new, compact_json(hash))
     return file_name_only file_name_new
 end
 
