@@ -167,28 +167,17 @@ live_loop :osc_monitor do
     when "open"
       cfgFile = n[0]
       # deserialize JSON file into cfg hash
-      data = initJSON(cfgFile)
+      cfg = initJSON(cfgFile)
 
-      ca = cfg['chord']['auto']
-      ba = cfg['bass']['auto']
-      da = cfg['drums']['auto']
+      # update time state FIRST for immediate tempo/state sync across threads
+      init_time_state_tempo cfg
+      init_time_state_chord cfg
+      init_time_state_bass cfg
+      init_time_state_drums cfg
 
-      # accept data only if all _auto states are true
-      # or new "tempo" is the same as current tempo
-      if (ca && ba && da) || (data['tempo'] == cfg['tempo'])
-        cfg = data
-        # update time state FIRST for immediate tempo/state sync across threads
-        init_time_state_tempo cfg
-        init_time_state_chord cfg
-        init_time_state_bass cfg
-        init_time_state_drums cfg
-
-        # init osc controls twice to avoid blank instruments
-        init_osc_controls cfg
-        init_osc_controls cfg
-      else
-        osc_ctrl "/NOTIFY", "triangle-exclamation", "Tempo mismatch! Cannot load " + cfgFile
-      end
+      # init osc controls twice to avoid blank instruments
+      init_osc_controls cfg
+      init_osc_controls cfg
       
     when "save"
       # serialize cfg hash into JSON file
