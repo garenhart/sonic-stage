@@ -32,11 +32,12 @@ define :play_drum do |drum, cfg|
   drums = get(:drums)
   beats = drums[drum]['beats']
   count = drums['count']
+  auto_on = get(:drums_auto)
 
   with_effects fx_chain(drums[drum]['fx']) do
     density drums['tempo_factor'] do
       count.times do |i|
-        rt_drum = get(:drums)[drum] # real-time params from Time State
+        rt_drum = auto_on ? get(:drums)[drum] : drums[drum] # real-time vs cached params
         amp = rt_drum['amp']
         beat_on = rt_drum['on'] && beats[i] == "1"
 
@@ -66,6 +67,8 @@ define :play_tonal_instrument do |state_key, label|
   sync :tick
   use_bpm get(:tempo)
 
+  auto_key = state_key == :bass_state ? :bass_auto : :chord_auto
+  auto_on = get(auto_key)
   cfg_inst = get(state_key)
 
   if cfg_inst['pattern'].size > 0 && cfg_inst['pattern'].size == cfg_inst['tonics'].size
@@ -74,7 +77,7 @@ define :play_tonal_instrument do |state_key, label|
     with_effects fx_chain(cfg_inst['fx']) do
       density cfg_inst['tempo_factor'] do
         cfg_inst['count'].times do |i|
-          rt_inst = get(state_key) # real-time params from Time State
+          rt_inst = auto_on ? get(state_key) : cfg_inst # real-time vs cached params
           pos = cfg_inst['pattern'].index(i + 1)
           if rt_inst['on'] && pos
             play cfg_inst['tonics'][pos], amp: rt_inst['amp'], **adsr_opts(cfg_inst['adsr'])

@@ -42,7 +42,7 @@ define :drum_mon do |token, inst, n, cfg|
       init_drum_component cfg, inst, "adsr", n
     else
       fx_mon token, inst, n, cfg
-      init_time_state_drums cfg if get(:drums_auto)
+      init_time_state_drums cfg
   end
 end
 

@@ -59,14 +59,14 @@ define :add_tonic_bass do |cfg, tonic, beat|
   cfg['bass']['tonics'] << tonic
   cfg['bass']['pattern'] << beat
   update_osc_bass_points cfg
-  init_time_state_bass cfg if get(:bass_auto)
+  init_time_state_bass cfg
 end
 
 define :add_tonic_chord do |cfg, tonic, beat| 
   cfg['chord']['tonics'] << tonic
   cfg['chord']['pattern'] << beat
   update_osc_chord_points cfg
-  init_time_state_chord cfg if get(:chord_auto)
+  init_time_state_chord cfg
 end
 
 # define :init_bass_pattern do |cfg|
@@ -76,7 +76,7 @@ end
 #     cfg['bass']['pattern'].push pos
 #   end
 #   update_osc_bass_points cfg
-#   init_time_state_bass cfg if get(:bass_auto)
+#   init_time_state_bass cfg
 # end
 
 define :delete_bass_pattern do |cfg, points|
@@ -92,7 +92,7 @@ define :delete_bass_pattern do |cfg, points|
     end
   end
   update_osc_bass_points cfg
-  init_time_state_bass cfg if get(:bass_auto)
+  init_time_state_bass cfg
 end
 
 # define :init_chord_pattern do |cfg|
@@ -102,7 +102,7 @@ end
 #     cfg['chord']['pattern'].push pos
 #   end
 #   update_osc_chord_points cfg
-#   init_time_state_chord cfg if get(:chord_auto)   
+#   init_time_state_chord cfg   
 # end
 
 define :delete_chord_pattern do |cfg, points|
@@ -118,34 +118,34 @@ define :delete_chord_pattern do |cfg, points|
     end
   end
   update_osc_chord_points cfg 
-  init_time_state_chord cfg if get(:chord_auto)
+  init_time_state_chord cfg
 end
 
 # sets specific bass configuration component
 define :init_bass_component do |cfg, c, v|
   cfg['bass'][c] = v
-  init_time_state_bass cfg if get(:bass_auto)
+  init_time_state_bass cfg
   osc_ctrl "/bass_fav", inst_fav?(cfg, 'bass', cfg['bass']['synth']) ? 1 : 0 if c == 'synth'
 end
 
 # sets specific chord configuration component
 define :init_chord_component do |cfg, c, v|
   cfg['chord'][c] = v
-  init_time_state_chord cfg if get(:chord_auto)
+  init_time_state_chord cfg
   osc_ctrl "/chord_fav", inst_fav?(cfg, 'chord', cfg['chord']['synth']) ? 1 : 0 if c == 'synth'
 end
 
 # sets specific drum configuration component
 define :init_drum_component do |cfg, d, c, v|
   cfg['drums'][d][c] = v
-  init_time_state_drums cfg if get(:drums_auto)
+  init_time_state_drums cfg
   (osc_ctrl "/#{d}_fav", inst_fav?(cfg, d, v) ? 1 : 0) if c == 'sample'
 end
 
 # sets specified drum beat
 define :init_drum_beat do |cfg, d, b, v|
   cfg['drums'][d]['beats'][b] = v  
-  init_time_state_drums cfg if get(:drums_auto)
+  init_time_state_drums cfg
 end
 
 # updates drum beats for a specific drum using new beat_count
@@ -169,7 +169,7 @@ define :update_drum_beats do |cfg, new_beat_count|
   update_drum_component_beats cfg, 'cymbal', new_beat_count
   update_drum_component_beats cfg, 'snare', new_beat_count
   update_drum_component_beats cfg, 'kick', new_beat_count  
-  init_time_state_drums cfg if get(:drums_auto)
+  init_time_state_drums cfg
 end
 
 define :update_bass_count do |cfg, new_count|
@@ -192,7 +192,7 @@ define :update_bass_count do |cfg, new_count|
 
   cfg['bass']['count'] = new_count
   update_osc_bass_points cfg
-  init_time_state_bass cfg if get(:bass_auto)
+  init_time_state_bass cfg
 end
 
 define :clone_bass_pattern do |cfg|
@@ -206,7 +206,7 @@ define :clone_bass_pattern do |cfg|
     cfg['bass']['tonics'] += cfg['bass']['tonics']
     cfg['bass']['count'] *= 2 # double the count
     update_osc_bass_points cfg
-    init_time_state_bass cfg if get(:bass_auto)
+    init_time_state_bass cfg
   end
 end
 
@@ -230,7 +230,7 @@ define :update_chord_count do |cfg, new_count|
 
   cfg['chord']['count'] = new_count
   update_osc_chord_points cfg
-  init_time_state_chord cfg if get(:chord_auto)
+  init_time_state_chord cfg
 end
 
   
@@ -245,7 +245,7 @@ define :clone_chord_pattern do |cfg|
     cfg['chord']['tonics'] += cfg['chord']['tonics']
     cfg['chord']['count'] *= 2 # double the count
     update_osc_chord_points cfg
-    init_time_state_chord cfg if get(:chord_auto)
+    init_time_state_chord cfg
   end
 end
 
@@ -258,7 +258,7 @@ define :clone_drums_beats do |cfg|
   clone_drum_beats cfg, 'cymbal'
   clone_drum_beats cfg, 'snare'
   clone_drum_beats cfg, 'kick'
-  init_time_state_drums cfg if get(:drums_auto)
+  init_time_state_drums cfg
 end
 
 define :clone_drum_beats do |cfg, d|

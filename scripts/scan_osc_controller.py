@@ -31,7 +31,7 @@ EXPECTED_OSC_IDS = {
     "cfg_path", "open", "NOTIFY",
     # Bass
     "bass_on", "bass_amp", "bass_inst", "bass_fav", "bass_fav_all",
-    "bass_auto", "bass_update", "bass_rec", "bass_del",
+    "bass_auto", "bass_rec", "bass_del",
     "bass_pt_count", "bass_tempo_factor", "bass_beat_point",
     "bass_fx1_fx", "bass_fx2_fx",
     "bass_fx1_opt1_value", "bass_fx1_opt2_value",
@@ -42,7 +42,7 @@ EXPECTED_OSC_IDS = {
     # Chord
     "chord_on", "chord_amp", "chord_inst", "chord_type",
     "chord_fav", "chord_fav_all",
-    "chord_auto", "chord_update", "chord_rec", "chord_del",
+    "chord_auto", "chord_rec", "chord_del",
     "chord_pt_count", "chord_tempo_factor", "chord_beat_point",
     "chord_fx1_fx", "chord_fx2_fx",
     "chord_fx1_opt1_value", "chord_fx1_opt2_value",
@@ -55,7 +55,7 @@ EXPECTED_OSC_IDS = {
     "solo_env_adsr",
     # Drums — per-instrument (kick / snare / cymbal)
     "beat_pt_count", "drum_tempo_factor",
-    "drums_auto", "drums_update",
+    "drums_auto",
     "kick_on", "kick_amp", "kick_range", "kick_random", "kick_reverse",
     "kick_pitch_shift", "kick_fav", "kick_beats_v",
     "snare_on", "snare_amp", "snare_range", "snare_random", "snare_reverse",
@@ -190,7 +190,7 @@ def main():
     phantom = js_get_refs - set(all_ids.keys())
     # Filter out dynamic/template references and known state keys
     KNOWN_STATE_KEYS = {
-        "bass_auto", "chord_auto", "drums_auto", "bass_update", "chord_update", "drums_update",
+        "bass_auto", "chord_auto", "drums_auto",
         "tooltip", "bass_beat_point", "chord_beat_point", "tonic_point",
         "selected_pts_bass", "selected_pts_chord", "fx_names",
         "bass_line", "chord_line",

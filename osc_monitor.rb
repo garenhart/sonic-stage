@@ -181,9 +181,9 @@ live_loop :osc_monitor do
         cfg = data
         # update time state FIRST for immediate tempo/state sync across threads
         init_time_state_tempo cfg
-        init_time_state_chord cfg if get(:chord_auto)
-        init_time_state_bass cfg if get(:bass_auto)
-        init_time_state_drums cfg if get(:drums_auto)
+        init_time_state_chord cfg
+        init_time_state_bass cfg
+        init_time_state_drums cfg
 
         # init osc controls twice to avoid blank instruments
         init_osc_controls cfg
@@ -249,11 +249,8 @@ live_loop :osc_monitor do
 
     when "chord_tempo_factor" # update Time State
       cfg['chord']['tempo_factor'] = n[0].to_i
-      init_time_state_chord cfg if get(:chord_auto)
+      init_time_state_chord cfg
 
-    when "chord_update" # update Time State
-      init_time_state_chord cfg if n[0] == 0.0
-      
     when "chord_auto"
       set :chord_auto, n[0].to_i == 1 ? true : false
 
@@ -307,11 +304,8 @@ live_loop :osc_monitor do
 
     when "bass_tempo_factor" # update Time State
       cfg['bass']['tempo_factor'] = n[0].to_i
-      init_time_state_bass cfg if get(:bass_auto)
+      init_time_state_bass cfg
 
-    when "bass_update" # update Time State
-      init_time_state_bass cfg if n[0] == 0.0
-      
     when "bass_auto"
       set :bass_auto, n[0].to_i == 1 ? true : false
 
@@ -362,11 +356,8 @@ live_loop :osc_monitor do
       
     when "drum_tempo_factor" # update Time State
       cfg['drums']['tempo_factor'] = n[0].to_i
-      init_time_state_drums cfg if get(:drums_auto)
+      init_time_state_drums cfg
 
-    when "drums_update" # update Time State
-      init_time_state_drums cfg if n[0] == 0.0
-      
     when "drums_auto"
       set :drums_auto, n[0].to_i == 1 ? true : false
 

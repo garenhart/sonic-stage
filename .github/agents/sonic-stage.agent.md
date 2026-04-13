@@ -68,8 +68,8 @@ ADSR: `[attack, attack_level, decay, decay_level, sustain, sustain_level, releas
 Key OSC paths:
 - Global: `/tempo`, `/mode`, `/scale`, `/pattern_mode`, `/open`, `/save`
 - Solo: `/solo_on`, `/solo_inst`, `/solo_fav`, `/solo_fx*`
-- Bass: `/bass_on`, `/bass_inst`, `/bass_amp`, `/bass_line_updated`, `/bass_pt_count`, `/bass_update`
-- Chord: `/chord_on`, `/chord_inst`, `/chord_amp`, `/chord_line_updated`, `/chord_pt_count`, `/chord_update`
+- Bass: `/bass_on`, `/bass_inst`, `/bass_amp`, `/bass_line_updated`, `/bass_pt_count`
+- Chord: `/chord_on`, `/chord_inst`, `/chord_amp`, `/chord_line_updated`, `/chord_pt_count`
 - Drums: `/{kick,snare,cymbal}_on`, `/{drum}_inst`, `/{drum}_beats`, `/{drum}_beats_v`, `/beat_pt_count`
 
 ## Key Conventions

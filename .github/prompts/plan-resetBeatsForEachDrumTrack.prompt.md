@@ -28,7 +28,7 @@ Add a "clear beats" reset button per drum track (kick, snare, cymbal) that clear
    - `type`: `"button"`, `mode`: `"tap"`, `on`: 1, `off`: 0
    - `label`: reset icon (e.g. `"^arrows-rotate"` or `"CLR"`)
    - `address`: `"auto"` (will auto-derive OSC path from id)
-   - `onValue`: `"if (get('drums_auto') === 0) { set('drums_update', 1)}"` — same pattern as other drum buttons
+   - `onValue`: `""` — no additional script needed
    - Copy width/height/styling from `kick_inst_prev` (tap button template at line 10327); size to fit inside the `"width": "5%"` panel
 
 ---
@@ -43,5 +43,5 @@ Add a "clear beats" reset button per drum track (kick, snare, cymbal) that clear
 1. Set some beats on kick, click reset → all kick beat buttons go dark/off
 2. Change beat count (e.g. to 32), set beats, click reset → all 32 beats clear
 3. Verify snare reset and cymbal reset independently
-4. With `drums_auto` off: reset clears beats locally and triggers `drums_update` sync
+4. With `drums_auto` off: reset clears beats locally, changes apply on next loop
 5. Active playback: after reset, drum stops playing within the current pattern cycle
