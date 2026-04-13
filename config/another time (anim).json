@@ -17,6 +17,7 @@
   "bass": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": false,
     "on": true,
     "amp": 0.8,
     "synth": "fm",
@@ -30,6 +31,7 @@
   "chord": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": false,
     "on": true,
     "amp": 0.5,
     "type": 1,
@@ -44,6 +46,7 @@
   "drums": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": true,
     "cymbal": {
       "on": false,
       "amp": 0.10000000149011612,

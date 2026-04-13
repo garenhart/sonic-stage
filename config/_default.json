@@ -10,43 +10,93 @@
     "inst": "piano",
     "fav": [],
     "fav_all": false,
-    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]]
+    "fx": [
+      [
+        "reverb",
+        0.9,
+        0.5
+      ],
+      [
+        "none",
+        0.9,
+        0.5
+      ]
+    ]
   },
   "bass": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": true,
     "on": false,
     "amp": 0.5,
     "synth": "fm",
     "fav": [],
     "fav_all": false,
-    "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
-    "tonics": [    ],
-    "pattern": [    ]
+    "fx": [
+      [
+        "reverb",
+        0.8,
+        0.5
+      ],
+      [
+        "none",
+        0.9,
+        0.5
+      ]
+    ],
+    "tonics": [],
+    "pattern": []
   },
   "chord": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": true,
     "on": false,
     "amp": 0.5,
     "type": 1,
     "synth": "piano",
     "fav": [],
     "fav_all": false,
-    "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
-    "tonics": [    ],
-    "pattern": [    ]
+    "fx": [
+      [
+        "reverb",
+        0.8,
+        0.5
+      ],
+      [
+        "none",
+        0.9,
+        0.5
+      ]
+    ],
+    "tonics": [],
+    "pattern": []
   },
   "drums": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": true,
     "cymbal": {
       "on": false,
       "amp": 0.5,
       "sample": "drum_cymbal_closed",
       "fav": [],
-      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
-      "range": [        0,        1      ],
+      "fx": [
+        [
+          "reverb",
+          0.8,
+          0.5
+        ],
+        [
+          "none",
+          0.9,
+          0.5
+        ]
+      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -57,8 +107,22 @@
       "amp": 0.5,
       "sample": "drum_snare_soft",
       "fav": [],
-      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
-      "range": [        0,        1      ],
+      "fx": [
+        [
+          "reverb",
+          0.8,
+          0.5
+        ],
+        [
+          "none",
+          0.9,
+          0.5
+        ]
+      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -69,8 +133,22 @@
       "amp": 0.5,
       "sample": "bd_tek",
       "fav": [],
-      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
-      "range": [        0,        1      ],
+      "fx": [
+        [
+          "reverb",
+          0.8,
+          0.5
+        ],
+        [
+          "none",
+          0.9,
+          0.5
+        ]
+      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,

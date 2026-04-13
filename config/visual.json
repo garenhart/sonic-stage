@@ -10,38 +10,71 @@
     "inst": "piano",
     "fav": [],
     "fav_all": false,
-    "fx": [["none", 0.9, 0.5], ["none", 0.9, 0.5]]
+    "fx": [
+      [
+        "none",
+        0.9,
+        0.5
+      ],
+      [
+        "none",
+        0.9,
+        0.5
+      ]
+    ]
   },
   "bass": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": true,
     "on": true,
     "amp": 0.5,
     "synth": "fm",
     "fav": [],
-    "tonics": [    ],
-    "pattern": [    ]
+    "tonics": [],
+    "pattern": []
   },
   "chord": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": true,
     "on": true,
     "amp": 0.5,
     "type": 1,
     "synth": "piano",
     "fav": [],
-    "tonics": [      57,      60,      62,      65,      64,      60,      62    ],
-    "pattern": [      1,      3,      4,      6,      8,      11,      12    ]
+    "tonics": [
+      57,
+      60,
+      62,
+      65,
+      64,
+      60,
+      62
+    ],
+    "pattern": [
+      1,
+      3,
+      4,
+      6,
+      8,
+      11,
+      12
+    ]
   },
   "drums": {
     "count": 16,
     "tempo_factor": 1,
+    "auto": true,
     "cymbal": {
       "on": true,
       "amp": 0.5,
       "sample": "drum_cymbal_closed",
       "fav": [],
-      "range": [        0,        1      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -52,7 +85,10 @@
       "amp": 0.5,
       "sample": "drum_snare_soft",
       "fav": [],
-      "range": [        0,        1      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -63,7 +99,10 @@
       "amp": 0.5,
       "sample": "bd_tek",
       "fav": [],
-      "range": [        0,        1      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,

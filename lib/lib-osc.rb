@@ -62,26 +62,26 @@ define :init_osc_keyboard do |tonic, mode|
   puts "init_osc_keyboard time: #{scale_notes.to_s}, #{mode}, #{time_diff_ms start, finish}"
 end
 
-define :init_osc_update_drums do
-  osc_ctrl "/drums_auto", get(:drums_auto) ? 1 : 0
+define :init_osc_update_drums do |cfg|
+  osc_ctrl "/drums_auto", cfg['drums']['auto'] ? 1 : 0
 end
 
-define :init_osc_update_bass do
-  osc_ctrl "/bass_auto", get(:bass_auto) ? 1 : 0
+define :init_osc_update_bass do |cfg|
+  osc_ctrl "/bass_auto", cfg['bass']['auto'] ? 1 : 0
   osc_ctrl "/bass_rec", get(:bass_rec) ? 1 : 0
   osc_ctrl "/bass_del", 0
 end
 
-define :init_osc_update_chord do
-  osc_ctrl "/chord_auto", get(:chord_auto) ? 1 : 0
+define :init_osc_update_chord do |cfg|
+  osc_ctrl "/chord_auto", cfg['chord']['auto'] ? 1 : 0
   osc_ctrl "/chord_rec", get(:chord_rec) ? 1 : 0
   osc_ctrl "/chord_del", 0
 end
 
-define :init_osc_updates do
-  init_osc_update_drums 
-  init_osc_update_bass
-  init_osc_update_chord
+define :init_osc_updates do |cfg|
+  init_osc_update_drums cfg
+  init_osc_update_bass cfg
+  init_osc_update_chord cfg
 end
 
 define :init_osc_drum do |d, gr_ctrl, inst_ctrl, cfg|
@@ -193,8 +193,9 @@ define :init_osc_inst_envelopes do |cfg|
 end
 
 define :init_osc_controls do |cfg, init_presets=false|
+  init_osc_updates cfg
+
   if init_presets
-    init_osc_updates
     init_osc_synths
     init_osc_sample_groups
     init_osc_fx

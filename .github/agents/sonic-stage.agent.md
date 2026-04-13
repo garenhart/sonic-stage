@@ -34,7 +34,7 @@ set :drums, cfg['drums']              # Initialize from config
 rt_drums = get(:drums)                # Read in live loops
 ```
 
-State keys: `:tempo`, `:beat`, `:bass_state`, `:chord_state`, `:drums`, `:bass_auto`, `:chord_auto`, `:drums_auto`, `:bass_rec`, `:chord_rec`, `:ctrl_ip`, `:ctrl_port`
+State keys: `:tempo`, `:beat`, `:bass_state`, `:chord_state`, `:drums`, `:bass_rec`, `:chord_rec`, `:ctrl_ip`, `:ctrl_port`
 
 ## Config JSON Structure
 

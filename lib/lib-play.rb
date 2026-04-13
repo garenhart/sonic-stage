@@ -32,7 +32,7 @@ define :play_drum do |drum, cfg|
   drums = get(:drums)
   beats = drums[drum]['beats']
   count = drums['count']
-  auto_on = get(:drums_auto)
+  auto_on = cfg['drums']['auto']
 
   with_effects fx_chain(drums[drum]['fx']) do
     density drums['tempo_factor'] do
@@ -62,13 +62,12 @@ define :play_drum do |drum, cfg|
 end
 
 # Shared playback logic for bass and chord instruments
-define :play_tonal_instrument do |state_key, label|
+define :play_tonal_instrument do |state_key, label, cfg|
   use_real_time
   sync :tick
   use_bpm get(:tempo)
 
-  auto_key = state_key == :bass_state ? :bass_auto : :chord_auto
-  auto_on = get(auto_key)
+  auto_on = cfg[label]['auto']
   cfg_inst = get(state_key)
 
   if cfg_inst['pattern'].size > 0 && cfg_inst['pattern'].size == cfg_inst['tonics'].size
@@ -93,11 +92,11 @@ define :play_tonal_instrument do |state_key, label|
 end
 
 define :play_bass do |cfg|
-  play_tonal_instrument :bass_state, "bass"
+  play_tonal_instrument :bass_state, "bass", cfg
 end
 
 define :play_chords do |cfg|
-  play_tonal_instrument :chord_state, "chord"
+  play_tonal_instrument :chord_state, "chord", cfg
 end
 
 define :play_chords_complex do |cfg|

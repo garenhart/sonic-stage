@@ -55,9 +55,7 @@ set :ctrl_port, 7777 # make sure to match Open Stage Control's osc-port value
 set :anim_ip, "127.0.0.1"
 set :anim_port, 8000 # make sure to match Processing osc-port value
 
-set :drums_auto, true
-set :bass_auto, true
-set :chord_auto, true
+
 
 bass_rec = false
 chord_rec = false
@@ -162,8 +160,8 @@ live_loop :osc_monitor do
     drum_mon token, t, n, cfg
   elsif ["solo", "bass", "chord"].include?(t) && token[1].include?("_fx")
     fx_mon token, t, n, cfg
-    init_time_state_bass cfg if t == "bass" && get(:bass_auto)
-    init_time_state_chord cfg if t == "chord" && get(:chord_auto)
+    init_time_state_bass cfg if t == "bass" && cfg['bass']['auto']
+    init_time_state_chord cfg if t == "chord" && cfg['chord']['auto']
   else
     case token[1]
     when "open"
@@ -171,9 +169,9 @@ live_loop :osc_monitor do
       # deserialize JSON file into cfg hash
       data = initJSON(cfgFile)
 
-      ca = get(:chord_auto)
-      ba = get(:bass_auto)
-      da = get(:drums_auto)
+      ca = cfg['chord']['auto']
+      ba = cfg['bass']['auto']
+      da = cfg['drums']['auto']
 
       # accept data only if all _auto states are true
       # or new "tempo" is the same as current tempo
@@ -252,7 +250,7 @@ live_loop :osc_monitor do
       init_time_state_chord cfg
 
     when "chord_auto"
-      set :chord_auto, n[0].to_i == 1 ? true : false
+      cfg['chord']['auto'] = n[0].to_i == 1 ? true : false
 
     when "chord_inst"
       init_chord_component(cfg, "synth", n[0].to_sym)
@@ -307,7 +305,7 @@ live_loop :osc_monitor do
       init_time_state_bass cfg
 
     when "bass_auto"
-      set :bass_auto, n[0].to_i == 1 ? true : false
+      cfg['bass']['auto'] = n[0].to_i == 1 ? true : false
 
     when "bass_inst"
       init_bass_component(cfg, 'synth', n[0].to_sym)
@@ -359,7 +357,7 @@ live_loop :osc_monitor do
       init_time_state_drums cfg
 
     when "drums_auto"
-      set :drums_auto, n[0].to_i == 1 ? true : false
+      cfg['drums']['auto'] = n[0].to_i == 1 ? true : false
 
   # save mode and scale
     when "mode"

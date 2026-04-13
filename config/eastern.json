@@ -8,43 +8,102 @@
   "solo": {
     "on": true,
     "inst": "pluck",
-    "fav": ["pluck", "piano"],
+    "fav": [
+      "pluck",
+      "piano"
+    ],
     "fav_all": true,
-    "fx": [["reverb", 2, 0.5], ["none", 0.4, [0.5, 0.8]]]
+    "fx": [
+      [
+        "reverb",
+        2,
+        0.5
+      ],
+      [
+        "none",
+        0.4,
+        [
+          0.5,
+          0.8
+        ]
+      ]
+    ]
   },
   "bass": {
     "count": 32,
     "tempo_factor": 1,
+    "auto": true,
     "on": true,
     "amp": 0.5,
     "synth": "pluck",
-    "fav": [    ],
-    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
-    "tonics": [    ],
-    "pattern": [    ]
+    "fav": [],
+    "fx": [
+      [
+        "reverb",
+        0.9,
+        0.5
+      ],
+      [
+        "none",
+        0.9,
+        0.5
+      ]
+    ],
+    "tonics": [],
+    "pattern": []
   },
   "chord": {
     "count": 32,
     "tempo_factor": 1,
+    "auto": true,
     "on": false,
     "amp": 0.5,
     "type": 1,
     "synth": "pluck",
-    "fav": [    ],
-    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
-    "tonics": [    ],
-    "pattern": [    ]
+    "fav": [],
+    "fx": [
+      [
+        "reverb",
+        0.9,
+        0.5
+      ],
+      [
+        "none",
+        0.9,
+        0.5
+      ]
+    ],
+    "tonics": [],
+    "pattern": []
   },
   "drums": {
     "count": 32,
     "tempo_factor": 1,
+    "auto": true,
     "cymbal": {
       "on": true,
       "amp": 0.3,
       "sample": "tabla_tas3",
-      "fav": [        "tabla_tas3",        "tabla_ghe4"      ],
-      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
-      "range": [        0,        1      ],
+      "fav": [
+        "tabla_tas3",
+        "tabla_ghe4"
+      ],
+      "fx": [
+        [
+          "reverb",
+          0.8,
+          0.5
+        ],
+        [
+          "none",
+          0.9,
+          0.5
+        ]
+      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": -4,
@@ -54,9 +113,26 @@
       "on": true,
       "amp": 0.85,
       "sample": "loop_safari",
-      "fav": [        "loop_tabla",        "loop_safari"      ],
-      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
-      "range": [        0,        1      ],
+      "fav": [
+        "loop_tabla",
+        "loop_safari"
+      ],
+      "fx": [
+        [
+          "reverb",
+          0.8,
+          0.5
+        ],
+        [
+          "none",
+          0.9,
+          0.5
+        ]
+      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": -12,
@@ -66,9 +142,26 @@
       "on": true,
       "amp": 0.85,
       "sample": "bd_boom",
-      "fav": [        "bd_sone",        "bd_boom"      ],
-      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
-      "range": [        0,        1      ],
+      "fav": [
+        "bd_sone",
+        "bd_boom"
+      ],
+      "fx": [
+        [
+          "reverb",
+          0.8,
+          0.5
+        ],
+        [
+          "none",
+          0.9,
+          0.5
+        ]
+      ],
+      "range": [
+        0,
+        1
+      ],
       "random": false,
       "reverse": false,
       "pitch_shift": 10,
