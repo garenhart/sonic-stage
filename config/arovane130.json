@@ -10,18 +10,7 @@
     "inst": "piano",
     "fav": [],
     "fav_all": false,
-    "fx": [
-      [
-        "reverb",
-        0.9,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ]
+    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]]
   },
   "bass": {
     "count": 16,
@@ -31,18 +20,7 @@
     "amp": 0.5,
     "synth": "fm",
     "fav": [],
-    "fx": [
-      [
-        "reverb",
-        0.9,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ],
+    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
     "tonics": [],
     "pattern": []
   },
@@ -55,18 +33,7 @@
     "type": 1,
     "synth": "piano",
     "fav": [],
-    "fx": [
-      [
-        "reverb",
-        0.9,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ],
+    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
     "tonics": [],
     "pattern": []
   },
@@ -79,22 +46,8 @@
       "amp": 0.5,
       "sample": "drum_cymbal_closed",
       "fav": [],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0,
-        1
-      ],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0, 1],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -105,22 +58,8 @@
       "amp": 0.5,
       "sample": "drum_snare_soft",
       "fav": [],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0,
-        1
-      ],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0, 1],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -131,22 +70,8 @@
       "amp": 0.5,
       "sample": "arovane_beat_c",
       "fav": [],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0.6700000166893005,
-        1.0
-      ],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0.6700000166893005, 1.0],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,

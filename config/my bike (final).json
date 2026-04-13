@@ -8,22 +8,9 @@
   "solo": {
     "on": true,
     "inst": "beep",
-    "fav": [
-      "beep"
-    ],
+    "fav": ["beep"],
     "fav_all": false,
-    "fx": [
-      [
-        "reverb",
-        0.8,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ]
+    "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]]
   },
   "bass": {
     "count": 16,
@@ -33,38 +20,9 @@
     "amp": 0.5,
     "synth": "tri",
     "fav": [],
-    "fx": [
-      [
-        "reverb",
-        0.9,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ],
-    "tonics": [
-      60,
-      60,
-      59,
-      57,
-      55,
-      52,
-      60,
-      59
-    ],
-    "pattern": [
-      2,
-      5,
-      7,
-      8,
-      9,
-      10,
-      12,
-      14
-    ]
+    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
+    "tonics": [60, 60, 59, 57, 55, 52, 60, 59],
+    "pattern": [2, 5, 7, 8, 9, 10, 12, 14]
   },
   "chord": {
     "count": 16,
@@ -75,18 +33,7 @@
     "type": 1,
     "synth": "piano",
     "fav": [],
-    "fx": [
-      [
-        "reverb",
-        0.9,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ],
+    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
     "tonics": [],
     "pattern": []
   },
@@ -99,22 +46,8 @@
       "amp": 0.5,
       "sample": "hat_cab",
       "fav": [],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0,
-        1
-      ],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0, 1],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -125,22 +58,8 @@
       "amp": 0.5,
       "sample": "hat_bdu",
       "fav": [],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0,
-        1
-      ],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0, 1],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -151,22 +70,8 @@
       "amp": 0.5,
       "sample": "bd_tek",
       "fav": [],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0,
-        1
-      ],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0, 1],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,

@@ -10,28 +10,8 @@
     "inst": "beep",
     "fav": [],
     "fav_all": false,
-    "fx": [
-      [
-        "reverb",
-        0.4,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ],
-    "adsr": [
-      0.0,
-      1.0,
-      0.1,
-      0.9,
-      0.2,
-      0.9,
-      0.7,
-      0.0
-    ]
+    "fx": [["reverb", 0.4, 0.5], ["none", 0.9, 0.5]],
+    "adsr": [0.0, 1.0, 0.1, 0.9, 0.2, 0.9, 0.7, 0.0]
   },
   "bass": {
     "count": 16,
@@ -41,30 +21,9 @@
     "amp": 0.5,
     "synth": "fm",
     "fav": [],
-    "fx": [
-      [
-        "reverb",
-        0.9,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ],
-    "tonics": [
-      45,
-      48,
-      50,
-      52
-    ],
-    "pattern": [
-      1,
-      5,
-      9,
-      13
-    ]
+    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
+    "tonics": [45, 48, 50, 52],
+    "pattern": [1, 5, 9, 13]
   },
   "chord": {
     "count": 16,
@@ -75,38 +34,9 @@
     "type": 1,
     "synth": "piano",
     "fav": [],
-    "fx": [
-      [
-        "reverb",
-        0.9,
-        0.5
-      ],
-      [
-        "none",
-        0.9,
-        0.5
-      ]
-    ],
-    "tonics": [
-      86,
-      84,
-      83,
-      83,
-      81,
-      77,
-      75,
-      76
-    ],
-    "pattern": [
-      1,
-      4,
-      5,
-      7,
-      8,
-      9,
-      12,
-      13
-    ]
+    "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]],
+    "tonics": [86, 84, 83, 83, 81, 77, 75, 76],
+    "pattern": [1, 4, 5, 7, 8, 9, 12, 13]
   },
   "drums": {
     "count": 16,
@@ -116,26 +46,9 @@
       "on": true,
       "amp": 0.5,
       "sample": "drum_cymbal_closed",
-      "fav": [
-        "drum_cymbal_closed",
-        "elec_ping"
-      ],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0,
-        1
-      ],
+      "fav": ["drum_cymbal_closed", "elec_ping"],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0, 1],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -145,27 +58,9 @@
       "on": true,
       "amp": 0.5,
       "sample": "drum_snare_soft",
-      "fav": [
-        "drum_snare_soft",
-        "elec_plip",
-        "ambi_lunar_land"
-      ],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0,
-        1
-      ],
+      "fav": ["drum_snare_soft", "elec_plip", "ambi_lunar_land"],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0, 1],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
@@ -175,26 +70,9 @@
       "on": true,
       "amp": 0.5,
       "sample": "bd_tek",
-      "fav": [
-        "vinyl_rewind",
-        "bd_tek"
-      ],
-      "fx": [
-        [
-          "reverb",
-          0.8,
-          0.5
-        ],
-        [
-          "none",
-          0.9,
-          0.5
-        ]
-      ],
-      "range": [
-        0,
-        1
-      ],
+      "fav": ["vinyl_rewind", "bd_tek"],
+      "fx": [["reverb", 0.8, 0.5], ["none", 0.9, 0.5]],
+      "range": [0, 1],
       "random": false,
       "reverse": false,
       "pitch_shift": 0,
