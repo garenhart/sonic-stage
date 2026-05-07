@@ -55,16 +55,42 @@ define :reset_tonics do |cfg|
   cfg['chord']['pattern'] = []
 end
 
-define :add_tonic_bass do |cfg, tonic, beat| 
+define :add_tonic_bass do |cfg, tonic, beat|
+  count = cfg['bass']['count'] || 16
+  # If this beat is already occupied by a previous input note, advance to next free beat
+  adjusted_beat = beat
+  while cfg['bass']['pattern'].include?(adjusted_beat)
+    adjusted_beat = (adjusted_beat % count) + 1
+    break if adjusted_beat == beat  # full loop, give up
+  end
+  # Overwrite any existing recorded point at adjusted_beat
+  idx = cfg['bass']['pattern'].index(adjusted_beat)
+  if idx
+    cfg['bass']['pattern'].delete_at(idx)
+    cfg['bass']['tonics'].delete_at(idx)
+  end
   cfg['bass']['tonics'] << tonic
-  cfg['bass']['pattern'] << beat
+  cfg['bass']['pattern'] << adjusted_beat
   update_osc_bass_points cfg
   init_time_state_bass cfg
 end
 
-define :add_tonic_chord do |cfg, tonic, beat| 
+define :add_tonic_chord do |cfg, tonic, beat|
+  count = cfg['chord']['count'] || 16
+  # If this beat is already occupied by a previous input note, advance to next free beat
+  adjusted_beat = beat
+  while cfg['chord']['pattern'].include?(adjusted_beat)
+    adjusted_beat = (adjusted_beat % count) + 1
+    break if adjusted_beat == beat  # full loop, give up
+  end
+  # Overwrite any existing recorded point at adjusted_beat
+  idx = cfg['chord']['pattern'].index(adjusted_beat)
+  if idx
+    cfg['chord']['pattern'].delete_at(idx)
+    cfg['chord']['tonics'].delete_at(idx)
+  end
   cfg['chord']['tonics'] << tonic
-  cfg['chord']['pattern'] << beat
+  cfg['chord']['pattern'] << adjusted_beat
   update_osc_chord_points cfg
   init_time_state_chord cfg
 end
