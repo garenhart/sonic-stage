@@ -55,20 +55,25 @@ define :reset_tonics do |cfg|
   cfg['chord']['pattern'] = []
 end
 
+# Finds a free beat slot, evicting any existing point there, and returns the adjusted beat.
+# Advances by +1 (wrapping at count) to avoid colliding with a same-session input note.
+define :adjust_beat do |pattern, tonics, beat, count|
+  adjusted = beat
+  while pattern.include?(adjusted)
+    adjusted = (adjusted % count) + 1
+    break if adjusted == beat  # full loop, give up
+  end
+  idx = pattern.index(adjusted)
+  if idx
+    pattern.delete_at(idx)
+    tonics.delete_at(idx)
+  end
+  adjusted
+end
+
 define :add_tonic_bass do |cfg, tonic, beat|
   count = cfg['bass']['count'] || 16
-  # If this beat is already occupied by a previous input note, advance to next free beat
-  adjusted_beat = beat
-  while cfg['bass']['pattern'].include?(adjusted_beat)
-    adjusted_beat = (adjusted_beat % count) + 1
-    break if adjusted_beat == beat  # full loop, give up
-  end
-  # Overwrite any existing recorded point at adjusted_beat
-  idx = cfg['bass']['pattern'].index(adjusted_beat)
-  if idx
-    cfg['bass']['pattern'].delete_at(idx)
-    cfg['bass']['tonics'].delete_at(idx)
-  end
+  adjusted_beat = adjust_beat(cfg['bass']['pattern'], cfg['bass']['tonics'], beat, count)
   cfg['bass']['tonics'] << tonic
   cfg['bass']['pattern'] << adjusted_beat
   update_osc_bass_points cfg
@@ -77,18 +82,7 @@ end
 
 define :add_tonic_chord do |cfg, tonic, beat|
   count = cfg['chord']['count'] || 16
-  # If this beat is already occupied by a previous input note, advance to next free beat
-  adjusted_beat = beat
-  while cfg['chord']['pattern'].include?(adjusted_beat)
-    adjusted_beat = (adjusted_beat % count) + 1
-    break if adjusted_beat == beat  # full loop, give up
-  end
-  # Overwrite any existing recorded point at adjusted_beat
-  idx = cfg['chord']['pattern'].index(adjusted_beat)
-  if idx
-    cfg['chord']['pattern'].delete_at(idx)
-    cfg['chord']['tonics'].delete_at(idx)
-  end
+  adjusted_beat = adjust_beat(cfg['chord']['pattern'], cfg['chord']['tonics'], beat, count)
   cfg['chord']['tonics'] << tonic
   cfg['chord']['pattern'] << adjusted_beat
   update_osc_chord_points cfg
