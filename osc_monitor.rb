@@ -59,6 +59,8 @@ set :anim_port, 8000 # make sure to match Processing osc-port value
 
 bass_rec = false
 chord_rec = false
+set :bass_rec, bass_rec
+set :chord_rec, chord_rec
 
 puts "CTRL", :ctrl_ip, :ctrl_port
 
@@ -168,6 +170,12 @@ live_loop :osc_monitor do
       cfgFile = n[0]
       # deserialize JSON file into cfg hash
       cfg = initJSON(cfgFile)
+
+      # Opening a new config should always exit live MIDI recording mode.
+      bass_rec = false
+      chord_rec = false
+      set :bass_rec, bass_rec
+      set :chord_rec, chord_rec
 
       # update time state FIRST for immediate tempo/state sync across threads
       init_time_state_tempo cfg
@@ -358,9 +366,11 @@ live_loop :osc_monitor do
     # recording
     when "bass_rec"
       bass_rec = n[0].to_i == 1 ? true : false
+      set :bass_rec, bass_rec
 
     when "chord_rec"
-      chord_rec = n[0].to_i == 1 ? true : false    
+      chord_rec = n[0].to_i == 1 ? true : false
+      set :chord_rec, chord_rec
     end
   end
 end
