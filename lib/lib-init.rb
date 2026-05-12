@@ -56,12 +56,14 @@ define :reset_tonics do |cfg|
 end
 
 # Finds a free beat slot, evicting any existing point there, and returns the adjusted beat.
-# Advances by +1 (wrapping at count) to avoid colliding with a same-session input note.
+# Stops searching if adjusted beat exceeds count (no wrapping).
 define :adjust_beat do |pattern, tonics, beat, count|
   adjusted = beat
   while pattern.include?(adjusted)
-    adjusted = (adjusted % count) + 1
-    break if adjusted == beat  # full loop, give up
+    adjusted = adjusted + 1
+    if adjusted > count
+      return nil  # No free beat found within valid range
+    end
   end
   idx = pattern.index(adjusted)
   if idx
@@ -74,6 +76,7 @@ end
 define :add_tonic_bass do |cfg, tonic, beat|
   count = cfg['bass']['count'] || 16
   adjusted_beat = adjust_beat(cfg['bass']['pattern'], cfg['bass']['tonics'], beat, count)
+  return if adjusted_beat.nil?  # Stop if no free beat found
   cfg['bass']['tonics'] << tonic
   cfg['bass']['pattern'] << adjusted_beat
   update_osc_bass_points cfg
@@ -83,6 +86,7 @@ end
 define :add_tonic_chord do |cfg, tonic, beat|
   count = cfg['chord']['count'] || 16
   adjusted_beat = adjust_beat(cfg['chord']['pattern'], cfg['chord']['tonics'], beat, count)
+  return if adjusted_beat.nil?  # Stop if no free beat found
   cfg['chord']['tonics'] << tonic
   cfg['chord']['pattern'] << adjusted_beat
   update_osc_chord_points cfg
