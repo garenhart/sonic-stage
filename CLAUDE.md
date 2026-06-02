@@ -111,6 +111,14 @@ cfg = initJSON(config_path + "test_config.json")
 init_osc_controls cfg, true  # true = reinitialize
 ```
 
+## Performance
+
+Real-time audio is the top priority. Not all code has equal timing sensitivity:
+
+- **Critical path** — `play_drum`, `play_bass`, `play_chords`, `play_cue`, and the MIDI live loops run on the audio thread. Minimize `get`/`set` calls, avoid unnecessary function calls, and prefer local variable capture over repeated `get()` calls when the value doesn't need live updates mid-loop.
+- **Non-critical** — `live_loop :osc_monitor`, initialization, and all `init_osc_*` functions are event-driven or one-shot; overhead there has no timing impact.
+- **Effects ordering** — the order of entries in `fx` arrays affects both latency and sound character; keep chains short in production configs.
+
 ## Conventions
 
 - Functions: `define :snake_case_name`
