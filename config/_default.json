@@ -8,7 +8,7 @@
   "solo": {
     "on": true,
     "inst": "piano",
-    "amp": 0.2,
+    "amp": 0.5,
     "fav": [],
     "fav_all": false,
     "fx": [["reverb", 0.9, 0.5], ["none", 0.9, 0.5]]

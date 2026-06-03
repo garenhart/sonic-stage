@@ -14410,7 +14410,7 @@
                     "html": "",
                     "css": "",
                     "value": "",
-                    "default": "",
+                    "default": 0.5,
                     "linkId": "",
                     "address": "auto",
                     "preArgs": "",
