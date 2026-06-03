@@ -6,6 +6,7 @@
   "scale": "ionian",
   "loop_mode": 0,
   "solo": {
+    "adsr": [0.0, 1.0, 0.4, 0.9, 0.8, 0.9, 4.0, 0.0],
     "on": true,
     "inst": "piano",
     "fav": ["piano"],

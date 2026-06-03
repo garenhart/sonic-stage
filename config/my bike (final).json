@@ -6,6 +6,7 @@
   "scale": "ionian",
   "loop_mode": 0,
   "solo": {
+    "adsr": [0.0, 1.0, 0.6, 0.9, 1.2, 0.9, 6.0, 0.0],
     "on": true,
     "inst": "beep",
     "fav": ["beep"],
