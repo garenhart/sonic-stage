@@ -112,6 +112,9 @@ define :handle_osc do |token, t, n, cfg, cfg_file|
     when "solo_on"
       cfg['solo']['on'] = n[0] == 1.0
 
+    when "solo_amp"
+      cfg['solo']['amp'] = n[0]
+
     when "solo_fav"
       update_fav_inst cfg, 'solo', n[0]
 

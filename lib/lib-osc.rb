@@ -208,6 +208,7 @@ define :init_osc_controls do |cfg, init_presets=false|
   osc_ctrl "/scale", cfg['scale']
   osc_ctrl "/switch_loop", cfg['loop_mode']
   osc_ctrl "/solo_on", cfg['solo']['on'] ? 1 : 0
+  osc_ctrl "/solo_amp", cfg['solo']['amp'] || 1
   osc_ctrl "/solo_fav_all", cfg['solo']['fav_all'] ? 1 : 0
   osc_ctrl "/solo_inst", cfg['solo']['inst']
   osc_ctrl "/solo_fav", inst_fav?(cfg, 'solo', cfg['solo']['inst']) ? 1 : 0
