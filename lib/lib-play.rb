@@ -183,7 +183,7 @@ end
 
 define :play_midi_solo do |cfg, note, vel|
   use_bpm get(:tempo) # required so adsr/fx times (in beats) scale like bass/chord; else solo runs at default 60 BPM and sounds different
-  amp = vel/127.0 * 2 * (cfg['solo']['amp'] || 0.5) * 2 # 2x headroom: fader 0.5 = old max, 1.0 = double (may distort); || 0.5 keeps configs without a solo amp at their original loudness
+  amp = vel/127.0 * 2 * (cfg['solo']['amp'] || 0.5) # 2x headroom: fader 0.5 = old max, 1.0 = double (may distort); || 0.5 keeps configs without a solo amp at their original loudness
   with_effects fx_chain(cfg['solo']['fx']) do
     play_synth_note cfg['solo']['inst'].to_sym, note, amp, cfg['solo']['adsr']
   end
