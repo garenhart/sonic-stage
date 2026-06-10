@@ -43,18 +43,22 @@ end
 # generate a unique file name based on file_name
 # by appending a suffix with next available number (at least 2 digits)
 define :unique_filename do |file_name|
+    dir       = File.dirname(file_name)
     extension = File.extname(file_name)
-    file_name_base = file_name.reverse.sub(extension.reverse, "".reverse).reverse
-    puts "file_name_base", file_name_base
-    file_name_base = file_name_base.split("_").first
-    file_name_new = file_name_base + extension
-    puts "file_name_new", file_name_new
+    base      = File.basename(file_name, extension)
+    # strip a previously-appended numeric suffix (e.g. "_03") so re-saving a
+    # generated file doesn't accumulate suffixes; only strip when something
+    # remains, so names like "_01" or "_default" keep their leading underscore
+    stripped = base.sub(/_\d+\z/, "")
+    base = stripped unless stripped.empty?
+    # final guard against a name that reduced to nothing (e.g. file was ".json")
+    base = "untitled" if base.empty?
+    file_name_new = File.join(dir, base + extension)
     i = 0
     while File.exist?(file_name_new)
         i += 1
-        file_name_new = "#{file_name_base}_#{i.to_s.rjust(2, '0')}#{extension}"
+        file_name_new = File.join(dir, "#{base}_#{i.to_s.rjust(2, '0')}#{extension}")
     end
-    puts "file_name_new", file_name_new
     return file_name_new
 end
 
