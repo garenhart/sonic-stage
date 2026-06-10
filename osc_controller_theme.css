@@ -14,12 +14,12 @@
     --color-widget: darkorange;
     --color-text: gray;
 }
- 
+
 .gh-button-action {
     --color-widget: darkorange;
     --color-text: gray;
 }
- 
+
 .gh-button-alert {
     --color-widget: red;
     --color-text: gray;
@@ -61,4 +61,90 @@
 :host(.gh-adsr-overlay) {
     background: transparent;
     z-index: 10000;
+}
+
+/* ============================================================
+   Neumorphic (soft 3D) depth — color-neutral, all widgets.
+   Convention (light source = top-left):
+     RAISED   press-controls (buttons/switches/menus) + cards
+     RECESSED canvas controls, text fields, displays, trays
+   Layout wrappers (root/tab/folder/fragment/clone) stay flat
+   so nested shadows don't pile up.
+   Tune everything from the --nu-* knobs below; delete this
+   block to return to the flat look.
+   ============================================================ */
+:root {
+    --nu-light:   rgba(255, 255, 255, 0.08);  /* top-left highlight   */
+    --nu-dark:    rgba(0, 0, 0, 0.60);         /* bottom-right shadow  */
+    --nu-dist:    6rem;                        /* shadow offset        */
+    --nu-blur:    12rem;                       /* shadow softness      */
+    --nu-radius:  8rem;                        /* corner rounding      */
+}
+
+/* --- RAISED: buttons --- */
+.button-container label {
+    border-radius: var(--nu-radius);
+    box-shadow:
+        calc(-1 * var(--nu-dist)) calc(-1 * var(--nu-dist)) var(--nu-blur) var(--nu-light),
+        var(--nu-dist) var(--nu-dist) var(--nu-blur) var(--nu-dark);
+    transition: box-shadow 0.08s ease-out;
+}
+
+/* pressed / active state: extrude inward */
+.button-container.on label,
+.button-container:active label {
+    box-shadow:
+        inset calc(-0.6 * var(--nu-dist)) calc(-0.6 * var(--nu-dist)) calc(0.7 * var(--nu-blur)) var(--nu-light),
+        inset var(--nu-dist) var(--nu-dist) calc(0.7 * var(--nu-blur)) var(--nu-dark);
+}
+
+/* --- RAISED: switch cells + menu/dropdown press-controls --- */
+.switch-container value,
+.menu-container,
+.dropdown-container {
+    border-radius: var(--nu-radius);
+    box-shadow:
+        calc(-0.8 * var(--nu-dist)) calc(-0.8 * var(--nu-dist)) calc(0.9 * var(--nu-blur)) var(--nu-light),
+        calc(0.8 * var(--nu-dist)) calc(0.8 * var(--nu-dist)) calc(0.9 * var(--nu-blur)) var(--nu-dark);
+}
+
+/* --- RAISED: cards (panels, frames, modals) --- */
+.panel-container,
+.frame-container,
+.modal-container {
+    border-radius: calc(var(--nu-radius) + 2rem);
+    box-shadow:
+        calc(-1.2 * var(--nu-dist)) calc(-1.2 * var(--nu-dist)) calc(1.4 * var(--nu-blur)) var(--nu-light),
+        calc(1.4 * var(--nu-dist)) calc(1.4 * var(--nu-dist)) calc(1.6 * var(--nu-blur)) var(--nu-dark);
+}
+
+/* --- RECESSED wells --- */
+/* Canvas controls paint their handles to <canvas>, so the 3D comes
+   from carving the container; text fields, displays and trays read
+   naturally as sunken. */
+.fader-container,
+.range-container,
+.knob-container,
+.encoder-container,
+.scrollbar-container,
+.multixy-container,
+.xy-container,
+.eq-container,
+.plot-container,
+.visualizer-container,
+.rgb-container,
+.input-container,
+.file-container,
+.text-container,
+.textarea-container,
+.led-container,
+.image-container,
+.svg-container,
+.canvas-container,
+.matrix-container,
+.keyboard-container {
+    border-radius: var(--nu-radius);
+    box-shadow:
+        inset var(--nu-dist) var(--nu-dist) var(--nu-blur) var(--nu-dark),
+        inset calc(-1 * var(--nu-dist)) calc(-1 * var(--nu-dist)) var(--nu-blur) var(--nu-light);
 }
