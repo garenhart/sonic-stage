@@ -76,9 +76,9 @@
 :root {
     --nu-light:   rgba(255, 255, 255, 0.08);  /* top-left highlight   */
     --nu-dark:    rgba(0, 0, 0, 0.60);         /* bottom-right shadow  */
-    --nu-dist:    6rem;                        /* shadow offset        */
+    --nu-dist:    4rem;                        /* shadow offset        */
     --nu-blur:    12rem;                       /* shadow softness      */
-    --nu-radius:  8rem;                        /* corner rounding      */
+    --nu-radius:  3rem;                        /* corner rounding      */
 }
 
 /* --- RAISED: buttons --- */
