@@ -5,3 +5,4 @@ config/unit-test.json
 
 sonic-stage.code-workspace
 .DS_Store
+.mcp.json
