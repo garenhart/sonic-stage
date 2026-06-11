@@ -1,3 +1,12 @@
+/* Override Open Stage Control's default blue accent with neutral grays.
+   This only affects widgets that fall back to the framework defaults;
+   the per-widget darkorange rules below still win where they're set. */
+:root {
+    --color-widget: #b8bcc2;   /* widget accent (was OSC's default blue) */
+    --color-fill:   #a0a4ab;   /* fader/range fill + active states       */
+    --color-stroke: #8a8f98;   /* canvas strokes / handles               */
+}
+
 .fader-container {
     --color-widget: darkorange;
 }
