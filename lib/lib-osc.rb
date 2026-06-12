@@ -123,20 +123,23 @@ end
 
 define :update_osc_bass_points do |cfg|
   bass = cfg['bass']
-  osc_ctrl "/bass_pt_count", bass['count']
+  # Send the count as the first arg of /bass_points instead of a separate
+  # /bass_pt_count message, so the UI sets it synchronously before rebuilding
+  # the points. Prevents the duplication race where the ovals don't redraw even
+  # though the count and sound do. (Mirrors the drum_dup_data race fix.)
   osc_ctrl "/bass_tempo_factor", bass['tempo_factor']
   tonic_names = notes_to_names(bass['tonics'])
   pos = bass['pattern'].flat_map {|x| [x, 0]}
-  osc_ctrl("/bass_points", *tonic_names, *pos)
+  osc_ctrl("/bass_points", bass['count'], *tonic_names, *pos)
 end
 
 define :update_osc_chord_points do |cfg|
   chord = cfg['chord']
-  osc_ctrl "/chord_pt_count", chord['count']
+  # Count rides along as the first arg of /chord_points (see update_osc_bass_points).
   osc_ctrl "/chord_tempo_factor", chord['tempo_factor']
   tonic_names = notes_to_names(chord['tonics'])
   pos = chord['pattern'].flat_map {|x| [x, 0]}
-  osc_ctrl("/chord_points", *tonic_names, *pos)
+  osc_ctrl("/chord_points", chord['count'], *tonic_names, *pos)
   update_scale_match cfg
 end
 
