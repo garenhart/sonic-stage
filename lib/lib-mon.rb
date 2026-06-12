@@ -131,6 +131,11 @@ define :handle_osc do |token, t, n, cfg, cfg_file|
     when "chord_dup_data"
       clone_chord_pattern cfg
 
+    when "chord_half"
+      # Halve server-side so the count + trimmed points come back atomically
+      # (avoids the brief client-side pile-up of points on the last beat).
+      update_chord_count cfg, [cfg['chord']['count'] / 2, 1].max
+
     when "chord_tempo_factor"
       cfg['chord']['tempo_factor'] = n[0].to_i
       init_time_state_chord cfg
@@ -182,6 +187,11 @@ define :handle_osc do |token, t, n, cfg, cfg_file|
 
     when "bass_dup_data"
       clone_bass_pattern cfg
+
+    when "bass_half"
+      # Halve server-side so the count + trimmed points come back atomically
+      # (avoids the brief client-side pile-up of points on the last beat).
+      update_bass_count cfg, [cfg['bass']['count'] / 2, 1].max
 
     when "bass_tempo_factor"
       cfg['bass']['tempo_factor'] = n[0].to_i
