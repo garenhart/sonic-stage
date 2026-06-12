@@ -223,6 +223,7 @@ define :clone_bass_pattern do |cfg|
   # clone the bass pattern and tonics and concatenate to the end
   # of the existing pattern and tonics, then update the osc widget
   # if the pattern is empty, then do nothing
+  return if cfg['bass']['count'] * 2 > 64  # 64 is the max beat count; don't duplicate past it
   if cfg['bass']['pattern'].length > 0
     # shift the pattern to the right by the "count" value
     # and concatenate to the existing pattern
@@ -262,6 +263,7 @@ define :clone_chord_pattern do |cfg|
   # clone the chord pattern and tonics and concatenate to the end
   # of the existing pattern and tonics, then update the osc widget
   # if the pattern is empty, then do nothing
+  return if cfg['chord']['count'] * 2 > 64  # 64 is the max beat count; don't duplicate past it
   if cfg['chord']['pattern'].length > 0
     # shift the pattern to the right by the "count" value
     # and concatenate to the existing pattern
@@ -275,6 +277,7 @@ end
 
 define :clone_drums_beats do |cfg|
   # clone the drum beats
+  return if cfg['drums']['count'] * 2 > 64  # 64 is the max beat count; don't duplicate past it
   cfg['drums']['count'] *= 2 # double the count
   # Don't send /beat_pt_count here — the *_beats_v scripts set it
   # synchronously before updating buttons, avoiding a race condition
