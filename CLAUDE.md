@@ -115,7 +115,9 @@ init_osc_controls cfg, true  # true = reinitialize
 
 Real-time audio is the top priority. Not all code has equal timing sensitivity:
 
-- **Critical path** — `play_drum`, `play_bass`, `play_chords`, `play_cue`, and the MIDI live loops run on the audio thread. Minimize `get`/`set` calls, avoid unnecessary function calls, and prefer local variable capture over repeated `get()` calls when the value doesn't need live updates mid-loop.
+> **Notify-first rule.** Before making any change that touches the audio thread — `play_cue`, `play_drum`, `play_bass`/`play_chords`/`play_tonal_instrument`, the MIDI live loops, or `fx_chain` as called inside them — and that could affect timing (added per-beat allocations, extra `get`/`set`, any I/O or `puts`, longer effect chains), **STOP and tell Garen first.** Real-time audio is never silently traded for convenience or features: call out the risk and get explicit sign-off before proceeding.
+
+- **Critical path** — `play_cue`, `play_drum`, `play_bass`/`play_chords` (via `play_tonal_instrument`), and the MIDI live loops run on the audio thread. Minimize `get`/`set` calls, avoid unnecessary function calls and per-beat object allocation, and prefer hoisting stable values into locals before the loop over re-reading them each beat (the loop only needs to re-read fields that change live mid-loop, e.g. `on`/`amp`).
 - **Non-critical** — `live_loop :osc_monitor`, initialization, and all `init_osc_*` functions are event-driven or one-shot; overhead there has no timing impact.
 - **Effects ordering** — the order of entries in `fx` arrays affects both latency and sound character; keep chains short in production configs.
 
