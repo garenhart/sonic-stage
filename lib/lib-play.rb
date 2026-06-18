@@ -33,13 +33,14 @@ define :play_drum do |drum, cfg|
   beats = drums[drum]['beats']
   count = drums['count']
   auto_on = cfg['drums']['auto']
+  beat_mask = beats.chars.map { |c| c == "1" } # precompute once; beats string is not re-read per beat
 
   with_effects fx_chain(drums[drum]['fx']) do
     density drums['tempo_factor'] do
       count.times do |i|
         rt_drum = auto_on ? get(:drums)[drum] : drums[drum] # real-time vs cached params
         amp = rt_drum['amp']
-        beat_on = rt_drum['on'] && beats[i] == "1"
+        beat_on = rt_drum['on'] && beat_mask[i]
 
         if beat_on
           opts = { amp: amp, rpitch: rt_drum['pitch_shift'], pitch_dis: 0.001, time_dis: 0.001 }
@@ -73,14 +74,22 @@ define :play_tonal_instrument do |state_key, label, cfg|
   if cfg_inst['pattern'].size > 0 && cfg_inst['pattern'].size == cfg_inst['tonics'].size
     use_synth cfg_inst['synth'].to_sym
 
+    # Structural data (pattern/tonics/adsr/synth) is fixed for the loop's duration,
+    # so precompute once here. Only the live fields (on, amp) are read per beat below.
+    tonics = cfg_inst['tonics']
+    adsr = adsr_opts(cfg_inst['adsr'])
+    # beat (1-based) -> index into tonics; reproduces pattern.index(i+1) as an O(1) lookup
+    pos_by_beat = []
+    cfg_inst['pattern'].each_with_index { |beat, idx| pos_by_beat[beat - 1] = idx }
+
     with_effects fx_chain(cfg_inst['fx']) do
       density cfg_inst['tempo_factor'] do
         cfg_inst['count'].times do |i|
-          rt_inst = auto_on ? get(state_key) : cfg_inst # real-time vs cached params
-          pos = cfg_inst['pattern'].index(i + 1)
+          rt_inst = auto_on ? get(state_key) : cfg_inst # real-time vs cached params (live fields only: on, amp)
+          pos = pos_by_beat[i]
           if rt_inst['on'] && pos
-            play cfg_inst['tonics'][pos], amp: rt_inst['amp'], **adsr_opts(cfg_inst['adsr'])
-            animate_keyboard label, cfg_inst['tonics'][pos], rt_inst['amp'] if rt_inst['animate']
+            play tonics[pos], amp: rt_inst['amp'], **adsr
+            animate_keyboard label, tonics[pos], rt_inst['amp'] if rt_inst['animate']
           end
           sleep rhythm
         end
@@ -97,88 +106,6 @@ end
 
 define :play_chords do |cfg|
   play_tonal_instrument :chord_state, "chord", cfg
-end
-
-define :play_chords_complex do |cfg|
-  use_real_time
-  sync :tick
-  use_bpm get(:tempo)
-  
-  cfg_chord = get(:chord_state)
-  tempo_factor = cfg_chord['tempo_factor']
-
-  if (cfg_chord['pattern'].size > 0) && (cfg_chord['pattern'].size == cfg_chord['tonics'].size)
-    use_synth (cfg_chord['synth']).to_sym
-    on = cfg_chord['on']
-
-
-    seq = 1
-    case cfg['pattern']
-    when 1
-      seq = [1]
-    when 2
-      seq = [1] # update later
-    when 3
-      seq = [1] # update later
-    when 4
-      seq = [2,5,1]
-    end
-
-    seven = false
-    rootless = false
-    tonic = false
-    case cfg_chord['type']
-    when 1
-      tonic = true
-    when 3
-      rootless = true
-    when 4
-      seven = true
-    when 5
-      seven = true
-      rootless = true
-    end
-
-    cs = []
-    last_pos = 0
-    with_effects fx_chain(cfg_chord['fx']) do
-      density tempo_factor do
-        cfg_chord['count'].times do |pos|
-          i = cfg_chord['pattern'].index(pos+1)
-          if ( on && i)
-            ind = note_ind(cfg_chord['tonics'][i], cfg_chord['tonics'][0], cfg['scale'])
-            puts "Nearest", ind, cfg_chord['tonics'][i], cfg_chord['tonics'][0], cfg['scale']
-            seq = ind == nil ? nil : [ind+1]
-            chord_tonic = cfg_chord['tonics'][0]
-            while cfg_chord['tonics'][i] < chord_tonic do # bring tonic down to corresponding octave if current tonic[i] is lower than tonic[0]
-              chord_tonic -= 12
-            end
-            while cfg_chord['tonics'][i]-chord_tonic >= 12 do # bring tonic up to corresponding octave if current tonic[i] is more than octave above tonic[0]
-              chord_tonic += 12
-            end
-            cs = chord_seq(chord_tonic, cfg['scale'], seq, seven, rootless)
-            puts "chord", cs
-            if cs != nil
-              play (tonic ? cs[0][0] : cs[0]), amp: cfg_chord['amp'] 
-              puts "II", (tonic ? cs[0][0] : cs[0])
-              animate_keyboard (tonic ? cs[0][0] : cs[0])
-            end        
-          else
-            chord_num = pos-last_pos
-            if (cs != nil) && (chord_num < cs.length) && (pos < cfg_chord['count'])
-              puts "III", pos
-              play cs[chord_num], amp: cfg_chord['amp']
-              puts cs[chord_num]
-              animate_keyboard cs[chord_num]
-            end
-          end
-          sleep rhythm
-        end
-      end
-    end
-  else
-    sleep rhythm
-  end
 end
 
 define :play_midi_solo do |cfg, note, vel|
@@ -217,29 +144,4 @@ end
 
 define :play_synth_note do |inst, note, amp, adsr|
   synth inst, note: note, amp: amp, **adsr_opts(adsr)
-end
-
-# returns index of nearest note in scale
-define :nearest_ind do |note, tonic, mode_scale|
-  return nil if mode_scale.empty?
-  scale_notes = scale tonic, mode_scale
-  puts "scale notes", scale_notes
-  i = 0
-  while note_to_octave(note, tonic) > scale_notes[i] do
-    i = i+1
-  end
-  return i
-end
-
-# returns index of the note in scale, or nil if the note is not in scale
-define :note_ind do |note, tonic, mode_scale|
-  return nil if mode_scale.empty?
-  scale_notes = scale tonic, mode_scale
-  octave_note = note_to_octave(note, tonic)
-  puts "scale notes", scale_notes
-  i = 0
-  while octave_note > scale_notes[i] do
-    i = i+1
-  end
-  return octave_note == scale_notes[i] ? i : nil
 end
