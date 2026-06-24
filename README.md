@@ -1,147 +1,127 @@
-# Sonic Stage Project
+# Sonic Stage
 
-Sonic Stage is an integrated music and visual performance system that combines Sonic Pi for audio generation, Open Stage Control for user interface, and optionally Processing for real-time visualizations.
+A real-time music **performance system**. A touch/mouse UI drives a live Sonic Pi audio engine, with optional synchronized visuals — all wired together over OSC (Open Sound Control).
 
-## Features
-- Real-time audio generation and playback
-- Configurable instruments and effects
-- MIDI input support for live performance
-- Visual animations synchronized with music (optional)
-- OSC (Open Sound Control) communication between components
+- 🎛️ Live control of instruments, effects, drum patterns, and tempo
+- 🔊 Real-time audio generation and playback in Sonic Pi
+- 🎹 MIDI input for live solo / bass / chord recording
+- 🌈 Optional music-synced visuals in Processing
+- 💾 Save and recall complete arrangements as JSON configs
 
-## Requirements
+## How it fits together
 
-### Software
-1. **Sonic Pi** (v3.3.0 or higher): [Download Sonic Pi](https://sonic-pi.net/)
-2. **Open Stage Control**: [Download Open Stage Control](https://openstagecontrol.ammd.net/)
-3. **Processing** (v4.0 or higher, optional): [Download Processing](https://processing.org/)
+```mermaid
+flowchart LR
+    OSC["🎛️ Open Stage Control<br/>UI · port 7777"]
+    SP["🔊 Sonic Pi<br/>Audio · port 4560"]
+    PR["🌈 Processing<br/>Visuals · port 8000<br/><i>(optional)</i>"]
+    OSC -- "OSC control" --> SP
+    SP -- "OSC feedback" --> OSC
+    SP -- "OSC drum / key" --> PR
+```
 
-### Libraries
-For Processing (optional):
-- `oscP5` (for OSC communication)
-- `controlP5` (for UI elements)
+| Component | Role | Listens on | Sends to |
+|-----------|------|-----------|----------|
+| **Open Stage Control** | User interface | `7777` | Sonic Pi `4560` |
+| **Sonic Pi** | Audio engine (the runtime) | `4560` | UI `7777`, Processing `8000` |
+| **Processing** *(optional)* | Visualizations | `8000` | — |
 
-## Installation
+> Run every component on the **same machine** (`127.0.0.1`) for minimal latency.
 
-### Step 1: Clone the Repository
-Clone the `sonic-stage` repository to your local machine:
+## 1. Prerequisites
+
+| Software | Min version | Download |
+|----------|-------------|----------|
+| **Sonic Pi** | 3.3.0 | <https://sonic-pi.net/> |
+| **Open Stage Control** | 1.27 | <https://openstagecontrol.ammd.net/> |
+| **Processing** *(optional)* | 4.0 | <https://processing.org/> |
+
+If you use Processing, also install the `oscP5` and `controlP5` libraries via
+**Sketch → Import Library → Manage Libraries…**
+
+## 2. Get the code
+
 ```bash
 git clone https://github.com/garenhart/sonic-stage
-```
-Clone the `sonic-stage-visualizer` to your local machine (this step is optional):
-```bash
-git clone https://github.com/garenhart/sonic-stage-visualizer
+git clone https://github.com/garenhart/sonic-stage-visualizer   # optional, for visuals
 ```
 
-### Step 2: Install Sonic Pi
-1. Download and install Sonic Pi from the [official website](https://sonic-pi.net/).
-2. Open Sonic Pi and ensure it runs correctly.
-
-### Step 3: Install Open Stage Control
-1. Download Open Stage Control from the [official website](https://openstagecontrol.ammd.net/).
-2. Extract the downloaded files to a convenient location.
-
-### Step 4: Install Processing (Optional)
-If you want to enable visualizations:
-1. Download Processing from the [official website](https://processing.org/).
-2. Install the required libraries:
-   - Open Processing.
-   - Go to `Sketch > Import Library > Add Library (or Manage Libraries)`.
-   - Search for `oscP5` and `controlP5` and install them.
-
-## Configuration
-
-### Directory Structure
-The project is organized as follows:
 ```
 sonic-stage/
-  sonic-stage.rb       # Wrapper script to launch main script (avoids buffer overflow)
-  osc_monitor.rb       # Main Sonic Pi script
-  osc_controller.json  # Open Stage Control configuration
-  config/              # JSON configuration files for music arrangements
-  lib/                 # Ruby libraries for Sonic Pi
+├── sonic-stage.rb           # ← load THIS in Sonic Pi (wrapper, prevents buffer overflow)
+├── osc_monitor.rb           # main engine (loaded by the wrapper)
+├── osc_controller.json      # Open Stage Control layout
+├── osc_controller.js        # Open Stage Control custom module
+├── osc_controller_theme.css # Open Stage Control theme
+├── config/                  # arrangements (_default.json is loaded on start)
+└── lib/                     # Sonic Pi libraries
 ```
 
-### Step 1: Configure Open Stage Control
-1. Start the Open Stage Control executable.
-2. Modify the following fields in the interface:
-   - **send**: Set this to `<your-local-ip>:4560` (Sonic Pi incoming port for OSC communication, replace `<your-local-ip>` with your machine's local IP address, e.g., `127.0.0.1`).
-   - **load**: Select the `osc_controller.json` file from the project directory.
-   - **custom-module**: Specify the path to `osc_controller.js` from the project directory.
-   - **osc-port**: Set this to `7777` (or your desired port for the incoming OSC messages).
-   - **theme**: Select the `osc_controller_theme.css` file from the project directory.
-   <img src="readme/open-stage-control-interface.png" alt="Open Stage Control Interface" width="500">
+## 3. Configure
 
-### Step 2: Configure Processing (Optional)
-If you are using Processing for visualizations:
-1. Open one of the Processing sketches from your cloned sonic-stage-visualizer (e.g., `keyboard_and_drums/keyboard_and_drums.pde`).
-2. Update the OSC port (if desired) by modifying the `oscP5 = new OscP5(this, 8000);` line in the sketch.
+### a. Point Sonic Pi at the project (required)
 
-### Step 3: Configure Sonic Pi
-#### Substep 3a: Configure Sonic Pi init.rb
-1. Open your Sonic Pi configuration file (`init.rb`) located in:
-   - Windows: `%USERPROFILE%\.sonic-pi\config\init.rb`
-   - macOS: `~/.sonic-pi/config/init.rb`
-   - Linux: `~/.sonic-pi/config/init.rb`
-2. Add the following line to set your project path:
-   ```ruby
-   set :ss_path, "C:/path/to/your/sonic-stage/"
-   ```
-   Replace the path with your actual sonic-stage project directory.
-   
-   **Important**: Use the full absolute path without the "~" symbol. For example:
-   - ✅ Good: `/Users/username/dev/sonic-stage/`
-   - ❌ Bad: `~/dev/sonic-stage/`
-3. Save the file and restart Sonic Pi for changes to take effect.
+Edit Sonic Pi's init file — create it if missing:
 
-#### Substep 3b: Configure osc_monitor.rb (Optional)
-The script will automatically use the `:ss_path` variable for library and configuration paths. If you need to customize OSC settings:
-1. Open the `osc_monitor.rb` in Sonic Pi or your preferred text editor.
-2. Update the 'ctrl_ip' and 'ctrl_port' variables to match the Open Stage Control configuration.
-3. If using Processing, update the 'anim_ip' and 'anim_port' variables to match the Processing configuration.
-4. Save the changes.
+| OS | Path |
+|----|------|
+| macOS / Linux | `~/.sonic-pi/config/init.rb` |
+| Windows | `%USERPROFILE%\.sonic-pi\config\init.rb` |
 
-#### Substep 3c: Configure sonic-stage.rb (Optional)
-No configuration needed - this wrapper script automatically uses the `:ss_path` variable to load the main script.
+Add one line with the **absolute** path to your clone (note the trailing slash):
 
-### Communication Flow
-```
-Open Stage Control (UI) <---OSC---> Sonic Pi (Audio) <---OSC---> Processing (Visual, optional)
-      (Port 7777)                     (Port 4560)                   (Port 8000)
+```ruby
+set :ss_path, "/Users/username/dev/sonic-stage/"
 ```
 
-### Usage
-1. Use the Open Stage Control interface to adjust music parameters in real-time.
-2. Sonic Pi generates audio based on the configuration.
-3. (Optional) If Processing is running, it visualizes the music in real-time.
+> ✅ `/Users/username/dev/sonic-stage/`  &nbsp;&nbsp; ❌ `~/dev/sonic-stage/` — `~` is not expanded.
 
-### Execution Steps
+Save and **restart Sonic Pi**.
 
-#### Step 1: Launch Open Stage Control
-1. Launch the Open Stage Control executable (open-stage-control.exe).
-2. Click the "play" button near the top left of the window. You should see status messages in the launcher window such as:
-   ```
-   (INFO) Server started, app available at
-       http://127. . . :8080
-       http://your.ip.address:8080
-   ```
-   And a client window will open. You can also copy the URL and paste it into your browser which will open the client window in your browser.
+### b. Configure Open Stage Control (required)
 
-#### Step 2: Run Processing Sketch (Optional)
-If you want visualizations:
-1. Open one of the Processing sketches (e.g., `keyboard_and_drums/keyboard_and_drums.pde`).
-2. Run the sketch to start the visualization.
+Launch Open Stage Control and fill in these fields (paths point into your clone):
 
-#### Step 3: Start Sonic Pi
-1. Open Sonic Pi and load the `sonic-stage.rb` file.
-2. Ensure that Open Stage Control (and optionally Processing) are already running.
-3. Run the code in Sonic Pi to start generating audio and communicating via OSC messages with Open Source Control (and optionally with Processing).
+| Field | Value |
+|-------|-------|
+| **send** | `127.0.0.1:4560` |
+| **osc-port** | `7777` |
+| **load** | `…/sonic-stage/osc_controller.json` |
+| **custom-module** | `…/sonic-stage/osc_controller.js` |
+| **theme** | `…/sonic-stage/osc_controller_theme.css` |
+
+<img src="readme/open-stage-control-interface.png" alt="Open Stage Control settings: send=127.0.0.1:4560, osc-port=7777, load/custom-module/theme pointing at the sonic-stage folder" width="640">
+
+### c. Configure Processing (optional)
+
+Open a sketch from `sonic-stage-visualizer` (e.g. `keyboard_and_drums/keyboard_and_drums.pde`).
+It listens on port `8000` by default — change `new OscP5(this, 8000)` only if you also change
+`:anim_port` in `osc_monitor.rb`.
+
+## 4. Run
+
+Start the components **in this order**:
+
+1. **Open Stage Control** — press ▶ (top-left). The launcher prints `Server started…` and a client window opens.
+2. **Processing** *(optional)* — open a visualizer sketch and click **Run**.
+3. **Sonic Pi** — open `sonic-stage.rb`, press **Run**.
+
+On Run, Sonic Pi loads `config/_default.json`, populates the UI dropdowns, and starts the live
+loops. Adjust anything in the Open Stage Control UI and you'll hear it change in real time.
+
+> Load a saved arrangement from the **config** menu in the UI, or save the current one with **Save**.
 
 ## Troubleshooting
-- **Port Conflicts**: Ensure no other applications are using ports `7777` or `8000`.
-- **Missing Libraries**: Verify that `oscP5` and `controlP5` are installed in Processing (if using Processing).
-- **Configuration Errors**: Double-check the paths in `sonic-stage.rb`, 'osc_monitor.rb' and `osc_controller.json`.
-- **Latency Issues**: Run all components on the same machine for minimal latency.
+
+| Symptom | Fix |
+|---------|-----|
+| `undefined ... ss_path` / nothing loads | `:ss_path` missing or has `~`. Use a full absolute path with trailing `/`, then restart Sonic Pi. |
+| UI shows but no sound / no response | Check **send** = `127.0.0.1:4560` and **osc-port** = `7777`. Confirm Open Stage Control is running *before* you press Run in Sonic Pi. |
+| Empty / blank dropdowns | Re-run `sonic-stage.rb` (init runs twice on purpose to fill them). |
+| No visuals | Verify `oscP5` + `controlP5` are installed and the sketch's port matches `:anim_port` (8000). |
+| Port already in use | Make sure nothing else holds `7777` or `8000`. |
+| Loaded `osc_monitor.rb` directly and it errored | Always load **`sonic-stage.rb`** — the wrapper avoids a buffer overflow. |
 
 ## License
-This project is licensed under the MIT License.
+
+MIT
