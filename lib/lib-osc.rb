@@ -52,7 +52,13 @@ end
 define :init_osc_keyboard do |tonic, mode|
   start = Time.now
   scale_notes = scale tonic, mode
-  sn = extract_between_brackets scale_notes.to_s
+  # Build the note list from the ring directly rather than scraping its to_s.
+  # Sonic Pi 5 RC2 made SPVector store list.to_a, so a scale's ring now prints
+  # as "(ring 60, 62, ...)" instead of wrapping the Scale object and its
+  # "[60, 62, ...]"; the old bracket scrape then returned nil and osc_send
+  # rejected it with "Unknown arg type to encode: nil".
+  sn = scale_notes.to_a.join(", ")
+  
   puts sn
   osc_ctrl "/scale_notes", sn
   # for note in 21..107
