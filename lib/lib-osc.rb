@@ -50,7 +50,6 @@ define :init_osc_samples do |target, sg, cfg|
 end
 
 define :init_osc_keyboard do |tonic, mode|
-  start = Time.now
   scale_notes = scale tonic, mode
   # Build the note list from the ring directly rather than scraping its to_s.
   # Sonic Pi 5 RC2 made SPVector store list.to_a, so a scale's ring now prints
@@ -58,14 +57,10 @@ define :init_osc_keyboard do |tonic, mode|
   # "[60, 62, ...]"; the old bracket scrape then returned nil and osc_send
   # rejected it with "Unknown arg type to encode: nil".
   sn = scale_notes.to_a.join(", ")
-  
-  puts sn
   osc_ctrl "/scale_notes", sn
   # for note in 21..107
   #   osc_ctrl "/keyboard_scale", note, (scale_notes.to_a.include? note) ? 1 : 0
   # end
-  finish = Time.now
-  puts "init_osc_keyboard time: #{scale_notes.to_s}, #{mode}, #{time_diff_ms start, finish}"
 end
 
 define :init_osc_update_drums do |cfg|
@@ -139,19 +134,24 @@ define :update_osc_bass_points do |cfg|
   osc_ctrl("/bass_points", bass['count'], *tonic_names, *pos)
 end
 
-define :update_osc_chord_points do |cfg|
+define :update_osc_chord_points do |cfg, refresh_keyboard=true|
   chord = cfg['chord']
   # Count rides along as the first arg of /chord_points (see update_osc_bass_points).
   osc_ctrl "/chord_tempo_factor", chord['tempo_factor']
   tonic_names = notes_to_names(chord['tonics'])
   pos = chord['pattern'].flat_map {|x| [x, 0]}
   osc_ctrl("/chord_points", chord['count'], *tonic_names, *pos)
-  update_scale_match cfg
+  update_scale_match cfg, refresh_keyboard
 end
 
-define :update_scale_match do |cfg|
+# /scale_match tests every chord tonic, so it must be re-sent whenever the tonics
+# list changes. The keyboard note list depends only on tonics[0] and the scale, so
+# callers that merely append a tonic can pass refresh_keyboard=false: building the
+# scale and sending /scale_notes is real work to repeat, and add_tonic_chord runs
+# this on the :midi_chord live loop for every recorded note.
+define :update_scale_match do |cfg, refresh_keyboard=true|
   osc_ctrl("/scale_match", (notes_in_scale cfg['chord']['tonics'], cfg['scale'], cfg['chord']['tonics'][0]) ? 1 : 0)
-  init_osc_keyboard(cfg['chord']['tonics'][0], cfg['scale'])
+  init_osc_keyboard(cfg['chord']['tonics'][0], cfg['scale']) if refresh_keyboard
 end
 
 # set the fx values for the specified prefix, e.g. solo, bass, chord

@@ -16,13 +16,20 @@ define :play_cue do |cfg|
   cue :tick
   drums = get(:drums)
   tempo_factor = drums['tempo_factor']
+  # Open Stage Control address, hoisted out of the beat loop. osc_ctrl resolves
+  # :ctrl_ip and :ctrl_port with two `get`s, and every get costs a hard 1ms
+  # Kernel.sleep inside Sonic Pi's EventHistory#wait_for_threads -- 2ms of stall
+  # before each /current_beat, which the UI playhead sees as lag. Both are set
+  # once at startup and never change, so reading them per beat bought nothing.
+  ctrl_ip = get(:ctrl_ip)
+  ctrl_port = get(:ctrl_port)
   # density tempo_factor do
     drums['count'].times do |i|
       set :beat, i+1
-      osc_ctrl "/current_beat", i+1
+      osc_send ctrl_ip, ctrl_port, "/current_beat", i+1
       sleep rhythm
     end
-  # end  
+  # end
 end
 
 define :play_drum do |drum, cfg|
@@ -34,6 +41,10 @@ define :play_drum do |drum, cfg|
   count = drums['count']
   auto_on = cfg['drums']['auto']
   beat_mask = beats.chars.map { |c| c == "1" } # precompute once; beats string is not re-read per beat
+  # Processing address, hoisted for the same reason as in play_cue: animate_drum
+  # would otherwise pay 2ms of get-sleeps on every animated beat.
+  anim_ip = get(:anim_ip)
+  anim_port = get(:anim_port)
 
   with_effects fx_chain(drums[drum]['fx']) do
     density drums['tempo_factor'] do
@@ -55,7 +66,7 @@ define :play_drum do |drum, cfg|
           sample rt_drum['sample'], **opts
         end
 
-        animate_drum drum, amp, (beat_on ? 1 : 0), (rt_drum['on'] ? 1 : 0) if rt_drum['animate']
+        animate_drum_at anim_ip, anim_port, drum, amp, (beat_on ? 1 : 0), (rt_drum['on'] ? 1 : 0) if rt_drum['animate']
         sleep rhythm
       end
     end
@@ -81,6 +92,10 @@ define :play_tonal_instrument do |state_key, label, cfg|
     # beat (1-based) -> index into tonics; reproduces pattern.index(i+1) as an O(1) lookup
     pos_by_beat = []
     cfg_inst['pattern'].each_with_index { |beat, idx| pos_by_beat[beat - 1] = idx }
+    # Processing address, hoisted for the same reason as in play_cue: animate_keyboard
+    # would otherwise pay 2ms of get-sleeps on every animated beat.
+    anim_ip = get(:anim_ip)
+    anim_port = get(:anim_port)
 
     with_effects fx_chain(cfg_inst['fx']) do
       density cfg_inst['tempo_factor'] do
@@ -89,7 +104,7 @@ define :play_tonal_instrument do |state_key, label, cfg|
           pos = pos_by_beat[i]
           if rt_inst['on'] && pos
             play tonics[pos], amp: rt_inst['amp'], **adsr
-            animate_keyboard label, tonics[pos], rt_inst['amp'] if rt_inst['animate']
+            animate_keyboard_at anim_ip, anim_port, label, tonics[pos], rt_inst['amp'] if rt_inst['animate']
           end
           sleep rhythm
         end

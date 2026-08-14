@@ -84,11 +84,14 @@ end
 
 define :add_tonic_chord do |cfg, tonic, beat|
   count = cfg['chord']['count'] || 16
+  first_tonic = cfg['chord']['tonics'][0] # captured before adjust_beat, which may evict index 0
   adjusted_beat = adjust_beat(cfg['chord']['pattern'], cfg['chord']['tonics'], beat, count)
   return if adjusted_beat.nil?  # Stop if no free beat found
   cfg['chord']['tonics'] << tonic
   cfg['chord']['pattern'] << adjusted_beat
-  update_osc_chord_points cfg
+  # Refresh the keyboard only when tonics[0] actually moved (first note recorded,
+  # or index 0 evicted above); this runs on the :midi_chord live loop per note.
+  update_osc_chord_points cfg, cfg['chord']['tonics'][0] != first_tonic
   init_time_state_chord cfg
 end
 
