@@ -23,6 +23,19 @@ define :play_cue do |cfg|
   # once at startup and never change, so reading them per beat bought nothing.
   ctrl_ip = get(:ctrl_ip)
   ctrl_port = get(:ctrl_port)
+  # density is deliberately NOT applied here, unlike play_drum. Sonic Pi's
+  # `density d` runs its block d times with each sleep scaled to 1/d, so at
+  # drum_tempo_factor > 1 the drums replay their pattern d times while this
+  # counter sweeps it once, and the highlight lags the hits it should track.
+  #
+  # Enabling it is not a clean fix:
+  #   - it multiplies /current_beat traffic by d, and the Open Stage Control
+  #     client (the Android tablet) is the bottleneck here, not Sonic Pi
+  #   - `set :beat` below is the MIDI recording position, so the drum factor
+  #     would end up setting the recording resolution for bass and chord too
+  #   - bass and chord carry their own tempo_factor dropdowns; one shared
+  #     counter cannot track three independently scaled grids
+  # Latent today: every config in config/ uses tempo_factor 1.
   # density tempo_factor do
     drums['count'].times do |i|
       set :beat, i+1
