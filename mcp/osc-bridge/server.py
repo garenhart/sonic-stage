@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Sonic Stage OSC bridge — a zero-dependency MCP (stdio) server.
+Bandstand OSC bridge — a zero-dependency MCP (stdio) server.
 
-It lets an MCP client (Claude Code) drive a running Sonic Stage session by
+It lets an MCP client (Claude Code) drive a running Bandstand session by
 *impersonating Open Stage Control*: it binds the UDP socket to the controller
 port (default 7777) and sends OSC to Sonic Pi (default 4560). Sonic Pi's
 :osc_monitor loop only reacts to messages whose source port is the controller
@@ -41,7 +41,7 @@ BIND_HOST = os.environ.get("SS_BIND_HOST", "127.0.0.1")
 BIND_PORT = int(os.environ.get("SS_BIND_PORT", "7777"))
 
 PROTOCOL_VERSION_DEFAULT = "2025-06-18"
-SERVER_NAME = "sonic-stage-osc-bridge"
+SERVER_NAME = "bandstand-osc-bridge"
 SERVER_VERSION = "0.1.0"
 RECV_BUFFER_MAX = 500
 
@@ -347,10 +347,10 @@ TOOLS = {
                  "pattern": {"type": "string", "description": "e.g. '1000100010001000'"}},
                 ["drum", "pattern"])),
     "load_config": (tool_load_config,
-        "Load a Sonic Stage config by absolute JSON path (sends /open).",
+        "Load a Bandstand config by absolute JSON path (sends /open).",
         _schema({"path": {"type": "string", "description": "absolute path to a config .json"}}, ["path"])),
     "read_messages": (tool_read_messages,
-        "Read OSC messages Sonic Stage has emitted back to the controller port "
+        "Read OSC messages Bandstand has emitted back to the controller port "
         "(e.g. /current_beat, /NOTIFY). Clears the buffer by default.",
         _schema({"address_filter": {"type": "string", "description": "substring match on address"},
                  "limit": {"type": "integer"},

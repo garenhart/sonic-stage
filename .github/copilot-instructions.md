@@ -1,7 +1,7 @@
-# Sonic Stage AI Coding Instructions
+# Bandstand AI Coding Instructions
 
 ## Architecture Overview
-Sonic Stage is a real-time music performance system integrating three components via OSC:
+Bandstand is a real-time music performance system integrating three components via OSC:
 - **Sonic Pi** (audio generation) - Primary runtime environment
 - **Open Stage Control** (UI) - Port 7777 for OSC communication
 - **Processing** (visualizations, optional) - Port 8000 for OSC communication

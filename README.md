@@ -1,4 +1,4 @@
-# Sonic Stage
+# Bandstand
 
 A real-time music **performance system**. A touch/mouse UI drives a live Sonic Pi audio engine, with optional synchronized visuals — all wired together over OSC (Open Sound Control).
 

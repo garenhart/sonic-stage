@@ -1,7 +1,7 @@
-# Sonic Stage OSC bridge (MCP server)
+# Bandstand OSC bridge (MCP server)
 
-A zero-dependency MCP server that lets Claude Code drive a **running** Sonic
-Stage session by impersonating Open Stage Control over OSC.
+A zero-dependency MCP server that lets Claude Code drive a **running**
+Bandstand session by impersonating Open Stage Control over OSC.
 
 ## How it works
 

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Project Is
 
-Sonic Stage is a real-time music performance system integrating three components via OSC (Open Sound Control):
+Bandstand is a real-time music performance system integrating three components via OSC (Open Sound Control):
 - **Sonic Pi** (audio generation) — the primary runtime; all `.rb` files run inside Sonic Pi
 - **Open Stage Control** (UI) — sends/receives OSC on port 7777
 - **Processing** (visualizations, optional) — receives OSC on port 8000

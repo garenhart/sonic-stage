@@ -281,7 +281,7 @@ A session is a single JSON object with a root widget containing children:
 }
 ```
 
-## Sonic Stage Integration
+## Bandstand Integration
 
 In this project, Open Stage Control communicates with Sonic Pi on port 7777:
 - UI widgets send OSC messages that `osc_monitor.rb` handles
