@@ -1,6 +1,6 @@
 {
   "createdWith": "Open Stage Control",
-  "version": "1.30.2",
+  "version": "1.30.4",
   "type": "session",
   "content": {
     "type": "root",
@@ -1052,7 +1052,6 @@
                         "onCreate": "",
                         "onTouch": ""
                       }
-
                     ],
                     "lock": false,
                     "visible": true,
@@ -1372,7 +1371,14 @@
                             "snap": false,
                             "spring": false,
                             "rangeX": "JS{{    \n  var hash = {};\n  var chunks = @{bass_pt_count}\n  for (var i = 0; i < chunks; i++) {\n    hash[(i / (chunks-1)) * 100 + \"%\"] = i+1;\n  }\n  return hash;\n}}",
-                            "rangeY": { "min": { "": -1 }, "max": { "": 1 } },
+                            "rangeY": {
+                              "min": {
+                                "": -1
+                              },
+                              "max": {
+                                "": 1
+                              }
+                            },
                             "logScaleX": false,
                             "logScaleY": false,
                             "sensitivity": 1,
@@ -3520,7 +3526,6 @@
                         "onCreate": "",
                         "onTouch": ""
                       }
-
                     ],
                     "lock": false,
                     "visible": true,
@@ -3838,7 +3843,14 @@
                             "snap": false,
                             "spring": false,
                             "rangeX": "JS{{    \n  var hash = {};\n  var chunks = @{chord_pt_count}\n  for (var i = 0; i < chunks; i++) {\n    hash[(i / (chunks-1)) * 100 + \"%\"] = i+1;\n  }\n  return hash;\n}}",
-                            "rangeY": { "min": { "": -1 }, "max": { "": 1 } },
+                            "rangeY": {
+                              "min": {
+                                "": -1
+                              },
+                              "max": {
+                                "": 1
+                              }
+                            },
                             "logScaleX": false,
                             "logScaleY": false,
                             "sensitivity": 1,
@@ -5972,7 +5984,6 @@
                         "onCreate": "",
                         "onTouch": ""
                       }
-
                     ],
                     "lock": false,
                     "visible": true,
