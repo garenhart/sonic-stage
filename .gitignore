@@ -6,3 +6,8 @@ config/unit-test.json
 sonic-stage.code-workspace
 .DS_Store
 .mcp.json
+
+# Seeded design-canvas payload — 2.3MB, ~98% packaged editor, 44KB content.
+# Kept on disk as an offline viewer for the presentation slides; re-seeded
+# from readme/presentation/{Main,Overview}.dc.html + canvas.json.
+bandstand-architecture.html

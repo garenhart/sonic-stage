@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #1b2027;
+      font-family: 'Space Grotesk', 'Helvetica Neue', Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
+    a { color: #ff8c00; } a:hover { color: #ffab4d; }
+  </style>
+</helmet>
+
+<div style="position: relative; width: 1920px; height: 1080px; background: #1b2027; overflow: hidden;">
+
+  <div style="position: absolute; left: 500px; top: 120px; width: 920px; height: 900px; background: radial-gradient(ellipse at center, rgba(255,140,0,0.06), rgba(255,140,0,0) 68%); z-index: 0;"></div>
+
+  <!-- ============ TITLE ============ -->
+  <div style="position: absolute; left: 80px; top: 90px; z-index: 4;">
+    <div style="font-size: 68px; font-weight: 700; color: #eceef1; letter-spacing: -0.025em; line-height: 1;">Bandstand</div>
+    <div style="margin-top: 16px; font-size: 24px; color: #8a8f98;">Four processes, one machine, one clock</div>
+  </div>
+
+  <!-- ============ WIRES ============ -->
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0; z-index: 1;">
+    <defs>
+      <marker id="ovOrange" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="17" markerHeight="17" markerUnits="userSpaceOnUse" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#ff8c00"></path>
+      </marker>
+      <marker id="ovGray" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="17" markerHeight="17" markerUnits="userSpaceOnUse" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#8a8f98"></path>
+      </marker>
+    </defs>
+
+    <path d="M 420,420 C 500,420 556,440 632,440" fill="none" stroke="#8a8f98" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ovGray)"></path>
+    <circle cx="420" cy="420" r="6" fill="#8a8f98"></circle>
+
+    <path d="M 420,690 C 500,690 556,630 632,630" fill="none" stroke="#ff8c00" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ovOrange)"></path>
+    <circle cx="420" cy="690" r="6" fill="#ff8c00"></circle>
+
+    <path d="M 640,700 C 564,700 508,760 428,760" fill="none" stroke="#ff8c00" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ovOrange)"></path>
+    <circle cx="640" cy="700" r="6" fill="#ff8c00"></circle>
+
+    <path d="M 1260,440 C 1340,440 1396,420 1472,420" fill="none" stroke="#ff8c00" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="10 9" marker-end="url(#ovOrange)"></path>
+    <circle cx="1260" cy="440" r="6" fill="#ff8c00"></circle>
+
+    <path d="M 1260,660 C 1340,660 1396,700 1472,700" fill="none" stroke="#8a8f98" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ovGray)"></path>
+    <circle cx="1260" cy="660" r="6" fill="#8a8f98"></circle>
+  </svg>
+
+  <!-- ============ WIRE LABELS ============ -->
+  <div style="position: absolute; left: 420px; top: 336px; width: 212px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-size: 14px; font-weight: 600; letter-spacing: 0.18em; color: #8a8f98;">MIDI</div>
+    <div class="mono" style="font-size: 18px; color: #d7dbe0;">note_on</div>
+  </div>
+
+  <div style="position: absolute; left: 420px; top: 566px; width: 212px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-size: 14px; font-weight: 600; letter-spacing: 0.18em; color: #ff8c00;">CONTROL</div>
+    <div class="mono" style="font-size: 22px; color: #d7dbe0;">OSC → :4560</div>
+  </div>
+
+  <div style="position: absolute; left: 420px; top: 792px; width: 212px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-size: 14px; font-weight: 600; letter-spacing: 0.18em; color: #ff8c00;">FEEDBACK</div>
+    <div class="mono" style="font-size: 22px; color: #d7dbe0;">OSC → :7777</div>
+  </div>
+
+  <div style="position: absolute; left: 1260px; top: 316px; width: 212px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-size: 14px; font-weight: 600; letter-spacing: 0.18em; color: #ff8c00;">VISUALS</div>
+    <div class="mono" style="font-size: 22px; color: #d7dbe0;">OSC → :8000</div>
+  </div>
+
+  <div style="position: absolute; left: 1260px; top: 756px; width: 212px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-size: 14px; font-weight: 600; letter-spacing: 0.18em; color: #8a8f98;">AUDIO</div>
+    <div class="mono" style="font-size: 18px; color: #d7dbe0;">out loud</div>
+  </div>
+
+  <!-- ============ MIDI KEYBOARD ============ -->
+  <div style="position: absolute; left: 80px; top: 320px; width: 340px; height: 200px; z-index: 2; background: #21252b; border-radius: 16px; padding: 26px; box-shadow: -5px -5px 16px rgba(255,255,255,0.05), 7px 7px 20px rgba(0,0,0,0.58); display: flex; flex-direction: column; gap: 14px;">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#b8bcc2" stroke-width="1.4" stroke-linejoin="round">
+      <rect x="2" y="6" width="20" height="12" rx="1.5"></rect>
+      <path d="M7.3 6v12M12 6v12M16.7 6v12" stroke-linecap="round"></path>
+      <rect x="5.4" y="6" width="3.2" height="7" rx="0.6" fill="#b8bcc2" stroke="none"></rect>
+      <rect x="10.4" y="6" width="3.2" height="7" rx="0.6" fill="#b8bcc2" stroke="none"></rect>
+      <rect x="15.1" y="6" width="3.2" height="7" rx="0.6" fill="#b8bcc2" stroke="none"></rect>
+    </svg>
+    <div>
+      <div style="font-size: 30px; font-weight: 600; color: #eceef1; line-height: 1.1;">MIDI Keyboard</div>
+      <div style="font-size: 16px; color: #6f757e; margin-top: 7px;">Play it live, or record a part</div>
+    </div>
+  </div>
+
+  <!-- ============ OPEN STAGE CONTROL ============ -->
+  <div style="position: absolute; left: 80px; top: 600px; width: 340px; height: 200px; z-index: 2; background: #21252b; border-radius: 16px; padding: 26px; box-shadow: -5px -5px 16px rgba(255,255,255,0.05), 7px 7px 20px rgba(0,0,0,0.58); display: flex; flex-direction: column; gap: 14px;">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="1.4" stroke-linecap="round">
+      <path d="M6 3v18M12 3v18M18 3v18"></path>
+      <rect x="3.4" y="7" width="5.2" height="3.2" rx="1.2" fill="#ff8c00" stroke="none"></rect>
+      <rect x="9.4" y="13.4" width="5.2" height="3.2" rx="1.2" fill="#ff8c00" stroke="none"></rect>
+      <rect x="15.4" y="9.6" width="5.2" height="3.2" rx="1.2" fill="#ff8c00" stroke="none"></rect>
+    </svg>
+    <div>
+      <div style="font-size: 30px; font-weight: 600; color: #eceef1; line-height: 1.1;">Open Stage Control</div>
+      <div style="font-size: 16px; color: #6f757e; margin-top: 7px;">The touch UI · listens on <span class="mono" style="color: #ff8c00;">:7777</span></div>
+    </div>
+  </div>
+
+  <!-- ============ SONIC PI ============ -->
+  <div style="position: absolute; left: 640px; top: 355px; width: 620px; height: 380px; z-index: 2; background: #21252b; border-radius: 20px; padding: 34px; box-shadow: -6px -6px 22px rgba(255,255,255,0.055), 10px 10px 30px rgba(0,0,0,0.62); display: flex; flex-direction: column; gap: 20px;">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="1.5" stroke-linecap="round">
+        <path d="M1.5 12c2-6.5 4-6.5 6 0s4 6.5 6 0 4-6.5 6 0"></path>
+        <circle cx="12" cy="12" r="1.6" fill="#ff8c00" stroke="none"></circle>
+      </svg>
+      <div style="font-size: 56px; font-weight: 700; color: #eceef1; line-height: 1; letter-spacing: -0.02em;">Sonic Pi</div>
+    </div>
+
+    <div style="font-size: 20px; color: #8a8f98; line-height: 1.45; text-wrap: pretty;">The audio engine — and the runtime that holds the clock, the state and the sound.</div>
+
+    <div>
+      <span class="mono" style="display: inline-flex; padding: 8px 15px; border-radius: 8px; border: 1px solid rgba(255,140,0,0.5); color: #ff8c00; font-size: 18px;">listens :4560</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 10px; background: rgba(0,255,0,0.06); border: 1px solid rgba(0,255,0,0.3);">
+      <span class="mono" style="font-size: 17px; font-weight: 700; color: #00ff00;">cue :tick</span>
+      <span style="font-size: 16px; color: #8a8f98;">— every loop syncs to it</span>
+    </div>
+
+    <div style="font-size: 16px; color: #6f757e;">10 live loops · shared state · JSON arrangements</div>
+  </div>
+
+  <!-- ============ PROCESSING ============ -->
+  <div style="position: absolute; left: 1480px; top: 320px; width: 340px; height: 200px; z-index: 2; background: #21252b; border-radius: 16px; padding: 26px; box-shadow: -5px -5px 16px rgba(255,255,255,0.05), 7px 7px 20px rgba(0,0,0,0.58); display: flex; flex-direction: column; gap: 14px;">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="1.4">
+      <circle cx="9.5" cy="9.5" r="5.5"></circle>
+      <rect x="9.5" y="9.5" width="9.5" height="9.5" rx="1.2"></rect>
+    </svg>
+    <div>
+      <div style="font-size: 30px; font-weight: 600; color: #eceef1; line-height: 1.1;">Processing</div>
+      <div style="font-size: 16px; color: #6f757e; margin-top: 7px;">Visuals · optional · <span class="mono" style="color: #ff8c00;">:8000</span></div>
+    </div>
+  </div>
+
+  <!-- ============ AUDIO OUT ============ -->
+  <div style="position: absolute; left: 1480px; top: 600px; width: 340px; height: 200px; z-index: 2; background: #21252b; border-radius: 16px; padding: 26px; box-shadow: -5px -5px 16px rgba(255,255,255,0.05), 7px 7px 20px rgba(0,0,0,0.58); display: flex; flex-direction: column; gap: 14px;">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#b8bcc2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 9h3.5L11.5 5v14L7 15H3.5z"></path>
+      <path d="M15.2 9.4a4 4 0 010 5.2"></path>
+      <path d="M18 7a7.6 7.6 0 010 10"></path>
+    </svg>
+    <div>
+      <div style="font-size: 30px; font-weight: 600; color: #eceef1; line-height: 1.1;">Audio Out</div>
+      <div style="font-size: 16px; color: #6f757e; margin-top: 7px;">Synths, samples and FX chains</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

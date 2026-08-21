@@ -1,0 +1,32 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1920,
+      "h": 1080,
+      "title": "System diagram (detailed)"
+    },
+    {
+      "file": "Overview.dc.html",
+      "x": 2060,
+      "y": 0,
+      "w": 1920,
+      "h": 1080,
+      "title": "Overview (read from the back row)"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "slide-pair",
+      "x": 0,
+      "y": -150,
+      "w": 620,
+      "text": "Two 1920×1080 slides.\nLeft: the full picture, for a laptop screen or a handout.\nRight: the same system stripped to five boxes, sized to read from the back of the room."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

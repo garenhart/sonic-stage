@@ -1,0 +1,340 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #1b2027;
+      font-family: 'Space Grotesk', 'Helvetica Neue', Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
+    a { color: #ff8c00; } a:hover { color: #ffab4d; }
+  </style>
+</helmet>
+
+<div style="position: relative; width: 1920px; height: 1080px; background: #1b2027; overflow: hidden;">
+
+  <!-- atmosphere behind the hub -->
+  <div style="position: absolute; left: 500px; top: 60px; width: 920px; height: 1000px; background: radial-gradient(ellipse at center, rgba(255,140,0,0.055), rgba(255,140,0,0) 68%); z-index: 0;"></div>
+
+  <!-- ============ TITLE ============ -->
+  <div style="position: absolute; left: 80px; top: 56px; z-index: 4;">
+    <div style="font-size: 52px; font-weight: 700; color: #eceef1; letter-spacing: -0.02em; line-height: 1;">Bandstand</div>
+    <div style="margin-top: 12px; font-size: 19px; color: #8a8f98; letter-spacing: 0.01em;">A real-time performance system — and how its pieces talk to each other</div>
+  </div>
+
+  <!-- ============ LEGEND ============ -->
+  <div style="position: absolute; right: 80px; top: 62px; z-index: 4; display: flex; flex-direction: column; align-items: flex-end; gap: 12px;">
+    <div style="display: flex; align-items: center; gap: 24px;">
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="width: 28px; height: 4px; border-radius: 2px; background: #ff8c00;"></div>
+        <span style="font-size: 13px; color: #b8bcc2; letter-spacing: 0.04em;">OSC</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="width: 28px; height: 4px; border-radius: 2px; background: #8a8f98;"></div>
+        <span style="font-size: 13px; color: #b8bcc2; letter-spacing: 0.04em;">MIDI / audio</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="width: 28px; height: 4px; border-radius: 2px; background: #00ff00;"></div>
+        <span style="font-size: 13px; color: #b8bcc2; letter-spacing: 0.04em;">the beat</span>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #6f757e; letter-spacing: 0.03em;">dashed = never answers back</div>
+  </div>
+
+  <!-- ============ WIRES ============ -->
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0; z-index: 1;">
+    <defs>
+      <marker id="headOrange" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#ff8c00"></path>
+      </marker>
+      <marker id="headGray" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#8a8f98"></path>
+      </marker>
+    </defs>
+
+    <!-- MIDI keyboard -> Sonic Pi -->
+    <path d="M 440,330 C 520,330 572,306 646,306" fill="none" stroke="#8a8f98" stroke-width="2.5" stroke-linecap="round" marker-end="url(#headGray)"></path>
+    <circle cx="440" cy="330" r="4.5" fill="#8a8f98"></circle>
+
+    <!-- Open Stage Control -> Sonic Pi (control) -->
+    <path d="M 440,615 C 520,615 572,590 646,590" fill="none" stroke="#ff8c00" stroke-width="2.5" stroke-linecap="round" marker-end="url(#headOrange)"></path>
+    <circle cx="440" cy="615" r="4.5" fill="#ff8c00"></circle>
+
+    <!-- Sonic Pi -> Open Stage Control (feedback) -->
+    <path d="M 650,745 C 576,745 526,770 454,770" fill="none" stroke="#ff8c00" stroke-width="2.5" stroke-linecap="round" marker-end="url(#headOrange)"></path>
+    <circle cx="650" cy="745" r="4.5" fill="#ff8c00"></circle>
+
+    <!-- Sonic Pi -> Processing -->
+    <path d="M 1270,350 C 1344,350 1404,400 1476,400" fill="none" stroke="#ff8c00" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 7" marker-end="url(#headOrange)"></path>
+    <circle cx="1270" cy="350" r="4.5" fill="#ff8c00"></circle>
+
+    <!-- Sonic Pi -> audio out -->
+    <path d="M 1270,790 C 1344,790 1404,800 1476,800" fill="none" stroke="#8a8f98" stroke-width="2.5" stroke-linecap="round" marker-end="url(#headGray)"></path>
+    <circle cx="1270" cy="790" r="4.5" fill="#8a8f98"></circle>
+  </svg>
+
+  <!-- ============ WIRE LABELS ============ -->
+  <div style="position: absolute; left: 440px; top: 236px; width: 210px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 4px;">
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: #8a8f98;">MIDI IN</div>
+    <div class="mono" style="font-size: 13px; color: #d7dbe0;">/midi*/note_on</div>
+    <div class="mono" style="font-size: 11px; color: #6f757e;">note, velocity</div>
+  </div>
+
+  <div style="position: absolute; left: 440px; top: 534px; width: 210px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 4px;">
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: #ff8c00;">OSC · CONTROL</div>
+    <div class="mono" style="font-size: 13px; color: #d7dbe0;">→ 127.0.0.1:4560</div>
+  </div>
+
+  <div style="position: absolute; left: 440px; top: 688px; width: 210px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 4px;">
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: #ff8c00;">OSC · FEEDBACK</div>
+    <div class="mono" style="font-size: 13px; color: #d7dbe0;">→ 127.0.0.1:7777</div>
+  </div>
+
+  <div style="position: absolute; left: 1270px; top: 298px; width: 210px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 4px;">
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: #ff8c00;">OSC · VISUALS</div>
+    <div class="mono" style="font-size: 13px; color: #d7dbe0;">→ 127.0.0.1:8000</div>
+  </div>
+
+  <div style="position: absolute; left: 1270px; top: 726px; width: 210px; z-index: 3; text-align: center; display: flex; flex-direction: column; gap: 4px;">
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: #8a8f98;">AUDIO</div>
+    <div class="mono" style="font-size: 12px; color: #6f757e;">synths · samples · FX</div>
+  </div>
+
+  <!-- ============ MIDI KEYBOARD ============ -->
+  <div style="position: absolute; left: 80px; top: 210px; width: 360px; height: 250px; z-index: 2; background: #21252b; border-radius: 14px; padding: 22px; box-shadow: -4px -4px 14px rgba(255,255,255,0.045), 6px 6px 18px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#b8bcc2" stroke-width="1.5" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" rx="1.5"></rect>
+        <path d="M7.3 6v12M12 6v12M16.7 6v12" stroke-linecap="round"></path>
+        <rect x="5.4" y="6" width="3.2" height="7" rx="0.6" fill="#b8bcc2" stroke="none"></rect>
+        <rect x="10.4" y="6" width="3.2" height="7" rx="0.6" fill="#b8bcc2" stroke="none"></rect>
+        <rect x="15.1" y="6" width="3.2" height="7" rx="0.6" fill="#b8bcc2" stroke="none"></rect>
+      </svg>
+      <div>
+        <div style="font-size: 21px; font-weight: 600; color: #eceef1; line-height: 1.1;">MIDI Keyboard</div>
+        <div style="font-size: 12.5px; color: #6f757e; margin-top: 3px;">Any class-compliant controller</div>
+      </div>
+    </div>
+
+    <div style="background: #191d23; border-radius: 9px; padding: 12px 14px; box-shadow: inset 3px 3px 9px rgba(0,0,0,0.55), inset -2px -2px 7px rgba(255,255,255,0.035); display: flex; flex-direction: column; gap: 6px;">
+      <div style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #6f757e;">SONIC PI PICKS IT UP AS</div>
+      <div class="mono" style="font-size: 13px; color: #b8bcc2;">note, vel = sync "/midi*/note_on"</div>
+    </div>
+
+    <div style="font-size: 13px; color: #8a8f98; line-height: 1.45; text-wrap: pretty;">Plugged straight into the machine — no OSC, no port. Sonic Pi turns every key press into a cue.</div>
+  </div>
+
+  <!-- ============ OPEN STAGE CONTROL ============ -->
+  <div style="position: absolute; left: 80px; top: 500px; width: 360px; height: 440px; z-index: 2; background: #21252b; border-radius: 14px; padding: 22px; box-shadow: -4px -4px 14px rgba(255,255,255,0.045), 6px 6px 18px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 13px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="1.5" stroke-linecap="round">
+        <path d="M6 3v18M12 3v18M18 3v18"></path>
+        <rect x="3.4" y="7" width="5.2" height="3.2" rx="1.2" fill="#ff8c00" stroke="none"></rect>
+        <rect x="9.4" y="13.4" width="5.2" height="3.2" rx="1.2" fill="#ff8c00" stroke="none"></rect>
+        <rect x="15.4" y="9.6" width="5.2" height="3.2" rx="1.2" fill="#ff8c00" stroke="none"></rect>
+      </svg>
+      <div style="flex-grow: 1;">
+        <div style="font-size: 21px; font-weight: 600; color: #eceef1; line-height: 1.1;">Open Stage Control</div>
+        <div style="font-size: 12.5px; color: #6f757e; margin-top: 3px;">The touch UI · tablet or browser</div>
+      </div>
+    </div>
+
+    <div>
+      <span class="mono" style="display: inline-flex; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; font-size: 12px;">listens :7777</span>
+    </div>
+
+    <div style="background: #191d23; border-radius: 9px; padding: 11px 13px; box-shadow: inset 3px 3px 9px rgba(0,0,0,0.55), inset -2px -2px 7px rgba(255,255,255,0.035); display: flex; flex-direction: column; gap: 6px;">
+      <div style="display: flex; justify-content: space-between; gap: 10px;">
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">osc_controller.json</span>
+        <span style="font-size: 11.5px; color: #6f757e;">layout</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 10px;">
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">osc_controller.js</span>
+        <span style="font-size: 11.5px; color: #6f757e;">custom module</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 10px;">
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">osc_controller_theme.css</span>
+        <span style="font-size: 11.5px; color: #6f757e;">theme</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 7px;">
+      <div style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #ff8c00;">SENDS ▸</div>
+      <div class="mono" style="font-size: 11.5px; color: #b8bcc2; line-height: 1.55;">/tempo · /bass_inst · /chord_type<br>/kick_beats/3 · /solo_fx1_fx · /open</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 7px;">
+      <div style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #ff8c00;">◂ RECEIVES</div>
+      <div class="mono" style="font-size: 11.5px; color: #b8bcc2; line-height: 1.55;"><span style="color: #00ff00;">/current_beat</span> · /synths · /scale_notes<br>/keyboard_scale · /pattern · /NOTIFY</div>
+    </div>
+
+    <div style="font-size: 12.5px; color: #8a8f98; line-height: 1.45; text-wrap: pretty;">Every widget is a message. Nothing stops or restarts — moves land while the music plays.</div>
+  </div>
+
+  <!-- ============ SONIC PI (the hub) ============ -->
+  <div style="position: absolute; left: 650px; top: 190px; width: 620px; height: 750px; z-index: 2; background: #21252b; border-radius: 16px; padding: 26px; box-shadow: -5px -5px 18px rgba(255,255,255,0.05), 8px 8px 24px rgba(0,0,0,0.6); display: flex; flex-direction: column; gap: 32px;">
+
+    <div style="display: flex; align-items: flex-start; gap: 13px;">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="1.6" stroke-linecap="round">
+        <path d="M1.5 12c2-6.5 4-6.5 6 0s4 6.5 6 0 4-6.5 6 0" stroke="#ff8c00"></path>
+        <circle cx="12" cy="12" r="1.6" fill="#ff8c00" stroke="none"></circle>
+      </svg>
+      <div style="flex-grow: 1;">
+        <div style="font-size: 30px; font-weight: 700; color: #eceef1; line-height: 1.05; letter-spacing: -0.01em;">Sonic Pi</div>
+        <div style="font-size: 13px; color: #8a8f98; margin-top: 5px; text-wrap: balance;">The audio engine — and the runtime everything else plugs into</div>
+      </div>
+      <span class="mono" style="align-self: center; padding: 5px 11px; border-radius: 6px; border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; font-size: 12.5px; white-space: nowrap;">listens :4560</span>
+    </div>
+
+    <div style="background: #191d23; border-radius: 8px; padding: 9px 13px; box-shadow: inset 3px 3px 9px rgba(0,0,0,0.55), inset -2px -2px 7px rgba(255,255,255,0.035);">
+      <span class="mono" style="font-size: 12.5px; color: #b8bcc2;">sonic-stage.rb</span>
+      <span class="mono" style="font-size: 12.5px; color: #565c65;">  →  </span>
+      <span class="mono" style="font-size: 12.5px; color: #b8bcc2;">osc_monitor.rb</span>
+      <span class="mono" style="font-size: 12.5px; color: #565c65;">  →  </span>
+      <span class="mono" style="font-size: 12.5px; color: #b8bcc2;">lib/*.rb</span>
+    </div>
+
+    <!-- the clock -->
+    <div style="display: flex; align-items: center; gap: 13px; padding: 12px 15px; border-radius: 9px; background: rgba(0,255,0,0.06); border: 1px solid rgba(0,255,0,0.30);">
+      <span class="mono" style="font-size: 14px; font-weight: 700; color: #00ff00;">:the_cue</span>
+      <svg width="20" height="9" viewBox="0 0 20 9" fill="none"><path d="M0 4.5h15" stroke="#00ff00" stroke-width="1.6"></path><path d="M14 1 L19 4.5 L14 8 Z" fill="#00ff00"></path></svg>
+      <span class="mono" style="font-size: 13.5px; color: #d7dbe0;">cue :tick</span>
+      <span style="margin-left: auto; font-size: 12.5px; color: #7d838c;">one pulse per beat, at the current BPM</span>
+    </div>
+
+    <!-- beat loops -->
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #6f757e;">BEAT LOOPS</span>
+        <span class="mono" style="font-size: 11.5px; color: #00ff00;">sync :tick</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span class="mono" style="font-size: 13px; color: #b8bcc2; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:drum_kick</span>
+        <span class="mono" style="font-size: 13px; color: #b8bcc2; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:drum_snare</span>
+        <span class="mono" style="font-size: 13px; color: #b8bcc2; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:drum_cymbal</span>
+        <span class="mono" style="font-size: 13px; color: #b8bcc2; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:bass</span>
+        <span class="mono" style="font-size: 13px; color: #b8bcc2; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:chord</span>
+      </div>
+    </div>
+
+    <!-- event loops -->
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #6f757e;">EVENT LOOPS</span>
+        <span class="mono" style="font-size: 11.5px; color: #8a8f98;">sync on whatever arrives</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span class="mono" style="font-size: 13px; color: #b8bcc2; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:midi_solo</span>
+        <span class="mono" style="font-size: 13px; color: #b8bcc2; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:midi_bass</span>
+        <span class="mono" style="font-size: 13px; color: #b8bcc2; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:midi_chord</span>
+        <span class="mono" style="font-size: 13px; color: #ff8c00; background: #262b33; border-radius: 8px; padding: 8px 11px; box-shadow: -2px -2px 6px rgba(255,255,255,0.035), 3px 3px 8px rgba(0,0,0,0.45);">:osc_monitor</span>
+      </div>
+      <div style="font-size: 12.5px; color: #8a8f98; line-height: 1.45; text-wrap: pretty;">Solo plays live; bass and chord record into the pattern once armed. <span class="mono" style="color: #b8bcc2;">:osc_monitor</span> syncs <span class="mono" style="color: #b8bcc2;">"/osc:127.0.0.1:7777/**"</span> and dispatches every widget.</div>
+    </div>
+
+    <!-- shared state -->
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #6f757e;">SHARED STATE</span>
+        <span class="mono" style="font-size: 11.5px; color: #8a8f98;">set / get</span>
+      </div>
+      <div style="background: #191d23; border-radius: 9px; padding: 11px 13px; box-shadow: inset 3px 3px 9px rgba(0,0,0,0.55), inset -2px -2px 7px rgba(255,255,255,0.035); display: flex; flex-wrap: wrap; gap: 8px 14px;">
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">:tempo</span>
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">:beat</span>
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">:drums</span>
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">:bass_state</span>
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">:chord_state</span>
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">:bass_rec</span>
+        <span class="mono" style="font-size: 11.5px; color: #b8bcc2;">:chord_rec</span>
+      </div>
+      <div style="font-size: 12.5px; color: #8a8f98; line-height: 1.45; text-wrap: pretty;">With <span class="mono" style="color: #b8bcc2;">auto</span> on, a loop re-reads its state every beat — which is why a fader move lands on the next beat, with nothing restarted. With it off, the loop keeps the values it started with.</div>
+    </div>
+
+    <!-- arrangements -->
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #6f757e;">ARRANGEMENTS</div>
+      <div style="background: #191d23; border-radius: 9px; padding: 10px 13px; box-shadow: inset 3px 3px 9px rgba(0,0,0,0.55), inset -2px -2px 7px rgba(255,255,255,0.035); display: flex; align-items: baseline; gap: 12px;">
+        <span class="mono" style="font-size: 12px; color: #ff8c00;">config/*.json</span>
+        <span style="font-size: 12px; color: #8a8f98;">tempo · instruments · FX chains · 16-step drum patterns</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ PROCESSING ============ -->
+  <div style="position: absolute; left: 1480px; top: 210px; width: 360px; height: 380px; z-index: 2; background: #21252b; border-radius: 14px; padding: 22px; box-shadow: -4px -4px 14px rgba(255,255,255,0.045), 6px 6px 18px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 13px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="1.5">
+        <circle cx="9.5" cy="9.5" r="5.5"></circle>
+        <rect x="9.5" y="9.5" width="9.5" height="9.5" rx="1.2"></rect>
+      </svg>
+      <div style="flex-grow: 1;">
+        <div style="font-size: 21px; font-weight: 600; color: #eceef1; line-height: 1.1;">Processing</div>
+        <div style="font-size: 12.5px; color: #6f757e; margin-top: 3px;">Visuals · entirely optional</div>
+      </div>
+    </div>
+
+    <div>
+      <span class="mono" style="display: inline-flex; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; font-size: 12px;">listens :8000</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #6f757e;">◂ RECEIVES</div>
+      <div style="background: #191d23; border-radius: 9px; padding: 11px 13px; box-shadow: inset 3px 3px 9px rgba(0,0,0,0.55), inset -2px -2px 7px rgba(255,255,255,0.035); display: flex; flex-direction: column; gap: 5px;">
+        <span class="mono" style="font-size: 13px; color: #ff8c00;">/drum</span>
+        <span class="mono" style="font-size: 11.5px; color: #8a8f98;">instrument, amp, beat_on, on</span>
+      </div>
+      <div style="background: #191d23; border-radius: 9px; padding: 11px 13px; box-shadow: inset 3px 3px 9px rgba(0,0,0,0.55), inset -2px -2px 7px rgba(255,255,255,0.035); display: flex; flex-direction: column; gap: 5px;">
+        <span class="mono" style="font-size: 13px; color: #ff8c00;">/key</span>
+        <span class="mono" style="font-size: 11.5px; color: #8a8f98;">instrument, note, amp</span>
+      </div>
+    </div>
+
+    <div style="font-size: 12.5px; color: #8a8f98; line-height: 1.45; text-wrap: pretty;">Fire and forget — Processing never answers back, so the visuals can be closed mid-set without the music noticing.</div>
+  </div>
+
+  <!-- ============ AUDIO OUT ============ -->
+  <div style="position: absolute; left: 1480px; top: 660px; width: 360px; height: 280px; z-index: 2; background: #21252b; border-radius: 14px; padding: 22px; box-shadow: -4px -4px 14px rgba(255,255,255,0.045), 6px 6px 18px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#b8bcc2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3.5 9h3.5L11.5 5v14L7 15H3.5z"></path>
+        <path d="M15.2 9.4a4 4 0 010 5.2"></path>
+        <path d="M18 7a7.6 7.6 0 010 10"></path>
+      </svg>
+      <div>
+        <div style="font-size: 21px; font-weight: 600; color: #eceef1; line-height: 1.1;">Audio Out</div>
+        <div style="font-size: 12.5px; color: #6f757e; margin-top: 3px;">The thing the room actually hears</div>
+      </div>
+    </div>
+
+    <div style="background: #191d23; border-radius: 9px; padding: 11px 13px; box-shadow: inset 3px 3px 9px rgba(0,0,0,0.55), inset -2px -2px 7px rgba(255,255,255,0.035); display: flex; flex-direction: column; gap: 6px;">
+      <div style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: #6f757e;">PER INSTRUMENT</div>
+      <div class="mono" style="font-size: 12.5px; color: #b8bcc2;">with_effects fx_chain(instrument['fx'])</div>
+    </div>
+
+    <div style="font-size: 13px; color: #8a8f98; line-height: 1.45; text-wrap: pretty;">Bass, chords, drums and solo each carry their own chain. Order matters — for the latency as much as for the sound.</div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div style="position: absolute; left: 80px; right: 80px; top: 986px; z-index: 4; display: flex; align-items: center; gap: 20px;">
+    <div style="height: 1px; width: 44px; background: #343a43;"></div>
+    <div style="font-size: 15px; color: #8a8f98; letter-spacing: 0.01em;">Four processes, one machine — everything speaks over <span style="color: #b8bcc2;">127.0.0.1</span>, because the shortest wire is the one that keeps time.</div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>
